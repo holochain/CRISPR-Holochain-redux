@@ -1,0 +1,29 @@
+#[entry_def]
+     fn happ_def() -> ValidatingEntryType {
+        happ::definition()
+    }
+
+    #[zome_fn("hc_public")]
+    fn create_happ(happ_input: HappEntry) -> ZomeApiResult<Happ> {
+        happ::handlers::create_happ(happ_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn get_happ(id: Address) -> ZomeApiResult<Happ> {
+        happ::handlers::get_happ(id)
+    }
+
+    #[zome_fn("hc_public")]
+    fn update_happ(id: Address, happ_input: HappEntry) -> ZomeApiResult<Happ> {
+        happ::handlers::update_happ(id, happ_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn remove_happ(id: Address) -> ZomeApiResult<Address> {
+        happ::handlers::remove_happ(id)
+    }
+
+    #[zome_fn("hc_public")]
+    fn list_happs() -> ZomeApiResult<Vec<Happ>> {
+        happ::handlers::list_happs()
+    }

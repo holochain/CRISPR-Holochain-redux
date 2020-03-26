@@ -1,0 +1,1 @@
+{"name":"profile-site","fields":[{"fieldName":"domain","fieldType":"singleLineText","test":{"create":"philt3r.rocks","update":"updated"}},{"fieldName":"player","fieldType":"singleLineText","test":{"create":"Philip Beadle","update":"Updated"}},{"fieldName":"mobile","fieldType":"singleLineText","test":{"create":"0000000000","update":"1111111111"}}]}

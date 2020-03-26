@@ -1,0 +1,61 @@
+#![feature(proc_macro_hygiene)]
+use hdk_proc_macros::zome;
+use serde_derive::{Deserialize, Serialize};
+use hdk::{
+    entry_definition::ValidatingEntryType,
+    error::ZomeApiResult,
+    holochain_persistence_api::cas::content::Address
+};
+
+use crate::entry_type::Entry_typeEntry;
+use crate::entry_type::Entry_type;
+pub mod entry_type;
+
+#[zome]
+mod entry_types {
+
+    #[init]
+    fn init() {
+        Ok(())type
+    }
+
+    #[validate_agent]
+    pub fn validate_agent(validation_data: EntryValidationData<AgentId>) {
+        Ok(())
+    }
+
+    #[entry_def]
+    fn anchor_def() -> ValidatingEntryType {
+        holochain_anchors::anchor_definition()
+    }
+
+        #[entry_def]
+     fn entry_type_def() -> ValidatingEntryType {
+        entry_type::definition()
+    }
+
+    #[zome_fn("hc_public")]
+    fn create_entry_type(entry_type_input: Entry_typeEntry) -> ZomeApiResult<Entry_type> {
+        entry_type::handlers::create_entry_type(entry_type_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn get_entry_type(id: Address) -> ZomeApiResult<Entry_type> {
+        entry_type::handlers::get_entry_type(id)
+    }
+
+    #[zome_fn("hc_public")]
+    fn update_entry_type(id: Address, entry_type_input: Entry_typeEntry) -> ZomeApiResult<Entry_type> {
+        entry_type::handlers::update_entry_type(id, entry_type_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn remove_entry_type(id: Address) -> ZomeApiResult<Address> {
+        entry_type::handlers::remove_entry_type(id)
+    }
+
+    #[zome_fn("hc_public")]
+    fn list_entry_types() -> ZomeApiResult<Vec<Entry_type>> {
+        entry_type::handlers::list_entry_types()
+    }
+}
