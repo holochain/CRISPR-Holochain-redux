@@ -24,8 +24,7 @@
 </template>
 
 <script>
-// import { dnas } from '../test-data/dnas.js'
-
+import { mapState } from 'vuex'
 export default {
   name: 'HolochainApps',
   components: {
@@ -33,27 +32,19 @@ export default {
   },
   data () {
     return {
-      newHolochainApp: {
-        name: 'New Holochain App',
+      new: {
+        id: '',
+        name: '',
         url: '',
         contact: '',
         mobile: ''
-      },
-      hApps: [
-        {
-          name: 'holochain-developer',
-          folder: '/Users/philipbeadle/eat-sleep-code-repeat/dashboard',
-          url: '/entry-types',
-          contact: 'Philip Beadle',
-          mobile: '+61 999 999 999'
-        }
-      ]
+      }
     }
   },
   methods: {
     addHolochainApp: function () {
       console.log('Add New Holochain App')
-      this.hApps.push(this.newHolochainApp)
+      this.hApps.push(this.new)
     },
     deleteHolochainApp: function (hApp) {
       console.log('Delete Entry Type')
@@ -62,6 +53,9 @@ export default {
         return hApp.name !== hAppName
       })
     }
+  },
+  computed: {
+    ...mapState('app', ['hApps'])
   }
 }
 </script>

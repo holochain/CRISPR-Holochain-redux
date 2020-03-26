@@ -16,6 +16,11 @@ const router = new Router({
       path: '/entry-types',
       name: 'Entry Types',
       component: () => import('@/views/EntryTypes')
+    },
+    {
+      path: '/zomes',
+      name: 'Zomes',
+      component: () => import('@/views/Zomes')
     }
   ]
 })
