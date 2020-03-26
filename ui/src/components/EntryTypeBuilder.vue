@@ -130,6 +130,20 @@ function replaceAndWriteLib (placeHolder, typeName, zomeName, fileName) {
   fs.writeFileSync(fileName, libContent)
 }
 
+function modFile (typeName, zomeName, folder) {
+  const rustFields = ['\n\tdomain: String', '\n\tplayer: String', '\n\tmobile: String']
+  const constRustNewFields = ['\n\t\t\tdomain: ' + typeName + '_entry.domain', '\n\t\t\tplayer: ' + typeName + '_entry.player', '\n\t\t\tmobile: ' + typeName + '_entry.mobile']
+  const placeHolder = 'happ'
+  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
+  const placeHolderAllC = placeHolder.toUpperCase()
+  const typeNameC = typeName.charAt(0).toUpperCase() + typeName.substring(1)
+  const typeNameAllC = typeName.toUpperCase()
+  const modContent = mod.replace(new RegExp(placeHolder, 'g'), typeName).replace(new RegExp(placeHolderC, 'g'), typeNameC).replace(new RegExp(placeHolderAllC, 'g'), typeNameAllC)
+  const modSplit = modContent.split('fields')
+  const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3]]
+  fs.writeFileSync(path.join(folder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), modDone.join().replace(new RegExp('_comma,', 'g'), ''))
+}
+
 function testFiles (typeName, zomeName, folder) {
   const typePlaceHolder = 'happ'
   const zomePlaceHolder = 'holochain_developer'
@@ -173,7 +187,7 @@ export default {
       replaceAndWrite(cargo, 'holochain_developer', zomeName, folder + 'zomes/' + zomeName + '/code/Cargo.toml')
       replaceAndWriteLib('happ', typeName, zomeName, folder + 'zomes/' + zomeName + '/code/src/lib.rs')
       replaceAndWrite(handlers, 'happ', typeName, folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/handlers.rs')
-      replaceAndWrite(mod, 'happ', typeName, folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs')
+      modFile(typeName, zomeName, folder)
       replaceAndWrite(validation, 'happ', typeName, folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/validation.rs')
       testFiles(typeName, zomeName, folder)
       this.generateEntryTypeDialog = false

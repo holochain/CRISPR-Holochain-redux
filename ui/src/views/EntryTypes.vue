@@ -43,7 +43,7 @@ export default {
           fields: [
             {
               fieldName: 'domain',
-              fieldType: 'singleLineText',
+              fieldType: 'String',
               test: {
                 create: 'philt3r.rocks',
                 update: 'updated'
@@ -51,7 +51,7 @@ export default {
             },
             {
               fieldName: 'player',
-              fieldType: 'singleLineText',
+              fieldType: 'String',
               test: {
                 create: 'Philip Beadle',
                 update: 'Updated'
@@ -59,7 +59,7 @@ export default {
             },
             {
               fieldName: 'mobile',
-              fieldType: 'singleLineText',
+              fieldType: 'String',
               test: {
                 create: '0000000000',
                 update: '1111111111'

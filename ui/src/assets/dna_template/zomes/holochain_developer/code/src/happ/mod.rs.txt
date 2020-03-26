@@ -30,8 +30,7 @@ const HAPPS_ANCHOR_TEXT: &str = "happs";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct HappEntry {
-    title: String,
-    content: String,
+    _commafields
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -39,8 +38,7 @@ pub struct HappEntry {
 pub struct Happ {
     id: Address,
     created_at: Iso8601,
-    title: String,
-    content: String,
+    _commafields
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -61,8 +59,7 @@ impl Happ {
         Ok(Happ{
             id: id.clone(),
             created_at: timestamp(id)?,
-            title: happ_entry.title,
-            content: happ_entry.content,
+            _commafields
         })
     }
 }
