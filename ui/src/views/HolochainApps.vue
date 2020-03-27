@@ -12,7 +12,7 @@
     </v-app-bar>
     <v-content>
     <v-row>
-      <v-col v-for="(hApp) in hApps" :key="hApp.name" cols="12">
+      <v-col v-for="(hApp) in hApps" :key="hApp.name" cols="3">
         <holochain-app :hApp="hApp" @delete-holochain-app="deleteHolochainApp"/>
       </v-col>
     </v-row>

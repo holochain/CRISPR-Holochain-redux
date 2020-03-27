@@ -12,6 +12,7 @@
     "hc:start": "npm run hc:config && npm run hc:run",
     "ui:connect-to-conductor": "cd ui && node connect-to-conductor",
     "ui:start": "cd ui && yarn electron:serve",
+    "ui:lint": "cd ui && yarn lint",
     "start": "nf start"
   },
   "repository": {

@@ -2,18 +2,18 @@
   <v-card fluid>
     <v-app-bar app clipped-left absolute>
       <v-toolbar>
-        <v-toolbar-title>Zomes</v-toolbar-title>
+        <v-toolbar-title>Anchors</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn text @click="addZome">
+        <v-btn text @click="addAnchor">
           <v-icon>mdi-plus</v-icon>
-          Zome
+          Anchor
         </v-btn>
       </v-toolbar>
     </v-app-bar>
     <v-content>
     <v-row>
-      <v-col v-for="(zome) in zomes" :key="zome.id" cols="12">
-        <zome :zome="zome" @delete-zome="deleteZome"/>
+      <v-col v-for="(anchor) in anchors" :key="anchor.id" cols="12">
+        <anchor :anchor="anchor" @delete-anchor="deleteAnchor"/>
       </v-col>
     </v-row>
     </v-content>
@@ -25,66 +25,30 @@
 
 <script>
 export default {
-  name: 'Zomes',
+  name: 'Anchors',
   components: {
-    Zome: () => import('../components/Zome')
+    Anchor: () => import('../components/Ancor')
   },
   data () {
     return {
-      newZome: {
+      newAnchor: {
         id: '',
         name: '',
         entryTypes: []
-      },
-      zomes: [
-        {
-          id: 'Qmmorehasshes',
-          name: 'websites',
-          entryTypes: [
-            {
-              name: 'Site',
-              fields: [
-                {
-                  fieldName: 'domain',
-                  fieldType: 'String',
-                  test: {
-                    create: 'philt3r.rocks',
-                    update: 'updated'
-                  }
-                },
-                {
-                  fieldName: 'player',
-                  fieldType: 'String',
-                  test: {
-                    create: 'Philip Beadle',
-                    update: 'Updated'
-                  }
-                },
-                {
-                  fieldName: 'mobile',
-                  fieldType: 'String',
-                  test: {
-                    create: '0000000000',
-                    update: '1111111111'
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      }
+
     }
   },
   methods: {
-    addZome: function () {
-      console.log('Add New Zome')
-      this.zomes.push(this.newZome)
+    addAnchor: function () {
+      console.log('Add New Anchor')
+      this.anchors.push(this.newAnchor)
     },
-    deleteZome: function (zome) {
+    deleteAnchor: function (anchor) {
       console.log('Delete Entry Type')
-      const zomeId = zome.id
-      this.zomes = this.zomes.filter(function (zome) {
-        return zome.id !== zomeId
+      const anchorId = anchor.id
+      this.anchors = this.anchors.filter(function (anchor) {
+        return anchor.id !== anchorId
       })
     }
   }

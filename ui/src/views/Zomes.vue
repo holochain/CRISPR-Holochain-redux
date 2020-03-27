@@ -35,44 +35,7 @@ export default {
         id: '',
         name: '',
         entryTypes: []
-      },
-      zomes: [
-        {
-          id: 'Qmmorehasshes',
-          name: 'websites',
-          entryTypes: [
-            {
-              name: 'Site',
-              fields: [
-                {
-                  fieldName: 'domain',
-                  fieldType: 'String',
-                  test: {
-                    create: 'philt3r.rocks',
-                    update: 'updated'
-                  }
-                },
-                {
-                  fieldName: 'player',
-                  fieldType: 'String',
-                  test: {
-                    create: 'Philip Beadle',
-                    update: 'Updated'
-                  }
-                },
-                {
-                  fieldName: 'mobile',
-                  fieldType: 'String',
-                  test: {
-                    create: '0000000000',
-                    update: '1111111111'
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      }
     }
   },
   methods: {

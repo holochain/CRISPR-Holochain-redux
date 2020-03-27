@@ -13,9 +13,9 @@ const router = new Router({
       component: () => import('@/views/HolochainApps')
     },
     {
-      path: '/entry-types',
-      name: 'Entry Types',
-      component: () => import('@/views/EntryTypes')
+      path: '/model',
+      name: 'Application Model',
+      component: () => import('@/views/Model')
     },
     {
       path: '/zomes',
