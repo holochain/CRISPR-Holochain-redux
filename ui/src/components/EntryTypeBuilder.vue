@@ -97,13 +97,21 @@
         </v-card>
     </v-tab-item>
     <v-tab-item key="validation">
-
+      <v-card v-resize="onResize" class="red">
+        <codemirror v-model="code" :options="cmOptions" ref="cm"></codemirror>
+      </v-card>
     </v-tab-item>
   </v-tabs-items>
 </div>
 </template>
 
 <script>
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+// language js
+import 'codemirror/mode/rust/rust.js'
+// theme css
+import 'codemirror/theme/base16-dark.css'
 import * as fs from 'fs'
 import * as path from 'path'
 import appFile from '../assets/dna_template/app.json.txt'
@@ -131,24 +139,25 @@ function ensureDirectoryExistence (filePath) {
   }
 }
 
-function replaceAndWrite (templateFile, placeHolder, replacement, fileName) {
+function replacePlaceHolders (content, placeHolder, replacement) {
+  placeHolder = placeHolder.toLowerCase()
+  replacement = replacement.toLowerCase()
   const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
   const replacementAllC = replacement.toUpperCase()
   const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
   const placeHolderAllC = placeHolder.toUpperCase()
-  const content = templateFile.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
-  fs.writeFileSync(fileName, content)
+  return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
+}
+
+function replaceAndWrite (templateFile, placeHolder, replacement, fileName) {
+  fs.writeFileSync(fileName, replacePlaceHolders(templateFile, placeHolder, replacement))
 }
 
 function replaceAndWriteLib (placeHolder, typeName, zomeName, fileName) {
-  const typeNameC = typeName.charAt(0).toUpperCase() + typeName.substring(1)
-  const typeNameAllC = typeName.toUpperCase()
-  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
-  const placeHolderAllC = placeHolder.toUpperCase()
-  const entryTypeFunctions = funcs.replace(new RegExp(placeHolder, 'g'), typeName).replace(new RegExp(placeHolderAllC, 'g'), typeNameAllC).replace(new RegExp(placeHolderC, 'g'), typeNameC)
-  const entryTypeDeclarations = decs.replace(new RegExp(placeHolder, 'g'), typeName).replace(new RegExp(placeHolderAllC, 'g'), typeNameAllC).replace(new RegExp(placeHolderC, 'g'), typeNameC)
-  const libContent = lib.replace(new RegExp('mod holochain_developer', 'g'), 'mod ' + zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations).replace(new RegExp(placeHolder, 'g'), typeName).replace(new RegExp(placeHolderAllC, 'g'), typeNameAllC).replace(new RegExp(placeHolderC, 'g'), typeNameC)
-  fs.writeFileSync(fileName, libContent)
+  const entryTypeFunctions = replacePlaceHolders(funcs, placeHolder, typeName)
+  const entryTypeDeclarations = replacePlaceHolders(decs, placeHolder, typeName)
+  const libContent = lib.replace(new RegExp('mod holochain_developer', 'g'), 'mod ' + zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations)
+  fs.writeFileSync(fileName, replacePlaceHolders(libContent, placeHolder, typeName))
 }
 
 function modFile (entryType, zomeName, folder) {
@@ -161,14 +170,8 @@ function modFile (entryType, zomeName, folder) {
       constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${entryTypeName}_entry.${field.fieldName}`)
     }
   })
-  // const rustFields = ['\n\tdomain: String', '\n\tplayer: String', '\n\tmobile: String']
-  // const constRustNewFields = ['\n\t\t\tdomain: ' + typeName + '_entry.domain', '\n\t\t\tplayer: ' + typeName + '_entry.player', '\n\t\t\tmobile: ' + typeName + '_entry.mobile']
   const placeHolder = 'happ'
-  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
-  const placeHolderAllC = placeHolder.toUpperCase()
-  const typeNameC = entryTypeName.charAt(0).toUpperCase() + entryTypeName.substring(1)
-  const typeNameAllC = entryTypeName.toUpperCase()
-  const modContent = mod.replace(new RegExp(placeHolder, 'g'), entryTypeName).replace(new RegExp(placeHolderC, 'g'), typeNameC).replace(new RegExp(placeHolderAllC, 'g'), typeNameAllC)
+  const modContent = replacePlaceHolders(mod, placeHolder, entryTypeName)
   const modSplit = modContent.split('fields')
   const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3]]
   fs.writeFileSync(path.join(folder, 'zomes/' + zomeName + '/code/src/' + entryTypeName + '/mod.rs'), modDone.join().replace(new RegExp('_comma,', 'g'), ''))
@@ -189,7 +192,8 @@ function testFiles (typeName, zomeName, folder) {
 export default {
   name: 'EntryTypeBuilder',
   components: {
-    EntryTypeField: () => import('../components/EntryTypeField')
+    EntryTypeField: () => import('../components/EntryTypeField'),
+    codemirror
   },
   props: ['folder', 'zome', 'entryType'],
   data () {
@@ -197,7 +201,15 @@ export default {
       tab: null,
       isEditing: '',
       dialog: false,
-      generateEntryTypeDialog: false
+      generateEntryTypeDialog: false,
+      code: replacePlaceHolders(validation, 'happ', this.entryType.name),
+      cmOptions: {
+        tabSize: 4,
+        mode: 'rust',
+        theme: 'base16-dark',
+        lineNumbers: true,
+        line: true
+      }
     }
   },
   methods: {
@@ -254,6 +266,24 @@ export default {
     },
     deleteEntryType (spec) {
       this.$emit('delete-entry-type', spec)
+    },
+    onCmReady (cm) {
+      console.log('the editor is readied!', cm)
+    },
+    onCmFocus (cm) {
+      console.log('the editor is focus!', cm)
+    },
+    onCmCodeChange (newCode) {
+      console.log('this is new code', newCode)
+      this.code = newCode
+    },
+    onResize () {
+      this.$refs.cm.codemirror.setSize(window.innerWidth, window.innerHeight - 300)
+    }
+  },
+  computed: {
+    codemirror () {
+      return this.$refs.cm.codemirror
     }
   }
 }
