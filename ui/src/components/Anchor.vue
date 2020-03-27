@@ -6,21 +6,18 @@
     <v-img
       class="white--text align-end"
       height="200px"
-      :src="require(`@/assets/happs/${hApp.name}/preview.png`)"
+      :src="require(`@/assets/anchors/anchor.png`)"
     >
-      <v-card-title>{{ hApp.name }}</v-card-title>
+      <v-card-title>{{ Anchor.type }}</v-card-title>
     </v-img>
     <v-card-subtitle class="pb-0">
-      {{ hApp.contact }}
-    </v-card-subtitle>
-    <v-card-subtitle class="pb-0">
-      {{ hApp.mobile }}
+      {{ Anchor.text }}
     </v-card-subtitle>
     <v-card-actions>
-      <v-btn color="orange" text :href="'http://' + hApp.url" target="_blank">
-        hApp Store
+      <v-btn color="orange" text :href="'http://' + Anchor.url" target="_blank">
+        Anchor Store
       </v-btn>
-      <v-btn color="orange" text :href="'http://' + hApp.name" target="_blank">
+      <v-btn color="orange" text :href="'http://' + Anchor.name" target="_blank">
         View
       </v-btn>
       <v-btn color="orange" text to="/entry-types">
@@ -32,9 +29,9 @@
 
 <script>
 export default {
-  name: 'HolochainApp',
+  name: 'Zome',
   props: {
-    hApp: {
+    Anchor: {
       type: Object,
       // Object or array defaults must be returned from
       // a factory function

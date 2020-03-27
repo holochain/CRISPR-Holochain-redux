@@ -3929,6 +3929,11 @@ dotenv@^8.0.0, dotenv@^8.2.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
   integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
 
+draggable-vue-directive@^1.1.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/draggable-vue-directive/-/draggable-vue-directive-1.2.0.tgz#f784d23b93308a59ca38d809d3bd8069f615740d"
+  integrity sha512-J/63ZiJvXGv0siV14C7QFoN4/dt4eEczSG+6oKUjoGojYMSew/b7p10LlDPF2ejXM06ciNs6EY+nPadeGVmnpA==
+
 duplexer3@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.4.tgz#ee01dd1cac0ed3cbc7fdbea37dc0a8f1ce002ce2"
@@ -9964,6 +9969,11 @@ supports-color@~5.0.0:
   dependencies:
     has-flag "^2.0.0"
 
+svg-pan-zoom@^3.5.3:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/svg-pan-zoom/-/svg-pan-zoom-3.6.1.tgz#f880a1bb32d18e9c625d7715350bebc269b450cf"
+  integrity sha512-JaKkGHHfGvRrcMPdJWkssLBeWqM+Isg/a09H7kgNNajT1cX5AztDTNs+C8UzpCxjCTRrG34WbquwaovZbmSk9g==
+
 svg-tags@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
@@ -10735,6 +10745,15 @@ vue-cli-plugin-vuetify@^2.0.3:
     semver "^7.1.2"
     shelljs "^0.8.3"
 
+vue-diagrams@^0.0.1-development:
+  version "0.0.1-development"
+  resolved "https://registry.yarnpkg.com/vue-diagrams/-/vue-diagrams-0.0.1-development.tgz#7102b8721cbebcc42469fe9c81aca410d39b3569"
+  integrity sha512-KjiTpYiaThV6RXnyH7BxvXVnLVoICB+847Nrj6R+Y+m7s2Ys0Dx1LJOCvyl70Kkr+0T8CTqWfo5cNCVTPUv9Qw==
+  dependencies:
+    draggable-vue-directive "^1.1.0"
+    svg-pan-zoom "^3.5.3"
+    vue-svg-pan-zoom "^0.1.0"
+
 vue-eslint-parser@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.0.0.tgz#a4ed2669f87179dedd06afdd8736acbb3a3864d6"
@@ -10782,6 +10801,13 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   dependencies:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
+
+vue-svg-pan-zoom@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/vue-svg-pan-zoom/-/vue-svg-pan-zoom-0.1.0.tgz#53cb10585c53eea85c5b4a83d862b14da81ef11d"
+  integrity sha1-U8sQWFxT7qhcW0qD2GKxTage8R0=
+  dependencies:
+    svg-pan-zoom "^3.5.3"
 
 vue-template-compiler@^2.6.11:
   version "2.6.11"

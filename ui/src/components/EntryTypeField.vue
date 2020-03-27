@@ -1,6 +1,6 @@
 <template>
-  <v-card width="100%" class="fill-height" flat>
-    <v-row align="center" justify="start" class="pa-1">
+  <v-card width="100%" flat class="pl-5">
+    <v-row align="center" justify="start" no-gutters>
       <v-col cols="4">
         <v-text-field v-model="fieldName" :disabled="!isEditing" label="Field Name" hint="eg. full_name" persistent-hint ></v-text-field>
       </v-col>
@@ -33,7 +33,7 @@
              <v-card-actions>
                <v-spacer></v-spacer>
                <v-btn color="green darken-1" text @click="dialog = false">Cancel</v-btn>
-               <v-btn color="red darken-1" text @click="deleteField()">Proceed</v-btn>
+               <v-btn color="red darken-1" text @click="deleteField(field)">Proceed</v-btn>
              </v-card-actions>
            </v-card>
          </v-dialog>
@@ -48,7 +48,12 @@ export default {
   data () {
     return {
       dialog: false,
-      fieldTypes: ['singleLineText'],
+      fieldTypes: [
+        { ui: 'singleLineText', type: 'String' },
+        { ui: 'multiLineText', type: 'String' },
+        { ui: 'avatar', type: 'String' },
+        { ui: 'image', type: 'String' }
+      ],
       fieldName: this.field.fieldName,
       fieldType: this.field.fieldType,
       isEditing: false,
@@ -56,41 +61,32 @@ export default {
     }
   },
   methods: {
-    change (field) {
-      console.log('change')
-      console.log(field)
-      const that = this
-      this.$nextTick(() => {
-        console.log(that.fieldTypes)
-      })
-    },
     deleteField () {
       console.log('delete')
       this.dialog = false
-      this.$emit('delete-entry-type-field', this.fieldName)
+      this.$emit('delete-entry-type-field', this.field)
     }
   },
-  props: ['newField', 'field'],
+  props: ['field'],
   watch: {
-    selected (field) {
-      if (field.fieldName === undefined) {
-        this.isEditing = true
-      }
-    },
     isEditing (save) {
       if (!save) {
-        // console.log('Saving ')
-        // console.log(this.selected)
-        // console.log(' data ')
-        // console.log(this.selectedData)
-        // this.$emit('save-profile-spec-field', this.selected, this.selectedData)
+        console.log('Saving ')
+        console.log(this.field, this.fieldName + this.fieldType)
+        this.$emit('save-entry-type-field', this.field, this.fieldName, this.fieldType)
       }
+    },
+    fieldName (newVal) {
+      this.fieldName = newVal
+    },
+    fieldType (newVal) {
+      this.fieldType = newVal
     }
   },
   mounted () {
-    if (this.fieldName) {
-      this.isEditing = false
-      // this.selected = { fieldType: this.fieldType }
+    console.log(this.isEditing)
+    if (this.field.fieldName === '') {
+      this.isEditing = true
     }
   }
 }

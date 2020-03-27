@@ -13,7 +13,7 @@
     <v-content>
     <v-row>
       <v-col v-for="(entryType) in entryTypes" :key="entryType.name" cols="12">
-        <entry-Type-builder folder='/Users/philipbeadle/eat-sleep-code-repeat/dashboard' zome="Websites" :entryType="entryType" @delete-entry-type="deleteEntryType"/>
+        <entry-Type-builder :folder="hApps[0].folder" :zome="hApps[0].zomes[0].name" :entryType="hApps[0].zomes[0].entryTypes[0]" @delete-entry-type="deleteEntryType"/>
       </v-col>
     </v-row>
     </v-content>
@@ -24,51 +24,11 @@
 </template>
 
 <script>
-// import { dnas } from '../test-data/dnas.js'
-
+import { mapState } from 'vuex'
 export default {
   name: 'EntryTypes',
   components: {
     EntryTypeBuilder: () => import('../components/EntryTypeBuilder')
-  },
-  data () {
-    return {
-      newEntryType: {
-        name: 'new-entry-type',
-        fields: []
-      },
-      entryTypes: [
-        {
-          name: 'Site',
-          fields: [
-            {
-              fieldName: 'domain',
-              fieldType: 'String',
-              test: {
-                create: 'philt3r.rocks',
-                update: 'updated'
-              }
-            },
-            {
-              fieldName: 'player',
-              fieldType: 'String',
-              test: {
-                create: 'Philip Beadle',
-                update: 'Updated'
-              }
-            },
-            {
-              fieldName: 'mobile',
-              fieldType: 'String',
-              test: {
-                create: '0000000000',
-                update: '1111111111'
-              }
-            }
-          ]
-        }
-      ]
-    }
   },
   methods: {
     addEntryType: function () {
@@ -82,6 +42,9 @@ export default {
         return entryType.name !== entryTypeName
       })
     }
+  },
+  computed: {
+    ...mapState('app', ['hApps'])
   }
 }
 </script>

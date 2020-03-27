@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'HolochainApp',
+  name: 'Zome',
   props: {
     hApp: {
       type: Object,

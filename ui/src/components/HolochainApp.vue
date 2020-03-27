@@ -1,13 +1,6 @@
 <template>
-  <v-card
-    class="mx-auto"
-    max-width="400"
-  >
-    <v-img
-      class="white--text align-end"
-      height="200px"
-      :src="require(`@/assets/happs/${hApp.name}/preview.png`)"
-    >
+  <v-card>
+    <v-img class="white--text align-end" height="200px" :src="require(`@/assets/happs/${hApp.name}/preview.png`)">
       <v-card-title>{{ hApp.name }}</v-card-title>
     </v-img>
     <v-card-subtitle class="pb-0">
@@ -16,15 +9,20 @@
     <v-card-subtitle class="pb-0">
       {{ hApp.mobile }}
     </v-card-subtitle>
+     <v-card-text>
+      <div class="text--primary">
+        {{ hApp.description }}
+      </div>
+    </v-card-text>
     <v-card-actions>
-      <v-btn color="orange" text :href="'http://' + hApp.url" target="_blank">
-        hApp Store
+      <v-btn color="orange" text to="/model">
+        Develop
       </v-btn>
       <v-btn color="orange" text :href="'http://' + hApp.name" target="_blank">
-        View
-      </v-btn>
-      <v-btn color="orange" text to="/entry-types">
         Build
+      </v-btn>
+      <v-btn color="orange" text>
+        Publish
       </v-btn>
     </v-card-actions>
   </v-card>
