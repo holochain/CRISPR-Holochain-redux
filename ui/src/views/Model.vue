@@ -1,5 +1,5 @@
 <template>
-  <zome-editor :hApp="hApps[0]" />
+  <zome-editor :hApp="hApps[0]" :zome="hApps[0].zomes[0]" />
 </template>
 <script>
 import { mapState } from 'vuex'

@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 const folder = '/Users/philipbeadle/holochain/holochain-developer'
-const appFile = fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
-const handlers = fs.readFileSync(`${folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/handlers.rs.txt`, 'utf8')
+// const appFile = fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
+
 export default {
   namespaced: true,
   state: {
@@ -18,8 +18,7 @@ export default {
         mobile: '+61 999 999 999',
         description: 'A basic Holochain hApp that demonstrates how to build a CRUD hApp with Holochain Developer.',
         templates: {
-          app: appFile,
-          handlers: handlers
+          app: fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
         },
         zomes: [
           {

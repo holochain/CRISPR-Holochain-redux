@@ -62,6 +62,12 @@
             </v-btn>
           </v-list-item-action>
           <v-list-item-action>
+            <v-btn text @click="addEntryTypeProfileField(entryType)">
+              <v-icon>mdi-plus</v-icon>
+              Add Profile Field
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
             <v-dialog v-model="generateEntryTypeDialog" persistent max-width="390">
                 <template v-slot:activator="{ on }">
                   <v-btn text v-on="on">
@@ -163,30 +169,30 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/rust/rust.js'
 // theme css
 import 'codemirror/theme/base16-dark.css'
-// import * as fs from 'fs'
-// import * as path from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 import { mapState } from 'vuex'
 
-// function ensureDirectoryExistence (filePath) {
-//   var dirname = path.dirname(filePath)
-//   console.log(dirname)
-//   if (!fs.existsSync(dirname)) {
-//     console.log('exists')
-//     fs.mkdirSync(dirname, { recursive: true })
-//   }
-// }
+function ensureDirectoryExistence (filePath) {
+  var dirname = path.dirname(filePath)
+  console.log(dirname)
+  if (!fs.existsSync(dirname)) {
+    console.log('exists')
+    fs.mkdirSync(dirname, { recursive: true })
+  }
+}
 
 // function replaceAndWriteAppFiles (templateFile, fileName, zomePlaceHolder, zomeName) {
 //   fs.writeFileSync(fileName, replacePlaceHolders(templateFile, zomePlaceHolder, zomeName))
 // }
 
-// function replacePlaceHolders (content, placeHolder, replacement) {
-//   const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
-//   const replacementAllC = replacement.toUpperCase()
-//   const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
-//   const placeHolderAllC = placeHolder.toUpperCase()
-//   return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
-// }
+function replacePlaceHolders (content, placeHolder, replacement) {
+  const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
+  const replacementAllC = replacement.toUpperCase()
+  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
+  const placeHolderAllC = placeHolder.toUpperCase()
+  return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
+}
 
 // function replaceAndWrite (templateFile, placeHolder, replacement, fileName) {
 //   fs.writeFileSync(fileName, replacePlaceHolders(templateFile, placeHolder, replacement))
@@ -240,7 +246,7 @@ import { mapState } from 'vuex'
 // }
 
 export default {
-  name: 'EntryTypeBuilder',
+  name: 'ZomeBuilder',
   components: {
     EntryTypeField: () => import('../components/EntryTypeField'),
     ValidationRules: () => import('../components/ValidationRules'),
@@ -248,7 +254,6 @@ export default {
   },
   props: ['hApp', 'zome', 'entryType'],
   data () {
-    console.log(this.hApp.templates.handlers)
     return {
       tab: null,
       codeTab: null,
@@ -264,8 +269,6 @@ export default {
       typeName: this.entryType.name.toLowerCase(),
       libCode: '',
       modCode: '',
-      handlersCode: this.hApp.templates.handlers,
-      validationCode: '',
       testCode: '',
       cmOptions: {
         tabSize: 4,
@@ -292,17 +295,15 @@ export default {
     generateEntryType (entryType) {
       console.log('generateEntryType')
       console.log(this.zomePlaceHolder)
-      // ensureDirectoryExistence(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
-      // ensureDirectoryExistence(this.hAppFolder + 'test/' + this.zomeName + '/index.js')
-      // replaceAndWriteAppFiles(this.appFile, this.hAppFolder + '/app.json', this.zomePlaceHolder, this.zomeName)
+      ensureDirectoryExistence(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
+      ensureDirectoryExistence(this.hAppFolder + 'test/' + this.zomeName + '/index.js')
+      fs.writeFileSync(path.join(this.hAppFolder + '/app.json'), this.appJson)
       // replaceAndWriteAppFiles(this.hcignore, this.hAppFolder + '/.hcignore', this.zomePlaceHolder, this.zomeName)
       // replaceAndWriteAppFiles(this.zomeJson, this.hAppFolder + 'zomes/' + this.zomeName + '/zome.json', this.zomePlaceHolder, this.zomeName)
       // replaceAndWriteAppFiles(this.hcbuild, this.hAppFolder + 'zomes/' + this.zomeName + '/code/.hcbuild', this.zomePlaceHolder, this.zomeName)
       // replaceAndWriteAppFiles(this.cargoToml, this.hAppFolder + 'zomes/' + this.zomeName + '/code/Cargo.toml', this.zomePlaceHolder, this.zomeName)
       // replaceAndWriteLib(this.libRs, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/lib.rs', this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
-      // replaceAndWrite(handlers, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs')
       // replaceAndWriteMod(mod, this.entryType, this.hAppFolder, this.zomeName, this.typePlaceHolder, this.typeName)
-      // replaceAndWrite(validation, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
       // testFiles(testIndex, this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
       this.generateEntryTypeDialog = false
       this.$emit('entry-type-updated', entryType)
@@ -370,6 +371,18 @@ export default {
     },
     testsCodemirror () {
       return this.$refs.cmTestEditor.codemirror
+    },
+    appJson () {
+      const appFile = fs.readFileSync(`${this.developer.folder}/templates/dna_template/app.json.txt`, 'utf8')
+      return replacePlaceHolders(appFile, this.zomePlaceHolder, this.zomeName)
+    },
+    handlersCode () {
+      const handlerTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/handlers.rs.txt`, 'utf8')
+      return replacePlaceHolders(handlerTemplate, this.typePlaceHolder, this.typeName)
+    },
+    validationCode () {
+      const validationTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/validation.rs.txt`, 'utf8')
+      return replacePlaceHolders(validationTemplate, this.typePlaceHolder, this.typeName)
     }
   }
 }

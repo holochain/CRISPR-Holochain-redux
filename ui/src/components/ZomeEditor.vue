@@ -14,18 +14,18 @@
         </v-btn>
         <v-btn text @click="showModel">
           <v-icon>mdi-plus</v-icon>
-          Model
+          Profile
         </v-btn>
       </v-toolbar>
     </v-app-bar>
     <v-content v-resize="onResize">
-        <diagram :model="model" @addField="editEntryType" :width="this.windowSize.x - 20" :height="this.windowSize.y"></diagram>
+        <diagram :model="model" @editEntryType="editEntryType" :width="this.windowSize.x - 20" :height="this.windowSize.y"></diagram>
     </v-content>
     <v-dialog v-model="dialog" fullscreen>
       <v-card flat>
         <v-row no-gutters>
           <v-col cols="12">
-            <entry-type-builder :hApp="this.holochainApp" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+            <zome-builder :hApp="this.holochainApp" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
           </v-col>
         </v-row>
         <v-card-actions>
@@ -82,9 +82,9 @@ export default {
   name: 'ZomeEditor',
   components: {
     Diagram,
-    EntryTypeBuilder: () => import('../components/EntryTypeBuilder')
+    ZomeBuilder: () => import('../components/ZomeBuilder')
   },
-  props: ['hApp'],
+  props: ['hApp', 'zome'],
   data () {
     return {
       holochainApp: this.hApp,

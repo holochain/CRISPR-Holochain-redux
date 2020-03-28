@@ -6,7 +6,7 @@
       <rect fill="#000000" :fill-opacity="titleFillOpacity" x="7" y="17" rx="3" ry="3" :width="width-4" height="16" class="node-dark-background">
       </rect>
       <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#000000">{{type}}-{{title}}</text>
-      <g v-if="type=='Entry'" @click="addField">
+      <g v-if="type=='Entry'" @click="editEntryType">
         <rect :x="width - 29" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
         <image :x="width - 29" y="18" width="14" height="14" xlink:href="./edit.svg" />
       </g>
@@ -70,8 +70,8 @@ export default {
     deleteNode: function () {
       this.$emit('delete')
     },
-    addField: function () {
-      this.$emit('addField', this.title)
+    editEntryType: function () {
+      this.$emit('editEntryType', this.title)
     },
     mouseDown: function (event) {
       this.$emit(
