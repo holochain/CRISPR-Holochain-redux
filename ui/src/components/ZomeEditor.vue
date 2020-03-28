@@ -16,6 +16,10 @@
           <v-icon>mdi-plus</v-icon>
           Profile
         </v-btn>
+        <v-btn text to="/">
+          <v-icon>mdi-view-dashboard</v-icon>
+          Dashboard
+        </v-btn>
       </v-toolbar>
     </v-app-bar>
     <v-content v-resize="onResize">

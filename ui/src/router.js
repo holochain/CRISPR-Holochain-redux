@@ -18,9 +18,9 @@ const router = new Router({
       component: () => import('@/views/Model')
     },
     {
-      path: '/zomes',
-      name: 'Zomes',
-      component: () => import('@/views/Zomes')
+      path: '/modules',
+      name: 'Modules',
+      component: () => import('@/views/Modules')
     }
   ]
 })
