@@ -24,7 +24,7 @@
     <v-dialog v-model="dialog" fullscreen>
       <v-card flat>
         <v-content>
-            <entry-type-builder :folder="this.holochainApp.folder" :zome="this.holochainApp.zomes[0].name" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+            <entry-type-builder :folder="this.holochainApp.folder" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
         </v-content>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -46,21 +46,36 @@
 import { Diagram } from '../components/Diagram'
 
 function createModel (holochainApp) {
-  const entryType = holochainApp.zomes[0].entryTypes[0]
+  // const entryType = holochainApp.zomes[0].entryTypes[0]
   const diagramModel = new Diagram.Model()
-  const node1 = diagramModel.addNode('Notes', 30, 200, 144, 200, 'Anchor')
-  const node1OutPort = node1.addOutPort('Link Type - note_link')
-  node1.addOutPort('Anchor Type - notes')
-  node1.addOutPort('Anchor Text - notes')
-  const node2 = diagramModel.addNode(entryType.name, 300, 300, 144, 200, 'Entry')
-  const node2InPort1 = node2.addInPort('id - Address')
-  entryType.fields.forEach(field => {
-    if (field.fieldName !== 'id') {
-      node2.addInPort(`${field.fieldName} - ${field.fieldType}`)
-    }
+  let entryTypeIndex = 1
+  let anchorIndex = 1
+
+  holochainApp.zomes[0].entryTypes.forEach(entryType => {
+    const entryNode = diagramModel.addNode(entryType.name, 100 + entryTypeIndex * 220, 200, 200, 300, 'Entry')
+    entryNode.color = '#00cc66'
+    entryType.fields.forEach(field => {
+      const fieldPort = entryNode.addInPort(`${field.fieldName} - ${field.fieldType}`)
+      if (field.links) {
+        field.links.forEach(link => {
+          const anchorNode = diagramModel.addNode(link.anchor.type.charAt(0).toUpperCase() + link.anchor.type.substring(1), 30, anchorIndex * 220, 144, 200, 'Anchor')
+          const anchorPort = anchorNode.addOutPort(`Link Type - ${link.type}`)
+          anchorNode.addOutPort(`Anchor Type - ${link.anchor.type}`)
+          anchorNode.addOutPort(`Anchor Type - ${link.anchor.text}`)
+          diagramModel.addLink(fieldPort, anchorPort)
+          anchorIndex += 1
+        })
+      }
+    })
+    entryTypeIndex += 1
   })
-  node2.color = '#00cc66'
-  diagramModel.addLink(node2InPort1, node1OutPort)
+  // const node1 = diagramModel.addNode('Notes', 30, 200, 144, 200, 'Anchor')
+  // const node1OutPort = node1.addOutPort('Link Type - note_link')
+  // node1.addOutPort('Anchor Type - notes')
+  // node1.addOutPort('Anchor Text - notes')
+  // const node2 = diagramModel.addNode(entryType.name, 300, 300, 144, 200, 'Entry')
+  // const node2InPort1 = node2.addInPort('id - Address')
+  // diagramModel.addLink(node2InPort1, node1OutPort)
   return diagramModel
 }
 
@@ -86,7 +101,7 @@ export default {
     showModel: function () {
       console.log(this.model.serialize())
     },
-    editEntryType: function () {
+    editEntryType (title) {
       this.dialog = true
     },
     onResize () {

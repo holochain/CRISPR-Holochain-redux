@@ -7,8 +7,11 @@
       <v-tab key="validation">
         Validation Rules
       </v-tab>
-      <v-tab key="ui">
-        UI
+      <v-tab key="skin">
+        Skin
+      </v-tab>
+      <v-tab key="code">
+        Code
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
@@ -96,9 +99,30 @@
           </v-row>
         </v-card>
     </v-tab-item>
-    <v-tab-item key="validation">
+    <v-tab-item key="code">
       <v-card v-resize="onResize" class="red">
-        <codemirror v-model="code" :options="cmOptions" ref="cm"></codemirror>
+        <v-tabs v-model="codeTab" background-color="secondary" dark>
+          <v-tab key="lib">
+            lib.rs
+          </v-tab>
+          <v-tab key="mod">
+            mod.rs
+          </v-tab>
+          <v-tab key="handlers">
+            handlers.rs
+          </v-tab>
+          <v-tab key="validation">
+            validations.rs
+          </v-tab>
+          <v-tab key="tests">
+            {{entryType.name}} tests
+          </v-tab>
+        </v-tabs>
+        <v-tabs-items v-model="codeTab">
+          <v-tab-item key="lib">
+            <codemirror v-model="libCode" :options="cmOptions" ref="cm"></codemirror>
+          </v-tab-item>
+        </v-tabs-items>
       </v-card>
     </v-tab-item>
   </v-tabs-items>
@@ -139,9 +163,11 @@ function ensureDirectoryExistence (filePath) {
   }
 }
 
+function replaceAndWriteAppFiles (templateFile, fileName, zomePlaceHolder, zomeName) {
+  fs.writeFileSync(fileName, replacePlaceHolders(templateFile, zomePlaceHolder, zomeName))
+}
+
 function replacePlaceHolders (content, placeHolder, replacement) {
-  placeHolder = placeHolder.toLowerCase()
-  replacement = replacement.toLowerCase()
   const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
   const replacementAllC = replacement.toUpperCase()
   const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
@@ -153,40 +179,44 @@ function replaceAndWrite (templateFile, placeHolder, replacement, fileName) {
   fs.writeFileSync(fileName, replacePlaceHolders(templateFile, placeHolder, replacement))
 }
 
-function replaceAndWriteLib (placeHolder, typeName, zomeName, fileName) {
-  const entryTypeFunctions = replacePlaceHolders(funcs, placeHolder, typeName)
-  const entryTypeDeclarations = replacePlaceHolders(decs, placeHolder, typeName)
-  const libContent = lib.replace(new RegExp('mod holochain_developer', 'g'), 'mod ' + zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations)
-  fs.writeFileSync(fileName, replacePlaceHolders(libContent, placeHolder, typeName))
+function replaceLib (zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
+  const entryTypeFunctions = replacePlaceHolders(funcs, typePlaceHolder, typeName)
+  const entryTypeDeclarations = replacePlaceHolders(decs, typePlaceHolder, typeName)
+  const libContent = lib.replace(new RegExp(`mod ${zomePlaceHolder}`, 'g'), 'mod ' + zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations)
+  return libContent
 }
 
-function modFile (entryType, zomeName, folder) {
-  const entryTypeName = entryType.name.toLowerCase()
+function replaceAndWriteLib (fileName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
+  fs.writeFileSync(fileName, replaceLib(zomePlaceHolder, zomeName, typePlaceHolder, typeName))
+}
+
+function replaceMod (entryType, typePlaceHolder, typeName) {
   const rustFields = []
   const constRustNewFields = []
   entryType.fields.forEach(field => {
     if (field.fieldName !== 'id' && field.fieldName !== 'created_at') {
       rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
-      constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${entryTypeName}_entry.${field.fieldName}`)
+      constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${typeName}_entry.${field.fieldName}`)
     }
   })
-  const placeHolder = 'happ'
-  const modContent = replacePlaceHolders(mod, placeHolder, entryTypeName)
+  const modContent = replacePlaceHolders(mod, typePlaceHolder, typeName)
   const modSplit = modContent.split('fields')
   const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3]]
-  fs.writeFileSync(path.join(folder, 'zomes/' + zomeName + '/code/src/' + entryTypeName + '/mod.rs'), modDone.join().replace(new RegExp('_comma,', 'g'), ''))
+  return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
-function testFiles (typeName, zomeName, folder) {
-  const typePlaceHolder = 'happ'
-  const zomePlaceHolder = 'holochain_developer'
+function replaceAndWriteMod (entryType, hAppFolder, zomeName, typePlaceHolder, typeName) {
+  fs.writeFileSync(path.join(hAppFolder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), replaceMod(entryType, typePlaceHolder, typeName))
+}
+
+function testFiles (hAppFolder, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
   const indexContent = index.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
   const zomeIndexContent = zomeIndex.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
   const configGenerateContent = configGenerate.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-  fs.writeFileSync(path.join(folder, 'test/index.js'), indexContent)
-  fs.writeFileSync(path.join(folder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
-  fs.writeFileSync(path.join(folder, 'test/config-generate.js'), configGenerateContent)
-  fs.writeFileSync(path.join(folder, 'test/package.json'), testPackage)
+  fs.writeFileSync(path.join(hAppFolder, 'test/index.js'), indexContent)
+  fs.writeFileSync(path.join(hAppFolder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
+  fs.writeFileSync(path.join(hAppFolder, 'test/config-generate.js'), configGenerateContent)
+  fs.writeFileSync(path.join(hAppFolder, 'test/package.json'), testPackage)
 }
 
 export default {
@@ -199,10 +229,19 @@ export default {
   data () {
     return {
       tab: null,
+      codeTab: null,
       isEditing: '',
       dialog: false,
       generateEntryTypeDialog: false,
-      code: replacePlaceHolders(validation, 'happ', this.entryType.name),
+      typePlaceHolder: 'happ',
+      zomePlaceHolder: 'holochain_developer',
+      zomeName: this.zome.name.toLowerCase(),
+      typeName: this.entryType.name.toLowerCase(),
+      hAppFolder: this.folder + '/dna/',
+      libCode: '',
+      modCode: '',
+      handlersCode: '',
+      validationCode: '',
       cmOptions: {
         tabSize: 4,
         mode: 'rust',
@@ -227,22 +266,19 @@ export default {
     },
     generateEntryType (entryType) {
       console.log('generateEntryType')
-      const zomeName = this.zome.toLowerCase()
-      const typeName = this.entryType.name.toLowerCase()
-      const folder = this.folder + '/dna/'
-      console.log(folder)
-      ensureDirectoryExistence(folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/validation.rs')
-      ensureDirectoryExistence(folder + 'test/' + zomeName + '/index.js')
-      replaceAndWrite(appFile, 'holochain_developer', zomeName, folder + '/app.json')
-      replaceAndWrite(hcignore, 'holochain_developer', zomeName, folder + '/.hcignore')
-      replaceAndWrite(zome, 'holochain_developer', zomeName, folder + 'zomes/' + zomeName + '/zome.json')
-      replaceAndWrite(hcbuild, 'holochain_developer', zomeName, folder + 'zomes/' + zomeName + '/code/.hcbuild')
-      replaceAndWrite(cargo, 'holochain_developer', zomeName, folder + 'zomes/' + zomeName + '/code/Cargo.toml')
-      replaceAndWriteLib('happ', typeName, zomeName, folder + 'zomes/' + zomeName + '/code/src/lib.rs')
-      replaceAndWrite(handlers, 'happ', typeName, folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/handlers.rs')
-      modFile(entryType, zomeName, folder)
-      replaceAndWrite(validation, 'happ', typeName, folder + 'zomes/' + zomeName + '/code/src/' + typeName + '/validation.rs')
-      testFiles(typeName, zomeName, folder)
+      console.log(this.zomePlaceHolder)
+      ensureDirectoryExistence(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
+      ensureDirectoryExistence(this.hAppFolder + 'test/' + this.zomeName + '/index.js')
+      replaceAndWriteAppFiles(appFile, this.hAppFolder + '/app.json', this.zomePlaceHolder, this.zomeName)
+      replaceAndWriteAppFiles(hcignore, this.hAppFolder + '/.hcignore', this.zomePlaceHolder, this.zomeName)
+      replaceAndWriteAppFiles(zome, this.hAppFolder + 'zomes/' + this.zomeName + '/zome.json', this.zomePlaceHolder, this.zomeName)
+      replaceAndWriteAppFiles(hcbuild, this.hAppFolder + 'zomes/' + this.zomeName + '/code/.hcbuild', this.zomePlaceHolder, this.zomeName)
+      replaceAndWriteAppFiles(cargo, this.hAppFolder + 'zomes/' + this.zomeName + '/code/Cargo.toml', this.zomePlaceHolder, this.zomeName)
+      replaceAndWriteLib(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/lib.rs', this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
+      replaceAndWrite(handlers, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs')
+      replaceAndWriteMod(this.entryType, this.hAppFolder, this.zomeName, this.typePlaceHolder, this.typeName)
+      replaceAndWrite(validation, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
+      testFiles(this.hAppFolder, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typName)
       this.generateEntryTypeDialog = false
       this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
@@ -285,6 +321,12 @@ export default {
     codemirror () {
       return this.$refs.cm.codemirror
     }
+  },
+  mounted () {
+    this.libCode = replaceLib(this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
+    this.modCode = replaceMod(this.entryType, this.typePlaceHolder, this.typeName)
+    this.handlersCode = replacePlaceHolders(handlers, this.typePlaceHolder, this.typeName)
+    this.validationCode = replacePlaceHolders(validation, this.typePlaceHolder, this.typeName)
   }
 }
 </script>

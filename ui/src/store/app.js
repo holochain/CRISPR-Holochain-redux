@@ -23,7 +23,16 @@ export default {
                   {
                     id: 'Qm11',
                     fieldName: 'id',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    links: [
+                      {
+                        type: 'note_link',
+                        anchor: {
+                          type: 'notes',
+                          text: 'notes'
+                        }
+                      }
+                    ]
                   },
                   {
                     id: 'Qm12',
@@ -40,6 +49,46 @@ export default {
                   {
                     id: 'Qm2',
                     fieldName: 'content',
+                    fieldType: 'String',
+                    createTest: 'Philip Beadle',
+                    updateTest: 'Updated'
+                  }
+                ]
+              },
+              {
+                name: 'Tasks',
+                update: true,
+                delete: true,
+                fields: [
+                  {
+                    id: 'Qm11',
+                    fieldName: 'id',
+                    fieldType: 'String',
+                    links: [
+                      {
+                        type: 'task_link',
+                        anchor: {
+                          type: 'tasks',
+                          text: ''
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qm12',
+                    fieldName: 'created_at',
+                    fieldType: 'Iso8601'
+                  },
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'title',
+                    fieldType: 'String',
+                    createTest: 'philt3r.rocks',
+                    updateTest: 'updated'
+                  },
+                  {
+                    id: 'Qm2',
+                    fieldName: 'description',
                     fieldType: 'String',
                     createTest: 'Philip Beadle',
                     updateTest: 'Updated'
