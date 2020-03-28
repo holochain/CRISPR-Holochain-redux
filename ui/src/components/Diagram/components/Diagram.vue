@@ -191,8 +191,8 @@ export default {
     clearSelection () {
       this.selectedItem = {}
     },
-    addField () {
-      this.$emit('addField')
+    addField (title) {
+      this.$emit('addField', title)
     },
     updateLinksPositions () {
       var links = []

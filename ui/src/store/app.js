@@ -23,7 +23,16 @@ export default {
                   {
                     id: 'Qm11',
                     fieldName: 'id',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    links: [
+                      {
+                        type: 'note_link',
+                        anchor: {
+                          type: 'notes',
+                          text: 'notes'
+                        }
+                      }
+                    ]
                   },
                   {
                     id: 'Qm12',
@@ -40,6 +49,46 @@ export default {
                   {
                     id: 'Qm2',
                     fieldName: 'content',
+                    fieldType: 'String',
+                    createTest: 'Philip Beadle',
+                    updateTest: 'Updated'
+                  }
+                ]
+              },
+              {
+                name: 'Tasks',
+                update: true,
+                delete: true,
+                fields: [
+                  {
+                    id: 'Qm11',
+                    fieldName: 'id',
+                    fieldType: 'String',
+                    links: [
+                      {
+                        type: 'task_link',
+                        anchor: {
+                          type: 'tasks',
+                          text: ''
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qm12',
+                    fieldName: 'created_at',
+                    fieldType: 'Iso8601'
+                  },
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'title',
+                    fieldType: 'String',
+                    createTest: 'philt3r.rocks',
+                    updateTest: 'updated'
+                  },
+                  {
+                    id: 'Qm2',
+                    fieldName: 'description',
                     fieldType: 'String',
                     createTest: 'Philip Beadle',
                     updateTest: 'Updated'
@@ -102,6 +151,53 @@ export default {
         description: 'Manage personal information. Information requested by hApps is mapped to the hApp from the players personal my-info hApp.',
         zomnes: []
       }
-    ]
+    ],
+    validationRules: {
+      validate_entry_create: [
+      ],
+      validate_entry_modify: [
+        {
+          group: 'Rule Set 1',
+          rules: [
+            {
+              rule: 'Any Agent can update entry',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Only allow Agent who authored entry to update',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Entry can not be updated',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            }
+          ]
+        },
+        {
+          group: 'Rule Set 2',
+          rules: [
+            {
+              rule: 'Another rule',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Another rule about updating',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            }
+          ]
+        }
+      ],
+      validate_entry_delete: [
+      ],
+      validate_link_add: [
+      ],
+      validate_link_remove: [
+      ]
+    }
   }
 }
