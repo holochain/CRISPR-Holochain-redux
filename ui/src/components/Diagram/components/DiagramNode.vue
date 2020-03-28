@@ -71,7 +71,7 @@ export default {
       this.$emit('delete')
     },
     addField: function () {
-      this.$emit('addField')
+      this.$emit('addField', this.title)
     },
     mouseDown: function (event) {
       this.$emit(
