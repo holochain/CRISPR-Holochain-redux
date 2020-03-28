@@ -99,8 +99,12 @@
           </v-row>
         </v-card>
     </v-tab-item>
+    <v-tab-item key="validation">
+    </v-tab-item>
+    <v-tab-item key="skin">
+    </v-tab-item>
     <v-tab-item key="code">
-      <v-card v-resize="onResize" class="red">
+      <v-card>
         <v-tabs v-model="codeTab" background-color="secondary" dark>
           <v-tab key="lib">
             lib.rs
@@ -120,7 +124,24 @@
         </v-tabs>
         <v-tabs-items v-model="codeTab">
           <v-tab-item key="lib">
-            <codemirror v-model="libCode" :options="cmOptions" ref="cm"></codemirror>
+            <v-card v-resize="onResizeLib">
+              <codemirror v-model="libCode" :options="cmOptions" ref="cmLibEditor"></codemirror>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item key="mod">
+            <v-card v-resize="onResizeMod">
+              <codemirror v-model="modCode" :options="cmOptions" ref="cmModEditor"></codemirror>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item key="handlers">
+            <v-card v-resize="onResizeHandlers">
+              <codemirror v-model="handlersCode" :options="cmOptions" ref="cmHandEditor"></codemirror>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item key="validation">
+            <v-card v-resize="onResizeValidation">
+              <codemirror v-model="validationCode" :options="cmOptions" ref="cmValEditor"></codemirror>
+            </v-card>
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -313,13 +334,31 @@ export default {
       console.log('this is new code', newCode)
       this.code = newCode
     },
-    onResize () {
-      this.$refs.cm.codemirror.setSize(window.innerWidth, window.innerHeight - 300)
+    onResizeLib () {
+      this.libCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+    },
+    onResizeMod () {
+      this.modCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+    },
+    onResizeHandlers () {
+      this.handCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+    },
+    onResizeValidation () {
+      this.valCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
     }
   },
   computed: {
-    codemirror () {
-      return this.$refs.cm.codemirror
+    libCodemirror () {
+      return this.$refs.cmLibEditor.codemirror
+    },
+    modCodemirror () {
+      return this.$refs.cmModEditor.codemirror
+    },
+    handCodemirror () {
+      return this.$refs.cmHandEditor.codemirror
+    },
+    valCodemirror () {
+      return this.$refs.cmValEditor.codemirror
     }
   },
   mounted () {
