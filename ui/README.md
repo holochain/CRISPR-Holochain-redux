@@ -11,7 +11,11 @@ When code is gemerated and written a new git branch will be created and the new 
 
 
 
-
+Ideas
+Skins:
+- Desktop - Holochain (Electron)
+- Web - Holo
+- Mobile??
 
 
 

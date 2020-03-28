@@ -1,6 +1,13 @@
+import * as fs from 'fs'
+const folder = '/Users/philipbeadle/holochain/holochain-developer'
+const appFile = fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
+const handlers = fs.readFileSync(`${folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/handlers.rs.txt`, 'utf8')
 export default {
   namespaced: true,
   state: {
+    developer: {
+      folder: '/Users/philipbeadle/holochain/holochain-developer'
+    },
     hApps: [
       {
         id: 'Qmmorebighashes333',
@@ -10,6 +17,10 @@ export default {
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'A basic Holochain hApp that demonstrates how to build a CRUD hApp with Holochain Developer.',
+        templates: {
+          app: appFile,
+          handlers: handlers
+        },
         zomes: [
           {
             id: 'Qmmorehas444',
@@ -53,7 +64,27 @@ export default {
                     createTest: 'Philip Beadle',
                     updateTest: 'Updated'
                   }
-                ]
+                ],
+                validationRules: {
+                  validateEntryCreate: [
+                  ],
+                  validateEntryModify: [
+                    {
+                      rule: 'Only allow Agent who authored entry allowed to update',
+                      template: 'only-agent-update'
+                    }
+                  ],
+                  validateEntryDelete: [
+                    {
+                      rule: 'Only allow Agent who authored entry allowed to delete',
+                      template: 'only-agent-delete'
+                    }
+                  ],
+                  validateLinkAdd: [
+                  ],
+                  validateLinkRemove: [
+                  ]
+                }
               },
               {
                 name: 'Tasks',
@@ -153,25 +184,25 @@ export default {
       }
     ],
     validationRules: {
-      validate_entry_create: [
+      validateEntryCreate: [
       ],
-      validate_entry_modify: [
+      validateEntryModify: [
         {
           group: 'Rule Set 1',
           rules: [
             {
               rule: 'Any Agent can update entry',
-              codeTemplate: 'only-agent-update.txt',
-              selected: false
+              template: 'any-agent-update',
+              selected: true
             },
             {
-              rule: 'Only allow Agent who authored entry to update',
-              codeTemplate: 'only-agent-update.txt',
+              rule: 'Only allow Agent who authored entry allowed to update',
+              template: 'only-agent-update',
               selected: false
             },
             {
               rule: 'Entry can not be updated',
-              codeTemplate: 'only-agent-update.txt',
+              template: 'not-updateable',
               selected: false
             }
           ]
@@ -181,22 +212,42 @@ export default {
           rules: [
             {
               rule: 'Another rule',
-              codeTemplate: 'only-agent-update.txt',
+              template: 'another-rule',
               selected: false
             },
             {
               rule: 'Another rule about updating',
-              codeTemplate: 'only-agent-update.txt',
+              template: 'another-rule-2',
               selected: false
             }
           ]
         }
       ],
-      validate_entry_delete: [
+      validateEntryDelete: [
+        {
+          group: 'Rule Set 1',
+          rules: [
+            {
+              rule: 'Any Agent can delete entry',
+              template: 'any-agent-delete',
+              selected: true
+            },
+            {
+              rule: 'Only allow Agent who authored entry allowed to delete',
+              template: 'only-agent-delete',
+              selected: false
+            },
+            {
+              rule: 'Entry can not be deleted',
+              template: 'not-deleteable',
+              selected: false
+            }
+          ]
+        }
       ],
-      validate_link_add: [
+      validateLinkAdd: [
       ],
-      validate_link_remove: [
+      validateLinkRemove: [
       ]
     }
   }
