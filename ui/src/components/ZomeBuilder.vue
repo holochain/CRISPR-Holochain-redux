@@ -62,6 +62,12 @@
             </v-btn>
           </v-list-item-action>
           <v-list-item-action>
+            <v-btn text @click="addEntryTypeProfileField(entryType)">
+              <v-icon>mdi-plus</v-icon>
+              Add Profile Field
+            </v-btn>
+          </v-list-item-action>
+          <v-list-item-action>
             <v-dialog v-model="generateEntryTypeDialog" persistent max-width="390">
                 <template v-slot:activator="{ on }">
                   <v-btn text v-on="on">
@@ -146,7 +152,7 @@
           </v-tab-item>
           <v-tab-item key="tests">
             <v-card v-resize="onResizeTests">
-              <codemirror v-model="testCode" :options="cmOptions" ref="cmTestEditor"></codemirror>
+              <codemirror v-model="testIndexCode" :options="cmOptions" ref="cmTestEditor"></codemirror>
             </v-card>
           </v-tab-item>
         </v-tabs-items>
@@ -165,21 +171,7 @@ import 'codemirror/mode/rust/rust.js'
 import 'codemirror/theme/base16-dark.css'
 import * as fs from 'fs'
 import * as path from 'path'
-import appFile from '../assets/dna_template/app.json.txt'
-import hcignore from '../assets/dna_template/hcignore.txt'
-import cargo from '../assets/dna_template/zomes/holochain_developer/code/Cargo.toml.txt'
-import hcbuild from '../assets/dna_template/zomes/holochain_developer/code/hcbuild.txt'
-import zome from '../assets/dna_template/zomes/holochain_developer/zome.json.txt'
-import lib from '../assets/dna_template/zomes/holochain_developer/code/src/lib.rs.txt'
-import funcs from '../assets/dna_template/zomes/holochain_developer/code/src/entryTypeFunctions.txt'
-import decs from '../assets/dna_template/zomes/holochain_developer/code/src/entryTypeDeclarations.txt'
-import handlers from '../assets/dna_template/zomes/holochain_developer/code/src/happ/handlers.rs.txt'
-import mod from '../assets/dna_template/zomes/holochain_developer/code/src/happ/mod.rs.txt'
-import validation from '../assets/dna_template/zomes/holochain_developer/code/src/happ/validation.rs.txt'
-import index from '../assets/dna_template/test/index.js.txt'
-import zomeIndex from '../assets/dna_template/test/holochain_developer/index.js.txt'
-import configGenerate from '../assets/dna_template/test/config-generate.js.txt'
-import testPackage from '../assets/dna_template/test/package.json.txt'
+import { mapState } from 'vuex'
 
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
@@ -190,10 +182,6 @@ function ensureDirectoryExistence (filePath) {
   }
 }
 
-function replaceAndWriteAppFiles (templateFile, fileName, zomePlaceHolder, zomeName) {
-  fs.writeFileSync(fileName, replacePlaceHolders(templateFile, zomePlaceHolder, zomeName))
-}
-
 function replacePlaceHolders (content, placeHolder, replacement) {
   const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
   const replacementAllC = replacement.toUpperCase()
@@ -202,22 +190,7 @@ function replacePlaceHolders (content, placeHolder, replacement) {
   return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
 }
 
-function replaceAndWrite (templateFile, placeHolder, replacement, fileName) {
-  fs.writeFileSync(fileName, replacePlaceHolders(templateFile, placeHolder, replacement))
-}
-
-function replaceLib (zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
-  const entryTypeFunctions = replacePlaceHolders(funcs, typePlaceHolder, typeName)
-  const entryTypeDeclarations = replacePlaceHolders(decs, typePlaceHolder, typeName)
-  const libContent = lib.replace(new RegExp(`mod ${zomePlaceHolder}`, 'g'), 'mod ' + zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations)
-  return libContent
-}
-
-function replaceAndWriteLib (fileName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
-  fs.writeFileSync(fileName, replaceLib(zomePlaceHolder, zomeName, typePlaceHolder, typeName))
-}
-
-function replaceMod (entryType, typePlaceHolder, typeName) {
+function replaceMod (modTemplate, entryType, typePlaceHolder, typeName) {
   const rustFields = []
   const constRustNewFields = []
   entryType.fields.forEach(field => {
@@ -226,32 +199,35 @@ function replaceMod (entryType, typePlaceHolder, typeName) {
       constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${typeName}_entry.${field.fieldName}`)
     }
   })
-  const modContent = replacePlaceHolders(mod, typePlaceHolder, typeName)
+  const modContent = replacePlaceHolders(modTemplate, typePlaceHolder, typeName)
   const modSplit = modContent.split('fields')
   const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3]]
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
-function replaceAndWriteMod (entryType, hAppFolder, zomeName, typePlaceHolder, typeName) {
-  fs.writeFileSync(path.join(hAppFolder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), replaceMod(entryType, typePlaceHolder, typeName))
+// function replaceAndWriteMod (entryType, hAppFolder, zomeName, typePlaceHolder, typeName) {
+//   fs.writeFileSync(path.join(hAppFolder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), replaceMod(entryType, typePlaceHolder, typeName))
+// }
+
+function zomeTestFile (zomeIndex, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
+  // Need to loop for multiple rules later.
+  const validateEntryModifyTemplate = fs.readFileSync(`/Users/philipbeadle/holochain/holochain-developer/templates/validation_rule_templates/validate_entry_modify/${entryType.validationRules.validateEntryModify[0].template}.test.txt`)
+  const validateEntryDeleteTemplate = fs.readFileSync(`/Users/philipbeadle/holochain/holochain-developer/templates/validation_rule_templates/validate_entry_delete/${entryType.validationRules.validateEntryDelete[0].template}.test.txt`)
+  return zomeIndex.replace(new RegExp('validate_entry_modify', 'g'), validateEntryModifyTemplate).replace(new RegExp('validate_entry_delete', 'g'), validateEntryDeleteTemplate).replace(new RegExp(happPlaceHolder, 'g'), hAppName).replace(new RegExp(typePlaceHolder, 'g'), entryType.name).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
 }
 
-function zomeTestFile (happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
-  return zomeIndex.replace(new RegExp(happPlaceHolder, 'g'), hAppName).replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-}
-
-function testFiles (hAppFolder, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
-  const indexContent = index.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-  const zomeIndexContent = zomeTestFile(happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName)
-  const configGenerateContent = configGenerate.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-  fs.writeFileSync(path.join(hAppFolder, 'test/index.js'), indexContent)
-  fs.writeFileSync(path.join(hAppFolder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
-  fs.writeFileSync(path.join(hAppFolder, 'test/config-generate.js'), configGenerateContent)
-  fs.writeFileSync(path.join(hAppFolder, 'test/package.json'), testPackage)
-}
+// function testFiles (testIndex, hAppFolder, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
+//   const indexContent = testIndex.replace(new RegExp(typePlaceHolder, 'g'), entryType.name.toLowerCase()).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
+//   const zomeIndexContent = zomeTestFile(zomeIndex, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType)
+//   const configGenerateContent = configGenerate.replace(new RegExp(typePlaceHolder, 'g'), entryType.name.toLowerCase()).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
+//   fs.writeFileSync(path.join(hAppFolder, 'test/index.js'), indexContent)
+//   fs.writeFileSync(path.join(hAppFolder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
+//   fs.writeFileSync(path.join(hAppFolder, 'test/config-generate.js'), configGenerateContent)
+//   fs.writeFileSync(path.join(hAppFolder, 'test/package.json'), testPackage)
+// }
 
 export default {
-  name: 'EntryTypeBuilder',
+  name: 'ZomeBuilder',
   components: {
     EntryTypeField: () => import('../components/EntryTypeField'),
     ValidationRules: () => import('../components/ValidationRules'),
@@ -272,11 +248,6 @@ export default {
       hAppFolder: this.hApp.folder + '/dna/',
       zomeName: this.zome.name.toLowerCase(),
       typeName: this.entryType.name.toLowerCase(),
-      libCode: '',
-      modCode: '',
-      handlersCode: '',
-      validationCode: '',
-      testCode: '',
       cmOptions: {
         tabSize: 4,
         mode: 'rust',
@@ -304,16 +275,14 @@ export default {
       console.log(this.zomePlaceHolder)
       ensureDirectoryExistence(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
       ensureDirectoryExistence(this.hAppFolder + 'test/' + this.zomeName + '/index.js')
-      replaceAndWriteAppFiles(appFile, this.hAppFolder + '/app.json', this.zomePlaceHolder, this.zomeName)
-      replaceAndWriteAppFiles(hcignore, this.hAppFolder + '/.hcignore', this.zomePlaceHolder, this.zomeName)
-      replaceAndWriteAppFiles(zome, this.hAppFolder + 'zomes/' + this.zomeName + '/zome.json', this.zomePlaceHolder, this.zomeName)
-      replaceAndWriteAppFiles(hcbuild, this.hAppFolder + 'zomes/' + this.zomeName + '/code/.hcbuild', this.zomePlaceHolder, this.zomeName)
-      replaceAndWriteAppFiles(cargo, this.hAppFolder + 'zomes/' + this.zomeName + '/code/Cargo.toml', this.zomePlaceHolder, this.zomeName)
-      replaceAndWriteLib(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/lib.rs', this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
-      replaceAndWrite(handlers, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs')
-      replaceAndWriteMod(this.entryType, this.hAppFolder, this.zomeName, this.typePlaceHolder, this.typeName)
-      replaceAndWrite(validation, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
-      testFiles(this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typName)
+      fs.writeFileSync(path.join(this.hAppFolder + '/app.json'), this.appJsonCode)
+      fs.writeFileSync(path.join(this.hAppFolder + '/.hcignore'), this.hcignoreCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/zome.json'), this.zomeJsonCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/.hcbuild'), this.hcbuildCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/Cargo.toml'), this.cargoCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/lib.rs'), this.libCode)
+
+      // testFiles(testIndex, this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
       this.generateEntryTypeDialog = false
       this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
@@ -365,6 +334,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('app', ['developer']),
     libCodemirror () {
       return this.$refs.cmLibEditor.codemirror
     },
@@ -379,14 +349,51 @@ export default {
     },
     testsCodemirror () {
       return this.$refs.cmTestEditor.codemirror
+    },
+    appJsonCode () {
+      const appTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/app.json.txt`, 'utf8')
+      return replacePlaceHolders(appTemplate, this.zomePlaceHolder, this.zomeName)
+    },
+    hcignoreCode () {
+      const hcignoreTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/hcignore.txt`, 'utf8')
+      return replacePlaceHolders(hcignoreTemplate, this.zomePlaceHolder, this.zomeName)
+    },
+    zomeJsonCode () {
+      const zomeTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/zome.json.txt`, 'utf8')
+      return replacePlaceHolders(zomeTemplate, this.zomePlaceHolder, this.zomeName)
+    },
+    hcbuildCode () {
+      const hcbuildTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/hcbuild.txt`, 'utf8')
+      return replacePlaceHolders(hcbuildTemplate, this.zomePlaceHolder, this.zomeName)
+    },
+    cargoCode () {
+      const cargoTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/Cargo.toml.txt`, 'utf8')
+      return replacePlaceHolders(cargoTemplate, this.zomePlaceHolder, this.zomeName)
+    },
+    libCode () {
+      const libTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/lib.rs.txt`, 'utf8')
+      const entryTypeFuncs = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/entryTypeFunctions.txt`, 'utf8')
+      const entryTypeDecs = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/entryTypeDeclarations.txt`, 'utf8')
+      const entryTypeFunctions = replacePlaceHolders(entryTypeFuncs, this.typePlaceHolder, this.typeName)
+      const entryTypeDeclarations = replacePlaceHolders(entryTypeDecs, this.typePlaceHolder, this.typeName)
+      return libTemplate.replace(new RegExp(`mod ${this.zomePlaceHolder}`, 'g'), 'mod ' + this.zomeName).replace(new RegExp('entry_type_functions', 'g'), entryTypeFunctions).replace(new RegExp('entry_type_declarations', 'g'), entryTypeDeclarations)
+    },
+    modCode () {
+      const modTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/mod.rs.txt`, 'utf8')
+      return replaceMod(modTemplate, this.entryType, this.typePlaceHolder, this.typeName)
+    },
+    handlersCode () {
+      const handlerTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/handlers.rs.txt`, 'utf8')
+      return replacePlaceHolders(handlerTemplate, this.typePlaceHolder, this.typeName)
+    },
+    validationCode () {
+      const validationTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/validation.rs.txt`, 'utf8')
+      return replacePlaceHolders(validationTemplate, this.typePlaceHolder, this.typeName)
+    },
+    testIndexCode () {
+      const zomeIndexTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/holochain_developer/index.js.txt`, 'utf8')
+      return zomeTestFile(zomeIndexTemplate, this.happPlaceHolder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
     }
-  },
-  mounted () {
-    this.libCode = replaceLib(this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
-    this.modCode = replaceMod(this.entryType, this.typePlaceHolder, this.typeName)
-    this.handlersCode = replacePlaceHolders(handlers, this.typePlaceHolder, this.typeName)
-    this.validationCode = replacePlaceHolders(validation, this.typePlaceHolder, this.typeName)
-    this.testCode = zomeTestFile(this.happPlaceHolder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
   }
 }
 </script>

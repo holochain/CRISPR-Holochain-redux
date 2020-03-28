@@ -71,7 +71,7 @@
           v-for="(node, nodeIndex) in model._model.nodes"
           :key="`'node'${nodeIndex}`"
           @onStartDrag="startDragItem"
-          @addField="addField"
+          @editEntryType="editEntryType"
           @delete="model.deleteNode(node)"
         >
           <DiagramPort
@@ -191,8 +191,8 @@ export default {
     clearSelection () {
       this.selectedItem = {}
     },
-    addField (title) {
-      this.$emit('addField', title)
+    editEntryType (title) {
+      this.$emit('editEntryType', title)
     },
     updateLinksPositions () {
       var links = []

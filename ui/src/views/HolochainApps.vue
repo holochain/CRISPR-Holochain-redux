@@ -8,6 +8,10 @@
           <v-icon>mdi-plus</v-icon>
           Holochain Application
         </v-btn>
+        <v-btn text to="modules">
+          <v-icon>mdi-view-module</v-icon>
+          Holochain Modules
+        </v-btn>
       </v-toolbar>
     </v-app-bar>
     <v-content>
