@@ -23,15 +23,14 @@
     </v-content>
     <v-dialog v-model="dialog" fullscreen>
       <v-card flat>
-        <v-content>
-            <entry-type-builder :folder="this.holochainApp.folder" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
-        </v-content>
+        <v-row no-gutters>
+          <v-col cols="12">
+            <entry-type-builder :hApp="this.holochainApp" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+          </v-col>
+        </v-row>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false">
-            Cancel
-          </v-btn>
-          <v-btn color="green darken-1" text @click="dialog = false">
+          <v-btn color="action darken-1" text @click="dialog = false">
             Done
           </v-btn>
         </v-card-actions>

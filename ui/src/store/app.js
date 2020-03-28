@@ -151,6 +151,53 @@ export default {
         description: 'Manage personal information. Information requested by hApps is mapped to the hApp from the players personal my-info hApp.',
         zomnes: []
       }
-    ]
+    ],
+    validationRules: {
+      validate_entry_create: [
+      ],
+      validate_entry_modify: [
+        {
+          group: 'Rule Set 1',
+          rules: [
+            {
+              rule: 'Any Agent can update entry',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Only allow Agent who authored entry to update',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Entry can not be updated',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            }
+          ]
+        },
+        {
+          group: 'Rule Set 2',
+          rules: [
+            {
+              rule: 'Another rule',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            },
+            {
+              rule: 'Another rule about updating',
+              codeTemplate: 'only-agent-update.txt',
+              selected: false
+            }
+          ]
+        }
+      ],
+      validate_entry_delete: [
+      ],
+      validate_link_add: [
+      ],
+      validate_link_remove: [
+      ]
+    }
   }
 }

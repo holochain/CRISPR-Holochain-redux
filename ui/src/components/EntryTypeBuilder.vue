@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-tabs v-model="tab" background-color="secondary" dark>
+    <v-tabs v-model="tab" background-color="primary" dark>
       <v-tab key="entity">
         Entry Fields
       </v-tab>
@@ -100,12 +100,13 @@
         </v-card>
     </v-tab-item>
     <v-tab-item key="validation">
+      <validation-rules />
     </v-tab-item>
     <v-tab-item key="skin">
     </v-tab-item>
     <v-tab-item key="code">
       <v-card>
-        <v-tabs v-model="codeTab" background-color="secondary" dark>
+        <v-tabs v-model="codeTab" background-color="accent" dark>
           <v-tab key="lib">
             lib.rs
           </v-tab>
@@ -119,7 +120,7 @@
             validations.rs
           </v-tab>
           <v-tab key="tests">
-            {{entryType.name}} tests
+            {{entryType.name}}/index.js
           </v-tab>
         </v-tabs>
         <v-tabs-items v-model="codeTab">
@@ -141,6 +142,11 @@
           <v-tab-item key="validation">
             <v-card v-resize="onResizeValidation">
               <codemirror v-model="validationCode" :options="cmOptions" ref="cmValEditor"></codemirror>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item key="tests">
+            <v-card v-resize="onResizeTests">
+              <codemirror v-model="testCode" :options="cmOptions" ref="cmTestEditor"></codemirror>
             </v-card>
           </v-tab-item>
         </v-tabs-items>
@@ -230,9 +236,13 @@ function replaceAndWriteMod (entryType, hAppFolder, zomeName, typePlaceHolder, t
   fs.writeFileSync(path.join(hAppFolder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), replaceMod(entryType, typePlaceHolder, typeName))
 }
 
-function testFiles (hAppFolder, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
+function zomeTestFile (happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
+  return zomeIndex.replace(new RegExp(happPlaceHolder, 'g'), hAppName).replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
+}
+
+function testFiles (hAppFolder, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName) {
   const indexContent = index.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-  const zomeIndexContent = zomeIndex.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
+  const zomeIndexContent = zomeTestFile(happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, typeName)
   const configGenerateContent = configGenerate.replace(new RegExp(typePlaceHolder, 'g'), typeName).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
   fs.writeFileSync(path.join(hAppFolder, 'test/index.js'), indexContent)
   fs.writeFileSync(path.join(hAppFolder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
@@ -244,9 +254,10 @@ export default {
   name: 'EntryTypeBuilder',
   components: {
     EntryTypeField: () => import('../components/EntryTypeField'),
+    ValidationRules: () => import('../components/ValidationRules'),
     codemirror
   },
-  props: ['folder', 'zome', 'entryType'],
+  props: ['hApp', 'zome', 'entryType'],
   data () {
     return {
       tab: null,
@@ -254,15 +265,18 @@ export default {
       isEditing: '',
       dialog: false,
       generateEntryTypeDialog: false,
+      happPlaceHolder: 'happ_name',
       typePlaceHolder: 'happ',
       zomePlaceHolder: 'holochain_developer',
+      hAppName: this.hApp.name,
+      hAppFolder: this.hApp.folder + '/dna/',
       zomeName: this.zome.name.toLowerCase(),
       typeName: this.entryType.name.toLowerCase(),
-      hAppFolder: this.folder + '/dna/',
       libCode: '',
       modCode: '',
       handlersCode: '',
       validationCode: '',
+      testCode: '',
       cmOptions: {
         tabSize: 4,
         mode: 'rust',
@@ -299,7 +313,7 @@ export default {
       replaceAndWrite(handlers, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs')
       replaceAndWriteMod(this.entryType, this.hAppFolder, this.zomeName, this.typePlaceHolder, this.typeName)
       replaceAndWrite(validation, this.typePlaceHolder, this.typeName, this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs')
-      testFiles(this.hAppFolder, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typName)
+      testFiles(this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typName)
       this.generateEntryTypeDialog = false
       this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
@@ -335,16 +349,19 @@ export default {
       this.code = newCode
     },
     onResizeLib () {
-      this.libCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+      this.libCodemirror.setSize(window.innerWidth, window.innerHeight - 150)
     },
     onResizeMod () {
-      this.modCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+      this.modCodemirror.setSize(window.innerWidth, window.innerHeight - 150)
     },
     onResizeHandlers () {
-      this.handCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+      this.handCodemirror.setSize(window.innerWidth, window.innerHeight - 150)
     },
     onResizeValidation () {
-      this.valCodemirror.setSize(window.innerWidth, window.innerHeight - 300)
+      this.valCodemirror.setSize(window.innerWidth, window.innerHeight - 150)
+    },
+    onResizeTests () {
+      this.testsCodemirror.setSize(window.innerWidth, window.innerHeight - 150)
     }
   },
   computed: {
@@ -359,6 +376,9 @@ export default {
     },
     valCodemirror () {
       return this.$refs.cmValEditor.codemirror
+    },
+    testsCodemirror () {
+      return this.$refs.cmTestEditor.codemirror
     }
   },
   mounted () {
@@ -366,6 +386,7 @@ export default {
     this.modCode = replaceMod(this.entryType, this.typePlaceHolder, this.typeName)
     this.handlersCode = replacePlaceHolders(handlers, this.typePlaceHolder, this.typeName)
     this.validationCode = replacePlaceHolders(validation, this.typePlaceHolder, this.typeName)
+    this.testCode = zomeTestFile(this.happPlaceHolder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.typeName)
   }
 }
 </script>
