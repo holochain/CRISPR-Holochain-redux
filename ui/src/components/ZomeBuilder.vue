@@ -205,10 +205,6 @@ function replaceMod (modTemplate, entryType, typePlaceHolder, typeName) {
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
-// function replaceAndWriteMod (entryType, hAppFolder, zomeName, typePlaceHolder, typeName) {
-//   fs.writeFileSync(path.join(hAppFolder, 'zomes/' + zomeName + '/code/src/' + typeName + '/mod.rs'), replaceMod(entryType, typePlaceHolder, typeName))
-// }
-
 function zomeTestFile (zomeIndex, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
   // Need to loop for multiple rules later.
   const validateEntryModifyTemplate = fs.readFileSync(`/Users/philipbeadle/holochain/holochain-developer/templates/validation_rule_templates/validate_entry_modify/${entryType.validationRules.validateEntryModify[0].template}.test.txt`)

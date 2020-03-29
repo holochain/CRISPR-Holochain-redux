@@ -1,6 +1,4 @@
-import * as fs from 'fs'
-const folder = '/Users/philipbeadle/holochain/holochain-developer'
-// const appFile = fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
+import { fieldNames } from './fieldNames.js'
 
 export default {
   namespaced: true,
@@ -17,13 +15,16 @@ export default {
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'A basic Holochain hApp that demonstrates how to build a CRUD hApp with Holochain Developer.',
-        templates: {
-          app: fs.readFileSync(`${folder}/templates/dna_template/app.json.txt`, 'utf8')
-        },
         zomes: [
           {
             id: 'Qmmorehas444',
             name: 'Notes',
+            anchors: [
+              {
+                type: 'notes',
+                text: 'notes'
+              }
+            ],
             entryTypes: [
               {
                 name: 'Note',
@@ -33,16 +34,7 @@ export default {
                   {
                     id: 'Qm11',
                     fieldName: 'id',
-                    fieldType: 'String',
-                    links: [
-                      {
-                        type: 'note_link',
-                        anchor: {
-                          type: 'notes',
-                          text: 'notes'
-                        }
-                      }
-                    ]
+                    fieldType: 'String'
                   },
                   {
                     id: 'Qm12',
@@ -62,6 +54,14 @@ export default {
                     fieldType: 'String',
                     createTest: 'Philip Beadle',
                     updateTest: 'Updated'
+                  }
+                ],
+                links: [
+                  {
+                    direction: 'from',
+                    entityType: 'anchor',
+                    entityName: 'notesnotes',
+                    type: 'note_link'
                   }
                 ],
                 validationRules: {
@@ -84,44 +84,32 @@ export default {
                   validateLinkRemove: [
                   ]
                 }
-              },
+              }
+            ],
+            profileSpecs: [
               {
-                name: 'Tasks',
-                update: true,
-                delete: true,
+                name: 'Notes hApp',
                 fields: [
                   {
-                    id: 'Qm11',
-                    fieldName: 'id',
-                    fieldType: 'String',
-                    links: [
-                      {
-                        type: 'task_link',
-                        anchor: {
-                          type: 'tasks',
-                          text: ''
-                        }
-                      }
-                    ]
+                    anchor: 'first-name',
+                    fieldName: 'First Name',
+                    fieldType: 'singleLineText',
+                    linkContract: 'persist',
+                    description: 'Your name so we know who wrote the note.'
                   },
                   {
-                    id: 'Qm12',
-                    fieldName: 'created_at',
-                    fieldType: 'Iso8601'
+                    anchor: 'avatar',
+                    fieldName: 'Avatar',
+                    fieldType: 'thumbnail',
+                    linkContract: 'persist',
+                    description: 'Shows on the Note so we can see who wrote the note.'
                   },
                   {
-                    id: 'Qm1333',
-                    fieldName: 'title',
-                    fieldType: 'String',
-                    createTest: 'philt3r.rocks',
-                    updateTest: 'updated'
-                  },
-                  {
-                    id: 'Qm2',
-                    fieldName: 'description',
-                    fieldType: 'String',
-                    createTest: 'Philip Beadle',
-                    updateTest: 'Updated'
+                    anchor: 'biography',
+                    fieldName: 'Bio',
+                    fieldType: 'multiLineText',
+                    linkContract: 'persist',
+                    description: 'A short bio of yourself to add some cred to your notes.'
                   }
                 ]
               }
@@ -248,6 +236,7 @@ export default {
       ],
       validateLinkRemove: [
       ]
-    }
+    },
+    fieldNames: fieldNames
   }
 }

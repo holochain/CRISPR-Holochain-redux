@@ -27,8 +27,8 @@ class DiagramModel {
    * @param {String} type  Anchor, Entry, Link
    * @return {Node} The node created
    */
-  addNode (title, x, y, width, height, type) {
-    const newNode = new DiagramNode(generateId(), title, x, y, width, height, type)
+  addNode (title, x, y, width, height, type, color) {
+    const newNode = new DiagramNode(generateId(), title, x, y, width, height, type, color)
     this._model.nodes.push(newNode)
     return newNode
   }
