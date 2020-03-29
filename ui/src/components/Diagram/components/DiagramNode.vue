@@ -5,7 +5,7 @@
     <svg x="0" y="0" @mousedown="mouseDown" @mouseenter="mouseenter" @mouseleave="mouseleave">
       <rect fill="#000000" :fill-opacity="titleFillOpacity" x="7" y="17" rx="3" ry="3" :width="width-4" height="16" class="node-dark-background">
       </rect>
-      <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#000000">{{type}}-{{title}}</text>
+      <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#FFFFFF">{{type}}-{{title}}</text>
       <g v-if="type=='Entry'" @click="editEntryType">
         <rect :x="width - 29" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
         <image :x="width - 29" y="18" width="14" height="14" xlink:href="./edit.svg" />
@@ -40,11 +40,11 @@ export default {
     y: Number,
     width: {
       type: Number,
-      default: 200
+      default: 300
     },
     height: {
       type: Number,
-      default: 300
+      default: 400
     },
     type: {
       type: String,

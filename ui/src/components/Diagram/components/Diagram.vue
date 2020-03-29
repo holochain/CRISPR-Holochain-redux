@@ -227,10 +227,10 @@ export default {
         var y
         if (port.type === 'in') {
           x = node.x + 10
-          y = node.y + port.y + 64
+          y = node.y + port.y + 80
         } else {
           x = node.x + node.width + 10
-          y = node.y + port.y + 64
+          y = node.y + port.y + 70
         }
 
         return { x, y }
