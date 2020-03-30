@@ -7,11 +7,14 @@
       <v-tab key="validation">
         Validation Rules
       </v-tab>
-      <v-tab key="skin">
-        Skin
+      <v-tab key="permissions">
+        Permissions
       </v-tab>
       <v-tab key="code">
         Code
+      </v-tab>
+      <v-tab key="skin">
+        Skin
       </v-tab>
     </v-tabs>
     <v-tabs-items v-model="tab">
@@ -108,7 +111,8 @@
     <v-tab-item key="validation">
       <validation-rules />
     </v-tab-item>
-    <v-tab-item key="skin">
+    <v-tab-item key="permissions">
+      <entry-type-permissions />
     </v-tab-item>
     <v-tab-item key="code">
       <v-card>
@@ -157,6 +161,8 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
+    </v-tab-item>
+    <v-tab-item key="skin">
     </v-tab-item>
   </v-tabs-items>
 </div>
@@ -227,6 +233,7 @@ export default {
   components: {
     EntryTypeField: () => import('../components/EntryTypeField'),
     ValidationRules: () => import('../components/ValidationRules'),
+    EntryTypePermissions: () => import('../components/EntryTypePermissions'),
     codemirror
   },
   props: ['hApp', 'zome', 'entryType'],
@@ -277,6 +284,9 @@ export default {
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/.hcbuild'), this.hcbuildCode)
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/Cargo.toml'), this.cargoCode)
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/lib.rs'), this.libCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs'), this.validationCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs'), this.handlersCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/mod.rs'), this.modCode)
 
       // testFiles(testIndex, this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
       this.generateEntryTypeDialog = false
@@ -355,7 +365,7 @@ export default {
       return replacePlaceHolders(hcignoreTemplate, this.zomePlaceHolder, this.zomeName)
     },
     zomeJsonCode () {
-      const zomeTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/zome.json.txt`, 'utf8')
+      const zomeTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/zome.json.txt`, 'utf8')
       return replacePlaceHolders(zomeTemplate, this.zomePlaceHolder, this.zomeName)
     },
     hcbuildCode () {

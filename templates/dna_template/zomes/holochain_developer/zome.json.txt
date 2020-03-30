@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "holochain_developer",
   "description": "",
   "list": "",
   "view":"",
