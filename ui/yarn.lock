@@ -1001,6 +1001,11 @@
     prepend-file "^1.3.1"
     release-it "^12.2.1"
 
+"@seregpie/claw@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@seregpie/claw/-/claw-3.0.0.tgz#a0746d0ec0aae5524cb277a8523eac386cac0344"
+  integrity sha512-FljpNMtIbq0BPYU3f8x6xo28Q5RKGdMpMfGUkPEuZJnqiyJUUeaQ/InPdLLZDBXk2BDT/9h3spck4UcsgQndPA==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -10844,6 +10849,20 @@ vue@^2.6.11, vue@^2.6.4:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
+
+vueclaw@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vueclaw/-/vueclaw-1.1.0.tgz#5a80a8c778c4a0fc2f4149059dbd43be09e4b676"
+  integrity sha512-rHPgAud0JBXaNWMwf2hqrCoCR+tjnmWlVDkBayxhTCwSXOYIQnxNtwOSbrVkhtnN4LfTZoqIX8mkuk9tFyr7/Q==
+  dependencies:
+    "@seregpie/claw" "^3.0.0"
+
+vuetify-image-input@^19.1.0:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/vuetify-image-input/-/vuetify-image-input-19.1.0.tgz#1656fefaf874f7e04605cf28bc6d4a5e2ef371d8"
+  integrity sha512-96i21jPgIMVMA7lDkUIOePt0M4hReYPxVr9iT/nQJkil5YIJWxmoIhUSWjc867a81wwJbWBSLPq4dmvO8ftypg==
+  dependencies:
+    vueclaw "^1.1.0"
 
 vuetify-loader@^1.4.3:
   version "1.4.3"

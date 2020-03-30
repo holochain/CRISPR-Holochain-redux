@@ -22,7 +22,7 @@
           <v-card flat>
             <v-row no-gutters>
               <v-col cols="12">
-                <profile-spec-builder :profileSpec="newProfileSpec" />
+                <profile-spec-builder :profileSpec="this.profileSpec" />
               </v-col>
             </v-row>
             <v-card-actions>
@@ -40,7 +40,7 @@
       </v-toolbar>
     </v-app-bar>
     <v-content v-resize="onResize">
-      <diagram :model="model" @editEntryType="editEntryType" :width="this.windowSize.x - 20" :height="this.windowSize.y"></diagram>
+      <diagram :model="model" @editModelNode="editModelNode" :width="this.windowSize.x - 20" :height="this.windowSize.y"></diagram>
     </v-content>
     <v-dialog v-model="dialog" fullscreen>
       <v-card flat>
@@ -65,7 +65,7 @@
 <script>
 import { Diagram } from '../components/Diagram'
 
-function port (nodes, ports, entityType, entityName, direction) {
+function port (nodes, ports, entityType, entityName, linkType, direction) {
   let linkPort
   const linkPorts = ports.filter(port => {
     return port.direction === direction && port.entityType === entityType && port.entityName === entityName
@@ -77,9 +77,9 @@ function port (nodes, ports, entityType, entityName, direction) {
     if (linkNodes.length > 0) {
       console.log(linkNodes)
       if (direction === 'from') {
-        linkPort = linkNodes[0].node.addInPort('Address')
+        linkPort = linkNodes[0].node.addInPort(linkType)
       } else {
-        linkPort = linkNodes[0].node.addOutPort('Address')
+        linkPort = linkNodes[0].node.addOutPort(linkType)
       }
       ports.push({
         direction: direction,
@@ -97,19 +97,20 @@ function createModel (holochainApp, entryColour, anchorColour) {
   // const entryType = holochainApp.zomes[0].entryTypes[0]
   const diagramModel = new Diagram.Model()
   let entryTypeIndex = 1
+  let profileSpecIndex = 1
   let anchorIndex = 1
   const nodes = []
   const ports = []
   const links = []
   holochainApp.zomes[0].anchors.forEach(anchor => {
-    const anchorNode = diagramModel.addNode(anchor.type.charAt(0).toUpperCase() + anchor.type.substring(1), 30, anchorIndex * 220, 250, 200, 'Anchor', anchorColour)
+    const anchorNode = diagramModel.addNode(anchor.type.charAt(0).toUpperCase() + anchor.type.substring(1), 30, anchorIndex * 350, 250, 200, 'anchor', anchorColour)
     nodes.push({ entityType: 'anchor', entityName: `${anchor.type}${anchor.text}`, node: anchorNode })
     anchorNode.addField(`Anchor Type - ${anchor.type}`)
     anchorNode.addField(`Anchor Text - ${anchor.text}`)
     anchorIndex += 1
   })
   holochainApp.zomes[0].entryTypes.forEach(entryType => {
-    const entryNode = diagramModel.addNode(entryType.name, 100 + entryTypeIndex * 220, 200, 250, 300, 'Entry', entryColour)
+    const entryNode = diagramModel.addNode(entryType.name, 380, entryTypeIndex * 350, 250, 300, 'entry', entryColour)
     nodes.push({ entityType: 'entry', entityName: entryType.name, node: entryNode })
     entryType.fields.forEach(field => {
       entryNode.addField(`${field.fieldName} - ${field.fieldType}`)
@@ -121,13 +122,33 @@ function createModel (holochainApp, entryColour, anchorColour) {
       })
     }
   })
-  links.forEach(link => {
-    if (link.direction === 'from') {
-      diagramModel.addLink(port(nodes, ports, link.link.entityType, link.link.entityName, 'from'), port(nodes, ports, link.entityType, link.entityName, 'to'))
-    } else {
-      diagramModel.addLink(port(nodes, ports, link.entityType, link.entityName, 'from'), port(nodes, ports, link.link.entityType, link.link.entityName, 'to'))
+  holochainApp.zomes[0].profileSpecs.forEach(profileSpec => {
+    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, profileSpecIndex * 350, 250, 300, 'profileSpec', entryColour)
+    nodes.push({ entityType: 'profileSpec', entityName: profileSpec.name, node: profileSpecNode })
+    profileSpec.fields.forEach(field => {
+      profileSpecNode.addField(`${field.fieldName} - ${field.fieldType}`)
+    })
+    profileSpecIndex += 1
+    if (profileSpec.links) {
+      profileSpec.links.forEach(link => {
+        links.push({ link: link, entityType: 'profileSpec', entityName: profileSpec.name })
+      })
     }
   })
+
+  links.forEach(link => {
+    if (link.direction === 'from') {
+      diagramModel.addLink(port(nodes, ports, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, ports, link.entityType, link.entityName, link.link.type, 'to'))
+    } else {
+      diagramModel.addLink(port(nodes, ports, link.entityType, link.entityName, link.link.type, 'from'), port(nodes, ports, link.link.entityType, link.link.entityName, link.link.type, 'to'))
+    }
+  })
+
+  nodes.forEach(node => {
+    node.node.addInPort('link_to')
+    node.node.addOutPort('link_from')
+  })
+
   return diagramModel
 }
 
@@ -149,20 +170,22 @@ export default {
         x: 0,
         y: 0
       },
-      newProfileSpec: {
-        id: '',
-        name: this.zome.name,
-        specFields: [],
-        customFields: []
-      }
+      profileSpec: this.zome.profileSpecs[0]
     }
   },
   methods: {
     showModel: function () {
       console.log(this.model.serialize())
     },
-    editEntryType (title) {
-      this.dialog = true
+    editModelNode (type, title) {
+      switch (type) {
+        case 'entry':
+          this.dialog = true
+          break
+        case 'profileSpec':
+          this.profileDialog = true
+          break
+      }
     },
     onResize () {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }

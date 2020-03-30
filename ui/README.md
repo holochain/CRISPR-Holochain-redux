@@ -17,7 +17,18 @@ Skins:
 - Web - Holo
 - Mobile??
 
+Players & Roles with Permissions per Entry Type or Anchor Type
+- List
+- Read
+- Write
+- Delete
 
+Use Entity Builder in built hApp so new apps can be built.
+Add fields, select view, edit, list templates
+I can use this to build artist sites like http://philt3r.rocks
+Select a template, the fields for the template get added like Profile Spec builder and Entity Builder.
+Can build new templates and load them at runtime https://alligator.io/vuejs/v-runtime-template/
+works just like Personas & Profiles, create a profile spec, save profiles.
 
 
 
