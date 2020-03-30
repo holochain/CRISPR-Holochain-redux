@@ -64,7 +64,7 @@ export default {
   props: ['profileSpec'],
   data () {
     return {
-      currentProfileSpecFields: this.profileSpec.specFields,
+      currentProfileSpecFields: this.profileSpec.fields,
       profileSpecName: this.profileSpec.name,
       profileName: '',
       isEditing: '',

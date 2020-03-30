@@ -18,6 +18,9 @@
         <v-col cols="4">
         <chat />
       </v-col>
+      <v-col cols="4">
+        <profile-website-builder-preview />
+      </v-col>
     </v-row>
     </v-content>
     <v-footer app>
@@ -31,7 +34,8 @@ export default {
   name: 'Modules',
   components: {
     ToDos: () => import('../modules/ToDos'),
-    Chat: () => import('../modules/Chat')
+    Chat: () => import('../modules/Chat'),
+    ProfileWebsiteBuilderPreview: () => import('/Users/philipbeadle/holochain/holochain-developer/ui/src/modules/ProfileWebsiteBuilder/Preview')
   }
 }
 </script>

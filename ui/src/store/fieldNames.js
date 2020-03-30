@@ -18,10 +18,51 @@ export const curatedFieldNames = [
 ]
 
 export const customFieldNames = [
-  { anchor: 'cats-name', fieldName: "Cat's Name", fieldType: 'singleLineText' },
-  { anchor: 'cats-history', fieldName: "Cat's History", fieldType: 'multiLineText' },
-  { anchor: 'stage-name', fieldName: 'Stage Name', fieldType: 'singleLineText' },
-  { anchor: 'mixes', fieldName: 'Mixes', fieldType: 'playlist' }
+  {
+    anchor: 'welcome',
+    fieldName: 'Welcome',
+    fieldType: 'multiLineText'
+  },
+  {
+    anchor: 'welcome-image',
+    fieldName: 'Welcome Image',
+    fieldType: 'image'
+  },
+  {
+    anchor: 'recent-projects',
+    fieldName: 'Recent Projects',
+    fieldType: 'multiLineText'
+  },
+  {
+    anchor: 'recent-projects-image',
+    fieldName: 'Recent Projects Image',
+    fieldType: 'image'
+  },
+  {
+    anchor: 'services',
+    fieldName: 'Services',
+    fieldType: 'multiLineText'
+  },
+  {
+    anchor: 'services-image',
+    fieldName: 'Services Image',
+    fieldType: 'image'
+  },
+  {
+    anchor: 'about-me',
+    fieldName: 'About Me',
+    fieldType: 'multiLineText'
+  },
+  {
+    anchor: 'about-me-image',
+    fieldName: 'About Me Image',
+    fieldType: 'image'
+  },
+  {
+    anchor: 'skills',
+    fieldName: 'Skills',
+    fieldType: 'multiLineText'
+  }
 ]
 
 export const fieldNames = [...new Set([...curatedFieldNames, ...customFieldNames])]

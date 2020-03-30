@@ -71,7 +71,7 @@
           v-for="(node, nodeIndex) in model._model.nodes"
           :key="`'node'${nodeIndex}`"
           @onStartDrag="startDragItem"
-          @editEntryType="editEntryType"
+          @editModelNode="editModelNode"
           @delete="model.deleteNode(node)"
         >
           <DiagramPort
@@ -191,8 +191,8 @@ export default {
     clearSelection () {
       this.selectedItem = {}
     },
-    editEntryType (title) {
-      this.$emit('editEntryType', title)
+    editModelNode (type, title) {
+      this.$emit('editModelNode', type, title)
     },
     updateLinksPositions () {
       var links = []
@@ -284,7 +284,6 @@ export default {
 
     mouseUpPort (portId) {
       var links = this.model._model.links
-
       if (this.draggedItem && this.draggedItem.type === 'points') {
         console.log(this.draggedItem)
         var pointIndex = this.draggedItem.pointIndex
@@ -318,7 +317,7 @@ export default {
             positionTo: {},
             points: []
           })
-          console.log(`'linked from:'${port2.name}`)
+          console.log(`linked from ${port2.name} to ${port1.name}`)
         } else if (port2.type === 'in' && port1.type === 'out') {
           links.push({
             id: generateId(),
@@ -331,7 +330,6 @@ export default {
         } else {
           console.warn('You must link one out port and one in port')
         }
-
         this.model._model.links = links
 
         this.updateLinksPositions()
