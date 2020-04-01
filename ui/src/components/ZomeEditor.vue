@@ -108,6 +108,11 @@ function createModel (holochainApp, entryColour, anchorColour) {
     anchorNode.addField(`Anchor Type - ${anchor.type}`)
     anchorNode.addField(`Anchor Text - ${anchor.text}`)
     anchorIndex += 1
+    if (anchor.links) {
+      anchor.links.forEach(link => {
+        links.push({ link: link, entityType: 'anchor', entityName: `${anchor.type}${anchor.text}` })
+      })
+    }
   })
   holochainApp.zomes[0].entryTypes.forEach(entryType => {
     const entryNode = diagramModel.addNode(entryType.name, 380, entryTypeIndex * 350, 250, 300, 'entry', entryColour)

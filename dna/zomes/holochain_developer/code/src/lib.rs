@@ -38,7 +38,7 @@ mod holochain_developer {
         happ::definition()
     }
 
-    #[zome_fn("hc_public")]
+    #[zome_fn("editor")]
     fn create_happ(happ_input: HappEntry) -> ZomeApiResult<Happ> {
         happ::handlers::create_happ(happ_input)
     }

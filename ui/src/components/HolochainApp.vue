@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-img class="white--text align-end" height="200px" :src="require(`@/assets/happs/${hApp.name}/preview.png`)">
+    <v-img class="white--text align-end" width="400" :src="require(`@/assets/happs/${hApp.name}/preview.png`)">
       <v-card-title>{{ hApp.name }}</v-card-title>
     </v-img>
     <v-card-subtitle class="pb-0">
@@ -15,11 +15,11 @@
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="orange" text to="/model">
+      <v-btn color="orange" text :to="`/model/${hApp.id}`">
         Develop
       </v-btn>
-      <v-btn color="orange" text :href="'http://' + hApp.name" target="_blank">
-        Build
+      <v-btn color="orange" text >
+        Demo
       </v-btn>
       <v-btn color="orange" text>
         Publish

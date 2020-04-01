@@ -35,7 +35,7 @@
 export default {
   name: 'ProfileWebsiteBuilderPreview',
   components: {
-    ProfileWebsiteBuilder: () => import('/Users/philipbeadle/holochain/holochain-developer/ui/src/modules/ProfileWebsiteBuilder/ProfileWebsiteBuilder')
+    ProfileWebsiteBuilder: () => import('@/modules/ProfileWebsiteBuilder/ProfileWebsiteBuilder')
   },
   data () {
     return {

@@ -32,7 +32,7 @@
 export default {
   name: 'ProfileWebsiteBuilder',
   components: {
-    ProfileWebsiteBuilderFreelancerPreview: () => import('/Users/philipbeadle/holochain/holochain-developer/ui/src/modules/ProfileWebsiteBuilder/Templates/Freelancer/views/PreviewCard')
+    ProfileWebsiteBuilderFreelancerPreview: () => import('@/modules/ProfileWebsiteBuilder/Templates/Freelancer/views/PreviewCard')
   }
 }
 </script>

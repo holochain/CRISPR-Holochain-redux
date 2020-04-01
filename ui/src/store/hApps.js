@@ -4,13 +4,155 @@ import { fieldNames } from './fieldNames.js'
 
 export const hApps = [
   {
+    id: 'QmCulture',
+    name: 'Culture',
+    folder: '/Users/philipbeadle/holochain/hApps/Culture',
+    url: '/happ-store/Culture',
+    contact: 'Philip Beadle',
+    mobile: '+61 999 999 999',
+    description: 'IDE for building Holochain hApps from models and templates. Uses Holochain anchors as a git like source control with branching, permission control and traceability of changes.',
+    zomes: [
+      {
+        id: 'QmCultureZome',
+        name: 'Culture',
+        anchors: [
+          {
+            type: 'branch',
+            text: '',
+            links: []
+          },
+          {
+            type: 'branch',
+            text: 'agent_defined',
+            links: [
+              {
+                direction: 'from',
+                entityType: 'anchor',
+                entityName: 'branch',
+                type: 'branches_link'
+              }
+            ]
+          }
+        ],
+        entryTypes: [
+          {
+            name: 'hApp',
+            update: true,
+            delete: true,
+            revisons: true,
+            fields: [
+              {
+                id: 'Qm11',
+                fieldName: 'id',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm12',
+                fieldName: 'created_at',
+                fieldType: 'Iso8601'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'name',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'folder',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'url',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'contact',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'mobile',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'description',
+                fieldType: 'String'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'branch',
+                fieldType: 'String'
+              }
+            ],
+            links: [
+              {
+                direction: 'from',
+                entityType: 'anchor',
+                entityName: 'branchagent_defined',
+                type: 'branch_link'
+              }
+            ],
+            validationRules: {
+              validateEntryCreate: [
+              ],
+              validateEntryModify: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to update',
+                  template: 'only-agent-update'
+                }
+              ],
+              validateEntryDelete: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to delete',
+                  template: 'only-agent-delete'
+                }
+              ],
+              validateLinkAdd: [
+              ],
+              validateLinkRemove: [
+              ]
+            },
+            testData: {
+              create: {
+                anchor: {
+                  type: 'branch',
+                  text: 'master'
+                },
+                name: 'hApp name',
+                folder: '/hApp',
+                url: '/happ-store/hApp',
+                contact: 'Contact',
+                mobile: '+61 999 999 999',
+                description: 'hApp description'
+              },
+              update: {
+                name: 'Update hApp name',
+                folder: 'Update /hApp',
+                url: 'Update /happ-store/hApp',
+                contact: 'Update Contact',
+                mobile: 'Update +61 999 999 999',
+                description: 'Update hApp description'
+              },
+              list: []
+            }
+          }
+        ],
+        profileSpecs: []
+      }
+    ],
+    modules: []
+  },
+  {
     id: 'Qmmorebighashes333',
     name: 'Notes',
     folder: '/Users/philipbeadle/holochain/hApps/Notes',
     url: '/happ-store/Notes',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
-    description: 'A basic Holochain hApp that demonstrates how to build a CRUD hApp with Holochain Developer.',
+    description: 'A basic Holochain hApp that demonstrates how to build a CRUD hApp with Holochain Culture.\nAlso shows how to integrate roles and permissions into Entry Types.',
     zomes: [
       {
         id: 'Qmmorehas444',
@@ -47,9 +189,7 @@ export const hApps = [
               {
                 id: 'Qm2',
                 fieldName: 'content',
-                fieldType: 'String',
-                createTest: 'Philip Beadle',
-                updateTest: 'Updated'
+                fieldType: 'String'
               }
             ],
             links: [
@@ -78,6 +218,19 @@ export const hApps = [
               validateLinkAdd: [
               ],
               validateLinkRemove: [
+              ]
+            },
+            testData: {
+              create: { title: 'Note 1 title', content: 'Note 1 content' },
+              update: [
+                { title: 'Updated Note 1 title', content: 'Updated Note 1 content' },
+                { title: 'Updated Again Note 1 title', content: 'Updated Again Note 1 content' }
+              ],
+              list: [
+                { title: 'Note 1 title', content: 'Note 1 content' },
+                { title: 'Note 2 title', content: 'Note 2 content' },
+                { title: 'Note 3 title', content: 'Note 3 content' },
+                { title: 'Note 4 title', content: 'Note 4 content' }
               ]
             }
           }
@@ -133,38 +286,83 @@ export const hApps = [
     description: 'Build and publish static websites from templates and player profiles.',
     zomes: [
       {
-        id: 'Qmmorehasshes',
-        name: 'Websites',
+        id: 'Qmmorehas444',
+        name: 'ProfileWebsites',
+        anchors: [
+          {
+            type: 'Profile Websites',
+            text: ''
+          }
+        ],
         entryTypes: [
           {
-            name: 'Site',
+            name: 'ProfileWebsite',
+            update: true,
+            delete: true,
             fields: [
               {
-                id: 'Qm1',
+                id: 'QmProfileWebsite1',
+                fieldName: 'id',
+                fieldType: 'String'
+              },
+              {
+                id: 'QmProfileWebsite2',
+                fieldName: 'created_at',
+                fieldType: 'Iso8601'
+              },
+              {
+                id: 'QmProfileWebsite3',
                 fieldName: 'domain',
-                fieldType: 'String',
-                createTest: 'philt3r.rocks',
-                updateTest: 'updated'
-              },
-              {
-                id: 'Qm2',
-                fieldName: 'player',
-                fieldType: 'String',
-                createTest: 'Philip Beadle',
-                updateTest: 'Updated'
-              },
-              {
-                id: 'Qm3',
-                fieldName: 'mobile',
-                fieldType: 'String',
-                createTest: '0000000000',
-                updateTest: '1111111111'
+                fieldType: 'String'
               }
-            ]
+            ],
+            links: [
+              {
+                direction: 'from',
+                entityType: 'anchor',
+                entityName: 'Profile Websites',
+                type: 'profile_websites_link'
+              }
+            ],
+            validationRules: {
+              validateEntryCreate: [
+              ],
+              validateEntryModify: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to update',
+                  template: 'only-agent-update'
+                }
+              ],
+              validateEntryDelete: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to delete',
+                  template: 'only-agent-delete'
+                }
+              ],
+              validateLinkAdd: [
+              ],
+              validateLinkRemove: [
+              ]
+            },
+            testData: {
+              create: { domain: 'www.domain.demo' },
+              update: [
+                { domain: 'Updated www.domain.demo' },
+                { domain: 'Updated Again www.domain.demo' }
+              ],
+              list: [
+                { domain: 'www.domain.demo 1' },
+                { domain: 'www.domain.demo 2' },
+                { domain: 'www.domain.demo 3' },
+                { domain: 'www.domain.demo 4' }
+              ]
+            }
           }
-        ]
+        ],
+        profileSpecs: []
       }
-    ]
+    ],
+    modules: []
   },
   {
     name: 'my-info',

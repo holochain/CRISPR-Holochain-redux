@@ -23,7 +23,7 @@
     <v-list subheader flat>
       <v-list-item-group v-for="(group, groupIndex) in validationRules.validateEntryModify" :key="group.group">
         <v-subheader inset>{{ group.group }}</v-subheader>
-        <v-radio-group :mandatory="false" value="0-0">
+        <v-radio-group :mandatory="false" value="0-1">
           <template v-for="(rule, index) in group.rules">
             <v-list-item :key="index" @click="ruleSelected(rule)">
               <v-list-item-action>

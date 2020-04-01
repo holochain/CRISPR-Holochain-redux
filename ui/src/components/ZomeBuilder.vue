@@ -156,7 +156,7 @@
           </v-tab-item>
           <v-tab-item key="tests">
             <v-card v-resize="onResizeTests">
-              <codemirror v-model="testIndexCode" :options="cmOptions" ref="cmTestEditor"></codemirror>
+              <codemirror v-model="testZomeIndexCode" :options="cmOptions" ref="cmTestEditor"></codemirror>
             </v-card>
           </v-tab-item>
         </v-tabs-items>
@@ -211,22 +211,12 @@ function replaceMod (modTemplate, entryType, typePlaceHolder, typeName) {
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
-function zomeTestFile (zomeIndex, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
+function zomeTestFile (zomeIndex, folder, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
   // Need to loop for multiple rules later.
-  const validateEntryModifyTemplate = fs.readFileSync(`/Users/philipbeadle/holochain/holochain-developer/templates/validation_rule_templates/validate_entry_modify/${entryType.validationRules.validateEntryModify[0].template}.test.txt`)
-  const validateEntryDeleteTemplate = fs.readFileSync(`/Users/philipbeadle/holochain/holochain-developer/templates/validation_rule_templates/validate_entry_delete/${entryType.validationRules.validateEntryDelete[0].template}.test.txt`)
-  return zomeIndex.replace(new RegExp('validate_entry_modify', 'g'), validateEntryModifyTemplate).replace(new RegExp('validate_entry_delete', 'g'), validateEntryDeleteTemplate).replace(new RegExp(happPlaceHolder, 'g'), hAppName).replace(new RegExp(typePlaceHolder, 'g'), entryType.name).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
+  const validateEntryModifyTemplate = fs.readFileSync(`${folder}/templates/validation_rule_templates/validate_entry_modify/${entryType.validationRules.validateEntryModify[0].template}.test.txt`)
+  const validateEntryDeleteTemplate = fs.readFileSync(`${folder}/templates/validation_rule_templates/validate_entry_delete/${entryType.validationRules.validateEntryDelete[0].template}.test.txt`)
+  return zomeIndex.replace(new RegExp('validate_entry_modify', 'g'), validateEntryModifyTemplate).replace(new RegExp('validate_entry_delete', 'g'), validateEntryDeleteTemplate).replace(new RegExp(happPlaceHolder, 'g'), hAppName.toLowerCase()).replace(new RegExp(typePlaceHolder, 'g'), entryType.name.toLowerCase()).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
 }
-
-// function testFiles (testIndex, hAppFolder, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType) {
-//   const indexContent = testIndex.replace(new RegExp(typePlaceHolder, 'g'), entryType.name.toLowerCase()).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-//   const zomeIndexContent = zomeTestFile(zomeIndex, happPlaceHolder, hAppName, zomePlaceHolder, zomeName, typePlaceHolder, entryType)
-//   const configGenerateContent = configGenerate.replace(new RegExp(typePlaceHolder, 'g'), entryType.name.toLowerCase()).replace(new RegExp(zomePlaceHolder, 'g'), zomeName)
-//   fs.writeFileSync(path.join(hAppFolder, 'test/index.js'), indexContent)
-//   fs.writeFileSync(path.join(hAppFolder, 'test/' + zomeName + '/index.js'), zomeIndexContent)
-//   fs.writeFileSync(path.join(hAppFolder, 'test/config-generate.js'), configGenerateContent)
-//   fs.writeFileSync(path.join(hAppFolder, 'test/package.json'), testPackage)
-// }
 
 export default {
   name: 'ZomeBuilder',
@@ -287,8 +277,11 @@ export default {
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/validation.rs'), this.validationCode)
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/handlers.rs'), this.handlersCode)
       fs.writeFileSync(path.join(this.hAppFolder + 'zomes/' + this.zomeName + '/code/src/' + this.typeName + '/mod.rs'), this.modCode)
-
-      // testFiles(testIndex, this.hAppFolder, this.hAppPlaceholder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
+      fs.writeFileSync(path.join(this.hAppFolder + 'test/package.json'), this.testPackageCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'test/index.js'), this.testIndexCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'test/' + this.zomeName + '/index.js'), this.testZomeIndexCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'test/config-generate.js'), this.configGenerateCode)
+      fs.writeFileSync(path.join(this.hAppFolder + 'test/config-copy.js'), this.configCopyCode)
       this.generateEntryTypeDialog = false
       this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
@@ -396,9 +389,24 @@ export default {
       const validationTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/zomes/holochain_developer/code/src/happ/validation.rs.txt`, 'utf8')
       return replacePlaceHolders(validationTemplate, this.typePlaceHolder, this.typeName)
     },
+    configGenerateCode () {
+      const configGenerate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/config-generate.js.txt`, 'utf8')
+      return replacePlaceHolders(configGenerate, this.zomePlaceHolder, this.zomeName)
+    },
+    configCopyCode () {
+      return fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/config-copy.js.txt`, 'utf8')
+    },
+    testPackageCode () {
+      return fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/package.json`, 'utf8')
+    },
     testIndexCode () {
+      const testIndexTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/index.js.txt`, 'utf8')
+      const testIndexHapp = replacePlaceHolders(testIndexTemplate, this.typePlaceHolder, this.typeName)
+      return replacePlaceHolders(testIndexHapp, this.zomePlaceHolder, this.zomeName)
+    },
+    testZomeIndexCode () {
       const zomeIndexTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_template/test/holochain_developer/index.js.txt`, 'utf8')
-      return zomeTestFile(zomeIndexTemplate, this.happPlaceHolder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
+      return zomeTestFile(zomeIndexTemplate, this.developer.folder, this.happPlaceHolder, this.hAppName, this.zomePlaceHolder, this.zomeName, this.typePlaceHolder, this.entryType)
     }
   }
 }

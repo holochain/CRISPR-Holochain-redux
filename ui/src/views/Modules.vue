@@ -35,7 +35,7 @@ export default {
   components: {
     ToDos: () => import('../modules/ToDos'),
     Chat: () => import('../modules/Chat'),
-    ProfileWebsiteBuilderPreview: () => import('/Users/philipbeadle/holochain/holochain-developer/ui/src/modules/ProfileWebsiteBuilder/Preview')
+    ProfileWebsiteBuilderPreview: () => import('@/modules/ProfileWebsiteBuilder/Preview')
   }
 }
 </script>

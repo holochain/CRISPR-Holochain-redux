@@ -4,14 +4,33 @@
         <table>
             <thead>
                 <tr>
-                    <th />
-                    <th v-for="permission in permissions" :key="permission" v-text="permission"/>
+                    <th>Note Entry</th>
+                    <th v-for="permission in entryPermissions" :key="permission" v-text="permission"/>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="role in roles" :key="role">
                     <td v-text="role" />
-                    <td v-for="permission in permissions" :key="permission">
+                    <td v-for="permission in entryPermissions" :key="permission">
+                        <v-checkbox></v-checkbox>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </v-simple-table>
+    <v-divider />
+  <v-simple-table>
+        <table>
+            <thead>
+                <tr>
+                    <th>note_link</th>
+                    <th v-for="permission in linkPermissions" :key="permission" v-text="permission"/>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="role in roles" :key="role">
+                    <td v-text="role" />
+                    <td v-for="permission in linkPermissions" :key="permission">
                         <v-checkbox></v-checkbox>
                     </td>
                 </tr>
@@ -34,8 +53,10 @@ export default {
   name: 'EntryTypeField',
   data () {
     return {
-      permissions: ['Read', 'Create', 'Update', 'Delete'],
-      roles: ['Administrators', 'Agents']
+      entryPermissions: ['Create', 'Update', 'Delete'],
+      linkTypes: ['note_link'],
+      linkPermissions: ['Add Link', 'Delete Link'],
+      roles: ['Author', 'Anyone', 'Administrators', 'Editors']
     }
   }
 }
