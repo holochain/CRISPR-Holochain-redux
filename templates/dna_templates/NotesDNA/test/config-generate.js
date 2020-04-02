@@ -30,9 +30,9 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const dna = Config.dna(dnaPath, 'holochain_developer-test')
-// const conductorConfig = Config.gen({holochain_developer: dna})
-const conductorConfig = Config.gen({holochain_developer: dna}, {
+const dna = Config.dna(dnaPath, 'notes-test')
+// const conductorConfig = Config.gen({notes: dna})
+const conductorConfig = Config.gen({notes: dna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'

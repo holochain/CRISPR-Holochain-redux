@@ -1,9 +1,0 @@
-  scenario("Only allow Agent who authored entry to update happ", async (s, t) => {
-    const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
-    const create_happ_result = await alice.call("happ_name", "holochain_developer", "create_happ", {"happ_input" : {"title":"Title first happ", "content":"Content first happ"}})
-    await s.consistency()
-    const updated_happ_result = await bob.call("happ_name", "holochain_developer", "update_happ", {"id": create_happ_result.Ok.id, "happ_input" : {"title":"Updated title first happ", "content":"Updated content first happ"}})
-    await s.consistency()
-    let err = JSON.parse(updated_happ_result.Err.Internal)
-    t.deepEqual(err.kind, {"ValidationFailed":"Agent who did not author is trying to update"})
-  })

@@ -85,7 +85,7 @@ export default {
       var y2 = Math.trunc(this.positionTo.y - 4)
       var distance = Math.trunc(4 * Math.sqrt(Math.abs(x1 - x2)))
       var path = `M ${x1} ${y1} C ${x1 + distance} ${y1}, ${x2 - distance} ${y2}, ${x2} ${y2}`
-      console.log(path)
+      // console.log(path)
       return path
     }
   }

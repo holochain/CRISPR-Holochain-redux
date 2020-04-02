@@ -1,5 +1,6 @@
 <template>
   <v-card>
+    <v-card tile class="pa-5">
     <v-simple-table>
         <table>
             <thead>
@@ -18,13 +19,16 @@
             </tbody>
         </table>
     </v-simple-table>
+    </v-card>
     <v-divider />
+    <v-card tile class="pa-5">
   <v-simple-table>
         <table>
             <thead>
                 <tr>
                     <th>note_link</th>
                     <th v-for="permission in linkPermissions" :key="permission" v-text="permission"/>
+                    <th />
                 </tr>
             </thead>
             <tbody>
@@ -33,10 +37,12 @@
                     <td v-for="permission in linkPermissions" :key="permission">
                         <v-checkbox></v-checkbox>
                     </td>
+                    <td />
                 </tr>
             </tbody>
         </table>
     </v-simple-table>
+    </v-card>
     <v-card-actions>
     <v-btn >
         Add Role

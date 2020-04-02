@@ -23,13 +23,13 @@ export const hApps = [
           },
           {
             type: 'branch',
-            text: 'agent_defined',
+            text: 'name of branch',
             links: [
               {
                 direction: 'from',
                 entityType: 'anchor',
                 entityName: 'branch',
-                type: 'branches_link'
+                type: 'branches'
               }
             ]
           }
@@ -41,16 +41,6 @@ export const hApps = [
             delete: true,
             revisons: true,
             fields: [
-              {
-                id: 'Qm11',
-                fieldName: 'id',
-                fieldType: 'String'
-              },
-              {
-                id: 'Qm12',
-                fieldName: 'created_at',
-                fieldType: 'Iso8601'
-              },
               {
                 id: 'Qm11',
                 fieldName: 'name',
@@ -80,10 +70,75 @@ export const hApps = [
                 id: 'Qm11',
                 fieldName: 'description',
                 fieldType: 'String'
+              }
+            ],
+            links: [
+              {
+                direction: 'from',
+                entityType: 'anchor',
+                entityName: 'branchname of branch',
+                type: 'branch'
+              }
+            ],
+            validationRules: {
+              validateEntryCreate: [
+              ],
+              validateEntryModify: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to update',
+                  template: 'only-agent-update'
+                }
+              ],
+              validateEntryDelete: [
+                {
+                  rule: 'Only allow Agent who authored entry allowed to delete',
+                  template: 'only-agent-delete'
+                }
+              ],
+              validateLinkAdd: [
+              ],
+              validateLinkRemove: [
+              ]
+            },
+            testData: {
+              create: {
+                anchor: {
+                  type: 'branch',
+                  text: 'master'
+                },
+                name: 'hApp name',
+                folder: '/hApp',
+                url: '/happ-store/hApp',
+                contact: 'Contact',
+                mobile: '+61 999 999 999',
+                description: 'hApp description'
+              },
+              update: {
+                name: 'Update hApp name',
+                folder: 'Update /hApp',
+                url: 'Update /happ-store/hApp',
+                contact: 'Update Contact',
+                mobile: 'Update +61 999 999 999',
+                description: 'Update hApp description'
+              },
+              list: []
+            }
+          },
+          {
+            name: 'zome',
+            update: true,
+            delete: true,
+            revisons: true,
+            anchors: [],
+            fields: [
+              {
+                id: 'Qm11',
+                fieldName: 'name',
+                fieldType: 'String'
               },
               {
                 id: 'Qm11',
-                fieldName: 'branch',
+                fieldName: 'description',
                 fieldType: 'String'
               }
             ],
@@ -91,8 +146,8 @@ export const hApps = [
               {
                 direction: 'from',
                 entityType: 'anchor',
-                entityName: 'branchagent_defined',
-                type: 'branch_link'
+                entityName: 'branchname of branch',
+                type: 'branch'
               }
             ],
             validationRules: {
@@ -159,32 +214,47 @@ export const hApps = [
         name: 'Notes',
         anchors: [
           {
-            type: 'notes',
-            text: 'notes'
+            name: '',
+            type: 'Notes',
+            text: 'ListNotes',
+            links: []
           }
         ],
         entryTypes: [
           {
-            name: 'Note',
-            update: true,
+            name: 'NoteId',
+            update: false,
             delete: true,
             fields: [
               {
                 id: 'Qm11',
-                fieldName: 'id',
+                fieldName: 'initial_entry_address',
                 fieldType: 'String'
               },
               {
                 id: 'Qm12',
-                fieldName: 'created_at',
+                fieldName: 'initial_entry_created_at',
                 fieldType: 'Iso8601'
-              },
+              }
+            ],
+            links: [
+              {
+                direction: 'from',
+                entityType: 'anchor',
+                entityName: 'NotesListNotes',
+                type: 'notes'
+              }
+            ]
+          },
+          {
+            name: 'NoteEntry',
+            update: true,
+            delete: true,
+            fields: [
               {
                 id: 'Qm1333',
                 fieldName: 'title',
-                fieldType: 'String',
-                createTest: 'philt3r.rocks',
-                updateTest: 'updated'
+                fieldType: 'String'
               },
               {
                 id: 'Qm2',
@@ -195,9 +265,9 @@ export const hApps = [
             links: [
               {
                 direction: 'from',
-                entityType: 'anchor',
-                entityName: 'notesnotes',
-                type: 'note_link'
+                entityType: 'entry',
+                entityName: 'NoteId',
+                type: 'entry'
               }
             ],
             validationRules: {
@@ -235,34 +305,7 @@ export const hApps = [
             }
           }
         ],
-        profileSpecs: [
-          {
-            name: 'Notes hApp',
-            fields: [
-              {
-                anchor: 'first-name',
-                fieldName: 'First Name',
-                fieldType: 'singleLineText',
-                linkContract: 'persist',
-                description: 'Your name so we know who wrote the note.'
-              },
-              {
-                anchor: 'avatar',
-                fieldName: 'Avatar',
-                fieldType: 'thumbnail',
-                linkContract: 'persist',
-                description: 'Shows on the Note so we can see who wrote the note.'
-              },
-              {
-                anchor: 'biography',
-                fieldName: 'Bio',
-                fieldType: 'multiLineText',
-                linkContract: 'persist',
-                description: 'A short bio of yourself to add some cred to your notes.'
-              }
-            ]
-          }
-        ]
+        profileSpecs: []
       }
     ],
     modules: [

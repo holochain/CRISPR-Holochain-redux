@@ -8,10 +8,27 @@
           <v-icon>mdi-plus</v-icon>
           Entity
         </v-btn>
-        <v-btn text>
-          <v-icon>mdi-plus</v-icon>
-          Anchor
-        </v-btn>
+        <v-dialog v-model="anchorDialog" fullscreen>
+          <template v-slot:activator="{ on }">
+            <v-btn text  v-on="on">
+              <v-icon>mdi-plus</v-icon>
+              Anchor
+            </v-btn>
+          </template>
+          <v-card flat>
+            <v-row no-gutters>
+              <v-col cols="12">
+                Anchor Builder {{`${this.anchor.type}-${this.anchor.text}`}}
+              </v-col>
+            </v-row>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="action darken-1" text @click="anchorDialog = false">
+                Done
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-dialog v-model="profileDialog" fullscreen>
           <template v-slot:activator="{ on }">
             <v-btn text  v-on="on">
@@ -46,7 +63,7 @@
       <v-card flat>
         <v-row no-gutters>
           <v-col cols="12">
-            <zome-builder :hApp="this.holochainApp" :zome="this.holochainApp.zomes[0]" :entryType="this.holochainApp.zomes[0].entryTypes[0]" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+            <zome-builder :hApp="this.holochainApp" :zome="this.zome" :entryType="this.entryType" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
           </v-col>
         </v-row>
         <v-card-actions>
@@ -64,46 +81,46 @@
 </template>
 <script>
 import { Diagram } from '../components/Diagram'
-
-function port (nodes, ports, entityType, entityName, linkType, direction) {
+const ports = []
+function port (nodes, entityType, entityName, linkType, direction) {
   let linkPort
   const linkPorts = ports.filter(port => {
-    return port.direction === direction && port.entityType === entityType && port.entityName === entityName
+    return port.direction === direction && port.entityType === entityType && port.entityName === entityName && port.linkType === linkType
   })
   if (linkPorts.length === 0) {
     const linkNodes = nodes.filter(node => {
       return node.entityType === entityType && node.entityName === entityName
     })
     if (linkNodes.length > 0) {
-      console.log(linkNodes)
       if (direction === 'from') {
-        linkPort = linkNodes[0].node.addInPort(linkType)
-      } else {
         linkPort = linkNodes[0].node.addOutPort(linkType)
+      } else {
+        linkPort = linkNodes[0].node.addInPort(linkType)
       }
       ports.push({
         direction: direction,
         entityType: entityType,
         entityName: entityName,
+        linkType: linkType,
         port: linkPort
       })
     }
   } else {
-    linkPort = linkPorts[0]
+    linkPort = linkPorts[0].port
   }
   return linkPort
 }
-function createModel (holochainApp, entryColour, anchorColour) {
+function createModel (zome, entryColour, anchorColour) {
   // const entryType = holochainApp.zomes[0].entryTypes[0]
   const diagramModel = new Diagram.Model()
-  let entryTypeIndex = 1
-  let profileSpecIndex = 1
-  let anchorIndex = 1
+  let entryTypeIndex = 0
+  let profileSpecIndex = 0
+  let anchorIndex = 0
   const nodes = []
-  const ports = []
   const links = []
-  holochainApp.zomes[0].anchors.forEach(anchor => {
-    const anchorNode = diagramModel.addNode(anchor.type.charAt(0).toUpperCase() + anchor.type.substring(1), 30, anchorIndex * 350, 250, 200, 'anchor', anchorColour)
+  zome.anchors.forEach(anchor => {
+    const anchorTitle = `${anchor.type}-${anchor.text}`
+    const anchorNode = diagramModel.addNode(anchorTitle, 30, 50 + anchorIndex * 350, 250, 200, 'anchor', anchorColour)
     nodes.push({ entityType: 'anchor', entityName: `${anchor.type}${anchor.text}`, node: anchorNode })
     anchorNode.addField(`Anchor Type - ${anchor.type}`)
     anchorNode.addField(`Anchor Text - ${anchor.text}`)
@@ -114,8 +131,8 @@ function createModel (holochainApp, entryColour, anchorColour) {
       })
     }
   })
-  holochainApp.zomes[0].entryTypes.forEach(entryType => {
-    const entryNode = diagramModel.addNode(entryType.name, 380, entryTypeIndex * 350, 250, 300, 'entry', entryColour)
+  zome.entryTypes.forEach(entryType => {
+    const entryNode = diagramModel.addNode(entryType.name, 380, 50 + entryTypeIndex * 350, 250, 300, 'entry', entryColour)
     nodes.push({ entityType: 'entry', entityName: entryType.name, node: entryNode })
     entryType.fields.forEach(field => {
       entryNode.addField(`${field.fieldName} - ${field.fieldType}`)
@@ -127,8 +144,8 @@ function createModel (holochainApp, entryColour, anchorColour) {
       })
     }
   })
-  holochainApp.zomes[0].profileSpecs.forEach(profileSpec => {
-    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, profileSpecIndex * 350, 250, 300, 'profileSpec', entryColour)
+  zome.profileSpecs.forEach(profileSpec => {
+    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, 50 + profileSpecIndex * 350, 250, 300, 'profileSpec', entryColour)
     nodes.push({ entityType: 'profileSpec', entityName: profileSpec.name, node: profileSpecNode })
     profileSpec.fields.forEach(field => {
       profileSpecNode.addField(`${field.fieldName} - ${field.fieldType}`)
@@ -142,15 +159,17 @@ function createModel (holochainApp, entryColour, anchorColour) {
   })
 
   links.forEach(link => {
-    if (link.direction === 'from') {
-      diagramModel.addLink(port(nodes, ports, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, ports, link.entityType, link.entityName, link.link.type, 'to'))
+    if (link.link.direction === 'from') {
+      diagramModel.addLink(port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, link.entityType, link.entityName, link.link.type, 'to'))
     } else {
-      diagramModel.addLink(port(nodes, ports, link.entityType, link.entityName, link.link.type, 'from'), port(nodes, ports, link.link.entityType, link.link.entityName, link.link.type, 'to'))
+      diagramModel.addLink(port(nodes, link.entityType, link.entityName, link.link.type, 'from'), port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'to'))
     }
   })
 
   nodes.forEach(node => {
-    node.node.addInPort('link_to')
+    if (node.entityType !== 'anchor') {
+      node.node.addInPort('link_to')
+    }
     node.node.addOutPort('link_from')
   })
 
@@ -168,14 +187,17 @@ export default {
   data () {
     return {
       holochainApp: this.hApp,
+      anchor: {},
+      entryType: {},
+      profileSpec: {},
       model: new Diagram.Model(),
       dialog: false,
       profileDialog: false,
+      anchorDialog: false,
       windowSize: {
         x: 0,
         y: 0
-      },
-      profileSpec: this.zome.profileSpecs[0]
+      }
     }
   },
   methods: {
@@ -184,10 +206,22 @@ export default {
     },
     editModelNode (type, title) {
       switch (type) {
+        case 'anchor':
+          this.anchor = this.zome.anchors.find(function (anchor) {
+            return `${anchor.type}-${anchor.text}` === title
+          })
+          this.anchorDialog = true
+          break
         case 'entry':
+          this.entryType = this.zome.entryTypes.find(function (entryType) {
+            return entryType.name === title
+          })
           this.dialog = true
           break
         case 'profileSpec':
+          this.profileSpec = this.zome.profileSpecs.find(function (profileSpec) {
+            return profileSpec.name === title
+          })
           this.profileDialog = true
           break
       }
@@ -204,7 +238,7 @@ export default {
     }
   },
   mounted () {
-    this.model = createModel(this.holochainApp, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary)
+    this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary)
   }
 }
 </script>
