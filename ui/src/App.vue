@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-container fluid>
+    <v-content>
        <router-view />
-    </v-container>
+    </v-content>
   </v-app>
 </template>
 

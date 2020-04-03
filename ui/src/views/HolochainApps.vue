@@ -1,29 +1,24 @@
 <template>
   <v-card fluid>
-    <v-app-bar app clipped-left absolute>
-      <v-toolbar>
-        <v-toolbar-title>Holochain Apps</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn text @click="addHolochainApp">
-          <v-icon>mdi-plus</v-icon>
-          Holochain Application
-        </v-btn>
-        <v-btn text to="modules">
-          <v-icon>mdi-view-module</v-icon>
-          Holochain Modules
-        </v-btn>
-      </v-toolbar>
-    </v-app-bar>
+    <v-toolbar>
+      <v-toolbar-title>Holochain Apps</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text @click="addHolochainApp">
+        <v-icon>mdi-plus</v-icon>
+        Holochain Application
+      </v-btn>
+      <v-btn text to="modules">
+        <v-icon>mdi-view-module</v-icon>
+        Holochain Modules
+      </v-btn>
+    </v-toolbar>
     <v-content>
-    <v-row>
-      <v-col v-for="(hApp) in hApps" :key="hApp.name" cols="3">
-        <holochain-app :hApp="hApp" @delete-holochain-app="deleteHolochainApp"/>
-      </v-col>
-    </v-row>
+      <v-row no-gutters align="start" justify="center" class="fill-height">
+        <v-col v-for="(hApp) in hApps" :key="hApp.name" cols="3">
+          <holochain-app :hApp="hApp" @delete-holochain-app="deleteHolochainApp"/>
+        </v-col>
+      </v-row>
     </v-content>
-    <v-footer app>
-      <span>Holochain</span>
-    </v-footer>
   </v-card>
 </template>
 

@@ -1,1 +1,0 @@
-        validation::validate_entry_create(entry, validation_data)

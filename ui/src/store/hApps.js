@@ -80,25 +80,12 @@ export const hApps = [
                 type: 'branch'
               }
             ],
-            validationRules: {
-              validateEntryCreate: [
-              ],
-              validateEntryModify: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to update',
-                  template: 'only-agent-update'
-                }
-              ],
-              validateEntryDelete: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to delete',
-                  template: 'only-agent-delete'
-                }
-              ],
-              validateLinkAdd: [
-              ],
-              validateLinkRemove: [
-              ]
+            permissionRules: {
+              validateEntryCreate: '',
+              validateEntryModify: '',
+              validateEntryDelete: '',
+              validateLinkAdd: '',
+              validateLinkRemove: ''
             },
             testData: {
               create: {
@@ -150,25 +137,12 @@ export const hApps = [
                 type: 'branch'
               }
             ],
-            validationRules: {
-              validateEntryCreate: [
-              ],
-              validateEntryModify: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to update',
-                  template: 'only-agent-update'
-                }
-              ],
-              validateEntryDelete: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to delete',
-                  template: 'only-agent-delete'
-                }
-              ],
-              validateLinkAdd: [
-              ],
-              validateLinkRemove: [
-              ]
+            permissionRules: {
+              validateEntryCreate: '',
+              validateEntryModify: '',
+              validateEntryDelete: '',
+              validateLinkAdd: '',
+              validateLinkRemove: ''
             },
             testData: {
               create: {
@@ -270,25 +244,12 @@ export const hApps = [
                 type: 'entry'
               }
             ],
-            validationRules: {
-              validateEntryCreate: [
-              ],
-              validateEntryModify: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to update',
-                  template: 'only-agent-update'
-                }
-              ],
-              validateEntryDelete: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to delete',
-                  template: 'only-agent-delete'
-                }
-              ],
-              validateLinkAdd: [
-              ],
-              validateLinkRemove: [
-              ]
+            permissionRules: {
+              validateEntryCreate: '',
+              validateEntryModify: '',
+              validateEntryDelete: '',
+              validateLinkAdd: '',
+              validateLinkRemove: ''
             },
             testData: {
               create: { title: 'Note 1 title', content: 'Note 1 content' },
@@ -367,25 +328,12 @@ export const hApps = [
                 type: 'profile_websites_link'
               }
             ],
-            validationRules: {
-              validateEntryCreate: [
-              ],
-              validateEntryModify: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to update',
-                  template: 'only-agent-update'
-                }
-              ],
-              validateEntryDelete: [
-                {
-                  rule: 'Only allow Agent who authored entry allowed to delete',
-                  template: 'only-agent-delete'
-                }
-              ],
-              validateLinkAdd: [
-              ],
-              validateLinkRemove: [
-              ]
+            permissionRules: {
+              validateEntryCreate: '',
+              validateEntryModify: '',
+              validateEntryDelete: '',
+              validateLinkAdd: '',
+              validateLinkRemove: ''
             },
             testData: {
               create: { domain: 'www.domain.demo' },

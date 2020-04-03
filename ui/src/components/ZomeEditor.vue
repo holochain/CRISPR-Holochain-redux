@@ -1,71 +1,79 @@
 <template>
-  <v-card fluid>
-    <v-app-bar app clipped-left absolute>
-      <v-toolbar>
-        <v-toolbar-title>{{this.holochainApp.name}} Zome</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn text>
-          <v-icon>mdi-plus</v-icon>
-          Entity
-        </v-btn>
-        <v-dialog v-model="anchorDialog" fullscreen>
-          <template v-slot:activator="{ on }">
-            <v-btn text  v-on="on">
-              <v-icon>mdi-plus</v-icon>
-              Anchor
-            </v-btn>
-          </template>
-          <v-card flat>
-            <v-row no-gutters>
+  <v-card flat class="mx-auto" height="calc(100% - 100px)">
+    <v-toolbar>
+      <v-toolbar-title>{{this.holochainApp.name}} Zome</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text>
+        <v-icon>mdi-plus</v-icon>
+        Entity
+      </v-btn>
+      <v-dialog v-model="anchorDialog" fullscreen>
+        <template v-slot:activator="{ on }">
+          <v-btn text  v-on="on">
+            <v-icon>mdi-plus</v-icon>
+            Anchor
+          </v-btn>
+        </template>
+        <v-card flat height="100%">
+          <v-container fill-height>
+            <v-row no-gutters align="start">
               <v-col cols="12">
                 Anchor Builder {{`${this.anchor.type}-${this.anchor.text}`}}
               </v-col>
             </v-row>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="action darken-1" text @click="anchorDialog = false">
-                Done
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="profileDialog" fullscreen>
-          <template v-slot:activator="{ on }">
-            <v-btn text  v-on="on">
-              <v-icon>mdi-plus</v-icon>
-              Profile
+          </v-container>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="action darken-1" text @click="anchorDialog = false">
+              Done
             </v-btn>
-          </template>
-          <v-card flat>
-            <v-row no-gutters>
-              <v-col cols="12">
-                <profile-spec-builder :profileSpec="this.profileSpec" />
-              </v-col>
-            </v-row>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="action darken-1" text @click="profileDialog = false">
-                Done
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-btn text to="/">
-          <v-icon>mdi-view-dashboard</v-icon>
-          Dashboard
-        </v-btn>
-      </v-toolbar>
-    </v-app-bar>
-    <v-content v-resize="onResize">
-      <diagram :model="model" @editModelNode="editModelNode" :width="this.windowSize.x - 20" :height="this.windowSize.y"></diagram>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="profileDialog" fullscreen>
+        <template v-slot:activator="{ on }">
+          <v-btn text  v-on="on">
+            <v-icon>mdi-plus</v-icon>
+            Profile
+          </v-btn>
+        </template>
+        <v-card flat height="100%">
+          <v-row no-gutters align="start">
+            <v-col cols="12">
+              <profile-spec-builder :profileSpec="this.profileSpec" />
+            </v-col>
+          </v-row>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="action darken-1" text @click="profileDialog = false">
+              Done
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-btn text to="/">
+        <v-icon>mdi-view-dashboard</v-icon>
+        Dashboard
+      </v-btn>
+    </v-toolbar>
+    <v-content>
+      <v-row no-gutters align="start" justify="center">
+        <v-col cols="12" v-resize="onResize">
+          <diagram :model="model" @editModelNode="editModelNode" :width="this.windowSize.x - 20" :height="this.windowSize.y - 100"></diagram>
+        </v-col>
+      </v-row>
     </v-content>
     <v-dialog v-model="dialog" fullscreen>
-      <v-card flat>
-        <v-row no-gutters>
-          <v-col cols="12">
-            <zome-builder :hApp="this.holochainApp" :zome="this.zome" :entryType="this.entryType" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
-          </v-col>
-        </v-row>
+      <v-card flat class="fill-height">
+        <v-card-text></v-card-text>
+        <v-content>
+          <v-row no-gutters align="start" justify="center">
+            <v-col cols="12">
+              <zome-builder :hApp="this.holochainApp" :zome="this.zome" :entryType="this.entryType" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+            </v-col>
+          </v-row>
+        </v-content>
+        <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="dialog = false">
@@ -74,9 +82,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-footer app>
-      <span>Holochain</span>
-    </v-footer>
   </v-card>
 </template>
 <script>
@@ -195,8 +200,8 @@ export default {
       profileDialog: false,
       anchorDialog: false,
       windowSize: {
-        x: 0,
-        y: 0
+        x: 200,
+        y: 200
       }
     }
   },
@@ -228,9 +233,10 @@ export default {
     },
     onResize () {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+      console.log(this.windowSize)
     },
     entryTypeUpdated (entryType) {
-      this.holochainApp.zomes[0].entryTypes[0] = entryType
+      this.zome.entryTypes[0] = entryType
       this.model = createModel(this.holochainApp)
     },
     closeEntryTypeBuilderDialog (entryType) {
