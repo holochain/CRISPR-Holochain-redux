@@ -16,7 +16,20 @@
   "dependencies": {
     "vue-codemirror": "^4.0.6",
     "vue-diagrams": "^0.0.1-development",
-    "vuetify-image-input": "^19.1.0"
+    "vuetify-image-input": "^19.1.0",
+    "@material/mwc-button": "^0.14.1",
+    "@material/mwc-textarea": "^0.14.1",
+    "@material/mwc-textfield": "^0.14.1",
+    "@polymer/app-layout": "^3.0.0",
+    "@uprtcl/graphql": "^0.0.6-alpha.4",
+    "@uprtcl/holochain-provider": "0.0.6-alpha.4",
+    "@uprtcl/micro-orchestrator": "^0.0.6-alpha.4",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
+    "apollo-boost": "^0.4.7",
+    "graphql": "^14.6.0",
+    "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.6",
+    "lit-element": "^2.2.1"
   },
   "devDependencies": {
     "@mdi/font": "^3.5.95",

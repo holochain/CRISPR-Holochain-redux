@@ -184,6 +184,7 @@
               </v-card>
             </v-tab-item>
             <v-tab-item key="skin">
+              <zome-skin :hApp="this.hApp"/>
             </v-tab-item>
           </v-tabs-items>
         </v-col>
@@ -247,7 +248,7 @@ export default {
   name: 'ZomeBuilder',
   components: {
     EntryTypeField: () => import('../components/EntryTypeField'),
-    // ValidationRules: () => import('../components/ValidationRules'),
+    ZomeSkin: () => import('../components/ZomeSkin'),
     EntryTypePermissions: () => import('../components/EntryTypePermissions'),
     codemirror
   },
