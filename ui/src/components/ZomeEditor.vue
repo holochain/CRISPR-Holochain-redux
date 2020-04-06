@@ -194,7 +194,12 @@ export default {
       holochainApp: this.hApp,
       anchor: {},
       entryType: {},
-      profileSpec: {},
+      profileSpec: {
+        id: '',
+        name: this.zome.name,
+        specFields: [],
+        customFields: []
+      },
       model: new Diagram.Model(),
       dialog: false,
       profileDialog: false,
