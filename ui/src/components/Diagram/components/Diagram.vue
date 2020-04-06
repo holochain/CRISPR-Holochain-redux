@@ -48,8 +48,8 @@
           @onCreatePoint="createPoint"
         />
         <line
-          :x1="getPortHandlePosition(newLink.startPortId).x"
-          :y1="getPortHandlePosition(newLink.startPortId).y"
+          :x1="getPortHandlePosition(newLink, newLink.startPortId).x"
+          :y1="getPortHandlePosition(newLink, newLink.startPortId).y"
           :x2="convertXYtoViewPort(mouseX, 0).x"
           :y2="convertXYtoViewPort(0, mouseY).y"
           style="stroke:rgb(255,0,0);stroke-width:2"
@@ -68,10 +68,11 @@
           :ports="node.ports"
           :selected="selectedItem.type === 'nodes' && selectedItem.index === nodeIndex"
           :index="nodeIndex"
+          :typeIndex="node.typeIndex"
           v-for="(node, nodeIndex) in model._model.nodes"
           :key="`'node'${nodeIndex}`"
           @onStartDrag="startDragItem"
-          @editModelNode="editModelNode"
+          @editModelNode="editModelNode(node)"
           @delete="model.deleteNode(node)"
         >
           <DiagramPort
@@ -191,8 +192,8 @@ export default {
     clearSelection () {
       this.selectedItem = {}
     },
-    editModelNode (type, title) {
-      this.$emit('editModelNode', type, title)
+    editModelNode (node) {
+      this.$emit('editModelNode', node.type, node.typeIndex)
     },
     updateLinksPositions () {
       var links = []
@@ -203,9 +204,9 @@ export default {
         setTimeout(() => {
           for (var i = 0; i < links.length; i++) {
             var coords
-            coords = this.getPortHandlePosition(links[i].from)
+            coords = this.getPortHandlePosition(links[i], links[i].from)
             links[i].positionFrom = { x: coords.x, y: coords.y }
-            coords = this.getPortHandlePosition(links[i].to)
+            coords = this.getPortHandlePosition(links[i], links[i].to)
             links[i].positionTo = { x: coords.x, y: coords.y }
           }
         }, 100)
@@ -219,9 +220,13 @@ export default {
       }
     },
 
-    getPortHandlePosition (portId) {
+    getPortHandlePosition (link, portId) {
       if (this.$refs['port-' + portId]) {
         var port = this.$refs['port-' + portId][0]
+        if (port === undefined) {
+          console.log(link)
+          return { x: 0, y: 0 }
+        }
         var node = this.$refs['node-' + port.nodeIndex][0]
         var x
         var y

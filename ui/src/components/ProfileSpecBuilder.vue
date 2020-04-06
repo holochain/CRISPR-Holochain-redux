@@ -39,32 +39,31 @@
         </v-dialog>
      </v-list-item-action>
      <v-list-item-action>
-       <v-btn text @click="addSpecField(profileSpec)">
+       <v-btn text @click="addSpecField()">
          <v-icon>mdi-plus</v-icon>
          Add Field
        </v-btn>
      </v-list-item-action>
     </v-list-item>
     <v-container class="fill-height ma-0 pl-5" fluid>
-      <v-col v-for="(field) in currentProfileSpecFields" :key="field.fieldName" cols="12">
-        <profile-spec-field :profileSpecFieldValue="field" :fieldNames="fieldNames" @save-profile-spec-field="saveField" @delete-profile-spec-field="deleteField"/>
+      <v-col v-for="(field, index) in this.profileSpec.specFields" :key="index" cols="12">
+        <profile-spec-field :index="index" :profileSpecField="field" :fieldNames="fieldNames" @save-profile-spec-field="saveField" @delete-profile-spec-field="deleteField"/>
       </v-col>
     </v-container>
   </v-card>
 </template>
 
 <script>
-import ProfileSpecField from './ProfileSpecField.vue'
 import { mapState } from 'vuex'
 export default {
   name: 'ProfileSpecBuilder',
   components: {
-    ProfileSpecField
+    ProfileSpecField: () => import('../components/ProfileSpecField')
   },
-  props: ['profileSpec'],
+  props: ['index', 'profileSpec'],
   data () {
     return {
-      currentProfileSpecFields: this.profileSpec.fields,
+      // currentProfileSpecFields: this.profileSpec.specFields,
       profileSpecName: this.profileSpec.name,
       profileName: '',
       isEditing: '',
@@ -73,19 +72,25 @@ export default {
     }
   },
   methods: {
-    addSpecField (spec) {
-      console.log(spec)
-      this.profileSpec.specFields.push({})
+    addSpecField () {
+      this.profileSpec.specFields.push({
+        anchor: '',
+        fieldName: '',
+        linkContract: '',
+        description: ''
+      })
     },
     addProfileFromSpec (spec) {
       console.log('addProfileFromSpec')
       this.profileName = this.profileSpec.name.toString()
       this.addProfileDialog = false
     },
-    saveField (field, fieldData) {
+    saveField (fieldIndex, field) {
       console.log('saveField')
-      field.profileSpecId = this.profileSpec.id
-      console.log(field.fieldName)
+      console.log(field)
+      this.profileSpec.specFields[fieldIndex] = field
+      // this.profileSpec.specFields = this.profileSpec.specFields
+      this.$emit('profile-spec-updated', this.index, this.profileSpec)
     },
     deleteField (field) {
       console.log('delete field')

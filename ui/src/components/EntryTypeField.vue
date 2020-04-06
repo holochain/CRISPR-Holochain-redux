@@ -45,6 +45,7 @@
 <script>
 export default {
   name: 'EntryTypeField',
+  props: ['index', 'field'],
   data () {
     return {
       dialog: false,
@@ -64,16 +65,17 @@ export default {
     deleteField () {
       console.log('delete')
       this.dialog = false
-      this.$emit('delete-entry-type-field', this.field)
+      this.$emit('delete-entry-type-field', this.index, this.field)
     }
   },
-  props: ['field'],
   watch: {
     isEditing (save) {
       if (!save) {
         console.log('Saving ')
         console.log(this.field, this.fieldName + this.fieldType)
-        this.$emit('save-entry-type-field', this.field, this.fieldName, this.fieldType)
+        this.field.fieldName = this.fieldName
+        this.field.fieldType = this.fieldType
+        this.$emit('save-entry-type-field', this.index, this.field)
       }
     },
     fieldName (newVal) {

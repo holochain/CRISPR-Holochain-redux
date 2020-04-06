@@ -16,14 +16,16 @@ class DiagramNode {
    * @param  {Integer} id [description]
    * @param  {String} type [description]
    * @param  {String} color [description]
+   * @param  {Integer} typeIndex  [description]
    */
-  constructor (id, title, x, y, width, height, type, color) {
+  constructor (id, title, x, y, width, height, type, typeIndex, color) {
     this.title = title
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.type = type
+    this.typeIndex = typeIndex
     this.color = color
     this.ports = []
   }

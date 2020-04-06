@@ -7,6 +7,10 @@
         <v-icon>mdi-plus</v-icon>
         Entity
       </v-btn>
+      <v-btn text @click="addProfileSpec">
+        <v-icon>mdi-plus</v-icon>
+        Profile
+      </v-btn>
       <v-dialog v-model="anchorDialog" fullscreen>
         <template v-slot:activator="{ on }">
           <v-btn text  v-on="on">
@@ -30,27 +34,6 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <v-dialog v-model="profileDialog" fullscreen>
-        <template v-slot:activator="{ on }">
-          <v-btn text  v-on="on">
-            <v-icon>mdi-plus</v-icon>
-            Profile
-          </v-btn>
-        </template>
-        <v-card flat height="100%">
-          <v-row no-gutters align="start">
-            <v-col cols="12">
-              <profile-spec-builder :profileSpec="this.profileSpec" />
-            </v-col>
-          </v-row>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="action darken-1" text @click="profileDialog = false">
-              Done
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
       <v-btn text to="/">
         <v-icon>mdi-view-dashboard</v-icon>
         Dashboard
@@ -63,7 +46,7 @@
         </v-col>
       </v-row>
     </v-content>
-    <v-dialog v-model="dialog" fullscreen>
+    <v-dialog v-model="entryTypeDialog" fullscreen>
       <v-card flat class="fill-height">
         <v-card-text></v-card-text>
         <v-content>
@@ -76,7 +59,22 @@
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="action darken-1" text @click="dialog = false">
+          <v-btn color="action darken-1" text @click="entryTypeDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="profileSpecDialog" fullscreen>
+      <v-card flat height="100%">
+        <v-row no-gutters align="start">
+          <v-col cols="12">
+            <profile-spec-builder :index="this.profileSpecIndex" :profileSpec="this.profileSpec" @profile-spec-updated="profileSpecUpdated" />
+          </v-col>
+        </v-row>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="profileSpecDialog = false">
             Done
           </v-btn>
         </v-card-actions>
@@ -86,21 +84,20 @@
 </template>
 <script>
 import { Diagram } from '../components/Diagram'
-const ports = []
+let ports = []
 function port (nodes, entityType, entityName, linkType, direction) {
-  let linkPort
-  const linkPorts = ports.filter(port => {
+  let linkPort = ports.find(port => {
     return port.direction === direction && port.entityType === entityType && port.entityName === entityName && port.linkType === linkType
   })
-  if (linkPorts.length === 0) {
-    const linkNodes = nodes.filter(node => {
+  if (linkPort === undefined) {
+    const linkNode = nodes.find(node => {
       return node.entityType === entityType && node.entityName === entityName
     })
-    if (linkNodes.length > 0) {
+    if (linkNode) {
       if (direction === 'from') {
-        linkPort = linkNodes[0].node.addOutPort(linkType)
+        linkPort = linkNode.node.addOutPort(linkType)
       } else {
-        linkPort = linkNodes[0].node.addInPort(linkType)
+        linkPort = linkNode.node.addInPort(linkType)
       }
       ports.push({
         direction: direction,
@@ -110,22 +107,20 @@ function port (nodes, entityType, entityName, linkType, direction) {
         port: linkPort
       })
     }
-  } else {
-    linkPort = linkPorts[0].port
   }
   return linkPort
 }
-function createModel (zome, entryColour, anchorColour) {
-  // const entryType = holochainApp.zomes[0].entryTypes[0]
+function createModel (zome, entryColour, anchorColour, profileSpecColour) {
   const diagramModel = new Diagram.Model()
   let entryTypeIndex = 0
   let profileSpecIndex = 0
   let anchorIndex = 0
   const nodes = []
   const links = []
+  ports = []
   zome.anchors.forEach(anchor => {
     const anchorTitle = `${anchor.type}-${anchor.text}`
-    const anchorNode = diagramModel.addNode(anchorTitle, 30, 50 + anchorIndex * 350, 250, 200, 'anchor', anchorColour)
+    const anchorNode = diagramModel.addNode(anchorTitle, 30, 50 + anchorIndex * 350, 250, 200, 'anchor', anchorIndex, anchorColour)
     nodes.push({ entityType: 'anchor', entityName: `${anchor.type}${anchor.text}`, node: anchorNode })
     anchorNode.addField(`Anchor Type - ${anchor.type}`)
     anchorNode.addField(`Anchor Text - ${anchor.text}`)
@@ -137,22 +132,22 @@ function createModel (zome, entryColour, anchorColour) {
     }
   })
   zome.entryTypes.forEach(entryType => {
-    const entryNode = diagramModel.addNode(entryType.name, 380, 50 + entryTypeIndex * 350, 250, 300, 'entry', entryColour)
-    nodes.push({ entityType: 'entry', entityName: entryType.name, node: entryNode })
+    const entryNode = diagramModel.addNode(entryType.name, 380, 50 + entryTypeIndex * 350, 250, 300, 'entryType', entryTypeIndex, entryColour)
+    nodes.push({ entityType: 'entryType', entityName: entryType.name, node: entryNode })
     entryType.fields.forEach(field => {
       entryNode.addField(`${field.fieldName} - ${field.fieldType}`)
     })
     entryTypeIndex += 1
     if (entryType.links) {
       entryType.links.forEach(link => {
-        links.push({ link: link, entityType: 'entry', entityName: entryType.name })
+        links.push({ link: link, entityType: 'entryType', entityName: entryType.name })
       })
     }
   })
   zome.profileSpecs.forEach(profileSpec => {
-    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, 50 + profileSpecIndex * 350, 250, 300, 'profileSpec', entryColour)
+    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, 50 + profileSpecIndex * 350, 250, 300, 'profileSpec', profileSpecIndex, profileSpecColour)
     nodes.push({ entityType: 'profileSpec', entityName: profileSpec.name, node: profileSpecNode })
-    profileSpec.fields.forEach(field => {
+    profileSpec.specFields.forEach(field => {
       profileSpecNode.addField(`${field.fieldName} - ${field.fieldType}`)
     })
     profileSpecIndex += 1
@@ -162,7 +157,6 @@ function createModel (zome, entryColour, anchorColour) {
       })
     }
   })
-
   links.forEach(link => {
     if (link.link.direction === 'from') {
       diagramModel.addLink(port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, link.entityType, link.entityName, link.link.type, 'to'))
@@ -170,7 +164,6 @@ function createModel (zome, entryColour, anchorColour) {
       diagramModel.addLink(port(nodes, link.entityType, link.entityName, link.link.type, 'from'), port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'to'))
     }
   })
-
   nodes.forEach(node => {
     if (node.entityType !== 'anchor') {
       node.node.addInPort('link_to')
@@ -194,15 +187,11 @@ export default {
       holochainApp: this.hApp,
       anchor: {},
       entryType: {},
-      profileSpec: {
-        id: '',
-        name: this.zome.name,
-        specFields: [],
-        customFields: []
-      },
+      profileSpec: {},
+      profileSpecIndex: 0,
       model: new Diagram.Model(),
-      dialog: false,
-      profileDialog: false,
+      entryTypeDialog: false,
+      profileSpecDialog: false,
       anchorDialog: false,
       windowSize: {
         x: 200,
@@ -211,45 +200,53 @@ export default {
     }
   },
   methods: {
+    onResize () {
+      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+    },
     showModel: function () {
       console.log(this.model.serialize())
     },
-    editModelNode (type, title) {
+    editModelNode (type, index) {
       switch (type) {
         case 'anchor':
-          this.anchor = this.zome.anchors.find(function (anchor) {
-            return `${anchor.type}-${anchor.text}` === title
-          })
+          this.anchor = this.zome.anchors[index]
           this.anchorDialog = true
           break
-        case 'entry':
-          this.entryType = this.zome.entryTypes.find(function (entryType) {
-            return entryType.name === title
-          })
-          this.dialog = true
+        case 'entryType':
+          this.entryType = this.zome.entryTypes[index]
+          this.entryTypeDialog = true
           break
         case 'profileSpec':
-          this.profileSpec = this.zome.profileSpecs.find(function (profileSpec) {
-            return profileSpec.name === title
-          })
-          this.profileDialog = true
+          this.profileSpec = this.zome.profileSpecs[index]
+          this.profileSpecDialog = true
           break
       }
     },
-    onResize () {
-      this.windowSize = { x: window.innerWidth, y: window.innerHeight }
-      console.log(this.windowSize)
+    addProfileSpec () {
+      this.profileSpecIndex = this.zome.profileSpecs.length
+      this.zome.profileSpecs.push({
+        id: '',
+        name: this.zome.name,
+        specFields: [],
+        customFields: []
+      })
+      this.profileSpec = this.zome.profileSpecs[this.profileSpecIndex]
+      this.profileSpecDialog = true
     },
-    entryTypeUpdated (entryType) {
-      this.zome.entryTypes[0] = entryType
-      this.model = createModel(this.holochainApp)
+    profileSpecUpdated (index, profileSpec) {
+      this.zome.profileSpecs[index] = profileSpec
+      this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary, this.$vuetify.theme.themes.dark.info)
+    },
+    entryTypeUpdated (index, entryType) {
+      this.zome.entryTypes[index] = entryType
+      this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary, this.$vuetify.theme.themes.dark.info)
     },
     closeEntryTypeBuilderDialog (entryType) {
       this.dialog = false
     }
   },
   mounted () {
-    this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary)
+    this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary, this.$vuetify.theme.themes.dark.info)
   }
 }
 </script>
