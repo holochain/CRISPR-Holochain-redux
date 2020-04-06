@@ -6,9 +6,24 @@
     </v-toolbar>
      <v-content>
       <v-row no-gutters align="start" justify="center">
-        <v-col cols="12" class="skin">
+        <v-col cols="12">
           <module-container>
-            <notes-editor></notes-editor>
+            <v-tabs v-model="tab" background-color="primary" dark>
+              <v-tab key="mock">
+                Mock
+              </v-tab>
+              <v-tab key="live">
+                Live
+              </v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab">
+              <v-tab-item key="mock" class="skin">
+                <notes-editor></notes-editor>
+              </v-tab-item>
+              <v-tab-item key="live">
+                <notes-editor></notes-editor>
+              </v-tab-item>
+            </v-tabs-items>
           </module-container>
         </v-col>
       </v-row>
@@ -27,6 +42,11 @@ import { NotesModule } from '../web-components/notes-module'
 export default {
   name: 'ZomeSkin',
   props: ['hApp', 'zome'],
+  data () {
+    return {
+      tab: null
+    }
+  },
   created () {
     const hcConnection = new HolochainConnection({
       host: 'ws://localhost:33000'

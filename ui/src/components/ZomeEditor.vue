@@ -15,6 +15,14 @@
         <v-icon>mdi-plus</v-icon>
         Anchor
       </v-btn>
+      <v-btn text @click="codeDialog = true ">
+        <v-icon>mdi-code-braces</v-icon>
+        Code
+      </v-btn>
+      <v-btn text @click="skinDialog = true">
+        <v-icon>mdi-application</v-icon>
+        Skin
+      </v-btn>
       <v-btn text to="/">
         <v-icon>mdi-view-dashboard</v-icon>
         Dashboard
@@ -73,6 +81,75 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="anchorDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="codeDialog" fullscreen>
+      <v-card flat class="fill-height">
+        <v-card-text></v-card-text>
+        <v-content>
+          <v-row no-gutters align="start" justify="center">
+            <v-col cols="12">
+              <v-tabs v-model="tab" background-color="primary" dark>
+                <v-tab key="code">
+                  Code
+                </v-tab>
+                <v-tab key="skin">
+                  Skin
+                </v-tab>
+              </v-tabs>
+              <v-tabs-items v-model="tab">
+                <v-tab-item key="skin">
+                  <zome-skin :hApp="this.hApp"/>
+                </v-tab-item>
+              </v-tabs-items>
+            </v-col>
+          </v-row>
+        </v-content>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="entryTypeDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-dialog v-model="skinDialog" fullscreen>
+      <v-card flat class="fill-height">
+        <v-card-text></v-card-text>
+        <v-content>
+          <v-row no-gutters align="start" justify="center">
+            <v-col cols="12">
+              <zome-skin :hApp="this.hApp"/>
+            </v-col>
+          </v-row>
+        </v-content>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="skinDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="codeDialog" fullscreen>
+      <v-card flat class="fill-height">
+        <v-card-text></v-card-text>
+        <v-content>
+          <v-row no-gutters align="start" justify="center">
+            <v-col cols="12">
+              <zome-code-editor :hApp="this.hApp" :zome="this.zome" :entryType="this.zome.entryTypes[0]"/>
+            </v-col>
+          </v-row>
+        </v-content>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="codeDialog = false">
             Done
           </v-btn>
         </v-card-actions>
@@ -177,7 +254,9 @@ export default {
   components: {
     Diagram,
     ZomeBuilder: () => import('../components/ZomeBuilder'),
-    ProfileSpecBuilder: () => import('../components/ProfileSpecBuilder')
+    ProfileSpecBuilder: () => import('../components/ProfileSpecBuilder'),
+    ZomeSkin: () => import('../components/ZomeSkin'),
+    ZomeCodeEditor: () => import('../components/ZomeCodeEditor')
   },
   props: ['hApp', 'zome'],
   data () {
@@ -191,6 +270,9 @@ export default {
       entryTypeDialog: false,
       profileSpecDialog: false,
       anchorDialog: false,
+      skinDialog: false,
+      codeDialog: false,
+      tab: null,
       windowSize: {
         x: 200,
         y: 200
@@ -202,6 +284,9 @@ export default {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }
     },
     showModel: function () {
+      console.log(this.model.serialize())
+    },
+    showSkin () {
       console.log(this.model.serialize())
     },
     editModelNode (type, index) {
