@@ -1,6 +1,6 @@
 <template>
   <v-card fluid>
-      <v-toolbar app>
+      <v-toolbar>
         <v-toolbar-title>Holochain Modules</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn text to="/">
