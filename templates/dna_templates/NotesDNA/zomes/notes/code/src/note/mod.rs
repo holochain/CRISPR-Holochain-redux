@@ -43,9 +43,7 @@ pub struct NoteId {
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct NoteEntry {
-	title: String,
-	content: String,
+pub struct NoteEntry {_commafields
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -53,8 +51,7 @@ pub struct NoteEntry {
 pub struct Note {
     id: Address,
     created_at: Iso8601,
-	title: String,
-	content: String,
+    updated_at: Iso8601,_commafields
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -85,8 +82,7 @@ impl Note {
         Ok(Note{
             id: note_id_entry.address(),
             created_at: note_id.initial_entry_created_at,
-			title: note_entry.title,
-			content: note_entry.content,
+            updated_at: note_id.initial_entry_created_at,_commafields
         })
     }
 }

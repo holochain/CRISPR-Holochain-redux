@@ -117,6 +117,9 @@
                       <v-col v-for="(field, index) in this.entryType.fields" :key="index" cols="12">
                         <entry-type-field :index="index" :field="field" @save-entry-type-field="saveField" @delete-entry-type-field="deleteField"/>
                       </v-col>
+                      <v-col cols="12" class="pa-10">
+                        <div v-html="this.patternDescription" />
+                      </v-col>
                     </v-row>
                   </v-content>
                 </v-card>
@@ -225,7 +228,7 @@ function replaceMod (modTemplate, entryType, typePlaceHolder, typeName) {
   const rustFields = []
   const constRustNewFields = []
   entryType.fields.forEach(field => {
-    if (field.fieldName !== 'id' && field.fieldName !== 'created_at') {
+    if (field.fieldName !== 'id' && field.fieldName !== 'created_at' && field.fieldName !== 'updated_at') {
       rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
       constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${typeName}_entry.${field.fieldName}`)
     }
@@ -271,6 +274,7 @@ export default {
       permissionsCode: '',
       createEntryPermissionTemplate: '',
       modifyEntryPermissionTemplate: '',
+      patternDescription: this.entryType.pattern,
       cmOptions: {
         tabSize: 4,
         mode: 'rust',
@@ -282,7 +286,6 @@ export default {
   },
   methods: {
     addEntryTypeField (entryType) {
-      console.log(entryType)
       this.entryType.fields.push(
         {
           id: '',

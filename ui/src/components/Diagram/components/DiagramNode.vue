@@ -72,7 +72,6 @@ export default {
       this.$emit('deleteModelNode', this.type, this.typeIndex)
     },
     editModelNode () {
-      console.log('editModelNode', this.typeIndex, this.type)
       this.$emit('editModelNode', this.typeIndex, this.type)
     },
     mouseDown: function (event) {

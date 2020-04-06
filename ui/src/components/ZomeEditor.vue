@@ -5,35 +5,16 @@
       <v-spacer></v-spacer>
       <v-btn text>
         <v-icon>mdi-plus</v-icon>
-        Entity
+        Entry Type
       </v-btn>
       <v-btn text @click="addProfileSpec">
         <v-icon>mdi-plus</v-icon>
         Profile
       </v-btn>
-      <v-dialog v-model="anchorDialog" fullscreen>
-        <template v-slot:activator="{ on }">
-          <v-btn text  v-on="on">
-            <v-icon>mdi-plus</v-icon>
-            Anchor
-          </v-btn>
-        </template>
-        <v-card flat height="100%">
-          <v-container fill-height>
-            <v-row no-gutters align="start">
-              <v-col cols="12">
-                Anchor Builder {{`${this.anchor.type}-${this.anchor.text}`}}
-              </v-col>
-            </v-row>
-          </v-container>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="action darken-1" text @click="anchorDialog = false">
-              Done
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
+      <v-btn text @click="addAnchor">
+        <v-icon>mdi-plus</v-icon>
+        Anchor
+      </v-btn>
       <v-btn text to="/">
         <v-icon>mdi-view-dashboard</v-icon>
         Dashboard
@@ -75,6 +56,23 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="profileSpecDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-dialog v-model="anchorDialog" fullscreen>
+      <v-card flat height="100%">
+        <v-container fill-height>
+          <v-row no-gutters align="start">
+            <v-col cols="12">
+              Anchor Builder {{`${this.anchor.type}-${this.anchor.text}`}}
+            </v-col>
+          </v-row>
+        </v-container>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="anchorDialog = false">
             Done
           </v-btn>
         </v-card-actions>
@@ -221,6 +219,9 @@ export default {
           this.profileSpecDialog = true
           break
       }
+    },
+    addAnchor () {
+      this.anchorDialog = true
     },
     addProfileSpec () {
       this.profileSpecIndex = this.zome.profileSpecs.length
