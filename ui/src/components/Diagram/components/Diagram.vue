@@ -232,10 +232,10 @@ export default {
         var y
         if (port.type === 'in') {
           x = node.x + 10
-          y = node.y + port.y + 80
+          y = node.y + port.y + 60
         } else {
           x = node.x + node.width + 10
-          y = node.y + port.y + 70
+          y = node.y + port.y + 60
         }
 
         return { x, y }

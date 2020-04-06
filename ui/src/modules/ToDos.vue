@@ -63,7 +63,7 @@
             :key="`${i}-divider`"
           ></v-divider>
 
-          <v-list-item :key="`${i}-${task.text}`">
+          <v-list-item :key="`${i}-${task.title}`">
             <v-list-item-action>
               <v-checkbox
                 v-model="task.done"
@@ -73,7 +73,7 @@
                   <div
                     :class="task.done && 'grey--text' || 'primary--text'"
                     class="ml-4"
-                    v-text="task.text"
+                    v-text="task.title"
                   ></div>
                 </template>
               </v-checkbox>
@@ -115,11 +115,11 @@ export default {
     tasks: [
       {
         done: false,
-        text: 'Foobar'
+        title: 'Foobar'
       },
       {
         done: false,
-        text: 'Fizzbuzz'
+        title: 'Fizzbuzz'
       }
     ],
     task: null
