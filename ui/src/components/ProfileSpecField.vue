@@ -88,31 +88,29 @@ export default {
       this.$emit('delete-profile-spec-field', this.selected)
     }
   },
-  props: ['newField', 'profileSpecFieldValue', 'fieldNames'],
+  props: ['index', 'profileSpecField', 'fieldNames'],
   watch: {
     selected (field) {
-      // console.log(field.anchor)
       if (field.fieldName === undefined) {
         this.isEditing = true
       }
     },
     isEditing (save) {
       if (!save) {
-        // console.log('Saving ')
-        // console.log(this.selected)
-        // console.log(' data ')
-        // console.log(this.selectedData)
-        this.$emit('save-profile-spec-field', this.selected, this.selectedData)
+        this.$emit('save-profile-spec-field', this.index, this.selected)
       }
     }
   },
   mounted () {
-    if (this.profileSpecFieldValue) {
-      const anchor = this.profileSpecFieldValue.anchor
-      const fieldName = this.profileSpecFieldValue.fieldName
-      const linkContract = this.profileSpecFieldValue.linkContract
-      const description = this.profileSpecFieldValue.description
-      this.selected = { anchor: anchor, fieldName: fieldName, linkContract: linkContract, description: description }
+    if (this.profileSpecField.fieldName !== '') {
+      const anchor = this.profileSpecField.anchor
+      const fieldName = this.profileSpecField.fieldName
+      const fieldType = this.profileSpecField.fieldType
+      const linkContract = this.profileSpecField.linkContract
+      const description = this.profileSpecField.description
+      this.selected = { index: this.index, anchor: anchor, fieldName: fieldName, fieldType: fieldType, linkContract: linkContract, description: description }
+    } else {
+      this.isEditing = true
     }
   }
 }

@@ -114,8 +114,8 @@
                   </v-list-item>
                   <v-content>
                     <v-row no-gutters align="start" justify="center">
-                      <v-col v-for="(field) in this.entryType.fields" :key="field.fieldName" cols="12">
-                        <entry-type-field :field="field" @save-entry-type-field="saveField" @delete-entry-type-field="deleteField"/>
+                      <v-col v-for="(field, index) in this.entryType.fields" :key="index" cols="12">
+                        <entry-type-field :index="index" :field="field" @save-entry-type-field="saveField" @delete-entry-type-field="deleteField"/>
                       </v-col>
                     </v-row>
                   </v-content>
@@ -287,11 +287,8 @@ export default {
         {
           id: '',
           fieldName: '',
-          fieldType: '',
-          createTest: '',
-          updateTest: ''
+          fieldType: ''
         })
-      this.$emit('entry-type-updated', entryType)
     },
     generateEntryType (entryType) {
       console.log('generateEntryType')
@@ -317,21 +314,14 @@ export default {
       this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
     },
-    saveField (field, fieldName, fieldType) {
+    saveField (fieldIndex, field) {
       console.log('Save Field')
-      console.log(fieldName)
-      field.fieldName = fieldName
-      field.fieldType = fieldType
-      console.log(field)
+      this.entryType.fields[fieldIndex] = field
       this.$emit('entry-type-updated', this.entryType)
     },
-    deleteField (field) {
+    deleteField (fieldIndex, field) {
       console.log('Delete field')
-      const fieldName = field.fieldName
-      console.log(fieldName)
-      this.entryType.fields = this.entryType.fields.filter(function (field) {
-        return field.fieldName !== fieldName
-      })
+      this.entryType.fields.splice(fieldIndex, 1)
       this.$emit('entry-type-updated', this.entryType)
     },
     deleteEntryType (spec) {

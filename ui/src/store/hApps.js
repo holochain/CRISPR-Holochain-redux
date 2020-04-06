@@ -239,7 +239,7 @@ export const hApps = [
             links: [
               {
                 direction: 'from',
-                entityType: 'entry',
+                entityType: 'entryType',
                 entityName: 'NoteId',
                 type: 'entry'
               }

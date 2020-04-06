@@ -6,11 +6,11 @@
       <rect fill="#000000" :fill-opacity="titleFillOpacity" x="7" y="17" rx="3" ry="3" :width="width-4" height="16" class="node-dark-background">
       </rect>
       <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#FFFFFF">{{type}}-{{title}}</text>
-      <g @click="editModelNode(type)">
+      <g @click="editModelNode()">
         <rect :x="width - 29" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
         <image :x="width - 29" y="18" width="14" height="14" xlink:href="./edit.svg" />
       </g>
-      <g v-if="deletable" @click="deleteNode">
+      <g v-if="deletable" @click="deleteNode()">
         <rect :x="width - 12" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
         <line :x1="width" :y1="20" :x2="width - 10" :y2="30" style="stroke:rgb(0,0,0);" stroke-width="2" />
         <line :x1="width - 10" :y1="20" :x2="width" :y2="30" style="stroke:rgb(0,0,0);" stroke-width="2" />
@@ -30,6 +30,7 @@ export default {
       required: true
     },
     index: Number,
+    typeIndex: Number,
     ports: {
       type: Array,
       default: () => {
@@ -67,11 +68,12 @@ export default {
     }
   },
   methods: {
-    deleteNode: function () {
-      this.$emit('delete')
+    deleteNode () {
+      this.$emit('deleteModelNode', this.type, this.typeIndex)
     },
-    editModelNode (type) {
-      this.$emit('editModelNode', type, this.title)
+    editModelNode () {
+      console.log('editModelNode', this.typeIndex, this.type)
+      this.$emit('editModelNode', this.typeIndex, this.type)
     },
     mouseDown: function (event) {
       this.$emit(
