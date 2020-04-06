@@ -41,6 +41,8 @@ pub fn update_happ(id: Address, happ_input: HappEntry) -> ZomeApiResult<Happ> {
         Some(entry) => entry.address()
     };
     hdk::update_entry(Entry::App(HAPP_ENTRY_NAME.into(), happ_input.clone().into()), &address)?;
+    // always update link to new address of entry.
+    // in UI update id with new address
     Happ::new(id, happ_input)
 }
 

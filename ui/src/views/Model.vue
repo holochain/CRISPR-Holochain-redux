@@ -1,5 +1,5 @@
 <template>
-  <zome-editor :hApp="hApps[0]" :zome="hApps[0].zomes[0]" />
+  <zome-editor :hApp="hApp" :zome="hApp.zomes[0]" />
 </template>
 <script>
 import { mapState } from 'vuex'
@@ -9,7 +9,14 @@ export default {
     ZomeEditor: () => import('../components/ZomeEditor')
   },
   computed: {
-    ...mapState('app', ['hApps'])
+    ...mapState('app', ['hApps']),
+    hApp () {
+      const filtered = this.hApps.filter(hApp => {
+        return hApp.id === this.$route.params.hAppId
+      })
+      console.log(filtered[0].name)
+      return filtered[0]
+    }
   }
 }
 </script>

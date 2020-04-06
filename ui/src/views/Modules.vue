@@ -1,7 +1,6 @@
 <template>
   <v-card fluid>
-    <v-app-bar app clipped-left absolute>
-      <v-toolbar>
+      <v-toolbar app>
         <v-toolbar-title>Holochain Modules</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn text to="/">
@@ -9,23 +8,19 @@
           Dashboard
         </v-btn>
       </v-toolbar>
-    </v-app-bar>
     <v-content>
-    <v-row>
-      <v-col cols="4">
-        <to-dos />
-      </v-col>
+      <v-row>
         <v-col cols="4">
-        <chat />
-      </v-col>
-      <v-col cols="4">
-        <profile-website-builder-preview />
-      </v-col>
-    </v-row>
+          <to-dos />
+        </v-col>
+          <v-col cols="4">
+          <chat />
+        </v-col>
+        <v-col cols="4">
+          <profile-website-builder-preview />
+        </v-col>
+      </v-row>
     </v-content>
-    <v-footer app>
-      <span>Holochain</span>
-    </v-footer>
   </v-card>
 </template>
 
@@ -35,7 +30,7 @@ export default {
   components: {
     ToDos: () => import('../modules/ToDos'),
     Chat: () => import('../modules/Chat'),
-    ProfileWebsiteBuilderPreview: () => import('/Users/philipbeadle/holochain/holochain-developer/ui/src/modules/ProfileWebsiteBuilder/Preview')
+    ProfileWebsiteBuilderPreview: () => import('@/modules/ProfileWebsiteBuilder/Preview')
   }
 }
 </script>

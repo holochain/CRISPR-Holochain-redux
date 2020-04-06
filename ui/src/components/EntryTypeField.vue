@@ -84,7 +84,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.isEditing)
     if (this.field.fieldName === '') {
       this.isEditing = true
     }

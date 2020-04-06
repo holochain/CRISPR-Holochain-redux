@@ -13,9 +13,10 @@ const router = new Router({
       component: () => import('@/views/HolochainApps')
     },
     {
-      path: '/model',
+      path: '/model/:hAppId',
       name: 'Application Model',
-      component: () => import('@/views/Model')
+      component: () => import('@/views/Model'),
+      props: true
     },
     {
       path: '/modules',
