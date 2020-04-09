@@ -4,55 +4,55 @@ export const personas = [
     title: 'Freelancer Demo',
     fields: [
       {
-        anchor: 'welcome',
+        anchor: 'Welcome',
         fieldName: 'Welcome',
         fieldType: 'multiLineText',
         fieldValue: 'Lorem ipsum dolor sit amet, consectetur ad ipiscin elit. Etiam vulputate augue vel felis gra vida porta. Lorem ipsum dolor sit amet, cons ectetur adipiscing elit. \nLorem ipsum dolor sit amet, consectetur ad ipiscin elit. Etiam vulputate augue vel felis gra vida porta. Lorem ipsum dolor sit amet, cons ectetur adipiscing elit.'
       },
       {
-        anchor: 'welcome-image',
+        anchor: 'Welcome Image',
         fieldName: 'Welcome Image',
         fieldType: 'image',
         fieldValue: ''
       },
       {
-        anchor: 'recent-projects',
+        anchor: 'Recent Projects',
         fieldName: 'Recent Projects',
         fieldType: 'multiLineText',
         fieldValue: 'Lorem ipsum dolor sit amet, consectetur adip  scin elit. Etiam vulpu  augue vel felis gravida porta. Lorem ipsum dolor sit amet.'
       },
       {
-        anchor: 'recent-projects-image',
+        anchor: 'Recent Projects Image',
         fieldName: 'Recent Projects Image',
         fieldType: 'image',
         fieldValue: ''
       },
       {
-        anchor: 'services',
+        anchor: 'Services',
         fieldName: 'Services',
         fieldType: 'multiLineText',
         fieldValue: 'Curabitur venenatis tortor erat, quis laoreet nis lobortis eget. Fusce tempor aucto.'
       },
       {
-        anchor: 'services-image',
+        anchor: 'Services Image',
         fieldName: 'Services Image',
         fieldType: 'image',
         fieldValue: ''
       },
       {
-        anchor: 'about-me',
+        anchor: 'About Me',
         fieldName: 'About Me',
         fieldType: 'multiLineText',
         fieldValue: 'Lorem ipsum dolor sit amet, consectetur adip  scin elit. Etiam vulpu  augue vel felis gravida porta. Lorem ipsum dolor sit amet.'
       },
       {
-        anchor: 'about-me-image',
+        anchor: 'About Me Image',
         fieldName: 'About Me Image',
         fieldType: 'image',
         fieldValue: ''
       },
       {
-        anchor: 'skills',
+        anchor: 'Skills',
         fieldName: 'Skills',
         fieldType: 'multiLineText',
         fieldValue: 'Lorem ipsum dolor sit amet, consectetur adip  scin elit. Etiam vulpu  augue vel felis gravida porta.'

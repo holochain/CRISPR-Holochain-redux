@@ -102,7 +102,7 @@ export class NotesEditor extends moduleConnect(LitElement) {
     <div class='note-form'>
       <h3 class='red'>${this.mode} Note</h3>
       <div class='form-row'>
-        <mwc-textfield outlined label="Title" id="title" .value=${note.title} @change=${e => { note.title = e.target.value }}></mwc-textfield>
+        <mwc-textfield outlined label="The Title" id="title" .value=${note.title} @change=${e => { note.title = e.target.value }}></mwc-textfield>
       </div>
       <div class='form-row'>
         <mwc-textarea outlined label="Content" id="content" .value=${note.content} @change=${e => { note.content = e.target.value }}></mwc-textarea>

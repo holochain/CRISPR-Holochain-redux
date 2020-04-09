@@ -4,76 +4,76 @@ export const profiles = [
     name: 'Freelancer Demo Website',
     fields: [
       {
-        anchor: 'welcome',
+        anchor: 'Welcome',
         fieldName: 'Welcome',
         fieldType: 'multiLineText',
         linkContract: 'persist',
         description: 'Text for the first section of the site',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'welcome' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Welcome' }
       },
       {
-        anchor: 'welcome-image',
+        anchor: 'Welcome Image',
         fieldName: 'Welcome Image',
         fieldType: 'image',
         linkContract: 'persist',
         description: 'Large image that shows on bigger screens at the top of the site',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'welcome-image' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Welcome Image' }
       },
       {
-        anchor: 'recent-projects',
+        anchor: 'Recent Projects',
         fieldName: 'Recent Projects',
         fieldType: 'multiLineText',
         linkContract: 'persist',
         description: 'Introduction text for the recent projects',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'recent-projects' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Recent Projects' }
       },
       {
-        anchor: 'recent-projects-image',
+        anchor: 'Recent Projects Image',
         fieldName: 'Recent Projects Image',
         fieldType: 'image',
         linkContract: 'persist',
         description: 'Large image that shows on bigger screens next to the grid of recent projects',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'recent-projects-image' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Recent Projects Image' }
       },
       {
-        anchor: 'services',
+        anchor: 'Services',
         fieldName: 'Services',
         fieldType: 'multiLineText',
         linkContract: 'persist',
-        description: 'Introduction text for the services provided',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'services' }
+        description: 'Introduction text for the Services provided',
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Services' }
       },
       {
-        anchor: 'services-image',
+        anchor: 'Services Image',
         fieldName: 'Services Image',
         fieldType: 'image',
         linkContract: 'persist',
-        description: 'Large image that shows on bigger screens next to the grid of services',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'services-image' }
+        description: 'Large image that shows on bigger screens next to the grid of Services',
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Services Image' }
       },
       {
-        anchor: 'about-me',
+        anchor: 'About Me',
         fieldName: 'About Me',
         fieldType: 'multiLineText',
         linkContract: 'persist',
         description: 'Short bio.',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'about-me' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'About Me' }
       },
       {
-        anchor: 'about-me-image',
+        anchor: 'About Me Image',
         fieldName: 'About Me Image',
         fieldType: 'image',
         linkContract: 'persist',
         description: 'Large image that shows on bigger screens next to the grid of skills',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'about-me-image' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'About Me Image' }
       },
       {
-        anchor: 'skills',
+        anchor: 'Skills',
         fieldName: 'Skills',
         fieldType: 'multiLineText',
         linkContract: 'persist',
         description: 'Introduction for the skills list.',
-        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'skills' }
+        mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'Skills' }
       }
     ]
   }

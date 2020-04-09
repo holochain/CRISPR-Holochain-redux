@@ -1,11 +1,12 @@
 import { profiles } from './profiles.js'
 import { personas } from './personas.js'
 import { fieldNames } from './fieldNames.js'
+import { items } from './foldersFiles.js'
 
 export const hApps = [
   {
     id: 'QmCulture',
-    name: 'Culture',
+    name: 'Holochain-IDE',
     folder: '/Users/philipbeadle/holochain/hApps/Culture',
     url: '/happ-store/Culture',
     contact: 'Philip Beadle',
@@ -29,7 +30,7 @@ export const hApps = [
                 direction: 'from',
                 entityType: 'anchor',
                 entityName: 'branch',
-                type: 'branches'
+                type: 'anchor_link'
               }
             ]
           }
@@ -77,7 +78,7 @@ export const hApps = [
                 direction: 'from',
                 entityType: 'anchor',
                 entityName: 'branchname of branch',
-                type: 'branch'
+                type: 'anchor_link'
               }
             ],
             permissionRules: {
@@ -134,7 +135,7 @@ export const hApps = [
                 direction: 'from',
                 entityType: 'anchor',
                 entityName: 'branchname of branch',
-                type: 'branch'
+                type: 'anchor_link'
               }
             ],
             permissionRules: {
@@ -188,9 +189,19 @@ export const hApps = [
         name: 'Notes',
         anchors: [
           {
-            type: 'ListNotes',
+            type: 'root_anchor',
             text: '',
             links: []
+          },
+          {
+            type: 'list_notes',
+            text: '',
+            links: [{
+              direction: 'from',
+              entityType: 'anchor',
+              entityName: 'root_anchor',
+              type: 'anchor_link'
+            }]
           }
         ],
         entryTypes: [
@@ -206,6 +217,11 @@ export const hApps = [
                 id: 'Qm12',
                 fieldName: 'created_at',
                 fieldType: 'Iso8601'
+              },
+              {
+                id: 'Qm11',
+                fieldName: 'address',
+                fieldType: 'Address'
               },
               {
                 id: 'Qm12',
@@ -227,8 +243,8 @@ export const hApps = [
               {
                 direction: 'from',
                 entityType: 'anchor',
-                entityName: 'ListNotes',
-                type: 'notes'
+                entityName: 'list_notes',
+                type: 'anchor_link'
               }
             ],
             pattern: `<h1>Pattern 3</h1>
@@ -318,7 +334,8 @@ export const hApps = [
             </ul>`
           }
         ],
-        profileSpecs: []
+        profileSpecs: [],
+        items: items
       },
       {
         id: 'Qmmorehas444',
@@ -414,83 +431,8 @@ export const hApps = [
     }]
   },
   {
-    id: 'Qmmorebighashes',
-    name: 'eat-sleep-code-repeat',
-    folder: '/Users/philipbeadle/eat-sleep-code-repeat/dashboard',
-    url: '/happ-store/eat-sleep-code-repeat',
-    contact: 'Philip Beadle',
-    mobile: '+61 999 999 999',
-    description: 'Build and publish static websites from templates and player profiles.',
-    zomes: [
-      {
-        id: 'Qmmorehas444',
-        name: 'ProfileWebsites',
-        anchors: [
-          {
-            type: 'Profile Websites',
-            text: ''
-          }
-        ],
-        entryTypes: [
-          {
-            name: 'ProfileWebsite',
-            update: true,
-            delete: true,
-            fields: [
-              {
-                id: 'QmProfileWebsite1',
-                fieldName: 'id',
-                fieldType: 'String'
-              },
-              {
-                id: 'QmProfileWebsite2',
-                fieldName: 'created_at',
-                fieldType: 'Iso8601'
-              },
-              {
-                id: 'QmProfileWebsite3',
-                fieldName: 'domain',
-                fieldType: 'String'
-              }
-            ],
-            links: [
-              {
-                direction: 'from',
-                entityType: 'anchor',
-                entityName: 'Profile Websites',
-                type: 'profile_websites_link'
-              }
-            ],
-            permissionRules: {
-              validateEntryCreate: '',
-              validateEntryModify: '',
-              validateEntryDelete: '',
-              validateLinkAdd: '',
-              validateLinkRemove: ''
-            },
-            testData: {
-              create: { domain: 'www.domain.demo' },
-              update: [
-                { domain: 'Updated www.domain.demo' },
-                { domain: 'Updated Again www.domain.demo' }
-              ],
-              list: [
-                { domain: 'www.domain.demo 1' },
-                { domain: 'www.domain.demo 2' },
-                { domain: 'www.domain.demo 3' },
-                { domain: 'www.domain.demo 4' }
-              ]
-            }
-          }
-        ],
-        profileSpecs: []
-      }
-    ],
-    modules: []
-  },
-  {
-    name: 'my-info',
-    folder: '/Users/philipbeadle/holochain/hApps/my-info',
+    name: 'personas-profiles',
+    folder: '/Users/philipbeadle/holochain/hApps/personas-profiles',
     url: '/entry-types',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
