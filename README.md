@@ -1,128 +1,182 @@
-# How to start Holochain Developer
+# Holochain-IDE
 
-Make sure you have nix-shell installed
+Make sure you have nix-shell installed and clone this repository:
 
 ```
-nix-shell https://holochain.love
-hn-holocahin-developer
+nix-shell
+yarn ui:start
 ```
 
+This will start up the IDE with the 3 projects we are building. 
+- Holochain IDE
+- Personas & Profiles
+- Notes
+
+The Holochain-IDE will build opinionated Holochain Apps with lit-element web component UIs and try-o-rama tested DNAs. The entry types
+
+## Notes App
+* Built completely with Holochain-IDE
+    * When this is done both Holochain-IDE and Personas MVPs will be complete.
+    * UI will be a lit-element web component using GraphQl & Apollo Client
+* 2 fields
+    * Title
+    * Content
+* Phases
+    * Phase 1
+        * List all notes
+        * Permissions
+            * Anyone update or delete
+    * Phase 2
+        * List Agent Notes only
+        * Permissions
+            * Anyone update or delete (you can only see your own anyway)
+    * Phase 3
+        * List all notes
+        * Permissions
+            * Agent Only update or delete
+    * Phase 4
+        * List all notes
+        * List Agent Notes
+        * Permissions
+            * Anyone update or delete
+    * Phase 5
+        * Agent Profile
+            * Handle
+            * Avatar
+        * Notes List shows avatar and handle on each entry
 
 
-<div>Icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>
+## Personas 
+> Details here https://holo.hackmd.io/UApQP-cyS6COLDhSE9piGA
+* Field Names App
+    * Build model in Holochain-IDE
+    * Internationalised
+        * en, es, de etc
+    * Curated fields list
+        * Global DHT
+    * Custom fields list
+        * Stored in the App DHT
+    * Roles based permission for who can manage field name in Global app
+    * Web Component UI
+        * Field
+            * Create
+            * Modify
+            * Remove
+            * List
+        * Language
+            * Create
+            * Modify
+            * Remove
+            * List
+        * Vocabulary (later)
+            * Create
+            * Modify
+            * Remove
+            * List
+* Profile Spec Builder - used in Holochain IDE
+    * POC UI needs team review, UX etc
+    * Connect to Field Names App
+        * Load from Global DHT
+        * Save Custom Fields to the Profile Spec.
+            * Save Custom fields to the Holochain-IDE DHT for the App
+* Personas Manager
+    * Build model in Holochain-IDE
+    * POC UI needs team review, UX etc
+    * Persona
+            * Create
+            * Modify
+                * + Move field between Personas
+            * Remove
+            * List
+* Profile Manager
+    * Build model in Holochain-IDE
+    * Profile
+        * Only created when Agent fills out a App Profile
+        * Modify
+        * Remove
+        * List
 
 
-Reserved field names
-
-
-WebComponents can be used in any app
-
-Permission role of "No-one" controls if Modify and Remove are generated.
-
-type_1_entry: 
-- Developer defined fields
-    - title {String,textfield}
-    - content {String,textarea}
-- Generated Structs
-    - type_1_entry
-    - type_1
-        - [address, address of type_1_entry]
-- Links []
-- Anchors []
-- Assumes that parent app is keeping track of Address such as a Comment entry linked to a Post.
-- zome_fns
-    - [] create_entry(type_1_entry) --> type_1[type_1.address = Address(type_1_id)]
-        - commit type_1_entry
-    - [] modify_entry(type_1) --> type_1[type_1.address = Modified Address(type_1_id)]
-        - modify type_1_entry
-    - [] remove_entry(type_1.address) --> Removed Address(type_1_id)
-        - remove type_1_entry
-- UI
-    - Item
-        - [] address [text]
-        - [] title [textfield]
-        - [] content [textarea]
-
-
-type_2_entry
-- Developer defined fields
-    - id (reserved field name)
-    - title [textfield]
-    - content [textarea]    
-- Generated Structs
-    - type_2_entry
-    - type_2_id
-        - initial_entry_address [address of intial type_2_entry]
-        - initial_entry_created_at [created_at of intial type_2_entry]
-    - type_2
-        - [type_2_entry, address of type_2_id]
-- Links
-    - from type_2_id
-- Anchors []
-- zome_fns
-    - [] create_entry(type_2_entry) --> type_2[type_2.id = Address of type_2_id]
-        - commit type_2_entry
-        - new type_2_id
-            - initial_entry_address [address of intial type_2_entry]
-            - initial_entry_created_at [created_at of intial type_2_entry]
-        - link type_2_id --> new type_2_entry
-    - [] modify_entry(type_2), type_2_id (doesnt change)
-        - link type_2_id --> new type_2_entry
-        - Remove old link type_2_id --> previous type_2_entry
-    - [] remove_entry(type_2.Id) --> Address
-        - Remove link type_2_id --> type_2_entry
-        - Remove type_2_entry
-- UI
-    - Item
-        - id [text]
-        - title [textfield]
-        - content [textarea]
-
-
-Pattern 3
-- Developer defined fields
-    - id (reserved field name)
-    - created_at (reserved field name)
-    - updated_at (reserved field name)
-    - title [textfield]
-    - content [textarea]    
-- Generated Structs
-    - type_3_entry
-    - type_3_id
-        - initial_entry_address [address of intial type_2_entry]
-        - initial_entry_created_at [created_at of intial type_2_entry]
-    - type_3
-        - [type_3.id = address of type_3_id, type_3.created_at = type_3_id.created_at, type_3.updated_at = type_3_entry.created_at, type_3_entry]
-- Links
-    - from type_3_id
-    - type_3_id from type_3
-- Anchors 
-    - AnchorType "type_3_list"
-    - AnchorText ""
-- zome_fns
-    - [] create_entry(type_3_entry) --> type_3[type_3.id = Address type_3_id, type_3.created_at = type_3_id.initial_entry_created_at, type_3.updated_at = type_3_id.initial_entry_created_at]
-        - commit type_3_entry
-        - new type_3_id
-            - initial_entry_address [address of intial type_3_entry]
-            - initial_entry_created_at [created_at of intial type_3_entry]
-        - link type_3_id --> new type_3_entry
-        - link type_3_list --> new type_3_id
-    - [] modify_entry(type_3) --> type_3[type_3.updated_at = type_3_entry.timestamp]
-        - link type_3_id --> new type_3_entry
-        - Remove old link type_3_id --> previous type_3_entry
-    - [] remove_entry(type_3.Id) --> Address
-        - Remove link type_3_id --> type_3_entry
-        - Remove link type_3_list --> type_3_id
-        - Remove type_3_id
-        - Remove type_3_entry
-- UI
-    - Item
-        - id [text]
-        - created_at [text]
-        - updated_at [text]
-        - title [textfield]
-        - content [textarea]
-
-
-
-Import a json schema to produce entry types
+Holochain IDE - MVP
+(Scope is to build Notes App and Personas with GraphQl, Apollo & lit-element UI)
+* POC is good enough to move on, Arthur prioritising this work
+* DNA Model Builder - Builds DNA, also teaches as each part of generated code is viewable on the Entry Type Builder
+    * Entry Type Builder
+        * Details stored a JSONSchema which will also enable importing schemas later.
+        * Specify name of Entry - auto formatted
+        * Select a “skin” for entry and list of entries - lit-element web components
+        * Set Permissions (Adding a Profile Type Entry enables roles based permissions)
+            * Updates functions list
+            * Updates permissions code
+        * Manage fields list
+            * name - auto-formatted
+            * type: selector [String only for MVP]
+            * selected type has selection of UI components
+            * id, created_at, address, updated_at are in every return
+                * id = address of EntryId entry for Entry, unchanging
+                * created_at = timestamp of initial entry for Entry, field of EntryId
+                * address = address of Entry, changes each update
+                * updated_at = timestamp Entry
+        * Display to developer
+            * entry!
+                * name:
+                * link!: from & type
+            * functions - these change depending on Permissions
+                * create_entry(entry: Entry) —> id, created_at, address, updated_at, entry
+                * Etc
+        * Code Viewer
+            * mod.rs
+            * handlers.rs
+            * permissions.rs
+            * test/entry_type/index.js
+        * Code Editor
+            * validation.rs
+        * Anchor
+            * Type: list_entrys
+            * Text:
+        * Optional Agent specific list
+            * link entries to AgentId, linking to ${agent_id} makes that node an authority and thus entries and links are local and fast to retrieve.
+        * Test and Demo data table
+            * Rows of suitable data that Agent would enter into App
+    * Anchor Type Entry
+        * Not configurable by developer for MVP
+        * Added by options in linked Entry
+        * Auto adds Root Anchor to model
+    * Profile Type Entry
+        * Profile Spec Builder
+            * Part of Personas App see above
+        * linked to ${agent_id}
+        * Doesn’t need an EntryId as the ${agent_id} is the unchanging Id for the profile entry
+        * No permissions management as only the Agent can make changes
+        * No need for skin as it uses Personas & Profiles
+        * Option
+            * Agent can fill out profile
+            * Agent must have profile
+    * Layout of model on svg canvas.
+        * Algorithm for laying out multiple linked entry types and anchors
+* Holochain Apps List - Use Modeller to build DNA
+    * Create
+        * Separate DHT for each Holochain App (Useful for other apps like a chat so each “room” can be completely private)
+    * Modify
+    * Remove
+    * List
+    * Zomes
+        * Create
+        * Modify
+        * Remove
+        * List
+        * Entry Types
+            * Create
+            * Modify
+            * Remove
+            * List
+        * Anchors
+            * Create
+            * Modify
+            * Remove
+            * List
+        * Profile Entry Types
+            * Create
+            * Modify
+            * Remove
+            * List
