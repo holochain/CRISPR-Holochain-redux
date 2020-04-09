@@ -15,17 +15,8 @@
             <v-tab key="entity">
               Entry Fields
             </v-tab>
-            <!-- <v-tab key="validation">
-              Validation Rules
-            </v-tab> -->
             <v-tab key="permissions">
               Permissions
-            </v-tab>
-            <v-tab key="code">
-              Code
-            </v-tab>
-            <v-tab key="skin">
-              Skin
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab">
@@ -75,60 +66,18 @@
                       Add Field
                     </v-btn>
                   </v-list-item-action>
-                  <v-list-item-action>
-                    <v-btn text @click="addEntryTypeProfileField(entryType)">
-                      <v-icon>mdi-plus</v-icon>
-                      Add Profile Field
-                    </v-btn>
-                  </v-list-item-action>
-                  <v-list-item-action>
-                    <v-dialog v-model="generateEntryTypeDialog" persistent max-width="390">
-                        <template v-slot:activator="{ on }">
-                          <v-btn text v-on="on">
-                            <v-icon>mdi-clipboard-flow-outline</v-icon>
-                              Generate Entry Type
-                          </v-btn>
-                        </template>
-                        <v-card>
-                          <v-card-title class="headline">Generate Entry Type</v-card-title>
-                          <v-list-item>
-                            <v-list-item-content>
-                              <v-col cols="12">
-                                <v-card-text>
-                                  This will generate the Entry Type & UI:
-                                </v-card-text>
-                                <v-card-text class="font-weight-bold mt-n5">
-                                  {{entryType.name}}
-                                </v-card-text>
-                              </v-col>
-                            </v-list-item-content>
-                          </v-list-item>
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn color="green darken-1" text @click="generateEntryTypeDialog = false">Cancel</v-btn>
-                            <v-btn color="green darken-1" text @click="generateEntryType(entryType)">Proceed</v-btn>
-                          </v-card-actions>
-                        </v-card>
-                      </v-dialog>
-                  </v-list-item-action>
                   </v-list-item>
                   <v-content>
                     <v-row no-gutters align="start" justify="center">
-                      <v-col v-for="(field, index) in this.entryType.fields" :key="index" cols="12">
+                      <v-col v-for="(field, index) in configurableFields" :key="index" cols="12">
                         <entry-type-field :index="index" :field="field" @save-entry-type-field="saveField" @delete-entry-type-field="deleteField"/>
-                      </v-col>
-                      <v-col cols="12" class="pa-10">
-                        <div v-html="this.patternDescription" />
                       </v-col>
                     </v-row>
                   </v-content>
                 </v-card>
             </v-tab-item>
-            <!-- <v-tab-item key="validation">
-              <validation-rules />
-            </v-tab-item> -->
             <v-tab-item key="permissions">
-              <entry-type-permissions :entryType="entryType" @permissionChanged="permissionChanged"/>
+              <entry-type-permissions :entryType="entryType" @permission-changed="permissionChanged"/>
             </v-tab-item>
           </v-tabs-items>
         </v-col>
@@ -177,14 +126,16 @@ export default {
       this.$emit('delete-entry-type', spec)
     },
     permissionChanged (mutation, role) {
-      switch (mutation) {
-        case 'entryCreate':
-          break
-        case 'entryModify':
-          break
-        case 'entryDelete':
-          break
-      }
+      this.$emit('permission-changed', this.entryType, mutation, role)
+    }
+  },
+  computed: {
+    configurableFields () {
+      const fields = this.entryType.fields.filter(field => {
+        return field.fieldName !== 'id' && field.fieldName !== 'created_at' && field.fieldName !== 'address' && field.fieldName !== 'updated_at'
+      })
+      console.log(fields)
+      return fields
     }
   }
 }

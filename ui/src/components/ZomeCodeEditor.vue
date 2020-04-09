@@ -1,14 +1,45 @@
 <template>
-  <v-card flat class="mx-auto" height="calc(100% - 100px)">
-    <v-toolbar>
-      <v-toolbar-title>{{this.hApp.name}} Zome</v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-     <v-content>
-      <v-row no-gutters align="start" justify="center">
+  <v-card flat height="calc(100%-200px)" width="100%" class="pa-0 ma-0">
+    <v-row no-gutters>
+      <v-col cols="3">
+        <v-toolbar color="primary" dark>
+          <v-toolbar-title>Application Files</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon class="mr-1 ml-n1">
+            <template>
+              <v-img width="20" :src="require(`@/assets/icons/holochain-circle.png`)" />
+            </template>
+          </v-btn>
+        </v-toolbar>
+        <v-treeview
+          v-model="tree"
+          :open="open"
+          :items="this.zome.items"
+          activatable
+          item-key="name"
+          dense
+          open-on-click>
+          <template v-slot:prepend="{ item, open }">
+            <v-btn icon>
+              <v-icon>
+                {{ open ? 'mdi-folder-open' : 'mdi-folder-closed' }}
+              </v-icon>
+            </v-btn>
+          </template>
+          <template v-slot:label="{ item }">
+            <v-btn text @click="loadFile(item)">
+              {{item.name}}
+            </v-btn>
+          </template>
+        </v-treeview>
+      </v-col>
+      <v-col cols="9">
+        <v-card flat class="mx-auto">
+        <v-content>
+        <v-row no-gutters align="start" justify="center">
         <v-col cols="12">
           <v-card>
-            <v-tabs v-model="codeTab" background-color="accent" dark>
+            <v-tabs v-model="codeTab" background-color="accent" dark height="64">
                 <v-tab key="lib">
                 lib.rs
                 </v-tab>
@@ -62,17 +93,18 @@
             </v-tabs-items>
             </v-card>
         </v-col>
-      </v-row>
-    </v-content>
+        </v-row>
+        </v-content>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
 <script>
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
-// language js
 import 'codemirror/mode/rust/rust.js'
-// theme css
 import 'codemirror/theme/base16-dark.css'
 import * as fs from 'fs'
 import * as path from 'path'
@@ -133,7 +165,7 @@ export default {
       hAppName: this.hApp.name,
       hAppFolder: this.hApp.folder + '/dna/',
       zomeName: this.zome.name.toLowerCase(),
-      typeName: 'note', // this.entryType.name.toLowerCase(),
+      typeName: this.entryType.name.toLowerCase(),
       permissionsTemplate: '',
       permissionsCode: '',
       createEntryPermissionTemplate: '',
@@ -144,29 +176,14 @@ export default {
         theme: 'base16-dark',
         lineNumbers: true,
         line: true
-      }
+      },
+      tree: [],
+      open: ['Notes App', 'dna', 'ui']
     }
   },
   methods: {
-    permissionChanged (mutation, role) {
-      this.permissionsCode = this.permissionsTemplate
-      switch (mutation) {
-        case 'entryCreate':
-          this.createEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_create/${role}.rs`, 'utf8')
-          break
-        case 'entryModify':
-          this.modifyEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_modify/${role}.rs`, 'utf8')
-          break
-        case 'entryDelete':
-          this.deleteEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/${role}.rs`, 'utf8')
-          break
-      }
-      this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_create', 'g'), this.createEntryPermissionTemplate)
-      this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_modify', 'g'), this.modifyEntryPermissionTemplate)
-      this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_delete', 'g'), this.deleteEntryPermissionTemplate)
-      if (this.$refs.cmPermEditor !== undefined) {
-        this.permCodemirror.refresh()
-      }
+    listFiles (item) {
+      this.files = item.files
     },
     writeZomeCode (entryType) {
       console.log('generateEntryType')
@@ -189,7 +206,6 @@ export default {
       fs.writeFileSync(path.join(this.hAppFolder + 'test/config-generate.js'), this.configGenerateCode)
       fs.writeFileSync(path.join(this.hAppFolder + 'test/config-copy.js'), this.configCopyCode)
       this.generateEntryTypeDialog = false
-      this.$emit('entry-type-updated', entryType)
       this.$emit('close-entry-type-builder-dialog', this.entryType)
     },
     onResizeLib () {
@@ -295,6 +311,12 @@ export default {
   mounted: function () {
     this.permissionsTemplate = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/NotesDNA/zomes/notes/code/src/note/permissions.rs`, 'utf8')
     this.permissionsCode = replacePlaceHolders(this.permissionsTemplate, this.typePlaceHolder, this.typeName)
+    this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_create', 'g'), this.entryType.createEntryPermissionTemplate)
+    this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_modify', 'g'), this.entryType.modifyEntryPermissionTemplate)
+    this.permissionsCode = this.permissionsCode.replace(new RegExp('// validate_permissions_entry_delete', 'g'), this.entryType.deleteEntryPermissionTemplate)
+    if (this.$refs.cmPermEditor !== undefined) {
+      this.permCodemirror.refresh()
+    }
   }
 }
 </script>

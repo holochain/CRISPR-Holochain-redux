@@ -91,7 +91,7 @@ export default {
       removeLinkPermission: '',
       linkTypes: ['note_link'],
       linkPermissions: ['Add Link', 'Delete Link'],
-      roles: [{ title: 'No-one', value: 'no-one' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }, { title: 'Administrators', value: 'administrators' }, { title: 'Admins & Author', value: 'administrators-author' }]
+      roles: [{ title: 'Remove', value: 'no-one' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }, { title: 'Administrators', value: 'administrators' }, { title: 'Admins & Author', value: 'administrators-author' }]
     }
   },
   props: ['entryType'],
@@ -104,19 +104,19 @@ export default {
   },
   watch: {
     createEntryPermission (role) {
-      this.$emit('permissionChanged', 'entryCreate', role)
+      this.$emit('permission-changed', 'entryCreate', role)
     },
     modifyEntryPermission (role) {
-      this.$emit('permissionChanged', 'entryModify', role)
+      this.$emit('permission-changed', 'entryModify', role)
     },
     deleteEntryPermission (role) {
-      this.$emit('permissionChanged', 'entryDelete', role)
+      this.$emit('permission-changed', 'entryDelete', role)
     },
     addLinkPermission (role) {
-      this.$emit('permissionChanged', 'addLink', role)
+      this.$emit('permission-changed', 'addLink', role)
     },
     removeLinkPermission (role) {
-      this.$emit('permissionChanged', 'removeLink', role)
+      this.$emit('permission-changed', 'removeLink', role)
     }
   }
 }

@@ -1,67 +1,156 @@
 export const curatedFieldNames = [
-  { anchor: 'name', fieldName: 'Full Name', fieldType: 'singleLineText' },
-  { anchor: 'given_name', fieldName: 'Given Name', fieldType: 'singleLineText' },
-  { anchor: 'family_name', fieldName: 'Family Name', fieldType: 'singleLineText' },
-  { anchor: 'middle_name', fieldName: 'Middle Name', fieldType: 'singleLineText' },
-  { anchor: 'nickname', fieldName: 'Nick Name', fieldType: 'singleLineText' },
-  { anchor: 'preferred-username', fieldName: 'Handle', fieldType: 'singleLineText' },
-  { anchor: 'profile-picture', fieldName: 'Profile Picture', fieldType: 'image' },
-  { anchor: 'avatar', fieldName: 'Avatar', fieldType: 'thumbnail' },
-  { anchor: 'biography', fieldName: 'Bio', fieldType: 'multiLineText' },
-  { anchor: 'website', fieldName: 'Website', fieldType: 'singleLineText' },
-  { anchor: 'email', fieldName: 'Email', fieldType: 'singleLineText' },
-  { anchor: 'birth-date', fieldName: 'Birth Date', fieldType: 'singleLineText' },
-  { anchor: 'time-zone', fieldName: 'Time Zone', fieldType: 'singleLineText' },
-  { anchor: 'locale', fieldName: 'Locale', fieldType: 'singleLineText' },
-  { anchor: 'phone-number', fieldName: 'Phone Number', fieldType: 'singleLineText' },
-  { anchor: 'address', fieldName: 'Email', fieldType: 'singleLineText' }
+  {
+    anchor: 'name',
+    fieldName: 'Full Name',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'given_name',
+    fieldName: 'Given Name',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'family_name',
+    fieldName: 'Family Name',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'middle_name',
+    fieldName: 'Middle Name',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'nickname',
+    fieldName: 'Nick Name',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'preferred-username',
+    fieldName: 'Handle',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'profile-picture',
+    fieldName: 'Profile Picture',
+    fieldType: 'String',
+    ui: 'thumbnail'
+  },
+  {
+    anchor: 'avatar',
+    fieldName: 'Avatar',
+    fieldType: 'String',
+    ui: 'thumbnail'
+  },
+  {
+    anchor: 'biography',
+    fieldName: 'Bio',
+    fieldType: 'String',
+    ui: 'textarea'
+  },
+  {
+    anchor: 'website',
+    fieldName: 'Website',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'email',
+    fieldName: 'Email',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'birth-date',
+    fieldName: 'Birth Date',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'time-zone',
+    fieldName: 'Time Zone',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'locale',
+    fieldName: 'Locale',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'phone-number',
+    fieldName: 'Phone Number',
+    fieldType: 'String',
+    ui: 'textfield'
+  },
+  {
+    anchor: 'address',
+    fieldName: 'Email',
+    fieldType: 'String',
+    ui: 'textfield'
+  }
 ]
 
 export const customFieldNames = [
   {
-    anchor: 'welcome',
+    anchor: 'Welcome',
     fieldName: 'Welcome',
-    fieldType: 'multiLineText'
+    fieldType: 'String',
+    ui: 'textarea'
   },
   {
-    anchor: 'welcome-image',
+    anchor: 'Welcome Image',
     fieldName: 'Welcome Image',
-    fieldType: 'image'
+    fieldType: 'String',
+    ui: 'image'
   },
   {
-    anchor: 'recent-projects',
+    anchor: 'Recent Projects',
     fieldName: 'Recent Projects',
-    fieldType: 'multiLineText'
+    fieldType: 'String',
+    ui: 'textarea'
   },
   {
-    anchor: 'recent-projects-image',
+    anchor: 'Recent Projects Image',
     fieldName: 'Recent Projects Image',
-    fieldType: 'image'
+    fieldType: 'String',
+    ui: 'image'
   },
   {
-    anchor: 'services',
+    anchor: 'Services',
     fieldName: 'Services',
-    fieldType: 'multiLineText'
+    fieldType: 'String',
+    ui: 'textarea'
   },
   {
-    anchor: 'services-image',
+    anchor: 'Services Image',
     fieldName: 'Services Image',
-    fieldType: 'image'
+    fieldType: 'String',
+    ui: 'image'
   },
   {
-    anchor: 'about-me',
+    anchor: 'About Me',
     fieldName: 'About Me',
-    fieldType: 'multiLineText'
+    fieldType: 'String',
+    ui: 'textarea'
   },
   {
-    anchor: 'about-me-image',
+    anchor: 'About Me Image',
     fieldName: 'About Me Image',
-    fieldType: 'image'
+    fieldType: 'String',
+    ui: 'image'
   },
   {
-    anchor: 'skills',
+    anchor: 'Skills',
     fieldName: 'Skills',
-    fieldType: 'multiLineText'
+    fieldType: 'String',
+    ui: 'textarea'
   }
 ]
 

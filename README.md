@@ -122,3 +122,7 @@ Pattern 3
         - updated_at [text]
         - title [textfield]
         - content [textarea]
+
+
+
+Import a json schema to produce entry types

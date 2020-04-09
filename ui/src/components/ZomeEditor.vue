@@ -41,7 +41,7 @@
         <v-content>
           <v-row no-gutters align="start" justify="center">
             <v-col cols="12">
-              <zome-builder :hApp="this.holochainApp" :zome="this.zome" :entryType="this.entryType" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" />
+              <zome-builder :hApp="this.holochainApp" :zome="this.zome" :entryType="this.entryType" @entry-type-updated="entryTypeUpdated" @close-entry-type-builder-dialog="closeEntryTypeBuilderDialog" @permission-changed="permissionChanged" />
             </v-col>
           </v-row>
         </v-content>
@@ -137,15 +137,12 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="codeDialog" fullscreen>
-      <v-card flat class="fill-height">
-        <v-card-text></v-card-text>
-        <v-content>
+      <v-card flat class="fill-height pa-0 ma-0">
           <v-row no-gutters align="start" justify="center">
             <v-col cols="12">
-              <zome-code-editor :hApp="this.hApp" :zome="this.zome" :entryType="this.zome.entryTypes[0]"/>
+              <zome-code-editor ref="zomeCodeEditor" :hApp="this.hApp" :zome="this.zome" :entryType="this.entryType" />
             </v-col>
           </v-row>
-        </v-content>
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -159,6 +156,9 @@
 </template>
 <script>
 import { Diagram } from '../components/Diagram'
+import * as fs from 'fs'
+import { mapState } from 'vuex'
+
 let ports = []
 function port (nodes, entityType, entityName, linkType, direction) {
   let linkPort = ports.find(port => {
@@ -195,7 +195,7 @@ function createModel (zome, entryColour, anchorColour, profileSpecColour) {
   ports = []
   zome.anchors.forEach(anchor => {
     const anchorTitle = `${anchor.type}-${anchor.text}`
-    const anchorNode = diagramModel.addNode(anchorTitle, 30, 50 + anchorIndex * 350, 250, 200, 'anchor', anchorIndex, anchorColour)
+    const anchorNode = diagramModel.addNode(anchorTitle, 30, 100 + anchorIndex * 350, 250, 200, 'anchor', anchorIndex, anchorColour)
     nodes.push({ entityType: 'anchor', entityName: `${anchor.type}${anchor.text}`, node: anchorNode })
     anchorNode.addField(`Anchor Type - ${anchor.type}`)
     anchorNode.addField(`Anchor Text - ${anchor.text}`)
@@ -207,7 +207,7 @@ function createModel (zome, entryColour, anchorColour, profileSpecColour) {
     }
   })
   zome.entryTypes.forEach(entryType => {
-    const entryNode = diagramModel.addNode(entryType.name, 380, 50 + entryTypeIndex * 350, 250, 300, 'entryType', entryTypeIndex, entryColour)
+    const entryNode = diagramModel.addNode(entryType.name, 380, 100 + entryTypeIndex * 350, 250, 300, 'entryType', entryTypeIndex, entryColour)
     nodes.push({ entityType: 'entryType', entityName: entryType.name, node: entryNode })
     entryType.fields.forEach(field => {
       entryNode.addField(`${field.fieldName} - ${field.fieldType}`)
@@ -220,7 +220,7 @@ function createModel (zome, entryColour, anchorColour, profileSpecColour) {
     }
   })
   zome.profileSpecs.forEach(profileSpec => {
-    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, 50 + profileSpecIndex * 350, 250, 300, 'profileSpec', profileSpecIndex, profileSpecColour)
+    const profileSpecNode = diagramModel.addNode(profileSpec.name, 720, 100 + profileSpecIndex * 350, 250, 300, 'profileSpec', profileSpecIndex, profileSpecColour)
     nodes.push({ entityType: 'profileSpec', entityName: profileSpec.name, node: profileSpecNode })
     profileSpec.specFields.forEach(field => {
       profileSpecNode.addField(`${field.fieldName} - ${field.fieldType}`)
@@ -234,16 +234,14 @@ function createModel (zome, entryColour, anchorColour, profileSpecColour) {
   })
   links.forEach(link => {
     if (link.link.direction === 'from') {
-      diagramModel.addLink(port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, link.entityType, link.entityName, link.link.type, 'to'))
+      diagramModel.addLink(port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'from'), port(nodes, link.entityType, link.entityName, '', 'to'))
     } else {
-      diagramModel.addLink(port(nodes, link.entityType, link.entityName, link.link.type, 'from'), port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'to'))
+      diagramModel.addLink(port(nodes, link.entityType, link.entityName, '', 'from'), port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'to'))
     }
   })
   nodes.forEach(node => {
-    if (node.entityType !== 'anchor') {
-      node.node.addInPort('link_to')
-    }
-    node.node.addOutPort('link_from')
+    node.node.addInPort('Target')
+    node.node.addOutPort('Add Link')
   })
 
   return diagramModel
@@ -272,6 +270,9 @@ export default {
       anchorDialog: false,
       skinDialog: false,
       codeDialog: false,
+      createEntryPermissionTemplate: '',
+      modifyEntryPermissionTemplate: '',
+      deleteEntryPermissionTemplate: '',
       tab: null,
       windowSize: {
         x: 200,
@@ -284,9 +285,6 @@ export default {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }
     },
     showModel: function () {
-      console.log(this.model.serialize())
-    },
-    showSkin () {
       console.log(this.model.serialize())
     },
     editModelNode (type, index) {
@@ -329,7 +327,25 @@ export default {
     },
     closeEntryTypeBuilderDialog (entryType) {
       this.dialog = false
+    },
+    permissionChanged (entryType, mutation, role) {
+      this.permissionsCode = this.permissionsTemplate
+      console.log(mutation)
+      switch (mutation) {
+        case 'entryCreate':
+          this.entryType.createEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_create/${role}.rs`, 'utf8')
+          break
+        case 'entryModify':
+          this.entryType.modifyEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_modify/${role}.rs`, 'utf8')
+          break
+        case 'entryDelete':
+          this.entryType.deleteEntryPermissionTemplate = fs.readFileSync(`${this.developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/${role}.rs`, 'utf8')
+          break
+      }
     }
+  },
+  computed: {
+    ...mapState('app', ['developer'])
   },
   mounted () {
     this.model = createModel(this.zome, this.$vuetify.theme.themes.dark.primary, this.$vuetify.theme.themes.dark.secondary, this.$vuetify.theme.themes.dark.info)
