@@ -9,8 +9,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Holochain Apps',
-      component: () => import('@/views/HolochainApps')
+      name: 'DNA Model',
+      component: () => import('@/views/DnaModeller')
     },
     {
       path: '/model/:hAppId',

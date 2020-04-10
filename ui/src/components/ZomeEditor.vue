@@ -13,7 +13,7 @@
       </v-btn>
       <v-btn text @click="addAnchor">
         <v-icon>mdi-plus</v-icon>
-        Anchor
+        Agent
       </v-btn>
       <v-btn text @click="codeDialog = true ">
         <v-icon>mdi-code-braces</v-icon>
@@ -239,10 +239,10 @@ function createModel (zome, entryColour, anchorColour, profileSpecColour) {
       diagramModel.addLink(port(nodes, link.entityType, link.entityName, '', 'from'), port(nodes, link.link.entityType, link.link.entityName, link.link.type, 'to'))
     }
   })
-  nodes.forEach(node => {
-    node.node.addInPort('Target')
-    node.node.addOutPort('Add Link')
-  })
+  // nodes.forEach(node => {
+  //   node.node.addInPort('Target')
+  //   node.node.addOutPort('Add Link')
+  // })
 
   return diagramModel
 }
