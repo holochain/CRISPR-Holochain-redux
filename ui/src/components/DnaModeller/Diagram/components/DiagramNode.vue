@@ -18,15 +18,18 @@
     </svg>
     <rect v-if="type==='rootAnchor' || type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="58" :fill-opacity="0.45" class="node-light-background">
     </rect>
+    <rect v-if="type==='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="38" :fill-opacity="0.45" class="node-light-background">
+    </rect>
     <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
     </rect>
-    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 129" class="node-light-background">
+    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
     </rect>
     <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
     </rect>
-    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="40" :fill-opacity="0.65" class="node-light-background">
+    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
     </rect>
-    <text v-if="type==='agent'" :x="15" :y="73" font-size="22" font-weight="bold" fill="#000000">AGENT_ADDRESS</text>
+    <rect v-if="type==='agent'" fill="#ffffff" x="7" :y="height - 28" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
+    </rect>
     <slot></slot>
   </svg>
 </template>

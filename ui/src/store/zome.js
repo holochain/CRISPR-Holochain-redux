@@ -3,6 +3,11 @@ export const zome = {
   agentAddress: true,
   anchorTypes: [
     {
+      type: 'list_agents',
+      text: '',
+      anchors: ['%agent_id']
+    },
+    {
       type: 'list_notes',
       text: '',
       anchors: [
@@ -19,11 +24,6 @@ export const zome = {
           text: '2020:05:09'
         }
       ]
-    },
-    {
-      type: 'list_agents',
-      text: '',
-      anchors: []
     }
   ],
   entryTypes: [],

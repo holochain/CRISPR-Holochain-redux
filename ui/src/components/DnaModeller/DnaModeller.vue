@@ -1,17 +1,9 @@
 <template>
   <v-card flat height="100vh">
-    <v-toolbar>
-      <v-toolbar-title>Zome</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text @click="addAgent">
-        <v-icon>mdi-plus</v-icon>
-        Agent
-      </v-btn>
-    </v-toolbar>
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
-          <diagram :model="model" @editModelNode="editModelNode" :width="this.windowSize.x - 20" :height="this.windowSize.y - 100"></diagram>
+          <diagram :model="model" @editModelNode="editModelNode" :width="this.windowSize.x" :height="this.windowSize.y"></diagram>
         </v-col>
       </v-row>
     </v-content>
@@ -59,10 +51,11 @@ export default {
       // const links = []
       // ports = []
       const yOffset = 130
+      let anchorsYIndex = 0
       let anchorsOffset = 0
       let anchorTypeIndex = 0
-      let anchorsCount = 0
-      const rootAnchorNode = dnaModel.addNode('anchor_type::root_anchor', 30, yOffset, 220, 145, 'rootAnchor', 0, this.$vuetify.theme.themes.dark.anchor)
+      let anchorIndex = 0
+      const rootAnchorNode = dnaModel.addNode('anchor_type::root_anchor', 30, yOffset, 206, 145, 'rootAnchor', 0, this.$vuetify.theme.themes.dark.anchor)
       rootAnchorNode.addField('entry! name:holochain::anchor')
       rootAnchorNode.addField('link!  from:holochain::anchor')
       rootAnchorNode.addField('link!  type:holochain::anchor_link')
@@ -70,8 +63,8 @@ export default {
       rootAnchorNode.addField('anchor_text=\'\'')
       const rootAnchorPort = rootAnchorNode.addOutPort('anchor_link')
       zome.anchorTypes.forEach(anchorType => {
-        let anchorIndex = 0
-        const anchorTypeNode = dnaModel.addNode(`anchor_type::${anchorType.type}`, 290, yOffset + anchorsOffset, 220, 165, 'anchorType', anchorTypeIndex + 1, this.$vuetify.theme.themes.dark.anchor)
+        anchorsOffset = anchorsYIndex * 185
+        const anchorTypeNode = dnaModel.addNode(`anchor_type::${anchorType.type}`, 290, yOffset + anchorsOffset, 206, 165, 'anchorType', anchorTypeIndex, this.$vuetify.theme.themes.dark.anchor)
         nodes.push({ entityType: 'anchorType', entityName: anchorType.type, node: anchorTypeNode })
         anchorTypeNode.addField('entry! name:holochain::anchor')
         anchorTypeNode.addField('link!  from:holochain::anchor')
@@ -81,27 +74,31 @@ export default {
         const anchorTypeInPort = anchorTypeNode.addInPort('address()')
         const anchorTypeOutPort = anchorTypeNode.addOutPort('anchor_link')
         dnaModel.addLink(rootAnchorPort, anchorTypeInPort)
-        anchorType.anchors.forEach(anchor => {
-          anchorsOffset = (anchorTypeIndex + anchorIndex) * 185
-          const anchorNode = dnaModel.addNode(`anchor::${anchor.text}`, 550, yOffset + anchorsOffset, 220, 165, 'anchor', anchorsCount, this.$vuetify.theme.themes.dark.anchor)
-          nodes.push({ entityType: 'anchor', entityName: anchor.type, node: anchorNode })
-          anchorNode.addField('entry! name:holochain::anchor')
-          anchorNode.addField('link!  from:holochain::anchor')
-          anchorNode.addField('link!  type:holochain::anchor_link')
-          anchorNode.addField(`anchor_type='${anchor.type}'`)
-          anchorNode.addField(`anchor_text='${anchor.text}'`)
-          const anchorInPort = anchorNode.addInPort('address()')
-          dnaModel.addLink(anchorTypeOutPort, anchorInPort)
-          anchorNode.addOutPort('anchor_link')
+        anchorType.anchors.forEach((anchor, index) => {
+          if (anchor === '%agent_id') {
+            const agentNode = dnaModel.addNode('AgentId', 550, yOffset + anchorsOffset, 206, 105, 'agent', 0, this.$vuetify.theme.themes.dark.accent)
+            agentNode.addField('nick: String')
+            agentNode.addField('pub_sign_key: String')
+            const agentInPort = agentNode.addInPort('%agent_id')
+            dnaModel.addLink(anchorTypeOutPort, agentInPort)
+          } else {
+            const anchorNode = dnaModel.addNode(`anchor::${anchor.text}`, 550, yOffset + anchorsOffset, 206, 165, 'anchor', anchorIndex, this.$vuetify.theme.themes.dark.anchor)
+            nodes.push({ entityType: 'anchor', entityName: anchor.type, node: anchorNode })
+            anchorNode.addField('entry! name:holochain::anchor')
+            anchorNode.addField('link!  from:holochain::anchor')
+            anchorNode.addField('link!  type:holochain::anchor_link')
+            anchorNode.addField(`anchor_type='${anchor.type}'`)
+            anchorNode.addField(`anchor_text='${anchor.text}'`)
+            const anchorInPort = anchorNode.addInPort('address()')
+            dnaModel.addLink(anchorTypeOutPort, anchorInPort)
+            anchorNode.addOutPort('anchor_link')
+          }
           anchorIndex += 1
-          anchorsCount += 1
+          anchorsYIndex += 1
+          anchorsOffset = anchorsYIndex * 185
         })
         anchorTypeIndex += 1
-        anchorsCount += 1
-        anchorsOffset = (anchorTypeIndex + anchorIndex - 1) * 185
       })
-
-      dnaModel.addNode('Agent Base', 550, 10, 220, 80, 'agent', 0, this.$vuetify.theme.themes.dark.accent)
       return dnaModel
     }
   },
