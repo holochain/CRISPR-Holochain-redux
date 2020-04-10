@@ -21,7 +21,7 @@ export default {
   props: ['id', 'y', 'type', 'name', 'nodeWidth', 'nodeIndex'],
   data () {
     return {
-      fill: this.$vuetify.theme.themes.dark.secondary
+      fill: this.$vuetify.theme.themes.dark.port
     }
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
     },
 
     leave () {
-      this.fill = this.$vuetify.theme.themes.dark.secondary
+      this.fill = this.$vuetify.theme.themes.dark.port
     },
     startDragNewLink () {
       this.$emit('onStartDragNewLink', this.id)

@@ -13,7 +13,7 @@
     <g v-if="curve !== 0" @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
       <g @mousedown="mouseDownSegment($event, 0)">
         <path :d="curve" :style="largeStrokeStyle" stroke-width="8" fill="none" />
-        <path :d="curve" style="stroke:rgb(0,255,255);" stroke-width="2" fill="none" />
+        <path :d="curve" style="stroke:rgb(255,255,255);" stroke-width="2" fill="none" />
       </g>
     </g>
     <DiagramPoint v-for="(point, pointIndex) in points" :key="`'point'${pointIndex}`" @mouseenter="mouseEnterPoint(point)" @mouseleave="mouseLeavePoint(point)" @mousedown="mouseDownPoint($event, pointIndex)" :x="point.x" :y="point.y" />

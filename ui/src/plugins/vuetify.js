@@ -22,7 +22,8 @@ export default new Vuetify({
         primary: '#4a148c',
         secondary: '#00acc1',
         accent: '#5c007a',
-        anchor: '#000051'
+        anchor: '#000051',
+        port: '#00bcd4'
       }
     }
   }
