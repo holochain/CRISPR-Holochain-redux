@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: {
     developer: {
-      folder: '/Users/philipbeadle/holochain/culture'
+      folder: '/Users/philipbeadle/holochain/Holochain-IDE'
     },
     hApps: hApps,
     validationRules: validationRules,

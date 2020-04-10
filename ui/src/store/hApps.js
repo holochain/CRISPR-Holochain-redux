@@ -7,7 +7,7 @@ export const hApps = [
   {
     id: 'QmCulture',
     name: 'Holochain-IDE',
-    folder: '/Users/philipbeadle/holochain/hApps/Culture',
+    folder: '/Users/philipbeadle/holochain/hApps/Holochain-IDE',
     url: '/happ-store/Culture',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
