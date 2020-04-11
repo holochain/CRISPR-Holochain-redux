@@ -62,13 +62,15 @@ class DiagramModel {
    * Adds a link between two ports
    * @param {Integer} from   Port id. Must be an out port
    * @param {Integer} to     Port id. Must be an in port
+   * @param {String}  tag  Optional. link tag
    * @param {Array}  points  Optional. Array of points to make the link represented as a segmented line
    */
-  addLink (from, to, points = []) {
+  addLink (from, to, tag = '', points = []) {
     this._model.links.push({
       id: generateId(),
       from: from,
       to: to,
+      tag: tag,
       positionFrom: {},
       positionTo: {},
       points

@@ -12,8 +12,15 @@
     </g>
     <g v-if="curve !== 0" @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
       <g @mousedown="mouseDownSegment($event, 0)">
-        <path :d="curve" :style="largeStrokeStyle" stroke-width="8" fill="none" />
+        <path :id="id" :d="curve" :style="largeStrokeStyle" stroke-width="8" fill="none" />
         <path :d="curve" style="stroke:rgb(255,255,255);" stroke-width="2" fill="none" />
+        <text v-if="tag !== ''" width="1000" font-size="10pt" font-weight="bold" fill="#ffffff" style="text-anchor: middle">
+          <textPath :xlink:href="`#${id}`" startOffset="50%">
+            <tspan dy="-6">
+              {{tag}}
+            </tspan>
+          </textPath>
+        </text>
       </g>
     </g>
     <DiagramPoint v-for="(point, pointIndex) in points" :key="`'point'${pointIndex}`" @mouseenter="mouseEnterPoint(point)" @mouseleave="mouseLeavePoint(point)" @mousedown="mouseDownPoint($event, pointIndex)" :x="point.x" :y="point.y" />
@@ -24,7 +31,7 @@ import DiagramPoint from './DiagramPoint'
 
 export default {
   name: 'DiagramLink',
-  props: ['positionFrom', 'positionTo', 'id', 'index', 'points'],
+  props: ['positionFrom', 'positionTo', 'id', 'tag', 'index', 'points'],
 
   components: {
     DiagramPoint

@@ -7,6 +7,7 @@ export const zome = {
       id: 'Qmlist_notesHash',
       type: 'list_notes',
       text: '',
+      tag: 'created_at:initial_note_entry_timestamp',
       entryTypes: [
         {
           id: 'QmNoteEntryTypeHash',
@@ -90,7 +91,16 @@ export const zome = {
           ]
         }
       ],
-      anchors: []
+      anchors: [{
+        id: 'Qmlist_notesdraftHash',
+        type: 'list_notes',
+        text: 'draft'
+      },
+      {
+        id: 'Qmlist_notespublishedHash',
+        type: 'list_notes',
+        text: 'published'
+      }]
     }
   ],
   entryTypes: [],
