@@ -45,6 +45,7 @@
           :id="link.id"
           :index="index"
           :key="index"
+          :tag="link.tag"
           @onStartDrag="startDragPoint"
           @onCreatePoint="createPoint"
         />

@@ -51,9 +51,9 @@ export default {
       // const links = []
       // ports = []
       const col0Offset = 20
-      const col1Offset = 340
-      const col2Offset = 660
-      const col3Offset = 1000
+      const col1Offset = 380
+      const col2Offset = 740
+      const col3Offset = 1240
       const yOffset = 130
       const cardWidth = 270
       let anchorsYIndex = 0
@@ -79,7 +79,7 @@ export default {
         anchorTypeNode.addField('anchor_text')
         const anchorTypeInPort = anchorTypeNode.addInPort('address()')
         const anchorTypeOutPort = anchorTypeNode.addOutPort('anchor_link')
-        dnaModel.addLink(rootAnchorPort, anchorTypeInPort)
+        dnaModel.addLink(rootAnchorPort, anchorTypeInPort, anchorType.type)
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
         anchorType.entryTypes.forEach(entryType => {
           const entityName = `${zome.name.toLowerCase()}::${entryType.name.toLowerCase()}`
@@ -94,8 +94,8 @@ export default {
           entryType.metaFields.forEach(metaField => {
             entryTypeNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
           })
-          const entryTypeInPort = entryTypeNode.addInPort('address()')
-          dnaModel.addLink(anchorTypeOutPort, entryTypeInPort)
+          const entryTypeInPort = entryTypeNode.addInPort('id:initial_note_entry_address')
+          dnaModel.addLink(anchorTypeOutPort, entryTypeInPort, anchorType.tag)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNodeHeight + 20
@@ -130,7 +130,7 @@ export default {
             anchorNode.addField(`anchor_type|${anchor.type}`)
             anchorNode.addField(`anchor_text|${anchor.text}`)
             const anchorInPort = anchorNode.addInPort('address()')
-            dnaModel.addLink(anchorTypeOutPort, anchorInPort)
+            dnaModel.addLink(anchorTypeOutPort, anchorInPort, anchor.text)
             anchorNode.addOutPort('anchor_link')
             nodes.push({ id: anchor.id, node: anchorNode })
           }
