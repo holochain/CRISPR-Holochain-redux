@@ -2,13 +2,14 @@
 
 export const zome = {
   name: 'Notes',
-  agentAddress: true,
   anchorTypes: [
     {
+      id: 'Qmlist_notesHash',
       type: 'list_notes',
       text: '',
       entryTypes: [
         {
+          id: 'QmNoteEntryTypeHash',
           name: 'Note',
           fields: [
             {
@@ -91,24 +92,38 @@ export const zome = {
       ],
       anchors: [
         {
+          id: 'Qmlist_notesdraftHash',
           type: 'list_notes',
           text: 'draft'
         },
         {
+          id: 'Qmlist_notesreviewHash',
           type: 'list_notes',
           text: 'review'
         },
         {
+          id: 'Qmlist_notespublishedHash',
           type: 'list_notes',
           text: 'published'
         }
       ]
     },
     {
+      id: 'Qmlist_agentsHash',
       type: 'list_agents',
       text: '',
       entryTypes: [],
-      anchors: ['%agent_id']
+      anchors: [
+        {
+          id: '%agent_id',
+          links: [
+            {
+              id: 'QmNoteEntryTypeHash',
+              target: 'address()',
+              type: 'anchor_link'
+            }
+          ]
+        }]
     }
   ],
   entryTypes: [],

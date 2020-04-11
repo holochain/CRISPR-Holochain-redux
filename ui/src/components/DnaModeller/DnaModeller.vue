@@ -72,7 +72,6 @@ export default {
       zome.anchorTypes.forEach(anchorType => {
         anchorsOffset = anchorsYIndex * 185
         const anchorTypeNode = dnaModel.addNode(`anchor_type::${anchorType.type}`, col1Offset, yOffset + anchorsOffset, cardWidth, 165, 'anchorType', anchorTypeIndex, this.$vuetify.theme.themes.dark.anchor)
-        nodes.push({ entityType: 'anchorType', entityName: anchorType.type, node: anchorTypeNode })
         anchorTypeNode.addField('entry!|name:holochain::anchor')
         anchorTypeNode.addField('link!|from:holochain::anchor')
         anchorTypeNode.addField('link!|type:holochain::anchor_link')
@@ -81,11 +80,11 @@ export default {
         const anchorTypeInPort = anchorTypeNode.addInPort('address()')
         const anchorTypeOutPort = anchorTypeNode.addOutPort('anchor_link')
         dnaModel.addLink(rootAnchorPort, anchorTypeInPort)
+        nodes.push({ id: anchorType.id, node: anchorTypeNode })
         anchorType.entryTypes.forEach(entryType => {
           const entityName = `${zome.name.toLowerCase()}::${entryType.name.toLowerCase()}`
           const entryTypeNodeHeight = 105 + (entryType.fields.length + entryType.metaFields.length) * 20
           const entryTypeNode = dnaModel.addNode(entityName, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeNodeHeight, 'entryType', entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
-          nodes.push({ entityType: 'entryType', entityName: entityName, node: entryTypeNode })
           entryTypeNode.addField(`entry!|${entityName}`)
           entryTypeNode.addField('link!|from:holochain::anchor')
           entryTypeNode.addField(`link!|type:::${entryType.name.toLowerCase()}_link`)
@@ -97,21 +96,34 @@ export default {
           })
           const entryTypeInPort = entryTypeNode.addInPort('address()')
           dnaModel.addLink(anchorTypeOutPort, entryTypeInPort)
+          nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNodeHeight + 20
         })
         anchorsOffset += entryTypesOffset
         anchorType.anchors.forEach((anchor, index) => {
-          if (anchor === '%agent_id') {
+          if (anchor.id === '%agent_id') {
             const agentNode = dnaModel.addNode('AgentId', col2Offset, yOffset + anchorsOffset, cardWidth, 105, 'agent', 0, this.$vuetify.theme.themes.dark.accent)
             agentNode.deletable = true
             agentNode.addField('nick|String')
             agentNode.addField('pub_sign_key|String')
             const agentInPort = agentNode.addInPort('%agent_id')
             dnaModel.addLink(anchorTypeOutPort, agentInPort)
+            anchor.links.forEach((link, index) => {
+              const agentOutPort = agentNode.addOutPort(link.type)
+              const inNode = nodes.find(node => node.id === link.id)
+              if (inNode && inNode.node.ports.length > 0) {
+                const inPort = inNode.node.ports.find(port => {
+                  return port.type === 'in' && port.name === link.target
+                })
+                if (inPort) {
+                  dnaModel.addLink(agentOutPort, inPort.id)
+                }
+              }
+            })
+            nodes.push({ id: '%agent_id', node: agentNode })
           } else {
             const anchorNode = dnaModel.addNode(`anchor::${anchor.text}`, col2Offset, yOffset + anchorsOffset, cardWidth, 165, 'anchor', anchorIndex, this.$vuetify.theme.themes.dark.anchor)
-            nodes.push({ entityType: 'anchor', entityName: anchor.type, node: anchorNode })
             anchorNode.addField('entry!|name:holochain::anchor')
             anchorNode.addField('link!|from:holochain::anchor')
             anchorNode.addField('link!|type:holochain::anchor_link')
@@ -120,6 +132,7 @@ export default {
             const anchorInPort = anchorNode.addInPort('address()')
             dnaModel.addLink(anchorTypeOutPort, anchorInPort)
             anchorNode.addOutPort('anchor_link')
+            nodes.push({ id: anchor.id, node: anchorNode })
           }
           anchorIndex += 1
           anchorsYIndex += 1
