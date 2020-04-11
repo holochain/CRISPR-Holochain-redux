@@ -1,8 +1,4 @@
-/* eslint no-template-curly-in-string: "off" */
-
-export const zome = {
-  name: 'Notes',
-  anchorTypes: [
+export const listAgentNotesAnchorTypes = [
     {
       id: 'Qmlist_notesHash',
       type: 'list_notes',
@@ -91,8 +87,22 @@ export const zome = {
         }
       ],
       anchors: []
+    },
+    {
+      id: 'Qmlist_agentsHash',
+      type: 'list_agents',
+      text: '',
+      entryTypes: [],
+      anchors: [
+        {
+          id: '%agent_id',
+          links: [
+            {
+              id: 'QmNoteEntryTypeHash',
+              target: 'address()',
+              type: 'agent_note_link'
+            }
+          ]
+        }]
     }
-  ],
-  entryTypes: [],
-  profileSpecs: []
-}
+  ]

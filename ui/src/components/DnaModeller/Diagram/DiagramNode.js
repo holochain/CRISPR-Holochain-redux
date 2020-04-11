@@ -30,11 +30,6 @@ class DiagramNode {
     this.ports = []
   }
 
-  /**
-   * Adds a new "in" port into the node.
-   * @param {String} name
-   * @return {Integer} The port id
-   */
   addInPort (name) {
     const newPort = {
       id: generateId(),
@@ -47,11 +42,6 @@ class DiagramNode {
     return newPort.id
   }
 
-  /**
-   * Adds a new "out" port into the node.
-   * @param {String} name
-   * @return {Integer} The port id
-   */
   addOutPort (name) {
     const newPort = {
       id: generateId(),
@@ -64,15 +54,22 @@ class DiagramNode {
     return newPort.id
   }
 
-  /**
-   * Adds a new "out" port into the node.
-   * @param {String} name
-   * @return {Integer} The port id
-   */
   addField (name) {
     const newPort = {
       id: generateId(),
       type: 'field',
+      name
+    }
+
+    this.ports.push(newPort)
+
+    return newPort.id
+  }
+
+  addMetaField (name) {
+    const newPort = {
+      id: generateId(),
+      type: 'metaField',
       name
     }
 

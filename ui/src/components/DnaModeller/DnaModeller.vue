@@ -92,7 +92,7 @@ export default {
             entryTypeNode.addField(`${field.fieldName}|${field.fieldType}`)
           })
           entryType.metaFields.forEach(metaField => {
-            entryTypeNode.addField(`${metaField.fieldName}|${metaField.fieldType}`)
+            entryTypeNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
           })
           const entryTypeInPort = entryTypeNode.addInPort('address()')
           dnaModel.addLink(anchorTypeOutPort, entryTypeInPort)
