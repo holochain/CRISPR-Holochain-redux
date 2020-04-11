@@ -16,15 +16,15 @@
         <line :x1="width - 10" :y1="20" :x2="width" :y2="30" style="stroke:rgb(0,0,0);" stroke-width="2" />
       </g>
     </svg>
-    <rect v-if="type==='rootAnchor' || type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="58" :fill-opacity="0.45" class="node-light-background">
+    <rect v-if="type!=='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="58" :fill-opacity="0.45" class="node-light-background">
     </rect>
     <rect v-if="type==='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="38" :fill-opacity="0.45" class="node-light-background">
     </rect>
-    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
+    <rect v-if="type==='entryType' || type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
     </rect>
-    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
+    <rect v-if="type==='entryType' || type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
     </rect>
