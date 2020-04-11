@@ -15,6 +15,7 @@
       id="svgroot2"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
+      xml:space="preserve"
       :viewBox="'0 0 ' + width + ' ' + height"
       :width="width"
       :height="height"
@@ -36,13 +37,13 @@
       <rect x="-5000px" y="-5000px" width="10000px" height="10000px" fill="url(#grid)" @mousedown="clearSelection" ref="grid" class="svg-pan-zoom_viewport"/>
       <g ref="viewPort" id="viewport" x="50" y="50">
         <DiagramLink
+          v-for="(link, index) in model._model.links"
           :ref="'link-' + index"
           :positionFrom="link.positionFrom"
           :positionTo="link.positionTo"
           :points="link.points"
           :id="link.id"
           :index="index"
-          v-for="(link, index) in model._model.links"
           :key="index"
           @onStartDrag="startDragPoint"
           @onCreatePoint="createPoint"
@@ -141,7 +142,6 @@ export default {
 
   data () {
     this.updateLinksPositions()
-
     return {
       document,
       zoomEnabled: true,
@@ -198,7 +198,9 @@ export default {
     updateLinksPositions () {
       var links = []
 
-      if (this.model && this.model._model) links = this.model._model.links
+      if (this.model && this.model._model) {
+        links = this.model._model.links
+      }
 
       this.$nextTick(() => {
         setTimeout(() => {

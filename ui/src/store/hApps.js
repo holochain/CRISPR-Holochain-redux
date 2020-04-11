@@ -5,10 +5,10 @@ import { items } from './foldersFiles.js'
 
 export const hApps = [
   {
-    id: 'QmCulture',
+    id: 'QmHolochainIDE',
     name: 'Holochain-IDE',
-    folder: '/Users/philipbeadle/holochain/hApps/Culture',
-    url: '/happ-store/Culture',
+    folder: '/Users/philipbeadle/holochain/hApps/Holochain-IDE',
+    url: '/happ-store/Holochain-IDE',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
     description: 'IDE for building Holochain hApps from models and templates. Uses Holochain anchors as a git like source control with branching, permission control and traceability of changes.',
@@ -182,7 +182,7 @@ export const hApps = [
     url: '/happ-store/Notes',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
-    description: 'A Holochain hApp that demonstrates how to build a CRUD hApp with Holochain.\nSelecting permissions and roles generates the code for the Zome Pattern based on Entry Type fields and links.\nAlso shows how to integrate roles and permissions into Entry Types.',
+    description: 'A Holochain hApp that demonstrates how to build a CRUD hApp with Holochain-IDE.\nSelecting permissions and roles generates the code for the Zome based on Entry Type fields and links.\nAlso shows how to integrate roles and permissions into Entry Types.',
     zomes: [
       {
         id: 'Qmmorehas444',
@@ -246,92 +246,7 @@ export const hApps = [
                 entityName: 'list_notes',
                 type: 'anchor_link'
               }
-            ],
-            pattern: `<h1>Pattern 3</h1>
-            <h2>Constant Id Entry - linked to anchor --> can list entries</h2> 
-            <ul>
-            <li class="has-line-data" data-line-start="1" data-line-end="7">Developer defined fields
-            <ul>
-            <li class="has-line-data" data-line-start="2" data-line-end="3">id (reserved field name)</li>
-            <li class="has-line-data" data-line-start="3" data-line-end="4">created_at (reserved field name)</li>
-            <li class="has-line-data" data-line-start="4" data-line-end="5">updated_at (reserved field name)</li>
-            <li class="has-line-data" data-line-start="5" data-line-end="6">title [textfield]</li>
-            <li class="has-line-data" data-line-start="6" data-line-end="7">content [textarea]</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="7" data-line-end="14">Generated Structs
-            <ul>
-            <li class="has-line-data" data-line-start="8" data-line-end="9">type_3_entry</li>
-            <li class="has-line-data" data-line-start="9" data-line-end="12">type_3_id
-            <ul>
-            <li class="has-line-data" data-line-start="10" data-line-end="11">initial_entry_address [address of intial type_2_entry]</li>
-            <li class="has-line-data" data-line-start="11" data-line-end="12">initial_entry_created_at [created_at of intial type_2_entry]</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="12" data-line-end="14">type_3
-            <ul>
-            <li class="has-line-data" data-line-start="13" data-line-end="14">[type_3.id = address of type_3_id, type_3.created_at = type_3_id.created_at, type_3.updated_at = type_3_entry.created_at, type_3_entry]</li>
-            </ul>
-            </li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="14" data-line-end="17">Links
-            <ul>
-            <li class="has-line-data" data-line-start="15" data-line-end="16">from type_3_id</li>
-            <li class="has-line-data" data-line-start="16" data-line-end="17">type_3_id from type_3</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="17" data-line-end="20">Anchors
-            <ul>
-            <li class="has-line-data" data-line-start="18" data-line-end="19">AnchorType “type_3_list”</li>
-            <li class="has-line-data" data-line-start="19" data-line-end="20">AnchorText “”</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="20" data-line-end="36">zome_fns
-            <ul>
-            <li class="has-line-data" data-line-start="21" data-line-end="28">[] create_entry(type_3_entry) --&gt; type_3[type_3.id = Address type_3_id, type_3.created_at = type_3_id.initial_entry_created_at, type_3.updated_at = type_3_id.initial_entry_created_at]
-            <ul>
-            <li class="has-line-data" data-line-start="22" data-line-end="23">commit type_3_entry</li>
-            <li class="has-line-data" data-line-start="23" data-line-end="26">new type_3_id
-            <ul>
-            <li class="has-line-data" data-line-start="24" data-line-end="25">initial_entry_address [address of intial type_3_entry]</li>
-            <li class="has-line-data" data-line-start="25" data-line-end="26">initial_entry_created_at [created_at of intial type_3_entry]</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="26" data-line-end="27">link type_3_id --&gt; new type_3_entry</li>
-            <li class="has-line-data" data-line-start="27" data-line-end="28">link type_3_list --&gt; new type_3_id</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="28" data-line-end="31">[] modify_entry(type_3) --&gt; type_3[type_3.updated_at = type_3_entry.timestamp]
-            <ul>
-            <li class="has-line-data" data-line-start="29" data-line-end="30">link type_3_id --&gt; new type_3_entry</li>
-            <li class="has-line-data" data-line-start="30" data-line-end="31">Remove old link type_3_id --&gt; previous type_3_entry</li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="31" data-line-end="36">[] remove_entry(type_3.Id) --&gt; Address
-            <ul>
-            <li class="has-line-data" data-line-start="32" data-line-end="33">Remove link type_3_id --&gt; type_3_entry</li>
-            <li class="has-line-data" data-line-start="33" data-line-end="34">Remove link type_3_list --&gt; type_3_id</li>
-            <li class="has-line-data" data-line-start="34" data-line-end="35">Remove type_3_id</li>
-            <li class="has-line-data" data-line-start="35" data-line-end="36">Remove type_3_entry</li>
-            </ul>
-            </li>
-            </ul>
-            </li>
-            <li class="has-line-data" data-line-start="36" data-line-end="43">UI
-            <ul>
-            <li class="has-line-data" data-line-start="37" data-line-end="43">Item
-            <ul>
-            <li class="has-line-data" data-line-start="38" data-line-end="39">id [text]</li>
-            <li class="has-line-data" data-line-start="39" data-line-end="40">created_at [text]</li>
-            <li class="has-line-data" data-line-start="40" data-line-end="41">updated_at [text]</li>
-            <li class="has-line-data" data-line-start="41" data-line-end="42">title [textfield]</li>
-            <li class="has-line-data" data-line-start="42" data-line-end="43">content [textarea]</li>
-            </ul>
-            </li>
-            </ul>
-            </li>
-            </ul>`
+            ]
           }
         ],
         profileSpecs: [],
@@ -339,12 +254,12 @@ export const hApps = [
       },
       {
         id: 'Qmmorehas444',
-        name: 'Notes',
+        name: 'notes',
         anchors: [
           {
             name: '',
-            type: 'Notes',
-            text: 'ListNotes',
+            type: 'list_notes',
+            text: '',
             links: []
           }
         ],

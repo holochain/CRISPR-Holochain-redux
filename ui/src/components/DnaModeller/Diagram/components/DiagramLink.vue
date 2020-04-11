@@ -2,15 +2,15 @@
   <g>
     <g v-if="points && points.length" @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
       <g v-for="(point, index) in points" :key="index" @mousedown="mouseDownSegment($event, index)">
-        <line :x1="index === 0 ? x1 : points[index - 1].x" :y1="index === 0 ? y1 : points[index - 1].y" :x2="point.x" :y2="point.y" :style="largeStrokeStyle" stroke-width="8" />
-        <line :x1="index === 0 ? x1 : points[index - 1].x" :y1="index === 0 ? y1 : points[index - 1].y" :x2="point.x" :y2="point.y" style="stroke:rgb(0,0,0);" stroke-width="2" />
+        <line :x1="index === 0 ? x1 : points[index - 1].x" :y1="index === 0 ? y1 : points[index - 1].y - 10" :x2="point.x" :y2="point.y" :style="largeStrokeStyle" stroke-width="8" />
+        <line :x1="index === 0 ? x1 : points[index - 1].x" :y1="index === 0 ? y1 : points[index - 1].y - 10" :x2="point.x" :y2="point.y" style="stroke:rgb(0,0,0);" stroke-width="2" />
       </g>
       <g @mousedown="mouseDownSegment($event, points.length)">
         <line :x1="points[points.length - 1].x" :y1="points[points.length - 1].y" :x2="x2" :y2="y2" :style="largeStrokeStyle" stroke-width="8" />
         <line :x1="points[points.length - 1].x" :y1="points[points.length - 1].y" :x2="x2" :y2="y2" style="stroke:rgb(0,0,0);" stroke-width="2" />
       </g>
     </g>
-    <g v-else @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
+    <g v-if="curve !== 0" @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
       <g @mousedown="mouseDownSegment($event, 0)">
         <path :d="curve" :style="largeStrokeStyle" stroke-width="8" fill="none" />
         <path :d="curve" style="stroke:rgb(255,255,255);" stroke-width="2" fill="none" />
@@ -79,14 +79,15 @@ export default {
     },
 
     curve () {
+      if (this.positionFrom.x === undefined) {
+        return 0
+      }
       var x1 = Math.trunc(this.positionFrom.x)
-      var y1 = Math.trunc(this.positionFrom.y - 4)
+      var y1 = Math.trunc(this.positionFrom.y - 14)
       var x2 = Math.trunc(this.positionTo.x - 4)
-      var y2 = Math.trunc(this.positionTo.y - 4)
+      var y2 = Math.trunc(this.positionTo.y - 14)
       var distance = Math.trunc(4 * Math.sqrt(Math.abs(x1 - x2)))
-      var path = `M ${x1} ${y1} C ${x1 + distance} ${y1}, ${x2 - distance} ${y2}, ${x2} ${y2}`
-      // console.log(path)
-      return path
+      return `M ${x1} ${y1} C ${x1 + distance} ${y1}, ${x2 - distance} ${y2}, ${x2} ${y2}`
     }
   }
 }

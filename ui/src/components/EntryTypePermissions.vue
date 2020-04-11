@@ -12,7 +12,7 @@
                 <p class="title">Create</p>
               </v-col>
               <v-col cols="3">
-                <p class="title">Modify</p>
+                <p class="title">Update</p>
               </v-col>
               <v-col cols="3">
                 <p class="title">Delete</p>
@@ -91,7 +91,7 @@ export default {
       removeLinkPermission: '',
       linkTypes: ['note_link'],
       linkPermissions: ['Add Link', 'Delete Link'],
-      roles: [{ title: 'Remove', value: 'no-one' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }, { title: 'Administrators', value: 'administrators' }, { title: 'Admins & Author', value: 'administrators-author' }]
+      roles: [{ title: 'Cannot', value: 'no-one' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }]
     }
   },
   props: ['entryType'],

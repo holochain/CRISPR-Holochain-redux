@@ -21,7 +21,11 @@ export default new Vuetify({
       dark: {
         primary: '#4a148c',
         secondary: '#00acc1',
-        accent: '#7c43bd'
+        accent: '#5c007a',
+        anchor: '#000051',
+        portBase: '#ffb300',
+        portTarget: '#ff6f00',
+        entry: '#5e35b1'
       }
     }
   }
