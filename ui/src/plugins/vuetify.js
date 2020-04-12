@@ -25,7 +25,8 @@ export default new Vuetify({
         anchor: '#000051',
         portBase: '#ffb300',
         portTarget: '#ff6f00',
-        entry: '#5e35b1'
+        entry: '#5e35b1',
+        fillFunction: '#76ff03'
       }
     }
   }

@@ -3,7 +3,7 @@
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
-          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" :width="this.windowSize.x" :height="this.windowSize.y"></diagram>
+          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y"></diagram>
         </v-col>
       </v-row>
     </v-content>
@@ -20,6 +20,7 @@ export default {
   data () {
     return {
       model: new Diagram.Model(),
+      code: [],
       windowSize: {
         x: 200,
         y: 200
@@ -44,6 +45,9 @@ export default {
           // this.profileSpecDialog = true
           break
       }
+    },
+    showFunctionCode (name) {
+      console.log(this.code.find(code => code.name === name))
     },
     createModel () {
       const dnaModel = new Diagram.Model()
@@ -72,6 +76,10 @@ export default {
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
         anchorType.entryTypes.forEach(entryType => {
           const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+          entryType.functions.forEach(f => {
+            entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation })
+          })
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -89,6 +97,10 @@ export default {
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
             if (!existingEntryTypeNode) {
               const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+              entryType.functions.forEach(f => {
+                entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation })
+              })
               nodes.push({ id: entryType.id, node: entryTypeNode })
             } else {
               console.log(existingEntryTypeNode.node.ports)

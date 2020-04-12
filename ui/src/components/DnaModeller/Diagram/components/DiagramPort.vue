@@ -19,6 +19,11 @@
       <text :x="nodeWidth / 3 + 10" y="20" font-size="10pt" fill="#000000">{{name.split('|')[1]}}</text>
       <text :x="nodeWidth - 30" y="20" font-size="10pt" fill="#000000">meta</text>
     </svg>
+    <svg :y="y + 31" v-if="type === 'fn'">
+      <rect :fill="fillFunction" ref="handle" x="0" y="10" rx="3" ry="3" width="10" height="10" @mousedown="showFunctionCode">
+      </rect>
+      <text x="12" y="20" font-size="12pt" font-weight="bold" fill="#000000">{{name}}</text>
+    </svg>
   </g>
 </template>
 <script>
@@ -28,18 +33,21 @@ export default {
   data () {
     return {
       fillBase: this.$vuetify.theme.themes.dark.portBase,
-      fillTarget: this.$vuetify.theme.themes.dark.portTarget
+      fillTarget: this.$vuetify.theme.themes.dark.portTarget,
+      fillFunction: this.$vuetify.theme.themes.dark.fillFunction
     }
   },
   methods: {
     mouseup () {
       this.$emit('mouseUpPort', this.id)
     },
-
+    showFunctionCode () {
+      console.log(this.name)
+      this.$emit('show-function-code', this.name)
+    },
     enter () {
       this.fill = this.$vuetify.theme.themes.dark.accent
     },
-
     leave () {
       this.fill = this.$vuetify.theme.themes.dark.port
     },

@@ -18,7 +18,7 @@ class DiagramNode {
    * @param  {String} color [description]
    * @param  {Integer} typeIndex  [description]
    */
-  constructor (id, title, x, y, width, height, type, typeIndex, color, entryDefHeight = 58) {
+  constructor (id, title, x, y, width, height, type, typeIndex, color, entryDefHeight = 58, functionsHeight = 20) {
     this.title = title
     this.x = x
     this.y = y
@@ -28,6 +28,7 @@ class DiagramNode {
     this.typeIndex = typeIndex
     this.color = color
     this.entryDefHeight = entryDefHeight
+    this.functionsHeight = functionsHeight
     this.ports = []
   }
 
@@ -85,9 +86,19 @@ class DiagramNode {
       type: 'metaField',
       name
     }
-
     this.ports.push(newPort)
+    return newPort.id
+  }
 
+  addFunction (name) {
+    const newPort = {
+      id: generateId(),
+      type: 'fn',
+      name
+    }
+    this.ports.push(newPort)
+    this.functionsHeight += 16
+    this.height += 20
     return newPort.id
   }
 }

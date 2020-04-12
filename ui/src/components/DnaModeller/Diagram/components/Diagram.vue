@@ -66,6 +66,7 @@
           :width="node.width"
           :height="node.height"
           :entryDefHeight="node.entryDefHeight"
+          :functionsHeight="node.functionsHeight"
           :type="node.type"
           :color="node.color"
           :deletable="node.deletable"
@@ -89,8 +90,10 @@
             :nodeWidth="node.width"
             :type="port.type"
             :name="port.name"
+            :code="port.code"
             @onStartDragNewLink="startDragNewLink"
             @mouseUpPort="mouseUpPort"
+            @show-function-code="showFunctionCode"
           />
         </DiagramNode>
       </g>
@@ -350,13 +353,15 @@ export default {
       console.log('startDragPoint', pointInfo)
       this.draggedItem = pointInfo
     },
-
     startDragItem (item, x, y) {
       this.panEnabled = false
       this.draggedItem = item
       this.selectedItem = item
       this.initialDragX = x
       this.initialDragY = y
+    },
+    showFunctionCode (name) {
+      this.$emit('show-function-code', name)
     }
   },
   computed: {

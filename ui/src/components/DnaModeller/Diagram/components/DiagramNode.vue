@@ -22,19 +22,21 @@
     </rect>
     <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - 51" class="node-light-background">
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - functionsHeight - 51" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight+10" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight-functionsHeight + 10" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
     </rect>
     <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight - 8" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
     </rect>
     <rect v-if="type==='agent'" fill="#ffffff" x="7" :y="height - 28" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 14" rx="3" ry="3" :width="width-4" :height="functionsHeight-1" :fill-opacity="0.8" class="node-light-background">
     </rect>
     <slot></slot>
   </svg>
@@ -80,7 +82,11 @@ export default {
     selected: Boolean,
     entryDefHeight: {
       type: Number,
-      default: 588
+      default: 58
+    },
+    functionsHeight: {
+      type: Number,
+      default: 20
     }
   },
   data () {
