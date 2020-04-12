@@ -21,7 +21,7 @@
       :height="height"
       preserveAspectRatio="xMinYMin meet"
       class="svg-content"
-      ref="dragramRoot"
+      ref="diagramRoot"
       @mousemove="mouseMove"
       @mouseup="mouseUp">
       <defs>
@@ -46,6 +46,7 @@
           :index="index"
           :key="index"
           :tag="link.tag"
+          :context="link.context"
           @onStartDrag="startDragPoint"
           @onCreatePoint="createPoint"
         />
@@ -64,6 +65,7 @@
           :y="node.y"
           :width="node.width"
           :height="node.height"
+          :entryDefHeight="node.entryDefHeight"
           :type="node.type"
           :color="node.color"
           :deletable="node.deletable"

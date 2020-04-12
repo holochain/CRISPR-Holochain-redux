@@ -18,7 +18,7 @@ class DiagramNode {
    * @param  {String} color [description]
    * @param  {Integer} typeIndex  [description]
    */
-  constructor (id, title, x, y, width, height, type, typeIndex, color) {
+  constructor (id, title, x, y, width, height, type, typeIndex, color, entryDefHeight = 58) {
     this.title = title
     this.x = x
     this.y = y
@@ -27,6 +27,7 @@ class DiagramNode {
     this.type = type
     this.typeIndex = typeIndex
     this.color = color
+    this.entryDefHeight = entryDefHeight
     this.ports = []
   }
 
@@ -63,6 +64,18 @@ class DiagramNode {
 
     this.ports.push(newPort)
 
+    return newPort.id
+  }
+
+  insertLinkField (name) {
+    const newPort = {
+      id: generateId(),
+      type: 'field',
+      name
+    }
+    this.ports.splice(3, 0, newPort)
+    this.height += 20
+    this.entryDefHeight += 20
     return newPort.id
   }
 

@@ -20,6 +20,11 @@
               {{tag}}
             </tspan>
           </textPath>
+          <textPath :xlink:href="`#${id}`" startOffset="50%">
+            <tspan dy="20">
+              {{context}}
+            </tspan>
+          </textPath>
         </text>
       </g>
     </g>
@@ -31,7 +36,7 @@ import DiagramPoint from './DiagramPoint'
 
 export default {
   name: 'DiagramLink',
-  props: ['positionFrom', 'positionTo', 'id', 'tag', 'index', 'points'],
+  props: ['positionFrom', 'positionTo', 'id', 'tag', 'context', 'index', 'points'],
 
   components: {
     DiagramPoint
