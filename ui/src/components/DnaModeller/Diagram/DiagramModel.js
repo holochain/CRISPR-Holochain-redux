@@ -4,6 +4,8 @@ var generateId = function () {
   return Math.trunc(Math.random() * 1000)
 }
 
+let anchorTypeIndex = 0
+
 /**
  * @class DiagramModel
  */
@@ -31,6 +33,61 @@ class DiagramModel {
     const newNode = new DiagramNode(generateId(), title, x, y, width, height, type, typeIndex, color)
     this._model.nodes.push(newNode)
     return newNode
+  }
+
+  addRootAnchor (colOffset, yOffset, cardWidth, color) {
+    const rootAnchorNode = this.addNode('anchor_type::root_anchor', colOffset, yOffset, cardWidth, 145, 'rootAnchor', 0, color)
+    rootAnchorNode.addField('entry!|name:holochain::anchor')
+    rootAnchorNode.addField('link!|from:holochain::anchor')
+    rootAnchorNode.addField('link!|type:holochain::anchor_link')
+    rootAnchorNode.addField('anchor_type|root_anchor')
+    rootAnchorNode.addField('anchor_text')
+    return rootAnchorNode.addOutPort('anchor_link')
+  }
+
+  addAnchorType (anchorType, rootAnchorPort, colOffset, yOffset, cardWidth, color) {
+    const anchorTypeNode = this.addNode(`anchor_type::${anchorType.type}`, colOffset, yOffset, cardWidth, 165, 'anchorType', anchorTypeIndex, color)
+    anchorTypeNode.addField('entry!|name:holochain::anchor')
+    anchorTypeNode.addField('link!|from:holochain::anchor')
+    anchorTypeNode.addField('link!|type:holochain::anchor_link')
+    anchorTypeNode.addField(`anchor_type|${anchorType.type}`)
+    anchorTypeNode.addField('anchor_text')
+    anchorTypeIndex += 1
+    const anchorTypeInPort = anchorTypeNode.addInPort('address()')
+    this.addLink(rootAnchorPort, anchorTypeInPort, anchorType.type)
+    return anchorTypeNode
+  }
+
+  addEntryType (zomeName, entryType, node, tag, context, colOffset, yOffset, cardWidth, entryTypeIndex, color) {
+    const entityName = `${zomeName.toLowerCase()}::${entryType.name.toLowerCase()}`
+    const entryTypeNodeHeight = 105 + (entryType.fields.length + entryType.metaFields.length) * 20
+    const entryTypeNode = this.addNode(entityName, colOffset, yOffset, cardWidth, entryTypeNodeHeight, 'entryType', entryTypeIndex, color)
+    entryTypeNode.deletable = true
+    entryTypeNode.addField(`entry!|${entityName}`)
+    entryTypeNode.addField('link!|from:holochain::anchor')
+    entryTypeNode.addField(`link!|type:::${entryType.name.toLowerCase()}_link`)
+    entryType.fields.forEach(field => {
+      entryTypeNode.addField(`${field.fieldName}|${field.fieldType}`)
+    })
+    entryType.metaFields.forEach(metaField => {
+      entryTypeNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
+    })
+    const entryTypeOutPort = node.addOutPort(`${entryType.name.toLowerCase()}_link`)
+    const entryTypeInPort = entryTypeNode.addInPort('id:initial_note_entry_address')
+    this.addLink(entryTypeOutPort, entryTypeInPort, tag, context)
+    return entryTypeNode
+  }
+
+  addAnchor (anchor, anchorTypeOutPort, colOffset, yOffset, cardWidth, anchorIndex, color) {
+    const anchorNode = this.addNode(`anchor::${anchor.text}`, colOffset, yOffset, cardWidth, 165, 'anchor', anchorIndex, color)
+    anchorNode.addField('entry!|name:holochain::anchor')
+    anchorNode.addField('link!|from:holochain::anchor')
+    anchorNode.addField('link!|type:holochain::anchor_link')
+    anchorNode.addField(`anchor_type|${anchor.type}`)
+    anchorNode.addField(`anchor_text|${anchor.text}`)
+    const anchorInPort = anchorNode.addInPort('address()')
+    this.addLink(anchorTypeOutPort, anchorInPort, anchor.text)
+    return anchorNode
   }
 
   deleteNode (node) {
@@ -65,12 +122,13 @@ class DiagramModel {
    * @param {String}  tag  Optional. link tag
    * @param {Array}  points  Optional. Array of points to make the link represented as a segmented line
    */
-  addLink (from, to, tag = '', points = []) {
+  addLink (from, to, tag = '', context = '', points = []) {
     this._model.links.push({
       id: generateId(),
       from: from,
       to: to,
       tag: tag,
+      context: context,
       positionFrom: {},
       positionTo: {},
       points

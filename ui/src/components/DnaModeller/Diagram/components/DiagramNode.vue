@@ -6,7 +6,7 @@
       <rect fill="#000000" :fill-opacity="titleFillOpacity" x="7" y="17" rx="3" ry="3" :width="width-4" height="18" class="node-dark-background">
       </rect>
       <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#FFFFFF">{{title}}</text>
-      <g v-if="type==='entry'" @click="editModelNode()">
+      <g v-if="type==='entryType'" @click="editModelNode()">
         <rect :x="width - 29" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
         <image :x="width - 29" y="18" width="14" height="14" xlink:href="./edit.svg" />
       </g>
@@ -16,19 +16,21 @@
         <line :x1="width - 10" :y1="20" :x2="width" :y2="30" style="stroke:rgb(0,0,0);" stroke-width="2" />
       </g>
     </svg>
-    <rect v-if="type!=='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="58" :fill-opacity="0.45" class="node-light-background">
+    <rect v-if="type!=='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" :height="entryDefHeight" :fill-opacity="0.45" class="node-light-background">
     </rect>
     <rect v-if="type==='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="38" :fill-opacity="0.45" class="node-light-background">
     </rect>
     <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 187" class="node-light-background">
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - 51" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-88" rx="3" ry="3" :width="width-4" height="78" :fill-opacity="0.85" class="node-light-background">
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight+10" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType' || type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
+    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
     </rect>
@@ -75,12 +77,18 @@ export default {
       type: Boolean,
       default: false
     },
-    selected: Boolean
+    selected: Boolean,
+    entryDefHeight: {
+      type: Number,
+      default: 588
+    }
   },
   data () {
     return {
       nodeStrokeWidth: 0,
-      titleFillOpacity: 0.25
+      titleFillOpacity: 0.25,
+      metaFieldsHeight: 78,
+      baseTargetHeight: 20
     }
   },
   methods: {
