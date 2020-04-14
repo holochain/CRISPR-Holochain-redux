@@ -4,6 +4,7 @@ Make sure you have nix-shell installed and clone this repository:
 
 ```
 nix-shell
+yarn hc:install
 yarn ui:start
 ```
 

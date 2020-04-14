@@ -9,7 +9,7 @@ export const zomes = [
         id: 'Qmlist_notesHash1',
         type: 'list_notes',
         text: '',
-        tag: 'created_at:initial_note_entry_timestamp',
+        tag: '',
         context: 'id:permanent',
         entryTypes: [
           {
@@ -55,6 +55,98 @@ export const zomes = [
                 fieldName: 'updated_at',
                 fieldType: 'Iso8601',
                 uiView: '<p class="subtitle">Updated At::$note.updated_at</p>'
+              }
+            ],
+            functions: [
+              {
+                name: 'create',
+                code:
+`  pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
+    let note_anchor = notes_anchor()?;
+    let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
+    let entry_address = hdk::commit_entry(&entry)?;
+    let note = Note::new(entry_address.clone(), note_entry)?;
+    hdk::link_entries(&note_anchor, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
+    Ok(note)
+  }`,
+                explanation: `
+                # Docs go here 
+                Mermaid sequence diagrams and cool stuff'
+              `,
+                permissionsCode:
+  `  pub fn validate_permissions_entry_create(entry: NoteEntry, validation_data: hdk::ValidationData) -> Result<(), String> {
+      validation::validate_entry_create(entry, validation_data)
+  }`,
+                permissionsExplanation: `
+                # Docs go here 
+                Mermaid sequence diagrams and cool stuff'
+              `
+              },
+              {
+                name: 'read',
+                code:
+  ` pub fn read(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
+    let note_entry: NoteEntry = hdk::utils::get_as_type(id.clone())?;
+    let address = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into()).address();
+    Note::existing(id.clone(), created_at, address, note_entry)
+ }`,
+                explanation: 'Docs go here',
+                permissionsCode: '',
+                permissionsExplanation: `
+                # Because entries are published to the DHT entries can be read via other methods so no point having permissions'
+              `
+              },
+              {
+                name: 'update',
+                code:
+  ` pub fn update(id: Address, created_at: Iso8601, address: Address, note_input: NoteEntry) -> ZomeApiResult<Note> {
+    let updated_entry_address = hdk::update_entry(Entry::App(NOTE_ENTRY_NAME.into(), note_input.clone().into()), &address.clone())?;
+    Note::existing(id.clone(), created_at, updated_entry_address, note_input)
+ }`,
+                explanation: 'Docs go here',
+                permissionsCode:
+  ` pub fn validate_permissions_entry_modify(new_entry: NoteEntry, old_entry: NoteEntry, old_entry_header: ChainHeader, validation_data: hdk::ValidationData) -> Result<(), String> {
+    if let (Some(o), Some(p)) = (old_entry_header.provenances().get(0), validation_data.package.chain_header.provenances().get(0)) {
+        if o.source() != p.source() {
+          Err("Agent who did not author is trying to delete".to_string())
+        }
+    }
+    else {
+      Err("No provenance on this validation_data".to_string())
+    }
+    validation::validate_entry_modify(new_entry, old_entry, old_entry_header, validation_data)
+ }`,
+                permissionsExplanation: `
+                # Docs go here 
+                Mermaid sequence diagrams and cool stuff'
+              `
+              },
+              {
+                name: 'delete',
+                code:
+  ` pub fn delete(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+    hdk::remove_link(&notes_anchor()?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
+    hdk::remove_entry(&address)
+ }`,
+                explanation: 'Docs go here',
+                permissionsCode:
+  ` pub fn validate_permissions_entry_delete(old_entry: NoteEntry, old_entry_header: ChainHeader, validation_data: hdk::ValidationData) -> Result<(), String> {
+    validation::validate_entry_delete(old_entry, old_entry_header, validation_data)
+ }`,
+                permissionsExplanation: ''
+              },
+              {
+                name: 'list',
+                code:
+  ` pub fn list() -> ZomeApiResult<Vec<Note>> {
+    hdk::get_links(&notes_anchor()?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
+    .iter()
+    .map(|link| get_note(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
+    .collect()
+ }`,
+                explanation: 'Docs go here',
+                permissionsCode: '',
+                permissionsExplanation: ''
               }
             ],
             examples: [
@@ -112,12 +204,12 @@ export const zomes = [
           {
             id: 'Qmlist_notesdraftHash',
             type: 'list_notes',
-            text: 'draft',
+            text: 'master',
             links: [
               {
                 entityId: 'QmNoteEntryTypeHash2',
                 type: 'note_link',
-                tag: 'created_at:initial_note_entry_timestamp',
+                tag: '',
                 context: 'id:permanent'
               }
             ]
@@ -125,12 +217,12 @@ export const zomes = [
           {
             id: 'Qmlist_notespublishedHash',
             type: 'list_notes',
-            text: 'published',
+            text: 'develop',
             links: [
               {
                 entityId: 'QmNoteEntryTypeHash2',
                 type: 'note_link',
-                tag: 'created_at:initial_note_entry_timestamp',
+                tag: '',
                 context: 'id:permanent'
               }
             ]
@@ -142,6 +234,7 @@ export const zomes = [
       {
         id: 'QmNoteEntryTypeHash2',
         name: 'Note',
+        Skin: '<html>',
         fields: [
           {
             id: 'Qm1333',
@@ -192,6 +285,58 @@ export const zomes = [
             uiView: '<p class="subtitle">Updated At::$note.updated_at</p>'
           }
         ],
+        functions: [{
+          name: 'create',
+          code: `
+  pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
+    let note_anchor = notes_anchor()?;
+    let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
+    let entry_address = hdk::commit_entry(&entry)?;
+    let note = Note::new(entry_address.clone(), note_entry)?;
+    hdk::link_entries(&note_anchor, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
+    Ok(note)
+  }`,
+          explanation: 'Docs go here'
+        },
+        {
+          name: 'read',
+          code: `
+pub fn read_note(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
+let note_entry: NoteEntry = hdk::utils::get_as_type(id.clone())?;
+let address = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into()).address();
+Note::existing(id.clone(), created_at, address, note_entry)
+}`,
+          explanation: 'Docs go here'
+        },
+        {
+          name: 'update',
+          code: `
+          pub fn update_note(id: Address, created_at: Iso8601, address: Address, note_input: NoteEntry) -> ZomeApiResult<Note> {
+            let updated_entry_address = hdk::update_entry(Entry::App(NOTE_ENTRY_NAME.into(), note_input.clone().into()), &address.clone())?;
+            Note::existing(id.clone(), created_at, updated_entry_address, note_input)
+        }`,
+          explanation: 'Docs go here'
+        },
+        {
+          name: 'delete',
+          code: `
+          pub fn delete_note(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+            hdk::remove_link(&notes_anchor()?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
+            hdk::remove_entry(&address)
+        }`,
+          explanation: 'Docs go here'
+        },
+        {
+          name: 'list',
+          code: `
+          pub fn list_notes() -> ZomeApiResult<Vec<Note>> {
+            hdk::get_links(&notes_anchor()?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
+            .iter()
+            .map(|link| get_note(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
+            .collect()
+        }`,
+          explanation: 'Docs go here'
+        }],
         examples: [
           {
             id: 'QmUDVBPMnRrYq6VKZ9d1BA21gEbQCCua2NQCTd9jDwec3n',
@@ -238,7 +383,7 @@ export const zomes = [
         id: 'Qmlist_notesHash3',
         type: 'list_notes',
         text: '',
-        tag: 'created_at:initial_note_entry_timestamp',
+        tag: '',
         context: 'id:permanent',
         entryTypes: [
           {
@@ -265,6 +410,20 @@ export const zomes = [
                 fieldType: 'String',
                 uiView: '<div class="note-content">${note.content}</div>',
                 uiEdit: '<div class="form-row"><mwc-textarea outlined label="Content" id="content" .value=${note.content} @change=${ e => { note.content = e.target.value }}></mwc-textarea></div>'
+              },
+              {
+                id: 'Qm2',
+                fieldName: 'owner',
+                fieldType: 'String',
+                uiView: '<div class="note-content">${note.owner}</div>',
+                uiEdit: '<div class="form-row"><mwc-textarea outlined label="Owner" id="content" .value=${note.content} @change=${ e => { note.content = e.target.value }}></mwc-textarea></div>'
+              },
+              {
+                id: 'Qm2',
+                fieldName: 'status',
+                fieldType: 'String',
+                uiView: '<div class="note-content">${note.owner}</div>',
+                uiEdit: '<div class="form-row"><mwc-textarea outlined label="Owner" id="content" .value=${note.content} @change=${ e => { note.content = e.target.value }}></mwc-textarea></div>'
               }
             ],
             metaFields: [
@@ -294,6 +453,58 @@ export const zomes = [
                 uiView: '<p class="subtitle">Updated At::$note.updated_at</p>'
               }
             ],
+            functions: [{
+              name: 'create',
+              code: `
+pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
+  let note_anchor = notes_anchor()?;
+  let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
+  let entry_address = hdk::commit_entry(&entry)?;
+  let note = Note::new(entry_address.clone(), note_entry)?;
+  hdk::link_entries(&note_anchor, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
+  Ok(note)
+}`,
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'read',
+              code: `
+pub fn read_note(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
+  let note_entry: NoteEntry = hdk::utils::get_as_type(id.clone())?;
+  let address = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into()).address();
+  Note::existing(id.clone(), created_at, address, note_entry)
+}`,
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'update',
+              code: `
+              pub fn update_note(id: Address, created_at: Iso8601, address: Address, note_input: NoteEntry) -> ZomeApiResult<Note> {
+                let updated_entry_address = hdk::update_entry(Entry::App(NOTE_ENTRY_NAME.into(), note_input.clone().into()), &address.clone())?;
+                Note::existing(id.clone(), created_at, updated_entry_address, note_input)
+            }`,
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'delete',
+              code: `
+              pub fn delete_note(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+                hdk::remove_link(&notes_anchor()?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
+                hdk::remove_entry(&address)
+            }`,
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'list',
+              code: `
+              pub fn list_notes() -> ZomeApiResult<Vec<Note>> {
+                hdk::get_links(&notes_anchor()?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
+                .iter()
+                .map(|link| get_note(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
+                .collect()
+            }`,
+              explanation: 'Docs go here'
+            }],
             examples: [
               {
                 id: 'QmUDVBPMnRrYq6VKZ9d1BA21gEbQCCua2NQCTd9jDwec3n',
@@ -341,7 +552,7 @@ export const zomes = [
         agentIdLinks: [
           {
             entityId: 'QmNoteEntryTypeHash3',
-            target: 'id:initial_note_entry_address',
+            target: 'id:',
             type: 'agent_note_link',
             tag: 'created_at:initial_note_entry_timestamp',
             context: 'id:permanent'

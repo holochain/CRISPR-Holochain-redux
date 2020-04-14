@@ -74,6 +74,16 @@ Validfation rules now only for entry specific requirements, no need to manage wh
 For git merge
 check if t
 
+
+We can gert the agentid and created time from the link entry, headers.
+ Option to selkect validation package
+pub enum ValidationPackageDefinition {
+    Entry,
+    ChainFull,
+    Custom(String),
+}
+
+
 # eat-sleep-code-repeat
 
 ## What I do
