@@ -14,9 +14,6 @@
   },
   "main": "background.js",
   "dependencies": {
-    "vue-codemirror": "^4.0.6",
-    "vue-diagrams": "^0.0.1-development",
-    "vuetify-image-input": "^19.1.0",
     "@material/mwc-button": "^0.14.1",
     "@material/mwc-textarea": "^0.14.1",
     "@material/mwc-textfield": "^0.14.1",
@@ -29,7 +26,10 @@
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.6",
-    "lit-element": "^2.2.1"
+    "lit-element": "^2.2.1",
+    "vue-codemirror": "^4.0.6",
+    "vue-diagrams": "^0.0.1-development",
+    "vuetify-image-input": "^19.1.0"
   },
   "devDependencies": {
     "@mdi/font": "^3.5.95",

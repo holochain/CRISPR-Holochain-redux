@@ -7,29 +7,68 @@
         </v-col>
       </v-row>
     </v-content>
+    <v-dialog v-model="codeDialog" max-width="1000px">
+      <v-card flat>
+        <v-toolbar color="primary" dark>
+          <v-toolbar-title class="display-1">{{this.functionName}}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-row no-gutters align="start" justify="center">
+          <v-col cols="12" v-resize="onResizeCode">
+            <codemirror v-model="functionCode" :options="cmOptions" ref="cmFunctionCode"></codemirror>
+          </v-col>
+        </v-row>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="codeDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
 import { Diagram } from './Diagram'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+import 'codemirror/mode/rust/rust.js'
+import 'codemirror/theme/base16-dark.css'
 export default {
   name: 'ZomeModeller',
   components: {
-    Diagram
+    Diagram,
+    codemirror
   },
   props: ['zome'],
   data () {
     return {
       model: new Diagram.Model(),
       code: [],
+      functionCode: '',
+      functionPermissionCode: '',
+      functionName: '',
+      codeDialog: false,
       windowSize: {
         x: 200,
         y: 200
+      },
+      cmOptions: {
+        tabSize: 4,
+        mode: 'rust',
+        theme: 'base16-dark',
+        lineNumbers: true,
+        line: true
       }
     }
   },
   methods: {
     onResize () {
       this.windowSize = { x: window.innerWidth, y: window.innerHeight }
+    },
+    onResizeCode () {
+      this.funcCodemirror.setSize(1000, 400)
     },
     addAgent () {
       console.log('Add Agent')
@@ -47,7 +86,12 @@ export default {
       }
     },
     showFunctionCode (name) {
-      console.log(this.code.find(code => code.name === name))
+      this.functionCode = ''
+      this.functionPermissionCode = ''
+      const functionInfo = this.code.find(code => code.name === name)
+      this.functionName = name
+      this.functionCode = `${functionInfo.code}\n\n${functionInfo.permissionsCode}`
+      this.codeDialog = true
     },
     createModel () {
       const dnaModel = new Diagram.Model()
@@ -78,7 +122,7 @@ export default {
           const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
           entryType.functions.forEach(f => {
             entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-            this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation })
+            this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
           })
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
@@ -99,7 +143,7 @@ export default {
               const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
               entryType.functions.forEach(f => {
                 entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation })
+                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
               })
               nodes.push({ id: entryType.id, node: entryTypeNode })
             } else {
@@ -145,6 +189,11 @@ export default {
         }
       })
       return dnaModel
+    }
+  },
+  computed: {
+    funcCodemirror () {
+      return this.$refs.cmFunctionCode.codemirror
     }
   },
   mounted () {
