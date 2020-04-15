@@ -3,7 +3,7 @@ import { personas } from './personas.js'
 import { fieldNames } from './fieldNames.js'
 import { items } from './foldersFiles.js'
 
-export const hApps = [
+export const projects = [
   {
     id: 'QmHolochainIDE',
     name: 'Holochain-IDE',

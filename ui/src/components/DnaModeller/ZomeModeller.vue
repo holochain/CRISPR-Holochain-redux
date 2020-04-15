@@ -1,9 +1,9 @@
 <template>
-  <v-card flat height="100vh">
+  <v-card flat height="100vh-64">
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
-          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y"></diagram>
+          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-64"></diagram>
         </v-col>
       </v-row>
     </v-content>
@@ -170,8 +170,8 @@ export default {
             const agentOutPort = agentNode.addOutPort(link.type)
             const inNode = nodes.find(node => node.id === link.entityId)
             if (inNode && inNode.node.ports.length > 0) {
-              inNode.node.insertLinkField('link!|from:%agent_id')
               inNode.node.insertLinkField(`link!|type:::${link.type}`)
+              inNode.node.insertLinkField('link!|from:%agent_id')
               const inPort = inNode.node.ports.find(port => {
                 return port.type === 'in' && port.name === link.target
               })

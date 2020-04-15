@@ -1,9 +1,11 @@
 /* eslint no-template-curly-in-string: "off" */
+import { items } from './foldersFiles.js'
 
 export const zomes = [
   {
     id: 'QmZome1hash',
     name: 'Notes',
+    items: items,
     anchorTypes: [
       {
         id: 'Qmlist_notesHash1',
@@ -193,7 +195,8 @@ export const zomes = [
   },
   {
     id: 'QmZome2hash',
-    name: 'Notes2',
+    name: 'Notes Workflow',
+    items: items,
     anchorTypes: [
       {
         id: 'Qmlist_notesHash2',
@@ -204,7 +207,7 @@ export const zomes = [
           {
             id: 'Qmlist_notesdraftHash',
             type: 'list_notes',
-            text: 'master',
+            text: 'draft',
             links: [
               {
                 entityId: 'QmNoteEntryTypeHash2',
@@ -217,15 +220,8 @@ export const zomes = [
           {
             id: 'Qmlist_notespublishedHash',
             type: 'list_notes',
-            text: 'develop',
-            links: [
-              {
-                entityId: 'QmNoteEntryTypeHash2',
-                type: 'note_link',
-                tag: '',
-                context: 'id:permanent'
-              }
-            ]
+            text: 'publish',
+            links: []
           }
         ]
       }
@@ -377,7 +373,8 @@ Note::existing(id.clone(), created_at, address, note_entry)
   },
   {
     id: 'QmZome3hash',
-    name: 'Notes3',
+    name: 'Agent Notes',
+    items: items,
     anchorTypes: [
       {
         id: 'Qmlist_notesHash3',
@@ -552,7 +549,7 @@ pub fn read_note(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
         agentIdLinks: [
           {
             entityId: 'QmNoteEntryTypeHash3',
-            target: 'id:',
+            target: 'id:initial_note_entry_address',
             type: 'agent_note_link',
             tag: 'created_at:initial_note_entry_timestamp',
             context: 'id:permanent'

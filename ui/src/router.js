@@ -9,13 +9,13 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'DNA Model',
-      component: () => import('@/views/DnaModeller')
+      name: 'Projects',
+      component: () => import('@/views/HolochainProjects')
     },
     {
-      path: '/model/:hAppId',
-      name: 'Application Model',
-      component: () => import('@/views/Model'),
+      path: '/project/:id',
+      name: 'Project',
+      component: () => import('@/views/DnaModeller'),
       props: true
     },
     {
