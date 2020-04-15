@@ -1,11 +1,11 @@
 <template>
   <v-card fluid>
-    <v-toolbar>
-      <v-toolbar-title>Holochain Apps</v-toolbar-title>
+    <v-toolbar color="primary" dark>
+      <v-toolbar-title>Holochain Projects</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="addHolochainApp">
         <v-icon>mdi-plus</v-icon>
-        Holochain Application
+        Holochain Project
       </v-btn>
       <v-btn text to="modules">
         <v-icon>mdi-view-module</v-icon>
@@ -14,8 +14,8 @@
     </v-toolbar>
     <v-content>
       <v-row no-gutters align="start" justify="center" class="fill-height">
-        <v-col v-for="(hApp) in hApps" :key="hApp.name" cols="3">
-          <holochain-app :hApp="hApp" @delete-holochain-app="deleteHolochainApp"/>
+        <v-col v-for="(project) in projects" :key="project.name" cols="3">
+          <holochain-project :project="project"/>
         </v-col>
       </v-row>
     </v-content>
@@ -23,14 +23,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { projects } from '../store/projects.js'
 export default {
-  name: 'HolochainApps',
+  name: 'HolochainProjects',
   components: {
-    HolochainApp: () => import('../components/HolochainApp')
+    HolochainProject: () => import('../components/HolochainProject')
   },
   data () {
     return {
+      projects: projects,
       new: {
         id: '',
         name: '',
@@ -43,18 +44,15 @@ export default {
   methods: {
     addHolochainApp: function () {
       console.log('Add New Holochain App')
-      this.hApps.push(this.new)
+      this.projects.push(this.new)
     },
-    deleteHolochainApp: function (hApp) {
+    deleteHolochainApp: function (project) {
       console.log('Delete Entry Type')
-      const hAppName = hApp.name
-      this.hApps = this.hApps.filter(function (hApp) {
-        return hApp.name !== hAppName
+      const projectName = project.name
+      this.projects = this.projects.filter(function (project) {
+        return project.name !== projectName
       })
     }
-  },
-  computed: {
-    ...mapState('app', ['hApps'])
   }
 }
 </script>

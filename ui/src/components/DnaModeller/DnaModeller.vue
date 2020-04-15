@@ -45,6 +45,10 @@
               <v-icon>mdi-plus</v-icon>
               Entry Type
             </v-btn>
+            <v-btn text to="/">
+              <v-icon>mdi-view-dashboard</v-icon>
+              Dashboard
+            </v-btn>
           </v-toolbar>
           <v-content>
             <v-row no-gutters align="start" justify="center">

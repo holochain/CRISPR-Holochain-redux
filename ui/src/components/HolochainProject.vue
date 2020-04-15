@@ -1,21 +1,21 @@
 <template>
   <v-card>
-    <v-img class="white--text align-end" width="300" :src="require(`@/assets/happs/${hApp.name}/preview.png`)">
-      <v-card-title>{{ hApp.name }}</v-card-title>
+    <v-img class="white--text align-end" width="300" :src="require(`@/assets/happs/${project.name}/preview.png`)">
+      <v-card-title>{{ project.name }}</v-card-title>
     </v-img>
     <v-card-subtitle class="pb-0">
-      {{ hApp.contact }}
+      {{ project.contact }}
     </v-card-subtitle>
     <v-card-subtitle class="pb-0">
-      {{ hApp.mobile }}
+      {{ project.mobile }}
     </v-card-subtitle>
      <v-card-text>
       <div class="text--primary">
-        {{ hApp.description }}
+        {{ project.description }}
       </div>
     </v-card-text>
     <v-card-actions>
-      <v-btn color="orange" text :to="`/model/${hApp.id}`">
+      <v-btn color="orange" text :to="`/project/${project.id}`">
         Develop
       </v-btn>
         <v-btn color="orange" text href="http://localhost:8080" target="_blank">
@@ -30,14 +30,15 @@
 
 <script>
 export default {
-  name: 'HolochainApp',
+  name: 'HolochainProject',
   props: {
-    hApp: {
+    project: {
       type: Object,
       // Object or array defaults must be returned from
       // a factory function
       default: function () {
         return {
+          id: '0',
           domain: 'escr',
           player: 'Philip Beadle',
           mobile: '0417301024'
