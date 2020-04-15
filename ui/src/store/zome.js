@@ -195,7 +195,7 @@ export const zomes = [
   },
   {
     id: 'QmZome2hash',
-    name: 'Notes2',
+    name: 'Notes Workflow',
     items: items,
     anchorTypes: [
       {
@@ -207,7 +207,7 @@ export const zomes = [
           {
             id: 'Qmlist_notesdraftHash',
             type: 'list_notes',
-            text: 'master',
+            text: 'draft',
             links: [
               {
                 entityId: 'QmNoteEntryTypeHash2',
@@ -220,15 +220,8 @@ export const zomes = [
           {
             id: 'Qmlist_notespublishedHash',
             type: 'list_notes',
-            text: 'develop',
-            links: [
-              {
-                entityId: 'QmNoteEntryTypeHash2',
-                type: 'note_link',
-                tag: '',
-                context: 'id:permanent'
-              }
-            ]
+            text: 'publish',
+            links: []
           }
         ]
       }
@@ -380,7 +373,7 @@ Note::existing(id.clone(), created_at, address, note_entry)
   },
   {
     id: 'QmZome3hash',
-    name: 'Notes3',
+    name: 'Agent Notes',
     items: items,
     anchorTypes: [
       {

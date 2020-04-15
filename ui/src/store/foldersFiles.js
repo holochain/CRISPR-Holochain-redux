@@ -7,12 +7,12 @@ export const items = [
       { id: 2, name: 'default.nix', file: 'nix' },
       {
         id: 5,
-        name: 'dna',
+        name: 'DNA',
         children: [
           { id: 2, name: 'app.json', file: 'json' },
           {
             id: 6,
-            name: 'test',
+            name: 'Test',
             children: [
               { id: 8, name: 'index.js', file: 'js' },
               { id: 2, name: 'package.json', file: 'json' },
@@ -27,13 +27,13 @@ export const items = [
           },
           {
             id: 10,
-            name: 'zomes',
+            name: 'Zomes',
             children: [
               {
                 id: 11,
-                name: 'notes',
+                name: 'Notes',
                 children: [
-                  { id: 12, name: 'model', file: 'model', index: 0 },
+                  { id: 12, name: 'Model', file: 'model', index: 0 },
                   { id: 12, name: 'zome.json', file: 'json' },
                   {
                     id: 11,
@@ -63,9 +63,9 @@ export const items = [
               },
               {
                 id: 11,
-                name: 'notes2',
+                name: 'Notes Workflow',
                 children: [
-                  { id: 12, name: 'model', file: 'model', index: 1 },
+                  { id: 12, name: 'Model', file: 'model', index: 1 },
                   { id: 12, name: 'zome.json', file: 'json' },
                   {
                     id: 11,
@@ -95,9 +95,9 @@ export const items = [
               },
               {
                 id: 11,
-                name: 'agent_notes',
+                name: 'Agent Notes',
                 children: [
-                  { id: 12, name: 'model', file: 'model', index: 2 },
+                  { id: 12, name: 'Model', file: 'model', index: 2 },
                   { id: 12, name: 'zome.json', file: 'json' },
                   {
                     id: 11,
@@ -134,7 +134,7 @@ export const items = [
       { id: 4, name: 'Procfile', file: 'code' },
       {
         id: 15,
-        name: 'ui',
+        name: 'UI',
         children: [
           { id: 16, name: 'index.html', file: 'html' },
           { id: 17, name: 'package.json', file: 'json' },
@@ -147,7 +147,7 @@ export const items = [
               { id: 16, name: 'index.js', file: 'js' },
               {
                 id: 17,
-                name: 'notes',
+                name: 'Notes',
                 children: [
                   {
                     id: 16,

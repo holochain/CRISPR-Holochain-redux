@@ -8,10 +8,10 @@
               <v-toolbar color="primary" dark>
                 <v-toolbar-title>Application Files</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon class="mr-1 ml-n1">
-                  <template>
-                    <v-img width="20" :src="require(`@/assets/icons/holochain-circle.png`)" />
-                  </template>
+                <v-btn icon>
+                  <v-icon>
+                    mdi-application-export
+                  </v-icon>
                 </v-btn>
               </v-toolbar>
               <v-treeview v-model="tree" :open="open" :items="this.zome.items" activatable item-key="name" open-on-click>
@@ -37,18 +37,13 @@
         </v-card>
       </v-col>
       <v-col cols="9">
-        <v-card flat height="100vh">
+        <v-card height="100vh" width="100%" class="pa-0 ma-0">
           <v-toolbar color="primary" dark>
-            <v-toolbar-title>Zome Models</v-toolbar-title>
+            <v-toolbar-title>{{this.zome.name}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn @click="loadZome(0)">
-              Zome 1
-            </v-btn>
-            <v-btn @click="loadZome(1)">
-              Zome 2
-            </v-btn>
-            <v-btn @click="loadZome(2)">
-              Zome 3
+            <v-btn text>
+              <v-icon>mdi-plus</v-icon>
+              Entry Type
             </v-btn>
           </v-toolbar>
           <v-content>
