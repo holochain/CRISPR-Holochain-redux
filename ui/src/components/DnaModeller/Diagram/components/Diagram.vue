@@ -16,7 +16,7 @@
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xml:space="preserve"
-      :viewBox="'0 0 ' + width + ' ' + height"
+      :viewBox="'0 0 ' + width * 1.1 + ' ' + height * 1.1"
       :width="width"
       :height="height"
       preserveAspectRatio="xMinYMin meet"

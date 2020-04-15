@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/holochain/react-graphql-template#readme",
   "dependencies": {
+    "@mdi/font": "^5.0.45",
     "foreman": "^3.0.1"
   }
 }

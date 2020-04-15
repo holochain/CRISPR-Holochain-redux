@@ -17,6 +17,7 @@
     "@material/mwc-button": "^0.14.1",
     "@material/mwc-textarea": "^0.14.1",
     "@material/mwc-textfield": "^0.14.1",
+    "@mdi/font": "^5.0.45",
     "@polymer/app-layout": "^3.0.0",
     "@uprtcl/graphql": "^0.0.6-alpha.4",
     "@uprtcl/holochain-provider": "0.0.6-alpha.4",
@@ -32,7 +33,6 @@
     "vuetify-image-input": "^19.1.0"
   },
   "devDependencies": {
-    "@mdi/font": "^3.5.95",
     "@vue/cli-plugin-babel": "^4.1.2",
     "@vue/cli-plugin-eslint": "^4.1.2",
     "@vue/cli-service": "^4.1.2",
