@@ -124,6 +124,7 @@ export default {
             entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
             this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
           })
+          this.$emit('functions-code-updated', this.code)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -145,6 +146,7 @@ export default {
                 entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
                 this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
               })
+              this.$emit('functions-code-updated', this.code)
               nodes.push({ id: entryType.id, node: entryTypeNode })
             } else {
               console.log(existingEntryTypeNode.node.ports)

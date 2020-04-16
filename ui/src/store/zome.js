@@ -1,5 +1,5 @@
 /* eslint no-template-curly-in-string: "off" */
-import { items } from './foldersFiles.js'
+import { items } from './foldersFilesCode.js'
 
 export const zomes = [
   {

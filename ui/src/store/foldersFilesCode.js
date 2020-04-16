@@ -1,26 +1,27 @@
+import * as fs from 'fs'
 export const items = [
   {
     id: 1,
     name: 'Notes App',
     children: [
-      { id: 2, name: 'config.nix', file: 'nix' },
-      { id: 2, name: 'default.nix', file: 'nix' },
+      { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/config.nix', 'utf8') },
+      { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/default.nix', 'utf8') },
       {
         id: 5,
         name: 'DNA',
         children: [
-          { id: 2, name: 'app.json', file: 'json', code: '' },
+          { id: 2, name: 'app.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/app.json', 'utf8').replace(new RegExp('AppNamePlaceHolder', 'g'), 'Notes') },
           {
             id: 6,
             name: 'Test',
             children: [
-              { id: 8, name: 'index.js', file: 'js' },
-              { id: 2, name: 'package.json', file: 'json' },
+              { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/index.js', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
+              { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/package.json', 'utf8') },
               {
                 id: 7,
                 name: 'notes',
                 children: [
-                  { id: 9, name: 'index.js', file: 'js' }
+                  { id: 9, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/test/notes/index.js', 'utf8') }
                 ]
               }
             ]
@@ -34,25 +35,25 @@ export const items = [
                 name: 'Notes',
                 index: 0,
                 children: [
-                  { id: 12, name: 'zome.json', file: 'json' },
+                  { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/zome.json', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
                   {
                     id: 11,
                     name: 'code',
                     children: [
-                      { id: 12, name: 'Cargo.toml', file: 'rs' },
+                      { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/Cargo.toml', 'utf8') },
                       {
                         id: 11,
                         name: 'src',
                         children: [
-                          { id: 12, name: 'lib.rs', file: 'rs' },
+                          { id: 12, name: 'lib.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs', 'utf8') },
                           {
                             id: 11,
                             name: 'note',
                             children: [
-                              { id: 12, name: 'handlers.rs', file: 'rs' },
-                              { id: 13, name: 'mod.rs', file: 'rs' },
-                              { id: 14, name: 'permissions.rs', file: 'rs' },
-                              { id: 14, name: 'validation.rs', file: 'rs' }
+                              { id: 12, name: 'handlers.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/handlers.rs', 'utf8') },
+                              { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/mod.rs', 'utf8') },
+                              { id: 14, name: 'permissions.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/permissions.rs', 'utf8') },
+                              { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/validation.rs', 'utf8') }
                             ]
                           }
                         ]
@@ -122,9 +123,9 @@ export const items = [
           }
         ]
       },
-      { id: 2, name: 'package.json', file: 'json' },
-      { id: 3, name: 'README.md', file: 'md' },
-      { id: 4, name: 'Procfile', file: 'code' },
+      { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/package.json', 'utf8') },
+      { id: 4, name: 'Procfile', file: 'code', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/Procfile', 'utf8') },
+      { id: 3, name: 'README.md', file: 'md', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/README.md', 'utf8') },
       {
         id: 15,
         name: 'UI',
