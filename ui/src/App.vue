@@ -3,6 +3,13 @@
     <v-content>
        <router-view />
     </v-content>
+    <v-footer dark padless>
+      <v-row no-gutters align="start">
+        <v-col cols="12" justify="end">
+          <v-img width="250" :src="require('@/assets/POWERED_HOLOCHAIN_HORIZONTAL_WHITE.png')" />
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
 

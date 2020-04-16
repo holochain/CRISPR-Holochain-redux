@@ -19,8 +19,8 @@ export default new Vuetify({
         info: '#5B5C79'
       },
       dark: {
-        primary: '#4a148c',
-        secondary: '#00acc1',
+        primary: '#7A00FF',
+        secondary: '#425BEE',
         accent: '#5c007a',
         anchor: '#000051',
         portBase: '#ffb300',

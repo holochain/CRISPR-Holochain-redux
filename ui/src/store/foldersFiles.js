@@ -32,8 +32,8 @@ export const items = [
               {
                 id: 11,
                 name: 'Notes',
+                index: 0,
                 children: [
-                  { id: 12, name: 'Model', file: 'model', index: 0 },
                   { id: 12, name: 'zome.json', file: 'json' },
                   {
                     id: 11,
@@ -64,8 +64,8 @@ export const items = [
               {
                 id: 11,
                 name: 'Notes Workflow',
+                index: 1,
                 children: [
-                  { id: 12, name: 'Model', file: 'model', index: 1 },
                   { id: 12, name: 'zome.json', file: 'json' },
                   {
                     id: 11,
@@ -96,29 +96,22 @@ export const items = [
               {
                 id: 11,
                 name: 'Agent Notes',
+                index: 2,
                 children: [
-                  { id: 12, name: 'Model', file: 'model', index: 2 },
-                  { id: 12, name: 'zome.json', file: 'json' },
+                  { id: 12, name: 'Cargo.toml', file: 'rs' },
                   {
                     id: 11,
-                    name: 'code',
+                    name: 'src',
                     children: [
-                      { id: 12, name: 'Cargo.toml', file: 'rs' },
+                      { id: 12, name: 'lib.rs', file: 'rs' },
                       {
                         id: 11,
-                        name: 'src',
+                        name: 'note',
                         children: [
-                          { id: 12, name: 'lib.rs', file: 'rs' },
-                          {
-                            id: 11,
-                            name: 'note',
-                            children: [
-                              { id: 12, name: 'handlers.rs', file: 'rs' },
-                              { id: 13, name: 'mod.rs', file: 'rs' },
-                              { id: 14, name: 'permissions.rs', file: 'rs' },
-                              { id: 14, name: 'validation.rs', file: 'rs' }
-                            ]
-                          }
+                          { id: 12, name: 'handlers.rs', file: 'rs' },
+                          { id: 13, name: 'mod.rs', file: 'rs' },
+                          { id: 14, name: 'permissions.rs', file: 'rs' },
+                          { id: 14, name: 'validation.rs', file: 'rs' }
                         ]
                       }
                     ]
