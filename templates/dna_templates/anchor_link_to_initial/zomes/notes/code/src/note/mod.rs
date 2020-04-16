@@ -1,5 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
-use holochain_json_derive::DefaultJson; 
+use holochain_json_derive::DefaultJson;
 use hdk::{
     self,
     entry,

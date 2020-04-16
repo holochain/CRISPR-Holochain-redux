@@ -48,8 +48,11 @@
         <v-card height="100%" width="100%" flat tile>
           <v-content>
             <v-row no-gutters align="start" justify="center">
-              <v-col cols="12">
-                <zome-modeller :zome="zome" :key="zome.id"/>
+              <v-col v-if="showModel" cols="12">
+                <zome-modeller :zome="zome" :key="zome.id" @functions-code-updated="functionsCodeUpdated"/>
+              </v-col>
+              <v-col v-if="showCode" cols="12">
+                <code-window :code="code" :options="options"/>
               </v-col>
             </v-row>
           </v-content>
@@ -63,15 +66,17 @@ import { zomes } from '../../store/zome.js'
 export default {
   name: 'DnaModeller',
   components: {
-    ZomeModeller: () => import('./ZomeModeller')
+    ZomeModeller: () => import('./ZomeModeller'),
+    CodeWindow: () => import('./CodeWindow')
   },
   data () {
     return {
+      applicationName: 'Notes',
       zomeTab: null,
       zomes: zomes,
       zome: zomes[0],
       tree: [],
-      open: ['Notes App', 'dna', 'ui'],
+      open: ['Notes App', 'DNA', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',
@@ -85,12 +90,73 @@ export default {
         rs: 'mdi-code-braces',
         md: 'mdi-language-markdown',
         model: 'mdi-merge'
-      }
+      },
+      showModel: false,
+      showCode: false,
+      code: '',
+      options: {}
     }
   },
   methods: {
     loadZome (index) {
       this.zome = this.zomes[index]
+      this.showModel = true
+      this.showCode = false
+    },
+    functionsCodeUpdated (code) {
+      console.log(code)
+    },
+    loadFile (item) {
+      switch (item.file) {
+        case 'rs':
+          this.code = ''
+          this.options = {
+            tabSize: 4,
+            mode: 'rust',
+            theme: 'base16-dark',
+            readOnly: true,
+            lineNumbers: true,
+            line: true
+          }
+          this.code = item.code
+          break
+        case 'json':
+        case 'nix':
+        case 'code':
+          this.options = {
+            tabSize: 4,
+            mode: 'javascript',
+            json: true,
+            theme: 'base16-dark',
+            lineNumbers: true,
+            line: true
+          }
+          this.code = item.code
+          break
+        case 'js':
+          this.options = {
+            tabSize: 4,
+            mode: 'javascript',
+            json: false,
+            theme: 'base16-dark',
+            lineNumbers: true,
+            line: true
+          }
+          this.code = item.code
+          break
+        case 'md':
+          this.options = {
+            tabSize: 4,
+            mode: 'markdown',
+            theme: 'base16-dark',
+            lineNumbers: true,
+            line: true
+          }
+          this.code = item.code
+          break
+      }
+      this.showModel = false
+      this.showCode = true
     }
   }
 }
