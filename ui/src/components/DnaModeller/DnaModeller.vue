@@ -1,19 +1,27 @@
 <template>
-  <v-card flat height="100vh" class="pa-0 ma-0">
+  <v-card height="99vh" flat tile>
+    <v-toolbar color="primary" dark>
+      <v-toolbar-title>Application Builder - Selected Zome [{{this.zome.name}}]</v-toolbar-title>
+      <v-btn icon>
+        <v-icon>
+          mdi-application-export
+        </v-icon>
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn text>
+        <v-icon>mdi-plus</v-icon>
+        Entry Type
+      </v-btn>
+      <v-btn text to="/">
+        <v-icon>mdi-view-dashboard</v-icon>
+        Dashboard
+      </v-btn>
+    </v-toolbar>
     <v-row no-gutters align="start" justify="center">
       <v-col cols="3">
-        <v-card height="100vh" width="100%" class="pa-0 ma-0 overflow-auto">
+        <v-card height="90vh" flat tile width="100%" class="pa-0 ma-0 overflow-auto">
           <v-row no-gutters>
             <v-col cols="12">
-              <v-toolbar color="primary" dark>
-                <v-toolbar-title>Application Files</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon>
-                  <v-icon>
-                    mdi-application-export
-                  </v-icon>
-                </v-btn>
-              </v-toolbar>
               <v-treeview v-model="tree" :open="open" :items="this.zome.items" activatable item-key="name" open-on-click>
                 <template v-slot:prepend="{ item, open }">
                   <v-icon v-if="!item.file">
@@ -37,19 +45,7 @@
         </v-card>
       </v-col>
       <v-col cols="9">
-        <v-card height="100vh" width="100%" class="pa-0 ma-0">
-          <v-toolbar color="primary" dark>
-            <v-toolbar-title>{{this.zome.name}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn text>
-              <v-icon>mdi-plus</v-icon>
-              Entry Type
-            </v-btn>
-            <v-btn text to="/">
-              <v-icon>mdi-view-dashboard</v-icon>
-              Dashboard
-            </v-btn>
-          </v-toolbar>
+        <v-card height="100%" width="100%" flat tile>
           <v-content>
             <v-row no-gutters align="start" justify="center">
               <v-col cols="12">

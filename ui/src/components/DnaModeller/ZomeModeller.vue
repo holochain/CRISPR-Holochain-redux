@@ -1,5 +1,5 @@
 <template>
-  <v-card flat height="100vh-64">
+  <v-card flat height="100%">
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
@@ -170,7 +170,7 @@ export default {
             const agentOutPort = agentNode.addOutPort(link.type)
             const inNode = nodes.find(node => node.id === link.entityId)
             if (inNode && inNode.node.ports.length > 0) {
-              inNode.node.insertLinkField(`link!|type:::${link.type}`)
+              inNode.node.insertLinkField(`link!|type::${link.type}`)
               inNode.node.insertLinkField('link!|from:%agent_id')
               const inPort = inNode.node.ports.find(port => {
                 return port.type === 'in' && port.name === link.target

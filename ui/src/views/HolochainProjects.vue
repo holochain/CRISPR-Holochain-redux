@@ -1,5 +1,5 @@
 <template>
-  <v-card fluid>
+  <v-card fluid height="99vh">
     <v-toolbar color="primary" dark>
       <v-toolbar-title>Holochain Projects</v-toolbar-title>
       <v-spacer></v-spacer>
