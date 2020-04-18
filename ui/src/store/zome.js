@@ -1,18 +1,46 @@
 /* eslint no-template-curly-in-string: "off" */
 import { items } from './foldersFilesCode.js'
+import * as fs from 'fs'
 
 export const zomes = [
   {
     id: 'QmZome1hash',
     name: 'Notes',
-    items: items,
+    items: [
+      { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/zome.json', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
+      {
+        id: 11,
+        name: 'code',
+        children: [
+          { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/Cargo.toml', 'utf8') },
+          {
+            id: 11,
+            name: 'src',
+            children: [
+              { id: 12, name: 'lib.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs', 'utf8') },
+              {
+                id: 11,
+                name: 'note',
+                children: [
+                  { id: 12, name: 'handlers.rs', file: 'rs', code: '' },
+                  { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/mod.rs', 'utf8') },
+                  { id: 14, name: 'entry_permissions.rs', file: 'rs', code: '' },
+                  { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/link_permissions.rs', 'utf8') },
+                  { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/validation.rs', 'utf8') }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
     anchorTypes: [
       {
         id: 'Qmlist_notesHash1',
         type: 'list_notes',
         text: '',
-        tag: '',
-        context: 'id:permanent',
+        tag: 'link tag',
+        context: 'permanent',
         entryTypes: [
           {
             id: 'QmNoteEntryTypeHash1',
@@ -61,24 +89,18 @@ export const zomes = [
             ],
             functions: [
               {
+                name: 'handlers',
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/handlers.rs', 'utf8'),
+                permissionsCode: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions.rs', 'utf8')
+              },
+              {
                 name: 'create',
-                code:
-`  pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
-    let note_anchor = notes_anchor()?;
-    let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
-    let entry_address = hdk::commit_entry(&entry)?;
-    let note = Note::new(entry_address.clone(), note_entry)?;
-    hdk::link_entries(&note_anchor, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
-    Ok(note)
-  }`,
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/create.rs', 'utf8'),
                 explanation: `
                 # Docs go here 
                 Mermaid sequence diagrams and cool stuff'
               `,
-                permissionsCode:
-  `  pub fn validate_permissions_entry_create(entry: NoteEntry, validation_data: hdk::ValidationData) -> Result<(), String> {
-      validation::validate_entry_create(entry, validation_data)
-  }`,
+                permissionsCode: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_create.rs', 'utf8'),
                 permissionsExplanation: `
                 # Docs go here 
                 Mermaid sequence diagrams and cool stuff'
@@ -86,12 +108,7 @@ export const zomes = [
               },
               {
                 name: 'read',
-                code:
-  ` pub fn read(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
-    let note_entry: NoteEntry = hdk::utils::get_as_type(id.clone())?;
-    let address = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into()).address();
-    Note::existing(id.clone(), created_at, address, note_entry)
- }`,
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/read.rs', 'utf8'),
                 explanation: 'Docs go here',
                 permissionsCode: '',
                 permissionsExplanation: `
@@ -100,24 +117,9 @@ export const zomes = [
               },
               {
                 name: 'update',
-                code:
-  ` pub fn update(id: Address, created_at: Iso8601, address: Address, note_input: NoteEntry) -> ZomeApiResult<Note> {
-    let updated_entry_address = hdk::update_entry(Entry::App(NOTE_ENTRY_NAME.into(), note_input.clone().into()), &address.clone())?;
-    Note::existing(id.clone(), created_at, updated_entry_address, note_input)
- }`,
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/update.rs', 'utf8'),
                 explanation: 'Docs go here',
-                permissionsCode:
-  ` pub fn validate_permissions_entry_modify(new_entry: NoteEntry, old_entry: NoteEntry, old_entry_header: ChainHeader, validation_data: hdk::ValidationData) -> Result<(), String> {
-    if let (Some(o), Some(p)) = (old_entry_header.provenances().get(0), validation_data.package.chain_header.provenances().get(0)) {
-        if o.source() != p.source() {
-          Err("Agent who did not author is trying to delete".to_string())
-        }
-    }
-    else {
-      Err("No provenance on this validation_data".to_string())
-    }
-    validation::validate_entry_modify(new_entry, old_entry, old_entry_header, validation_data)
- }`,
+                permissionsCode: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_update.rs', 'utf8'),
                 permissionsExplanation: `
                 # Docs go here 
                 Mermaid sequence diagrams and cool stuff'
@@ -125,27 +127,14 @@ export const zomes = [
               },
               {
                 name: 'delete',
-                code:
-  ` pub fn delete(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-    hdk::remove_link(&notes_anchor()?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
-    hdk::remove_entry(&address)
- }`,
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs', 'utf8'),
                 explanation: 'Docs go here',
-                permissionsCode:
-  ` pub fn validate_permissions_entry_delete(old_entry: NoteEntry, old_entry_header: ChainHeader, validation_data: hdk::ValidationData) -> Result<(), String> {
-    validation::validate_entry_delete(old_entry, old_entry_header, validation_data)
- }`,
+                permissionsCode: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_delete.rs', 'utf8'),
                 permissionsExplanation: ''
               },
               {
                 name: 'list',
-                code:
-  ` pub fn list() -> ZomeApiResult<Vec<Note>> {
-    hdk::get_links(&notes_anchor()?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
-    .iter()
-    .map(|link| get_note(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
-    .collect()
- }`,
+                code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/list.rs', 'utf8'),
                 explanation: 'Docs go here',
                 permissionsCode: '',
                 permissionsExplanation: ''
@@ -207,20 +196,28 @@ export const zomes = [
           {
             id: 'Qmlist_notesdraftHash',
             type: 'list_notes',
-            text: 'draft',
+            text: 'To do',
             links: [
               {
                 entityId: 'QmNoteEntryTypeHash2',
                 type: 'note_link',
-                tag: '',
-                context: 'id:permanent'
+                tag: 'To do',
+                context: 'exclusive'
               }
             ]
           },
           {
             id: 'Qmlist_notespublishedHash',
             type: 'list_notes',
-            text: 'publish',
+            text: 'In progress',
+            tag: 'in progress',
+            links: []
+          },
+          {
+            id: 'Qmlist_notespublishedHash',
+            type: 'list_notes',
+            text: 'Done',
+            tag: 'Done',
             links: []
           }
         ]
@@ -380,8 +377,8 @@ Note::existing(id.clone(), created_at, address, note_entry)
         id: 'Qmlist_notesHash3',
         type: 'list_notes',
         text: '',
-        tag: '',
-        context: 'id:permanent',
+        tag: 'link tag',
+        context: 'permanent',
         entryTypes: [
           {
             id: 'QmNoteEntryTypeHash3',
@@ -551,8 +548,8 @@ pub fn read_note(id: Address, created_at: Iso8601) -> ZomeApiResult<Note> {
             entityId: 'QmNoteEntryTypeHash3',
             target: 'id:initial_note_entry_address',
             type: 'agent_note_link',
-            tag: 'created_at:initial_note_entry_timestamp',
-            context: 'id:permanent'
+            tag: 'link tag',
+            context: 'permanent'
           }
         ]
       }

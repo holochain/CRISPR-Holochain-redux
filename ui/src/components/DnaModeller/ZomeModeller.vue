@@ -1,5 +1,5 @@
 <template>
-  <v-card flat height="100%">
+  <v-card flat height="100vh">
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
@@ -120,11 +120,15 @@ export default {
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
         anchorType.entryTypes.forEach(entryType => {
           const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+          let handlersCode = ''
+          let permissionsCode = ''
           entryType.functions.forEach(f => {
-            entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            if (f.name !== 'handlers') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            handlersCode += f.code + '\n\n'
+            permissionsCode += f.permissionsCode + '\n\n'
             this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
           })
-          this.$emit('functions-code-updated', this.code)
+          this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -172,7 +176,7 @@ export default {
             const agentOutPort = agentNode.addOutPort(link.type)
             const inNode = nodes.find(node => node.id === link.entityId)
             if (inNode && inNode.node.ports.length > 0) {
-              inNode.node.insertLinkField(`link!|type::${link.type}`)
+              inNode.node.insertLinkField(`link!|type:${link.type}`)
               inNode.node.insertLinkField('link!|from:%agent_id')
               const inPort = inNode.node.ports.find(port => {
                 return port.type === 'in' && port.name === link.target

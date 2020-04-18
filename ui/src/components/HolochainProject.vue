@@ -1,6 +1,6 @@
 <template>
-  <v-card>
-    <v-img class="white--text align-end" width="300" :src="require(`@/assets/happs/${project.name}/preview.png`)">
+  <v-card class="ma-5">
+    <v-img class="white--text align-end" height="350" :src="require(`@/assets/happs/${project.name}/preview.png`)">
       <v-card-title>{{ project.name }}</v-card-title>
     </v-img>
     <v-card-subtitle class="pb-0">

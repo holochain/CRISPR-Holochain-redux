@@ -11,7 +11,7 @@
     <v-content>
       <v-row>
         <v-col cols="4">
-          <to-dos />
+          <notes-module />
         </v-col>
           <v-col cols="4">
           <chat />
@@ -28,8 +28,8 @@
 export default {
   name: 'Modules',
   components: {
-    ToDos: () => import('../modules/ToDos'),
-    Chat: () => import('../modules/Chat'),
+    NotesModule: () => import('@/modules/NotesModule'),
+    Chat: () => import('@/modules/Chat'),
     ProfileWebsiteBuilderPreview: () => import('@/modules/ProfileWebsiteBuilder/Preview')
   }
 }

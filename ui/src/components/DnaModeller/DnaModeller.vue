@@ -8,7 +8,7 @@
         </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn text>
+      <v-btn text v-if="showModel">
         <v-icon>mdi-plus</v-icon>
         Entry Type
       </v-btn>
@@ -22,7 +22,7 @@
         <v-card height="90vh" flat tile width="100%" class="pa-0 ma-0 overflow-auto">
           <v-row no-gutters>
             <v-col cols="12">
-              <v-treeview v-model="tree" :open="open" :items="this.zome.items" activatable item-key="name" open-on-click>
+              <v-treeview v-model="tree" :open="open" :items="this.items" activatable item-key="name" open-on-click>
                 <template v-slot:prepend="{ item, open }">
                   <v-icon v-if="!item.file">
                     {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
@@ -32,7 +32,7 @@
                   </v-icon>
                 </template>
                 <template v-slot:label="{ item }">
-                  <v-btn v-if="item.index!==undefined" text @click="loadZome(item.index)" class="text-none">
+                  <v-btn v-if="item.index!==undefined" text @click="loadZome(item)" class="text-none">
                     {{item.name}}
                   </v-btn>
                   <v-btn v-else text @click="loadFile(item)" class="text-none">
@@ -47,7 +47,15 @@
       <v-col cols="9">
         <v-card height="100%" width="100%" flat tile>
           <v-content>
-            <v-row no-gutters align="start" justify="center">
+            <v-row no-gutters align="center" justify="center">
+               <v-col v-if="showCode === showModel" cols="12">
+                <v-card class="mx-auto pt-10" max-width="900">
+                  <v-img class="white--text align-end" width="900px" :src="require('@/assets/HOLOCHAIN_WHITE.png')">
+                  </v-img>
+                  <v-card-title>Holochain-IDE</v-card-title>
+                  <v-card-subtitle class="pb-0">Build hApps from Data Models and Skins</v-card-subtitle>
+                </v-card>
+              </v-col>
               <v-col v-if="showModel" cols="12">
                 <zome-modeller :zome="zome" :key="zome.id" @functions-code-updated="functionsCodeUpdated"/>
               </v-col>
@@ -63,6 +71,8 @@
 </template>
 <script>
 import { zomes } from '../../store/zome.js'
+import { items } from '../../store/foldersFilesCode.js'
+
 export default {
   name: 'DnaModeller',
   components: {
@@ -71,12 +81,13 @@ export default {
   },
   data () {
     return {
-      applicationName: 'Notes',
+      applicationName: 'Holochain-IDE',
       zomeTab: null,
       zomes: zomes,
       zome: zomes[0],
+      items: items,
       tree: [],
-      open: ['Notes App', 'DNA', 'Zomes', 'UI'],
+      open: ['Holochain-IDE', 'DNA', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',
@@ -98,13 +109,22 @@ export default {
     }
   },
   methods: {
-    loadZome (index) {
-      this.zome = this.zomes[index]
+    loadZome (item) {
+      this.zome = this.zomes[item.index]
+      item.children = this.zome.items
       this.showModel = true
       this.showCode = false
     },
-    functionsCodeUpdated (code) {
-      console.log(code)
+    functionsCodeUpdated (entryType, handlersCode, permissionsCode) {
+      const entryTypeCodeItem = this.zome.items.find(i => i.name === 'code').children
+      if (entryTypeCodeItem) {
+        const entryTypeSrcItem = entryTypeCodeItem.find(i => i.name === 'src').children
+        if (entryTypeSrcItem) {
+          const entryTypeItem = entryTypeSrcItem.find(i => i.name === entryType)
+          entryTypeItem.children[0].code = handlersCode
+          entryTypeItem.children[2].code = permissionsCode
+        }
+      }
     },
     loadFile (item) {
       switch (item.file) {
@@ -118,7 +138,6 @@ export default {
             lineNumbers: true,
             line: true
           }
-          this.code = item.code
           break
         case 'json':
         case 'nix':
@@ -131,7 +150,6 @@ export default {
             lineNumbers: true,
             line: true
           }
-          this.code = item.code
           break
         case 'js':
           this.options = {
@@ -142,7 +160,6 @@ export default {
             lineNumbers: true,
             line: true
           }
-          this.code = item.code
           break
         case 'md':
           this.options = {
@@ -152,11 +169,13 @@ export default {
             lineNumbers: true,
             line: true
           }
-          this.code = item.code
           break
       }
-      this.showModel = false
-      this.showCode = true
+      if (item.code !== undefined) {
+        this.code = item.code
+        this.showModel = false
+        this.showCode = true
+      }
     }
   }
 }

@@ -23,26 +23,13 @@ export default {
   },
   methods: {
     onResizeCodeWindow () {
-      this.codeWindow.setSize(window.innerWidth, window.innerHeight - 150)
+      this.codeWindow.setSize(window.innerWidth, window.innerHeight - 74)
     }
   },
   computed: {
     codeWindow () {
       return this.$refs.codeWindow.codemirror
     }
-  },
-  mounted () {
-    this.$watch(
-      () => {
-        return this.codeWindow.value
-      },
-      (newVal, oldVal) => {
-        console.log(newVal)
-      },
-      {
-        deep: true
-      }
-    )
   }
 }
 </script>
