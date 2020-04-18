@@ -6,9 +6,13 @@
       <rect fill="#000000" :fill-opacity="titleFillOpacity" x="7" y="17" rx="3" ry="3" :width="width-4" height="18" class="node-dark-background">
       </rect>
       <text :x="10" :y="30" font-size="14" font-weight="bold" fill="#FFFFFF">{{title}}</text>
-      <g v-if="type==='entryType'" @click="editModelNode()">
+      <g v-if="type==='entryType'" @click="editPermissions()">
+        <rect :x="width - 46" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
+        <image :x="width - 46" y="18" width="14" height="14" xlink:href="./key.svg" />
+      </g>
+      <g v-if="type==='entryType'" @click="editProperties()">
         <rect :x="width - 29" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
-        <image :x="width - 29" y="18" width="14" height="14" xlink:href="./edit.svg" />
+        <image :x="width - 28" y="20" width="12" height="11" xlink:href="./properties.svg" />
       </g>
       <g v-if="deletable" @click="deleteNode()">
         <rect :x="width - 12" y="18" width="14" height="14" rx="2" ry="2" fill="#ffffff" :fill-opacity="0.25"/>
@@ -101,8 +105,11 @@ export default {
     deleteNode () {
       this.$emit('deleteModelNode', this.type, this.typeIndex)
     },
-    editModelNode () {
-      this.$emit('editModelNode', this.typeIndex, this.type)
+    editProperties () {
+      this.$emit('edit-properties', this.typeIndex, this.type)
+    },
+    editPermissions () {
+      this.$emit('edit-permissions', this.title)
     },
     mouseDown: function (event) {
       this.$emit(

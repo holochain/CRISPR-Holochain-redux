@@ -1,1 +1,1 @@
-// Only administrators allowed to modify
+// Only administrators allowed to delete

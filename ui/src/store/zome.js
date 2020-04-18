@@ -102,6 +102,7 @@ export const zomes = [
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_create.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/create.rs', 'utf8'),
                 explanation: '',
+                permission: '',
                 permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_create.rs', 'utf8'),
                 permissionsExplanation: 'Docs go here'
               },
@@ -118,7 +119,8 @@ export const zomes = [
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_update.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/update.rs', 'utf8'),
                 explanation: 'Docs go here',
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_update.rs', 'utf8'),
+                permission: 'author-only',
+                permissionsCode: fs.readFileSync(developer.folder + 'templates/permissions_rule_templates/validate_permissions_entry_modify/author-only.rs', 'utf8'),
                 permissionsExplanation: 'Docs go here'
               },
               {
@@ -126,6 +128,7 @@ export const zomes = [
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_delete.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs', 'utf8'),
                 explanation: 'Docs go here',
+                permission: 'remove',
                 permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_delete.rs', 'utf8'),
                 permissionsExplanation: 'Docs go here'
               },

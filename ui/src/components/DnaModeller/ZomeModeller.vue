@@ -3,7 +3,7 @@
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
-          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-64"></diagram>
+          <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-64"></diagram>
         </v-col>
       </v-row>
     </v-content>
@@ -27,6 +27,26 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="permissionsDialog" max-width="700px">
+      <v-card flat>
+        <v-toolbar color="primary" dark>
+          <v-toolbar-title class="display-1">Permissions - {{this.entryTypeName}}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-row no-gutters align="start" justify="center">
+          <v-col cols="12">
+            <entry-type-permissions @permission-changed="permissionChanged" />
+          </v-col>
+        </v-row>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="permissionsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -39,7 +59,8 @@ export default {
   name: 'ZomeModeller',
   components: {
     Diagram,
-    codemirror
+    codemirror,
+    EntryTypePermissions: () => import('./EntryTypePermissions')
   },
   props: ['zome'],
   data () {
@@ -49,6 +70,8 @@ export default {
       functionCode: '',
       functionPermissionCode: '',
       functionName: '',
+      permissionsDialog: false,
+      entryTypeName: '',
       codeDialog: false,
       windowSize: {
         x: 200,
@@ -73,6 +96,9 @@ export default {
     addAgent () {
       console.log('Add Agent')
     },
+    permissionChanged (entryFunction, role) {
+      console.log(entryFunction, role)
+    },
     editModelNode (type, index) {
       switch (type) {
         case 'entryType':
@@ -84,6 +110,11 @@ export default {
           // this.profileSpecDialog = true
           break
       }
+    },
+    editPermissions (entryTypeName) {
+      console.log(entryTypeName)
+      this.entryTypeName = entryTypeName
+      this.permissionsDialog = true
     },
     showFunctionCode (name) {
       this.functionCode = ''
