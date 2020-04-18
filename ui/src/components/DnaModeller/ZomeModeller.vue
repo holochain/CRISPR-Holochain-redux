@@ -99,9 +99,9 @@ export default {
       // const links = []
       // ports = []
       const col0Offset = 20
-      const col1Offset = 380
-      const col2Offset = 740
-      const col3Offset = 1110
+      const col1Offset = 390
+      const col2Offset = 760
+      const col3Offset = 1140
       const yOffset = 130
       const cardWidth = 270
       let anchorsYIndex = 0
@@ -109,6 +109,7 @@ export default {
       let entryTypesOffset = 0
       let anchorIndex = 0
       let entryTypeIndex = 0
+      let libCode = ''
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
       let entryTypeOffset = col2Offset
       if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
@@ -118,17 +119,20 @@ export default {
         anchorsOffset = anchorsYIndex * 185
         const anchorTypeNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + anchorsOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
+        libCode += anchorType.libCode
         anchorType.entryTypes.forEach(entryType => {
           const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
           let handlersCode = ''
           let permissionsCode = ''
           entryType.functions.forEach(f => {
-            if (f.name !== 'handlers') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            libCode += f.libCode + '\n\n'
             handlersCode += f.code + '\n\n'
             permissionsCode += f.permissionsCode + '\n\n'
             this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
           })
-          this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
+          libCode += '}'
+          this.$emit('functions-code-updated', entryType.name.toLowerCase(), libCode, handlersCode, permissionsCode)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -146,11 +150,15 @@ export default {
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
             if (!existingEntryTypeNode) {
               const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+              let handlersCode = ''
+              let permissionsCode = ''
               entryType.functions.forEach(f => {
-                entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+                if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+                handlersCode += f.code + '\n\n'
+                permissionsCode += f.permissionsCode + '\n\n'
                 this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
               })
-              this.$emit('functions-code-updated', this.code)
+              this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
               nodes.push({ id: entryType.id, node: entryTypeNode })
             } else {
               console.log(existingEntryTypeNode.node.ports)
