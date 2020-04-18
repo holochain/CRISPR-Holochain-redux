@@ -234,7 +234,6 @@ export default {
       if (this.$refs['port-' + portId]) {
         var port = this.$refs['port-' + portId][0]
         if (port === undefined) {
-          console.log(link)
           return { x: 0, y: 0 }
         }
         var node = this.$refs['node-' + port.nodeIndex][0]

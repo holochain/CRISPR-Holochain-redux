@@ -102,17 +102,15 @@ export const zomes = [
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_create.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/create.rs', 'utf8'),
                 explanation: '',
-                permission: '',
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_create.rs', 'utf8'),
+                permission: 'anyone',
+                permissionsCode: fs.readFileSync(developer.folder + 'templates/permissions_rule_templates/validate_permissions_entry_create/anyone.rs', 'utf8'),
                 permissionsExplanation: 'Docs go here'
               },
               {
                 name: 'read',
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_read.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/read.rs', 'utf8'),
-                explanation: 'Docs go here',
-                permissionsCode: '',
-                permissionsExplanation: 'Docs go here'
+                explanation: 'Docs go here'
               },
               {
                 name: 'update',
@@ -136,9 +134,7 @@ export const zomes = [
                 name: 'list',
                 libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_list.rs', 'utf8'),
                 code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/list.rs', 'utf8'),
-                explanation: 'Docs go here',
-                permissionsCode: '',
-                permissionsExplanation: 'Docs go here'
+                explanation: 'Docs go here'
               }
             ],
             examples: [

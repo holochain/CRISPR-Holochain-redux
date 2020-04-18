@@ -21,7 +21,7 @@
           </v-col>
           <v-col cols="3">
             <v-radio-group v-model="createEntryPermission" column class="ma-0 pa-0">
-              <v-radio v-for="role in createEntryRoles" :key="`createEntryPermission${role.value}`" color="red" :value="role.value" class="pt-0 mt-0 mb-6" :disabled="role.value==='remove' || role.value==='author-only'"></v-radio>
+              <v-radio v-for="role in roles" :key="`createEntryPermission${role.value}`" color="red" :value="role.value" class="pt-0 mt-0 mb-6" :disabled="role.value==='remove' || role.value==='author-only'"></v-radio>
             </v-radio-group>
           </v-col>
           <v-col cols="3">
@@ -43,23 +43,15 @@
 <script>
 export default {
   name: 'EntryTypeField',
+  props: ['permissions'],
   data () {
     return {
-      createEntryPermission: '',
-      updateEntryPermission: '',
-      deleteEntryPermission: '',
+      createEntryPermission: this.permissions.create,
+      updateEntryPermission: this.permissions.update,
+      deleteEntryPermission: this.permissions.delete,
       addLinkPermission: '',
       removeLinkPermission: '',
-      linkTypes: ['note_link'],
-      linkPermissions: ['Add Link', 'Delete Link'],
       roles: [{ title: 'Remove', value: 'remove' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }]
-    }
-  },
-  computed: {
-    createEntryRoles () {
-      return this.roles.filter(role => {
-        return role.title !== ''
-      })
     }
   },
   watch: {

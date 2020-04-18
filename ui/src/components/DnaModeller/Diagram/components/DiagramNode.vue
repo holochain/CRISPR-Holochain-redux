@@ -109,7 +109,8 @@ export default {
       this.$emit('edit-properties', this.typeIndex, this.type)
     },
     editPermissions () {
-      this.$emit('edit-permissions', this.title)
+      const entryTypeName = this.title.split('::')[1]
+      this.$emit('edit-permissions', entryTypeName)
     },
     mouseDown: function (event) {
       this.$emit(

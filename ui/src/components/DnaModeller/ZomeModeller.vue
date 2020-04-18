@@ -35,7 +35,7 @@
         </v-toolbar>
         <v-row no-gutters align="start" justify="center">
           <v-col cols="12">
-            <entry-type-permissions @permission-changed="permissionChanged" />
+            <entry-type-permissions :permissions="permissions" @permission-changed="permissionChanged" />
           </v-col>
         </v-row>
         <v-spacer></v-spacer>
@@ -71,6 +71,7 @@ export default {
       functionPermissionCode: '',
       functionName: '',
       permissionsDialog: false,
+      permissions: {},
       entryTypeName: '',
       codeDialog: false,
       windowSize: {
@@ -81,7 +82,7 @@ export default {
         tabSize: 4,
         mode: 'rust',
         theme: 'base16-dark',
-        lineNumbers: true,
+        readOnly: true,
         line: true
       }
     }
@@ -112,7 +113,27 @@ export default {
       }
     },
     editPermissions (entryTypeName) {
-      console.log(entryTypeName)
+      console.log(this.code)
+      let updatePermission = ''
+      let deletePermission = ''
+      let functionInfo = this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::update`)
+      if (functionInfo === undefined) {
+        updatePermission = 'remove'
+      } else {
+        updatePermission = functionInfo.permission
+      }
+      functionInfo = this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::delete`)
+      if (functionInfo === undefined) {
+        deletePermission = 'remove'
+      } else {
+        deletePermission = functionInfo.permission
+      }
+      this.permissions = {
+        create: this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::create`).permission,
+        update: updatePermission,
+        delete: deletePermission
+      }
+      console.log(this.permissions)
       this.entryTypeName = entryTypeName
       this.permissionsDialog = true
     },
@@ -121,6 +142,7 @@ export default {
       this.functionPermissionCode = ''
       const functionInfo = this.code.find(code => code.name === name)
       this.functionName = name
+      if (functionInfo.permissionsCode === undefined) functionInfo.permissionsCode = ''
       this.functionCode = `${functionInfo.code}\n\n${functionInfo.permissionsCode}`
       this.codeDialog = true
     },
@@ -156,11 +178,13 @@ export default {
           let handlersCode = ''
           let permissionsCode = ''
           entryType.functions.forEach(f => {
-            if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-            libCode += f.libCode + '\n\n'
-            handlersCode += f.code + '\n\n'
-            permissionsCode += f.permissionsCode + '\n\n'
-            this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
+            if (f.permission !== 'remove') {
+              if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+              libCode += f.libCode + '\n\n'
+              handlersCode += f.code + '\n\n'
+              if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
+              this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation, permission: f.permission })
+            }
           })
           libCode += '}'
           this.$emit('functions-code-updated', entryType.name.toLowerCase(), libCode, handlersCode, permissionsCode)
@@ -186,8 +210,8 @@ export default {
               entryType.functions.forEach(f => {
                 if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
                 handlersCode += f.code + '\n\n'
-                permissionsCode += f.permissionsCode + '\n\n'
-                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
+                if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
+                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation, permission: f.permission })
               })
               this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
               nodes.push({ id: entryType.id, node: entryTypeNode })

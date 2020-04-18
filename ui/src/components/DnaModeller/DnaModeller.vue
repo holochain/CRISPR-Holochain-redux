@@ -158,7 +158,6 @@ export default {
     loadFile (item) {
       switch (item.file) {
         case 'rs':
-          this.code = ''
           this.options = {
             tabSize: 4,
             mode: 'rust',
