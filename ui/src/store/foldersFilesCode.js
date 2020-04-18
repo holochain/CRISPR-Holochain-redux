@@ -10,6 +10,7 @@ export const items = [
         id: 5,
         name: 'DNA',
         children: [
+          { id: 2, name: '.hcignore', file: 'code', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/.hcignore', 'utf8').replace(new RegExp('AppNamePlaceHolder', 'g'), 'Notes') },
           { id: 2, name: 'app.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/app.json', 'utf8').replace(new RegExp('AppNamePlaceHolder', 'g'), 'Notes') },
           {
             id: 6,

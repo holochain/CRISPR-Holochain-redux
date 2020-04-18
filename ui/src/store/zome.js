@@ -13,6 +13,7 @@ export const zomes = [
         id: 11,
         name: 'code',
         children: [
+          { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/.hcbuild', 'utf8') },
           { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/Cargo.toml', 'utf8') },
           {
             id: 11,

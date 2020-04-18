@@ -92,8 +92,9 @@ function writeFiles (item, folder) {
     item.children.forEach(item => {
       console.log(folder + '/' + item.name)
       if (item.file) {
-        ensureDirectoryExistence(folder + '/' + item.name)
-        fs.writeFileSync(folder + '/' + item.name, item.code)
+        const fileName = folder + '/' + item.name
+        ensureDirectoryExistence(fileName.toLowerCase())
+        fs.writeFileSync(fileName.toLowerCase(), item.code)
       }
       writeFiles(item, folder)
     })
