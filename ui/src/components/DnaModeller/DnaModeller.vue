@@ -57,7 +57,7 @@
                 </v-card>
               </v-col>
               <v-col v-if="showModel" cols="12">
-                <zome-modeller :zome="zome" :key="zome.id" @functions-code-updated="functionsCodeUpdated"/>
+                <zome-modeller :zome="zome" :key="refreshKey" @functions-code-updated="functionsCodeUpdated" @update-model="updateModel"/>
               </v-col>
               <v-col v-if="showCode" cols="12">
                 <code-window :code="code" :options="options"/>
@@ -113,6 +113,7 @@ export default {
       zomeTab: null,
       zomes: zomes,
       zome: zomes[0],
+      refreshKey: 'clean',
       items: items,
       tree: [],
       open: ['Holochain-IDE', 'DNA', 'Zomes', 'UI'],
@@ -142,6 +143,10 @@ export default {
       item.children = this.zome.items
       this.showModel = true
       this.showCode = false
+    },
+    updateModel (zome) {
+      this.refreshKey += '1'
+      this.zome = zome
     },
     functionsCodeUpdated (entryType, libCode, handlersCode, permissionsCode) {
       const entryTypeCodeItem = this.zome.items.find(i => i.name === 'code').children

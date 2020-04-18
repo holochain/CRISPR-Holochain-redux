@@ -20,27 +20,27 @@
         <line :x1="width - 10" :y1="20" :x2="width" :y2="30" style="stroke:rgb(0,0,0);" stroke-width="2" />
       </g>
     </svg>
+    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
+    </rect>
+    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
+    </rect>
+    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
+    </rect>
+    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - functionsHeight - 32" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight-functionsHeight + 29" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 11" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
+    </rect>
+    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 33" rx="3" ry="3" :width="width-4" :height="functionsHeight-21" :fill-opacity="0.8" class="node-light-background">
+    </rect>
     <rect v-if="type!=='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" :height="entryDefHeight" :fill-opacity="0.45" class="node-light-background">
     </rect>
     <rect v-if="type==='agent'" fill="#ffffff" x="7" y="37" rx="3" ry="3" :width="width-4" height="38" :fill-opacity="0.45" class="node-light-background">
     </rect>
-    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" y="98" rx="3" ry="3" :width="width-4" :height="height - 109" class="node-light-background">
-    </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - functionsHeight - 51" class="node-light-background">
-    </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight-functionsHeight + 10" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
-    </rect>
-    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" y="97" rx="3" ry="3" :width="width-4" :height="height - 128" class="node-light-background">
-    </rect>
-    <rect v-if="type==='rootAnchor'" fill="#ffffff" x="7" :y="height - 8" rx="3" ry="3" :width="width-4" height="20" :fill-opacity="0.65" class="node-light-background">
-    </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight - 8" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
-    </rect>
-    <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
-    </rect>
     <rect v-if="type==='agent'" fill="#ffffff" x="7" :y="height - 28" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
-    </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 14" rx="3" ry="3" :width="width-4" :height="functionsHeight-1" :fill-opacity="0.8" class="node-light-background">
     </rect>
     <slot></slot>
   </svg>

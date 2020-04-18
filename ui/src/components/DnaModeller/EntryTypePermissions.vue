@@ -56,19 +56,13 @@ export default {
   },
   watch: {
     createEntryPermission (role) {
-      this.$emit('permission-changed', 'entryCreate', role)
+      this.$emit('permission-changed', 'create', role)
     },
     updateEntryPermission (role) {
-      this.$emit('permission-changed', 'entryUpdate', role)
+      this.$emit('permission-changed', 'update', role)
     },
     deleteEntryPermission (role) {
-      this.$emit('permission-changed', 'entryDelete', role)
-    },
-    addLinkPermission (role) {
-      this.$emit('permission-changed', 'addLink', role)
-    },
-    removeLinkPermission (role) {
-      this.$emit('permission-changed', 'removeLink', role)
+      this.$emit('permission-changed', 'delete', role)
     }
   }
 }

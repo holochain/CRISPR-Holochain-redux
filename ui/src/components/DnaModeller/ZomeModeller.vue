@@ -98,7 +98,20 @@ export default {
       console.log('Add Agent')
     },
     permissionChanged (entryFunction, role) {
-      console.log(entryFunction, role)
+      let entryType = {}
+      this.zome.anchorTypes.some(a => {
+        entryType = a.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+        if (entryType !== {}) {
+          return true
+        }
+      })
+      if (entryType === {}) {
+        entryType = this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+      }
+      entryType.functions.find(f => f.name === entryFunction).permission = role
+      // console.log(this.zome)
+      this.zome.id = 'updateme'
+      this.$emit('update-model', this.zome)
     },
     editModelNode (type, index) {
       switch (type) {
@@ -113,7 +126,6 @@ export default {
       }
     },
     editPermissions (entryTypeName) {
-      console.log(this.code)
       let updatePermission = ''
       let deletePermission = ''
       let functionInfo = this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::update`)
@@ -133,7 +145,6 @@ export default {
         update: updatePermission,
         delete: deletePermission
       }
-      console.log(this.permissions)
       this.entryTypeName = entryTypeName
       this.permissionsDialog = true
     },
