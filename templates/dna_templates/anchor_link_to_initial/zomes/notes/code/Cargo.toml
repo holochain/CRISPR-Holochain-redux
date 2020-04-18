@@ -8,9 +8,9 @@ edition = "2018"
 serde = "=1.0.104"
 serde_json = { version = "=1.0.47", features = ["preserve_order"] }
 serde_derive = "=1.0.104"
-hdk = "=0.0.46-alpha1"
-hdk_proc_macros = "=0.0.46-alpha1"
-holochain_wasm_utils = "=0.0.46-alpha1"
+hdk = "=0.0.47-alpha1"
+hdk_proc_macros = "=0.0.47-alpha1"
+holochain_wasm_utils = "=0.0.47-alpha1"
 holochain_json_derive = "=0.0.23"
 holochain_anchors = { git = "https://github.com/holochain/holochain-anchors" , branch = "master" }
 

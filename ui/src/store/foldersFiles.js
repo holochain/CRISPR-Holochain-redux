@@ -15,6 +15,8 @@ export const items = [
             name: 'Test',
             children: [
               { id: 8, name: 'index.js', file: 'js' },
+              { id: 8, name: 'config-copy.js', file: 'js' },
+              { id: 8, name: 'index.js', file: 'js' },
               { id: 2, name: 'package.json', file: 'json' },
               {
                 id: 7,

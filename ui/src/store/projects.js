@@ -22,7 +22,7 @@ export const projects = [
     url: '/happ-store/Notes',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
-    description: 'A Holochain hApp that demonstrates how to build a CRUD hApp with Holochain-IDE.\nSelecting permissions and roles generates the code for the Zome based on Entry Type fields and links.\nAlso shows how to integrate roles and permissions into Entry Types.',
+    description: 'A Holochain hApp that demonstrates how to build a CRUD hApp with Holochain-IDE.\nSelecting permissions and roles generates the code for the Zome based on Entry Type fields and links.',
     zomes: [],
     modules: []
   },
@@ -32,7 +32,7 @@ export const projects = [
     url: '/entry-types',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
-    description: 'Manage personal information. Information requested by hApps is mapped to the hApp from the players personal my-info hApp.',
+    description: 'Manage personal information.\nEasily add profiles to your hApp to integrate the information requested from the players personal my-info hApp. Players manage their own information.',
     zomes: []
   }
 ]
