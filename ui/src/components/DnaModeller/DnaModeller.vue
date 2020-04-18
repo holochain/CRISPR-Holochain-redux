@@ -1,9 +1,9 @@
 <template>
   <v-card height="99vh" flat tile>
     <v-toolbar color="primary" dark>
-      <v-toolbar-title>Application Builder - Selected Zome [{{this.zome.name}}]</v-toolbar-title>
+      <v-toolbar-title>Project [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title>
       <v-btn icon>
-        <v-icon>
+        <v-icon @click="exportFiles">
           mdi-application-export
         </v-icon>
       </v-btn>
@@ -70,8 +70,36 @@
   </v-card>
 </template>
 <script>
+import * as fs from 'fs'
+import * as path from 'path'
 import { zomes } from '../../store/zome.js'
+import { projects } from '../../store/projects.js'
 import { items } from '../../store/foldersFilesCode.js'
+
+function ensureDirectoryExistence (filePath) {
+  var dirname = path.dirname(filePath)
+  console.log(dirname)
+  if (!fs.existsSync(dirname)) {
+    console.log('exists')
+    fs.mkdirSync(dirname, { recursive: true })
+  }
+}
+
+function writeFiles (item, folder) {
+  if (item.children) {
+    console.log(folder)
+    folder += '/' + item.name
+    item.children.forEach(item => {
+      console.log(folder + '/' + item.name)
+      if (item.file) {
+        const fileName = folder + '/' + item.name
+        ensureDirectoryExistence(fileName.toLowerCase())
+        fs.writeFileSync(fileName.toLowerCase(), item.code)
+      }
+      writeFiles(item, folder)
+    })
+  }
+}
 
 export default {
   name: 'DnaModeller',
@@ -115,10 +143,11 @@ export default {
       this.showModel = true
       this.showCode = false
     },
-    functionsCodeUpdated (entryType, handlersCode, permissionsCode) {
+    functionsCodeUpdated (entryType, libCode, handlersCode, permissionsCode) {
       const entryTypeCodeItem = this.zome.items.find(i => i.name === 'code').children
       if (entryTypeCodeItem) {
         const entryTypeSrcItem = entryTypeCodeItem.find(i => i.name === 'src').children
+        entryTypeSrcItem[0].code = libCode
         if (entryTypeSrcItem) {
           const entryTypeItem = entryTypeSrcItem.find(i => i.name === entryType)
           entryTypeItem.children[0].code = handlersCode
@@ -176,6 +205,18 @@ export default {
         this.showModel = false
         this.showCode = true
       }
+    },
+    exportFiles () {
+      writeFiles(this.items[0], this.project.folder)
+    }
+  },
+  computed: {
+    project () {
+      const filtered = projects.filter(project => {
+        return project.id === this.$route.params.id
+      })
+      console.log(filtered[0].name)
+      return filtered[0]
     }
   }
 }

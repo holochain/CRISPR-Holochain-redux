@@ -10,6 +10,7 @@ export const items = [
         id: 5,
         name: 'DNA',
         children: [
+          { id: 2, name: '.hcignore', file: 'code', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/.hcignore', 'utf8').replace(new RegExp('AppNamePlaceHolder', 'g'), 'Notes') },
           { id: 2, name: 'app.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/app.json', 'utf8').replace(new RegExp('AppNamePlaceHolder', 'g'), 'Notes') },
           {
             id: 6,
@@ -37,63 +38,6 @@ export const items = [
                 name: 'Notes',
                 index: 0,
                 children: []
-              },
-              {
-                id: 11,
-                name: 'Notes Workflow',
-                index: 1,
-                children: [
-                  { id: 12, name: 'zome.json', file: 'json' },
-                  {
-                    id: 11,
-                    name: 'code',
-                    children: [
-                      { id: 12, name: 'Cargo.toml', file: 'rs' },
-                      {
-                        id: 11,
-                        name: 'src',
-                        children: [
-                          { id: 12, name: 'lib.rs', file: 'rs' },
-                          {
-                            id: 11,
-                            name: 'note',
-                            children: [
-                              { id: 12, name: 'handlers.rs', file: 'rs' },
-                              { id: 13, name: 'mod.rs', file: 'rs' },
-                              { id: 14, name: 'permissions.rs', file: 'rs' },
-                              { id: 14, name: 'validation.rs', file: 'rs' }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                id: 11,
-                name: 'Agent Notes',
-                index: 2,
-                children: [
-                  { id: 12, name: 'Cargo.toml', file: 'rs' },
-                  {
-                    id: 11,
-                    name: 'src',
-                    children: [
-                      { id: 12, name: 'lib.rs', file: 'rs' },
-                      {
-                        id: 11,
-                        name: 'note',
-                        children: [
-                          { id: 12, name: 'handlers.rs', file: 'rs' },
-                          { id: 13, name: 'mod.rs', file: 'rs' },
-                          { id: 14, name: 'permissions.rs', file: 'rs' },
-                          { id: 14, name: 'validation.rs', file: 'rs' }
-                        ]
-                      }
-                    ]
-                  }
-                ]
               }
             ]
           }

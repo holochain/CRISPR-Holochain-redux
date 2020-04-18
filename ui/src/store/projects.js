@@ -7,7 +7,7 @@ export const projects = [
   {
     id: 'QmHolochainIDE',
     name: 'Holochain-IDE',
-    folder: '/Users/philipbeadle/holochain/hApps/Holochain-IDE',
+    folder: '/Users/philipbeadle/holochain/hApps',
     url: '/happ-store/Holochain-IDE',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',
