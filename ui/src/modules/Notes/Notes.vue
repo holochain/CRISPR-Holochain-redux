@@ -19,10 +19,9 @@ export default {
   props: ['notes'],
   methods: {
     addNote () {
-      this.notes.push({
-        id: '',
-        title: 'New Note',
-        content: 'Content of new note.'
+      this.notes.splice(0, 0, {
+        title: '',
+        content: ''
       })
     }
   }

@@ -52,8 +52,8 @@
                 <v-card class="mx-auto pt-10" max-width="900">
                   <v-img class="white--text align-end" width="900px" :src="require('@/assets/HOLOCHAIN_WHITE.png')">
                   </v-img>
-                  <v-card-title>Holochain-IDE</v-card-title>
-                  <v-card-subtitle class="pb-0">Build hApps from Data Models and Skins</v-card-subtitle>
+                  <v-card-title>Holochain CRISPR</v-card-title>
+                  <v-card-subtitle class="pb-0">Build & Connect DNA from Data Models</v-card-subtitle>
                 </v-card>
               </v-col>
               <v-col v-if="showModel" cols="12">
@@ -104,6 +104,7 @@ function ensureDirectoryExistence (filePath) {
 }
 
 function writeFiles (item, folder) {
+  console.log(folder)
   if (item.children) {
     folder += '/' + item.name
     item.children.forEach(item => {
