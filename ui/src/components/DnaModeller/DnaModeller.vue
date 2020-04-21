@@ -57,7 +57,7 @@
                 </v-card>
               </v-col>
               <v-col v-if="showModel" cols="12">
-                <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions"/>
+                <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
               </v-col>
               <v-col v-if="showCode" cols="12">
                 <code-window :code="code" :options="options"/>
@@ -174,9 +174,7 @@ export default {
     loadZome (item) {
       this.zome = this.zomes[item.index]
       item.children = this.zome.items
-      const testItem = findItem(this.items, 'test')
-      console.log(testItem)
-      testItem.children.push(this.zome.testItems)
+      findItem(this.items, 'Entry Types').children = this.zome.testItems
       this.showModel = true
       this.showCode = false
     },
@@ -184,6 +182,11 @@ export default {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
       functionInfo.permissionsCode = fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      if (role === 'remove') {
+        functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
+      } else {
+        functionInfo.testCode = fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/${role}-${entryFunction}-note.js`, 'utf8')
+      }
       this.refreshKey += '1'
     },
     editPermissions (entryType) {
@@ -209,22 +212,15 @@ export default {
       }
       this.permissionsDialog = true
     },
-    entryTypeFunctionsCodeUpdated (entryType, handlersCode, permissionsCode) {
-      const entryTypeItem = findItem(this.zome.items, entryType).children
-      entryTypeItem[0].code = handlersCode
-      entryTypeItem[2].code = permissionsCode
+    entryTypeFunctionsCodeUpdated (entryTypeName, handlersCode, permissionsCode, testCode) {
+      const entryTypeNameItem = findItem(this.zome.items, entryTypeName).children
+      entryTypeNameItem[0].code = handlersCode
+      entryTypeNameItem[2].code = permissionsCode
+      const entryTypeTestItems = findItem(this.zome.testItems, entryTypeName)
+      findItem(entryTypeTestItems.children, 'index.js').code = testCode
     },
-    zomeFunctionsCodeUpdated (libCode, testCode) {
-      // const zomeTestCodeItem = this.zome.testItems.find(i => i.name === 'test').children
-      // if (zomeCodeItem) {
-      //   const zomeSrcItem = zomeCodeItem.find(i => i.name === 'src').children
-      //   zomeSrcItem[0].code = libCode
-      // }
-      // const zomeCodeItem = this.zome.items.find(i => i.name === 'code').children
-      // if (zomeCodeItem) {
-      //   const zomeSrcItem = zomeCodeItem.find(i => i.name === 'src').children
-      //   zomeSrcItem[0].code = libCode
-      // }
+    zomeModelUpdated (libCode) {
+      findItem(this.zome.items, 'lib.rs').code = libCode
     },
     loadFile (item) {
       switch (item.file) {

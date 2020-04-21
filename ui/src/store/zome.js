@@ -36,13 +36,15 @@ export const zomes = [
         ]
       }
     ],
-    testItems: {
-      id: 7,
-      name: 'notes',
-      children: [
-        { id: 9, name: 'index.js', file: 'js', code: '' }
-      ]
-    },
+    testItems: [
+      {
+        id: 7,
+        name: 'Note',
+        children: [
+          { id: 9, name: 'index.js', file: 'js', code: '' }
+        ]
+      }
+    ],
     anchorTypes: [
       {
         id: 'Qmlist_notesHash1',
@@ -127,17 +129,18 @@ export const zomes = [
                 explanation: 'Docs go here',
                 permission: 'author-only',
                 permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
-                permissionsExplanation: 'Docs go here'
+                permissionsExplanation: 'Docs go here',
+                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/author-only-update-note.js`, 'utf8')
               },
               {
                 name: 'delete',
                 libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_delete.rs`, 'utf8'),
                 code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs`, 'utf8'),
                 explanation: 'Docs go here',
-                permission: 'remove',
+                permission: 'anyone',
                 permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
                 permissionsExplanation: 'Docs go here',
-                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/remove-delete.js`, 'utf8')
+                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/anyone-delete-note.js`, 'utf8')
               },
               {
                 name: 'list',

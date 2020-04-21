@@ -134,16 +134,17 @@ export default {
             if (f.permission !== 'remove') {
               if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
               libCode += f.libCode + '\n\n'
-              testCode += f.testCode + '\n\n'
+              if (f.testCode) testCode += f.testCode + '\n\n'
               handlersCode += f.code + '\n\n'
             } else {
-              libCode += `// No-one allowed to ${f.name}\n\n`
-              testCode += `// No-one allowed to ${f.name}\n\n`
-              handlersCode += `// No-one allowed to ${f.name}\n\n`
+              libCode += `\t// No-one allowed to ${f.name}\n\n`
+              if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
+              handlersCode += `\t// No-one allowed to ${f.name}\n\n`
             }
             if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
           })
-          this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
+          testCode += '}'
+          this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -215,8 +216,7 @@ export default {
         }
       })
       libCode += '}'
-      testCode += '}'
-      this.$emit('zome-model-updated', libCode, testCode)
+      this.$emit('zome-model-updated', libCode)
       return dnaModel
     }
   },
