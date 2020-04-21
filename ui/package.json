@@ -14,6 +14,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@holochain/hc-web-client": "^0.5.3",
     "@material/mwc-button": "^0.14.1",
     "@material/mwc-textarea": "^0.14.1",
     "@material/mwc-textfield": "^0.14.1",

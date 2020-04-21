@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card height="90vh" flat tile width="100%" class="pa-0 ma-0 overflow-auto">
     <notes :notes="notes"/>
     <v-card-text>
       <div class="text--primary">
@@ -17,6 +17,15 @@
   </v-card>
 </template>
 <script>
+import { connect } from '@holochain/hc-web-client'
+
+function makeHolochainCall (holochainConnection, callString, params, callback) {
+  const [instanceId, zome, func] = callString.split('/')
+  holochainConnection.then(({ callZome }) => {
+    callZome(instanceId, zome, func)(params).then((result) => callback(JSON.parse(result)))
+  })
+}
+
 export default {
   name: 'NotesModule',
   components: {
@@ -50,8 +59,17 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      holochainConnection: {}
     }
+  },
+  created () {
+    console.log('mounted')
+    this.holochainConnection = connect({ url: 'ws://localhost:33000' })
+    makeHolochainCall(this.holochainConnection, 'notes/notes/list_notes', { }, (result) => {
+      console.log('retrieved notes', result)
+      this.notes = result.Ok
+    })
   }
 }
 </script>

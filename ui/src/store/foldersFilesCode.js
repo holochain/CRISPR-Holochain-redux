@@ -2,7 +2,7 @@ import * as fs from 'fs'
 export const items = [
   {
     id: 1,
-    name: 'Holochain-IDE',
+    name: 'Notes',
     children: [
       { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/config.nix', 'utf8') },
       { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/default.nix', 'utf8') },
