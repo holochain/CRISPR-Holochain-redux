@@ -77,7 +77,8 @@
           v-for="(node, nodeIndex) in model._model.nodes"
           :key="`'node'${nodeIndex}`"
           @onStartDrag="startDragItem"
-          @editModelNode="editModelNode(node)"
+          @edit-properties="editProperties"
+          @edit-permissions="editPermissions"
           @delete="model.deleteNode(node)"
         >
           <DiagramPort
@@ -182,7 +183,6 @@ export default {
     beforePan () {
       if (this.selectedItem.type || this.draggedItem || this.newLink) { return false } else return true
     },
-
     createPoint (x, y, linkIndex, pointIndex) {
       const coords = this.convertXYtoViewPort(x, y)
       const links = this.model._model.links
@@ -194,12 +194,14 @@ export default {
       points.splice(pointIndex, 0, coords)
       links[linkIndex].points = points
     },
-
     clearSelection () {
       this.selectedItem = {}
     },
-    editModelNode (node) {
-      this.$emit('editModelNode', node.type, node.typeIndex)
+    editProperties (index) {
+      this.$emit('edit-properties', index)
+    },
+    editPermissions (entryTypeName) {
+      this.$emit('edit-permissions', entryTypeName)
     },
     updateLinksPositions () {
       var links = []
@@ -232,7 +234,6 @@ export default {
       if (this.$refs['port-' + portId]) {
         var port = this.$refs['port-' + portId][0]
         if (port === undefined) {
-          console.log(link)
           return { x: 0, y: 0 }
         }
         var node = this.$refs['node-' + port.nodeIndex][0]

@@ -1,1 +1,0 @@
-// Admins & Author allowed to delete

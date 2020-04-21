@@ -1,1 +1,0 @@
-// Anyone allowed to modify

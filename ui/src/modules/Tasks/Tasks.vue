@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="tasks.length > 0">
+  <v-card v-if="tasks && tasks.length > 0">
     <v-slide-y-transition class="py-0" group tag="v-list">
       <template v-for="(task, i) in tasks">
         <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
@@ -32,6 +32,9 @@
     </v-row>
     <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
   </v-card>
+  <v-card v-else>
+    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
+  </v-card>
 </template>
 <script>
 export default {
@@ -58,6 +61,9 @@ export default {
 
   methods: {
     create () {
+      if (this.tasks === undefined) {
+        this.tasks = []
+      }
       this.tasks.push({
         done: false,
         title: this.task.title,

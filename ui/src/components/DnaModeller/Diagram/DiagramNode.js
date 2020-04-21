@@ -97,7 +97,7 @@ class DiagramNode {
       name
     }
     this.ports.push(newPort)
-    this.functionsHeight += 16
+    this.functionsHeight += 20
     this.height += 20
     return newPort.id
   }

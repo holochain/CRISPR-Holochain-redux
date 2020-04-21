@@ -1,1 +1,0 @@
-// Only administrators allowed to create

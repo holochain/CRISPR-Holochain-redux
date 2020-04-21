@@ -1,38 +1,47 @@
 /* eslint no-template-curly-in-string: "off" */
 import * as fs from 'fs'
-const developer = {
-  folder: '/Users/philipbeadle/holochain/holochain-ide/'
+export const developer = {
+  folder: '/Users/philipbeadle/holochain/holochain-ide'
 }
 export const zomes = [
   {
     id: 'QmZome1hash',
     name: 'Notes',
     items: [
-      { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/zome.json', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
+      { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
       {
         id: 11,
         name: 'code',
         children: [
-          { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/.hcbuild', 'utf8') },
-          { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/Cargo.toml', 'utf8') },
+          { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/.hcbuild`, 'utf8') },
+          { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/Cargo.toml`, 'utf8') },
           {
             id: 11,
             name: 'src',
             children: [
-              { id: 12, name: 'lib.rs', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs', 'utf8') },
+              { id: 12, name: 'lib.rs', file: 'rs', code: '' },
               {
                 id: 11,
                 name: 'note',
                 children: [
                   { id: 12, name: 'handlers.rs', file: 'rs', code: '' },
-                  { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/mod.rs', 'utf8') },
+                  { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/mod.rs`, 'utf8') },
                   { id: 14, name: 'entry_permissions.rs', file: 'rs', code: '' },
-                  { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/link_permissions.rs', 'utf8') },
-                  { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/validation.rs', 'utf8') }
+                  { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/link_permissions.rs`, 'utf8') },
+                  { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/validation.rs`, 'utf8') }
                 ]
               }
             ]
           }
+        ]
+      }
+    ],
+    testItems: [
+      {
+        id: 7,
+        name: 'Note',
+        children: [
+          { id: 9, name: 'index.js', file: 'js', code: '' }
         ]
       }
     ],
@@ -43,7 +52,8 @@ export const zomes = [
         text: '',
         tag: ' ',
         context: 'permanent',
-        libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs', 'utf8'),
+        libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs`, 'utf8'),
+        testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/index.js`, 'utf8'),
         entryTypes: [
           {
             id: 'QmNoteEntryTypeHash1',
@@ -93,49 +103,50 @@ export const zomes = [
             functions: [
               {
                 name: 'declarations',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_entry_def.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/handlers.rs', 'utf8'),
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions.rs', 'utf8')
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_entry_def.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/handlers.rs`, 'utf8'),
+                permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions.rs`, 'utf8')
               },
               {
                 name: 'create',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_create.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/create.rs', 'utf8'),
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_create.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/create.rs`, 'utf8'),
                 explanation: '',
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_create.rs', 'utf8'),
+                permission: 'anyone',
+                permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_create/anyone.rs`, 'utf8'),
                 permissionsExplanation: 'Docs go here'
               },
               {
                 name: 'read',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_read.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/read.rs', 'utf8'),
-                explanation: 'Docs go here',
-                permissionsCode: '',
-                permissionsExplanation: 'Docs go here'
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_read.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/read.rs`, 'utf8'),
+                explanation: 'Docs go here'
               },
               {
                 name: 'update',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_update.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/update.rs', 'utf8'),
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_update.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/update.rs`, 'utf8'),
                 explanation: 'Docs go here',
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_update.rs', 'utf8'),
-                permissionsExplanation: 'Docs go here'
+                permission: 'author-only',
+                permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
+                permissionsExplanation: 'Docs go here',
+                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/author-only-update-note.js`, 'utf8')
               },
               {
                 name: 'delete',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_delete.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs', 'utf8'),
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_delete.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs`, 'utf8'),
                 explanation: 'Docs go here',
-                permissionsCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/entry_permissions_delete.rs', 'utf8'),
-                permissionsExplanation: 'Docs go here'
+                permission: 'anyone',
+                permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
+                permissionsExplanation: 'Docs go here',
+                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/anyone-delete-note.js`, 'utf8')
               },
               {
                 name: 'list',
-                libCode: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_list.rs', 'utf8'),
-                code: fs.readFileSync(developer.folder + 'templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/list.rs', 'utf8'),
-                explanation: 'Docs go here',
-                permissionsCode: '',
-                permissionsExplanation: 'Docs go here'
+                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_list.rs`, 'utf8'),
+                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/list.rs`, 'utf8'),
+                explanation: 'Docs go here'
               }
             ],
             examples: [

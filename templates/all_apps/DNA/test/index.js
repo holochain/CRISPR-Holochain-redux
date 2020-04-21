@@ -33,6 +33,6 @@ const orchestrator = new Orchestrator({
 const dna = Config.dna(dnaPath, 'ZomePlaceHolder-test')
 const conductorConfig = Config.gen({ZomePlaceHolder: dna})
 
-require('./notes')(orchestrator.registerScenario, conductorConfig)
+require('./entry types/note')(orchestrator.registerScenario, conductorConfig)
 
 orchestrator.run()

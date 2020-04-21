@@ -1,5 +1,10 @@
 <template>
-  <v-card>
+  <v-card class="mx-auto" max-width="520" color="info" dark>
+    <v-system-bar color="indigo darken-2" dark>
+      <v-spacer></v-spacer>
+      <v-icon @click="addNote">mdi-clipboard-plus-outline</v-icon>
+      <v-icon>mdi-delete-circle-outline</v-icon>
+    </v-system-bar>
     <v-col cols="12" v-for="note in notes" :key="note.id">
       <note :note="note"/>
     </v-col>
@@ -11,6 +16,15 @@ export default {
   components: {
     Note: () => import('./Note')
   },
-  props: ['notes']
+  props: ['notes'],
+  methods: {
+    addNote () {
+      this.notes.push({
+        id: '',
+        title: 'New Note',
+        content: 'Content of new note.'
+      })
+    }
+  }
 }
 </script>

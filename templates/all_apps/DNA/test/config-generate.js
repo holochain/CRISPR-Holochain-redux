@@ -10,7 +10,7 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
-const dnaPath = path.join(__dirname, "../dist/dna_src.dna.json")
+const dnaPath = path.join(__dirname, "../dist/dna.dna.json")
 
 const orchestrator = new Orchestrator({
   middleware: combine(
@@ -40,11 +40,29 @@ const conductorConfig = Config.gen({notes: dna}, {
 })
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
-  const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Title first note", "content":"Content first note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Title second note", "content":"Content second note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Title third note", "content":"Content third note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Title fourth note", "content":"Content fourth note"}})
+  const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title first note", "content":"Content first note"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title second note", "content":"Content second note"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title third note", "content":"Content third note"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title fourth note", "content":"Content fourth note"}})
+  await s.consistency()
+
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title first note", "content":"Content first note"}})
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title second note", "content":"Content second note"}})
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title third note", "content":"Content third note"}})
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title fourth note", "content":"Content fourth note"}})
+  await s.consistency()
+
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title first note", "content":"Content first note"}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title second note", "content":"Content second note"}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title third note", "content":"Content third note"}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title fourth note", "content":"Content fourth note"}})
+  await s.consistency()
+
+  await lucy.call("notes", "notes", "create_note", {"note_input" : {"title":"Lucy Title first note", "content":"Content first note"}})
+  await lucy.call("notes", "notes", "create_note", {"note_input" : {"title":"Lucy Title second note", "content":"Content second note"}})
+  await lucy.call("notes", "notes", "create_note", {"note_input" : {"title":"Lucy Title third note", "content":"Content third note"}})
+  await lucy.call("notes", "notes", "create_note", {"note_input" : {"title":"Lucy Title fourth note", "content":"Content fourth note"}})
   await s.consistency()
 })
 

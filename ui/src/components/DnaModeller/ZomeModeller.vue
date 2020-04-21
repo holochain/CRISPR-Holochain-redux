@@ -3,7 +3,7 @@
     <v-content>
       <v-row no-gutters align="start" justify="center">
         <v-col cols="12" v-resize="onResize">
-          <diagram :id="zome.id" :key="zome.id" :model="model" @editModelNode="editModelNode" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-64"></diagram>
+          <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-64"></diagram>
         </v-col>
       </v-row>
     </v-content>
@@ -45,10 +45,10 @@ export default {
   data () {
     return {
       model: new Diagram.Model(),
-      code: [],
       functionCode: '',
       functionPermissionCode: '',
       functionName: '',
+      entryTypeName: '',
       codeDialog: false,
       windowSize: {
         x: 200,
@@ -58,7 +58,7 @@ export default {
         tabSize: 4,
         mode: 'rust',
         theme: 'base16-dark',
-        lineNumbers: true,
+        readOnly: true,
         line: true
       }
     }
@@ -85,19 +85,23 @@ export default {
           break
       }
     },
+    editPermissions (entryTypeName) {
+      this.entryTypeName = entryTypeName
+      this.$emit('edit-permissions', this.entryType)
+    },
     showFunctionCode (name) {
+      this.entryTypeName = name.split('::')[0]
+      this.functionName = name.split('::')[1]
       this.functionCode = ''
       this.functionPermissionCode = ''
-      const functionInfo = this.code.find(code => code.name === name)
-      this.functionName = name
+      const functionInfo = this.entryType.functions.find(f => f.name === this.functionName)
+      if (functionInfo.permissionsCode === undefined) functionInfo.permissionsCode = ''
       this.functionCode = `${functionInfo.code}\n\n${functionInfo.permissionsCode}`
       this.codeDialog = true
     },
     createModel () {
       const dnaModel = new Diagram.Model()
       const nodes = []
-      // const links = []
-      // ports = []
       const col0Offset = 20
       const col1Offset = 390
       const col2Offset = 760
@@ -110,6 +114,7 @@ export default {
       let anchorIndex = 0
       let entryTypeIndex = 0
       let libCode = ''
+      let testCode = ''
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
       let entryTypeOffset = col2Offset
       if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
@@ -120,19 +125,26 @@ export default {
         const anchorTypeNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + anchorsOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
         libCode += anchorType.libCode
+        testCode += anchorType.testCode
         anchorType.entryTypes.forEach(entryType => {
           const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
           let handlersCode = ''
           let permissionsCode = ''
           entryType.functions.forEach(f => {
-            if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-            libCode += f.libCode + '\n\n'
-            handlersCode += f.code + '\n\n'
-            permissionsCode += f.permissionsCode + '\n\n'
-            this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
+            if (f.permission !== 'remove') {
+              if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+              libCode += f.libCode + '\n\n'
+              if (f.testCode) testCode += f.testCode + '\n\n'
+              handlersCode += f.code + '\n\n'
+            } else {
+              libCode += `\t// No-one allowed to ${f.name}\n\n`
+              if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
+              handlersCode += `\t// No-one allowed to ${f.name}\n\n`
+            }
+            if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
           })
-          libCode += '}'
-          this.$emit('functions-code-updated', entryType.name.toLowerCase(), libCode, handlersCode, permissionsCode)
+          testCode += '}'
+          this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -153,15 +165,16 @@ export default {
               let handlersCode = ''
               let permissionsCode = ''
               entryType.functions.forEach(f => {
-                if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-                handlersCode += f.code + '\n\n'
-                permissionsCode += f.permissionsCode + '\n\n'
-                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation })
+                if (f.permission !== 'remove') {
+                  if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+                  libCode += f.libCode + '\n\n'
+                  handlersCode += f.code + '\n\n'
+                }
+                if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
               })
-              this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
               nodes.push({ id: entryType.id, node: entryTypeNode })
+              this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
             } else {
-              console.log(existingEntryTypeNode.node.ports)
               entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === 'id:initial_note_entry_address').id
               const entryTypeOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
               dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
@@ -202,12 +215,24 @@ export default {
           anchorsOffset = anchorsYIndex * 185
         }
       })
+      libCode += '}'
+      this.$emit('zome-model-updated', libCode)
       return dnaModel
     }
   },
   computed: {
     funcCodemirror () {
       return this.$refs.cmFunctionCode.codemirror
+    },
+    entryType () {
+      let entryType = {}
+      this.zome.anchorTypes.some(a => {
+        entryType = a.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+      })
+      if (entryType === {}) {
+        entryType = this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+      }
+      return entryType
     }
   },
   mounted () {

@@ -21,11 +21,9 @@ export const items = [
               { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/index.js', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
               { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/package.json', 'utf8') },
               {
-                id: 7,
-                name: 'notes',
-                children: [
-                  { id: 9, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/test/notes/index.js', 'utf8') }
-                ]
+                id: 4445,
+                name: 'Entry Types',
+                children: []
               }
             ]
           },
@@ -45,43 +43,7 @@ export const items = [
       },
       { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/package.json', 'utf8') },
       { id: 4, name: 'Procfile', file: 'code', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/Procfile', 'utf8') },
-      { id: 3, name: 'README.md', file: 'md', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/README.md', 'utf8') },
-      {
-        id: 15,
-        name: 'UI',
-        children: [
-          { id: 16, name: 'index.html', file: 'html' },
-          { id: 17, name: 'package.json', file: 'json' },
-          { id: 18, name: 'polymer.json', file: 'json' },
-          { id: 19, name: 'webpack.config.js', file: 'js' },
-          {
-            id: 20,
-            name: 'src',
-            children: [
-              { id: 16, name: 'index.js', file: 'js' },
-              {
-                id: 17,
-                name: 'Notes',
-                children: [
-                  {
-                    id: 16,
-                    name: 'graphql',
-                    children: [
-                      { id: 16, name: 'create.js', file: 'js' },
-                      { id: 17, name: 'list.js', file: 'js' },
-                      { id: 18, name: 'remove.js', file: 'js' },
-                      { id: 19, name: 'resolvers.js', file: 'js' },
-                      { id: 19, name: 'schema.js', file: 'js' },
-                      { id: 19, name: 'update.js', file: 'js' }
-                    ]
-                  },
-                  { id: 17, name: 'index.js', file: 'js' }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      { id: 3, name: 'README.md', file: 'md', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/README.md', 'utf8') }
     ]
   }
 ]
