@@ -19,7 +19,7 @@ export const zomes = [
             id: 11,
             name: 'src',
             children: [
-              { id: 12, name: 'lib.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs`, 'utf8') },
+              { id: 12, name: 'lib.rs', file: 'rs', code: '' },
               {
                 id: 11,
                 name: 'note',
@@ -36,6 +36,13 @@ export const zomes = [
         ]
       }
     ],
+    testItems: {
+      id: 7,
+      name: 'notes',
+      children: [
+        { id: 9, name: 'index.js', file: 'js', code: '' }
+      ]
+    },
     anchorTypes: [
       {
         id: 'Qmlist_notesHash1',
@@ -44,6 +51,7 @@ export const zomes = [
         tag: ' ',
         context: 'permanent',
         libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/lib.rs`, 'utf8'),
+        testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/index.js`, 'utf8'),
         entryTypes: [
           {
             id: 'QmNoteEntryTypeHash1',
@@ -126,9 +134,10 @@ export const zomes = [
                 libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/lib_delete.rs`, 'utf8'),
                 code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/code/src/note/delete.rs`, 'utf8'),
                 explanation: 'Docs go here',
-                permission: 'author-only',
-                permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/author-only.rs`, 'utf8'),
-                permissionsExplanation: 'Docs go here'
+                permission: 'remove',
+                permissionsCode: fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
+                permissionsExplanation: 'Docs go here',
+                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/remove-delete.js`, 'utf8')
               },
               {
                 name: 'list',

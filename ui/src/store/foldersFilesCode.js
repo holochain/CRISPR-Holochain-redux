@@ -19,14 +19,7 @@ export const items = [
               { id: 8, name: 'config-copy.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/config-copy.js', 'utf8') },
               { id: 8, name: 'config-generate.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/config-generate.js', 'utf8') },
               { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/index.js', 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
-              { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/package.json', 'utf8') },
-              {
-                id: 7,
-                name: 'notes',
-                children: [
-                  { id: 9, name: 'index.js', file: 'js', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/dna_templates/anchor_link_to_initial/test/notes/index.js', 'utf8') }
-                ]
-              }
+              { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync('/Users/philipbeadle/holochain/holochain-ide/templates/all_apps/DNA/test/package.json', 'utf8') }
             ]
           },
           {

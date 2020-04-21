@@ -57,7 +57,7 @@
                 </v-card>
               </v-col>
               <v-col v-if="showModel" cols="12">
-                <zome-modeller :zome="zome" :key="refreshKey" @functions-code-updated="functionsCodeUpdated" @edit-permissions="editPermissions"/>
+                <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions"/>
               </v-col>
               <v-col v-if="showCode" cols="12">
                 <code-window :code="code" :options="options"/>
@@ -117,6 +117,19 @@ function writeFiles (item, folder) {
   }
 }
 
+function findItem (items, name) {
+  function iter (a) {
+    if (a.name.toLowerCase() === name.toLowerCase()) {
+      result = a
+      return true
+    }
+    return Array.isArray(a.children) && a.children.some(iter)
+  }
+  var result
+  items.some(iter)
+  return result
+}
+
 export default {
   name: 'DnaModeller',
   components: {
@@ -161,6 +174,9 @@ export default {
     loadZome (item) {
       this.zome = this.zomes[item.index]
       item.children = this.zome.items
+      const testItem = findItem(this.items, 'test')
+      console.log(testItem)
+      testItem.children.push(this.zome.testItems)
       this.showModel = true
       this.showCode = false
     },
@@ -193,17 +209,22 @@ export default {
       }
       this.permissionsDialog = true
     },
-    functionsCodeUpdated (entryType, libCode, handlersCode, permissionsCode) {
-      const entryTypeCodeItem = this.zome.items.find(i => i.name === 'code').children
-      if (entryTypeCodeItem) {
-        const entryTypeSrcItem = entryTypeCodeItem.find(i => i.name === 'src').children
-        entryTypeSrcItem[0].code = libCode
-        if (entryTypeSrcItem) {
-          const entryTypeItem = entryTypeSrcItem.find(i => i.name === entryType)
-          entryTypeItem.children[0].code = handlersCode
-          entryTypeItem.children[2].code = permissionsCode
-        }
-      }
+    entryTypeFunctionsCodeUpdated (entryType, handlersCode, permissionsCode) {
+      const entryTypeItem = findItem(this.zome.items, entryType).children
+      entryTypeItem[0].code = handlersCode
+      entryTypeItem[2].code = permissionsCode
+    },
+    zomeFunctionsCodeUpdated (libCode, testCode) {
+      // const zomeTestCodeItem = this.zome.testItems.find(i => i.name === 'test').children
+      // if (zomeCodeItem) {
+      //   const zomeSrcItem = zomeCodeItem.find(i => i.name === 'src').children
+      //   zomeSrcItem[0].code = libCode
+      // }
+      // const zomeCodeItem = this.zome.items.find(i => i.name === 'code').children
+      // if (zomeCodeItem) {
+      //   const zomeSrcItem = zomeCodeItem.find(i => i.name === 'src').children
+      //   zomeSrcItem[0].code = libCode
+      // }
     },
     loadFile (item) {
       switch (item.file) {
