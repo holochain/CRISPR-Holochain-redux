@@ -106,14 +106,17 @@ pub fn definition() -> ValidatingEntryType {
                 // entry_validation_functions
                 hdk::EntryValidationData::Create{entry, validation_data} =>
                 {
+                    // entry_permissions::validate_permissions_entry_create
                     entry_permissions::validate_permissions_entry_create(entry, validation_data)
                 },
                 hdk::EntryValidationData::Modify{new_entry, old_entry, old_entry_header, validation_data} =>
                 {
+                    // entry_permissions::validate_permissions_entry_update
                     entry_permissions::validate_permissions_entry_modify(new_entry, old_entry, old_entry_header, validation_data)
                 },
                 hdk::EntryValidationData::Delete{old_entry, old_entry_header, validation_data} =>
                 {
+                    // entry_permissions::validate_permissions_entry_delete
                     entry_permissions::validate_permissions_entry_delete(old_entry, old_entry_header, validation_data)
                 }
             }

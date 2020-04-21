@@ -32,9 +32,6 @@
     </v-row>
     <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
   </v-card>
-  <v-card v-else>
-    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
-  </v-card>
 </template>
 <script>
 export default {
@@ -61,9 +58,6 @@ export default {
 
   methods: {
     create () {
-      if (this.tasks === undefined) {
-        this.tasks = []
-      }
       this.tasks.push({
         done: false,
         title: this.task.title,

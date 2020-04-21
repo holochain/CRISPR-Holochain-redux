@@ -57,7 +57,7 @@
                 </v-card>
               </v-col>
               <v-col v-if="showModel" cols="12">
-                <zome-modeller :zome="zome" :key="refreshKey" @functions-code-updated="functionsCodeUpdated" @update-model="updateModel"/>
+                <zome-modeller :zome="zome" :key="refreshKey" @functions-code-updated="functionsCodeUpdated" @edit-permissions="editPermissions"/>
               </v-col>
               <v-col v-if="showCode" cols="12">
                 <code-window :code="code" :options="options"/>
@@ -67,30 +67,46 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="permissionsDialog" max-width="700px">
+      <v-card flat>
+        <v-toolbar color="primary" dark>
+          <v-toolbar-title class="display-1">Permissions - {{this.entryType.name}}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-row no-gutters align="start" justify="center">
+          <v-col cols="12">
+            <entry-type-permissions :permissions="permissions" @permission-changed="permissionChanged" />
+          </v-col>
+        </v-row>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="permissionsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 <script>
 import * as fs from 'fs'
 import * as path from 'path'
-import { zomes } from '../../store/zome.js'
+import { developer, zomes } from '../../store/zome.js'
 import { projects } from '../../store/projects.js'
 import { items } from '../../store/foldersFilesCode.js'
 
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
-  console.log(dirname)
   if (!fs.existsSync(dirname)) {
-    console.log('exists')
     fs.mkdirSync(dirname, { recursive: true })
   }
 }
 
 function writeFiles (item, folder) {
   if (item.children) {
-    console.log(folder)
     folder += '/' + item.name
     item.children.forEach(item => {
-      console.log(folder + '/' + item.name)
       if (item.file) {
         const fileName = folder + '/' + item.name
         ensureDirectoryExistence(fileName.toLowerCase())
@@ -105,7 +121,8 @@ export default {
   name: 'DnaModeller',
   components: {
     ZomeModeller: () => import('./ZomeModeller'),
-    CodeWindow: () => import('./CodeWindow')
+    CodeWindow: () => import('./CodeWindow'),
+    EntryTypePermissions: () => import('./EntryTypePermissions')
   },
   data () {
     return {
@@ -113,6 +130,7 @@ export default {
       zomeTab: null,
       zomes: zomes,
       zome: zomes[0],
+      entryType: {},
       refreshKey: 'clean',
       items: items,
       tree: [],
@@ -134,7 +152,9 @@ export default {
       showModel: false,
       showCode: false,
       code: '',
-      options: {}
+      options: {},
+      permissionsDialog: false,
+      permissions: {}
     }
   },
   methods: {
@@ -144,9 +164,34 @@ export default {
       this.showModel = true
       this.showCode = false
     },
-    updateModel (zome) {
+    permissionChanged (entryFunction, role) {
+      const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
+      functionInfo.permission = role
+      functionInfo.permissionsCode = fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       this.refreshKey += '1'
-      this.zome = zome
+    },
+    editPermissions (entryType) {
+      this.entryType = entryType
+      let updatePermission = ''
+      let deletePermission = ''
+      let functionInfo = entryType.functions.find(f => f.name === 'update')
+      if (functionInfo === undefined) {
+        updatePermission = 'remove'
+      } else {
+        updatePermission = functionInfo.permission
+      }
+      functionInfo = entryType.functions.find(f => f.name === 'delete')
+      if (functionInfo === undefined) {
+        deletePermission = 'remove'
+      } else {
+        deletePermission = functionInfo.permission
+      }
+      this.permissions = {
+        create: entryType.functions.find(f => f.name === 'create').permission,
+        update: updatePermission,
+        delete: deletePermission
+      }
+      this.permissionsDialog = true
     },
     functionsCodeUpdated (entryType, libCode, handlersCode, permissionsCode) {
       const entryTypeCodeItem = this.zome.items.find(i => i.name === 'code').children
@@ -219,7 +264,6 @@ export default {
       const filtered = projects.filter(project => {
         return project.id === this.$route.params.id
       })
-      console.log(filtered[0].name)
       return filtered[0]
     }
   }

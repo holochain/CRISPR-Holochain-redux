@@ -27,26 +27,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="permissionsDialog" max-width="700px">
-      <v-card flat>
-        <v-toolbar color="primary" dark>
-          <v-toolbar-title class="display-1">Permissions - {{this.entryTypeName}}</v-toolbar-title>
-          <v-spacer></v-spacer>
-        </v-toolbar>
-        <v-row no-gutters align="start" justify="center">
-          <v-col cols="12">
-            <entry-type-permissions :permissions="permissions" @permission-changed="permissionChanged" />
-          </v-col>
-        </v-row>
-        <v-spacer></v-spacer>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="action darken-1" text @click="permissionsDialog = false">
-            Done
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 <script>
@@ -59,19 +39,15 @@ export default {
   name: 'ZomeModeller',
   components: {
     Diagram,
-    codemirror,
-    EntryTypePermissions: () => import('./EntryTypePermissions')
+    codemirror
   },
   props: ['zome'],
   data () {
     return {
       model: new Diagram.Model(),
-      code: [],
       functionCode: '',
       functionPermissionCode: '',
       functionName: '',
-      permissionsDialog: false,
-      permissions: {},
       entryTypeName: '',
       codeDialog: false,
       windowSize: {
@@ -97,22 +73,6 @@ export default {
     addAgent () {
       console.log('Add Agent')
     },
-    permissionChanged (entryFunction, role) {
-      let entryType = {}
-      this.zome.anchorTypes.some(a => {
-        entryType = a.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
-        if (entryType !== {}) {
-          return true
-        }
-      })
-      if (entryType === {}) {
-        entryType = this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
-      }
-      entryType.functions.find(f => f.name === entryFunction).permission = role
-      // console.log(this.zome)
-      this.zome.id = 'updateme'
-      this.$emit('update-model', this.zome)
-    },
     editModelNode (type, index) {
       switch (type) {
         case 'entryType':
@@ -126,33 +86,15 @@ export default {
       }
     },
     editPermissions (entryTypeName) {
-      let updatePermission = ''
-      let deletePermission = ''
-      let functionInfo = this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::update`)
-      if (functionInfo === undefined) {
-        updatePermission = 'remove'
-      } else {
-        updatePermission = functionInfo.permission
-      }
-      functionInfo = this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::delete`)
-      if (functionInfo === undefined) {
-        deletePermission = 'remove'
-      } else {
-        deletePermission = functionInfo.permission
-      }
-      this.permissions = {
-        create: this.code.find(code => code.name === `${entryTypeName.toLowerCase()}::create`).permission,
-        update: updatePermission,
-        delete: deletePermission
-      }
       this.entryTypeName = entryTypeName
-      this.permissionsDialog = true
+      this.$emit('edit-permissions', this.entryType)
     },
     showFunctionCode (name) {
+      this.entryTypeName = name.split('::')[0]
+      this.functionName = name.split('::')[1]
       this.functionCode = ''
       this.functionPermissionCode = ''
-      const functionInfo = this.code.find(code => code.name === name)
-      this.functionName = name
+      const functionInfo = this.entryType.functions.find(f => f.name === this.functionName)
       if (functionInfo.permissionsCode === undefined) functionInfo.permissionsCode = ''
       this.functionCode = `${functionInfo.code}\n\n${functionInfo.permissionsCode}`
       this.codeDialog = true
@@ -160,8 +102,6 @@ export default {
     createModel () {
       const dnaModel = new Diagram.Model()
       const nodes = []
-      // const links = []
-      // ports = []
       const col0Offset = 20
       const col1Offset = 390
       const col2Offset = 760
@@ -194,7 +134,6 @@ export default {
               libCode += f.libCode + '\n\n'
               handlersCode += f.code + '\n\n'
               if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
-              this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation, permission: f.permission })
             }
           })
           libCode += '}'
@@ -221,13 +160,12 @@ export default {
               entryType.functions.forEach(f => {
                 if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
                 handlersCode += f.code + '\n\n'
+                libCode += f.libCode + '\n\n'
                 if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
-                this.code.push({ name: `${entryType.name.toLowerCase()}::${f.name}`, code: f.code, explanation: f.explanation, permissionsCode: f.permissionsCode, permissionsExplanation: f.permissionsExplanation, permission: f.permission })
               })
               this.$emit('functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
               nodes.push({ id: entryType.id, node: entryTypeNode })
             } else {
-              console.log(existingEntryTypeNode.node.ports)
               entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === 'id:initial_note_entry_address').id
               const entryTypeOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
               dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
@@ -274,6 +212,16 @@ export default {
   computed: {
     funcCodemirror () {
       return this.$refs.cmFunctionCode.codemirror
+    },
+    entryType () {
+      let entryType = {}
+      this.zome.anchorTypes.some(a => {
+        entryType = a.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+      })
+      if (entryType === {}) {
+        entryType = this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
+      }
+      return entryType
     }
   },
   mounted () {

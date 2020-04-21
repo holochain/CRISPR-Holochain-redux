@@ -42,7 +42,6 @@ export default {
       this.$emit('mouseUpPort', this.id)
     },
     showFunctionCode () {
-      console.log(this.name)
       this.$emit('show-function-code', this.name)
     },
     enter () {

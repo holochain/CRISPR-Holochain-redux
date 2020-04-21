@@ -8,9 +8,9 @@ use hdk::{
     holochain_persistence_api::cas::content::Address,
 };
 
+pub mod note;
 use crate::note::NoteEntry;
 use crate::note::Note;
-pub mod note;
 
 #[zome]
 mod notes {
