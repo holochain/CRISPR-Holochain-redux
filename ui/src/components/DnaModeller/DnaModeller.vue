@@ -147,7 +147,7 @@ export default {
       refreshKey: 'clean',
       items: items,
       tree: [],
-      open: ['Holochain-IDE', 'DNA', 'Zomes', 'UI'],
+      open: ['Notes', 'DNA', 'Test', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',

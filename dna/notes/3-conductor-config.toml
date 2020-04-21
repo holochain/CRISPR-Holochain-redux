@@ -1,0 +1,88 @@
+bridges = []
+persistence_dir = '/tmp/tmp.ndmg4n3gVe/tryorama/FDKy4c'
+ui_bundles = []
+ui_interfaces = []
+
+[[agents]]
+id = 'notes'
+keystore_file = '[UNUSED]'
+name = 'phil::notes::e3f2e3d3-78e2-465f-9508-19bc080852b9'
+public_address = 'HcScjoHg7Akmvu8ewdg3aObtyCyw4ms8mcMfE9QhVAfntt8nXCfxnA8Jk88tijr'
+test_agent = true
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/holochain-ide/dna/notes/dna/dist/dna.dna.json'
+hash = 'QmSQcSradr8rR2ZE9hwh7Vn8rnVV4R7QGGKUzrFkT6RZBD'
+id = 'notes-test'
+uuid = 'e3f2e3d3-78e2-465f-9508-19bc080852b9'
+
+[[instances]]
+agent = 'notes'
+dna = 'notes-test'
+id = 'notes'
+
+[instances.storage]
+path = '/tmp/tmp.ndmg4n3gVe/tryorama/FDKy4c/notes'
+type = 'lmdb'
+
+[[interfaces]]
+admin = true
+choose_free_port = false
+id = 'tryorama-interface'
+
+[[interfaces.instances]]
+id = 'notes'
+
+[interfaces.driver]
+port = 33002
+type = 'websocket'
+
+[logger]
+state_dump = false
+type = 'debug'
+[[logger.rules.rules]]
+exclude = true
+pattern = '^parity'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^mio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^tokio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^hyper'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rusoto_core'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^want'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rpc'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^holochain'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^lib3h'
+
+[network]
+sim2h_url = 'ws://localhost:9000'
+type = 'sim2h'
+
+[passphrase_service]
+type = 'cmd'
+
+[signals]
+consistency = true
+trace = false
