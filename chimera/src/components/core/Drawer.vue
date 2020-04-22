@@ -59,7 +59,7 @@ export default {
           to: '/library'
         },
         {
-          icon: 'mdi-home-variant',
+          icon: 'mdi-newspaper',
           text: 'News',
           to: '/'
         },

@@ -13,7 +13,7 @@
     "hc:package": "cd dna && hc package",
     "hc:run": "holochain -c ./1-conductor-config.toml",
     "hc:start": "npm run hc:config && npm run hc:run",
-    "chimera:start": "cd chimera && yarn electron:serve",
+    "chimera": "cd chimera && yarn electron:serve",
     "chimera:lint": "cd chimera && yarn lint",
     "start": "nf start"
   },
