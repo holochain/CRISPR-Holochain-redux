@@ -10,7 +10,7 @@
     <v-divider />
     <v-content>
       <v-row>
-        <v-col v-for="(profile) in profiles" :key="profile.id" cols="12" sm="6" md="4">
+        <v-col v-for="(profile) in profiles" :key="profile.id" cols="12" md="6">
           <profile-card :profile="profile" :personas="personas"/>
         </v-col>
       </v-row>
