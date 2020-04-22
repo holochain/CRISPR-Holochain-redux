@@ -18,7 +18,7 @@ export const projects = [
   {
     id: 'Qmmorebighashes333',
     name: 'Notes',
-    folder: '/Users/philipbeadle/holochain/holochain-ide/dna',
+    folder: '/Users/philipbeadle/holochain/CRISPR/dna',
     url: '/happ-store/Notes',
     contact: 'Philip Beadle',
     mobile: '+61 999 999 999',

@@ -1,7 +1,7 @@
 <template>
   <v-card fluid height="99vh">
     <v-toolbar color="primary" dark>
-      <v-toolbar-title>Holochain Projects</v-toolbar-title>
+      <v-toolbar-title>Holochain CRISPR</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn text @click="addHolochainApp">
         <v-icon>mdi-plus</v-icon>

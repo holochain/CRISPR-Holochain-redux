@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-img class="white--text align-end" height="420" :src="require(`@/modules/vue-beautiful-chat.gif`)">
+    <v-img class="white--text align-end" height="420" :src="require(`@/modules/chat-module.png`)">
       <v-card-title>Holochain Chat</v-card-title>
     </v-img>
      <v-card-text>

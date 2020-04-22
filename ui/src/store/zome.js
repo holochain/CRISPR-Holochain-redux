@@ -1,7 +1,7 @@
 /* eslint no-template-curly-in-string: "off" */
 import * as fs from 'fs'
 export const developer = {
-  folder: '/Users/philipbeadle/holochain/holochain-ide'
+  folder: '/Users/philipbeadle/holochain/CRISPR'
 }
 export const zomes = [
   {
