@@ -1,9 +1,0 @@
-{
-  "name": "",
-  "description": "",
-  "list": "",
-  "view":"",
-  "create": "",
-  "update": "",
-  "delete": ""
-}
