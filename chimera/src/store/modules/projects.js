@@ -4,10 +4,10 @@ export default {
   state: {
     projects: [
       {
-        id: 'QmHolochainIDE',
-        name: 'Holochain-IDE',
+        id: 'QmHashyChimera',
+        name: 'Chimera',
         folder: '/Users/philipbeadle/holochain/hApps',
-        url: '/happ-store/Holochain-IDE',
+        url: '/happ-store/Chimera',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'IDE for building Holochain hApps from models and templates. Uses Holochain anchors as a git like source control with branching, permission control and traceability of changes.',
@@ -21,7 +21,7 @@ export default {
         url: '/happ-store/Notes',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'A Holochain hApp that demonstrates how to build a CRUD hApp with Holochain-IDE.\nSelecting permissions and roles generates the code for the Zome based on Entry Type fields and links.',
+        description: 'This is the project management tool with Notes in workflow swim lanes that is being built with CRISPR.\nSelecting permissions and roles generates the code for the Zome & UI based on Entry Type fields and links.',
         zomes: [],
         modules: []
       },
@@ -36,10 +36,13 @@ export default {
       }
     ]
   },
-
   getters: {
     allProjects: state => {
       return state.projects
+    },
+    projectById: (state) => (projectId) => {
+      console.log(projectId)
+      return state.projects.find(p => p.id === projectId)
     }
   }
 }

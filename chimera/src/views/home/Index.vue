@@ -1,11 +1,8 @@
 <template>
   <section>
     <v-toolbar flat>
-      <v-btn icon to="/">
-        <v-icon>mdi-chevron-left</v-icon>
-      </v-btn>
       <v-divider class="mx-3" inset vertical />
-      News
+      <span class="title">News</span>
     </v-toolbar>
     <news />
   </section>

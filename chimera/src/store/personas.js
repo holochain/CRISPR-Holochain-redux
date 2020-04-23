@@ -1,7 +1,7 @@
 export const personas = [
   {
     id: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r',
-    title: 'Chimera',
+    title: 'Personal',
     fields: [
       {
         anchor: 'nickname',

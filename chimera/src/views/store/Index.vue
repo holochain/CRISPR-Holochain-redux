@@ -5,10 +5,9 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      Store
+      <span class="title">Store</span>
     </v-toolbar>
     <featured />
-
     <games />
   </section>
 </template>
