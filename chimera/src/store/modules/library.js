@@ -4,8 +4,8 @@ export default {
   namespaced: true,
 
   state: {
-    installed: [2, 7, 10],
-    games: [2, 4, 7, 9, 10]
+    installed: [1, 9, 10, 'QmHashyCRISPR'],
+    games: [1, 6, 7, 9, 8, 10, 'QmHashyCRISPR']
   },
 
   getters: {

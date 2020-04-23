@@ -79,9 +79,10 @@ export default {
         updated: 1545864353031
       },
       {
-        id: 9,
+        id: 'QmHashyCRISPR',
         name: 'CRISPR',
         src: 'crispr',
+        description: 'Each CRISPR Project gets its own DHT and can be linked to the same store info sp many profiles can have the same looking store images. So Profiles page shows the current Apps page. Click on  an Apps link to see the list of profiles you have. Projects can use their store info as well. Install --> Profile added.',
         price: 59.99,
         compareAt: 54.34,
         publisher: 'Holochain.org',

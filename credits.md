@@ -9,3 +9,6 @@ https://commons.wikimedia.org/wiki/File:DNA_replication_en.svg
 # Names of things
 Eric Doriean for the CRISPR idea
 https://toolbox.biomimicry.org/references/glossary/ for chimera.
+
+# Fonts
+https://adobe-fonts.github.io/source-code-pro/

@@ -46,6 +46,16 @@
                       <v-list-item-title>Chat</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
+                  <v-list-item @click="inviteFriend">
+                    <v-list-item-action>
+                      <v-btn icon>
+                        <v-icon>mdi-chat</v-icon>
+                      </v-btn>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                      <v-list-item-title>Chat</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
                   <v-list-item @click="removeFriend">
                     <v-list-item-action>
                       <v-btn icon>
@@ -54,16 +64,6 @@
                     </v-list-item-action>
                     <v-list-item-content>
                       <v-list-item-title>Remove</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="blockFriend">
-                    <v-list-item-action>
-                      <v-btn icon>
-                        <v-icon>mdi-account-off</v-icon>
-                      </v-btn>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                      <v-list-item-title>Block</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -109,9 +109,6 @@ export default {
   },
   methods: {
     ...mapMutations('friends', ['setDrawer']),
-    blockFriend () {
-      //
-    },
     menu (event) {
       //
     },
@@ -119,6 +116,9 @@ export default {
       //
     },
     whisperFriend () {
+      //
+    },
+    inviteFriend () {
       //
     }
   }

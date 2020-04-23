@@ -12,6 +12,9 @@ import install from '@/store/modules/install'
 import library from '@/store/modules/library'
 import portfolio from '@/store/modules/portfolio'
 import projects from '@/store/modules/projects'
+import personalInformation from '@/store/modules/personalInformation'
+import profiles from '@/store/modules/profiles'
+import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
 import verify from '@/store/modules/verify'
 
@@ -29,6 +32,9 @@ const store = new Vuex.Store({
     library,
     portfolio,
     projects,
+    personalInformation,
+    profiles,
+    personas,
     snackbar,
     verify
   },

@@ -22,18 +22,13 @@
 </template>
 
 <script>
-import { profiles } from '../../store/profiles.js'
-import { personas } from '../../store/personas.js'
-
+import { mapGetters } from 'vuex'
 export default {
   components: {
     ProfileCard: () => import('@/components/personas/ProfileCard')
   },
-  data () {
-    return {
-      personas: personas,
-      profiles: profiles
-    }
+  computed: {
+    ...mapGetters('personalInformation', ['profiles', 'personas'])
   }
 }
 </script>

@@ -95,8 +95,6 @@ export default {
     if (this.mapping !== undefined) {
       const anchor = this.mapping.tag
       const id = this.mapping.persona
-      console.log(anchor)
-
       const mappedPersona = this.personas.filter((persona) => persona.id === id)
         .map(persona => {
           const mappedPersonaCopy = { ...persona }
@@ -106,19 +104,15 @@ export default {
           })
           return mappedFields
         })
-
       const foundPersona = [].concat.apply([], mappedPersona)[0]
       if (foundPersona) {
         this.profileData = [].concat.apply([], mappedPersona)[0]
         this.selectedPersona = ' (' + this.profileData.personaTitle + '-' + this.profileData.fieldName + ')'
       }
-      console.log(foundPersona)
     }
   },
   methods: {
     change (field) {
-      console.log('change')
-      console.log(field)
       this.selectedPersona = ' (' + field.personaTitle + '-' + field.fieldName + ')'
       if (field.anchor === '') {
         this.addThumbnailDialog = true
@@ -129,7 +123,6 @@ export default {
       })
     },
     remove (item) {
-      console.log('remove')
       this.$emit('profile-field-changed', this.selected)
       this.profileData = null
     }

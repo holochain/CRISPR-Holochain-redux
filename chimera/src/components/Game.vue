@@ -26,7 +26,7 @@
           </v-row>
         </v-img>
       </router-link>
-
+      <profile-card v-if="getAction(value) === 'LaunchAction'" :profile="profile" :personas="personas"/>
       <v-fade-transition mode="out-in">
         <component
           :is="getAction(value)"
@@ -40,18 +40,18 @@
 </template>
 
 <script>
-// Utilities
 import {
+  mapGetters,
   mapState
 } from 'vuex'
-
 export default {
   name: 'Game',
 
   components: {
     InstallAction: () => import('@/views/library/InstallAction'),
     LaunchAction: () => import('@/views/library/LaunchAction'),
-    VerifyAction: () => import('@/views/library/VerifyAction')
+    VerifyAction: () => import('@/views/library/VerifyAction'),
+    ProfileCard: () => import('@/components/personas/ProfileCard')
   },
 
   inheritAttrs: false,
@@ -68,6 +68,10 @@ export default {
     showAction: {
       type: Boolean,
       default: false
+    },
+    profileId: {
+      type: String,
+      default: ''
     },
     static: {
       type: Boolean,
@@ -93,6 +97,10 @@ export default {
 
   computed: {
     ...mapState('verify', ['verifying']),
+    ...mapGetters('personalInformation', ['profiles', 'personas']),
+    profile () {
+      return this.profiles[0]
+    },
     height () {
       if (this.tall) return 524
       if (this.dense) return 150
@@ -117,10 +125,8 @@ export default {
   methods: {
     getAction (game) {
       let action = 'Launch'
-
       if (this.verifying === game.id) action = 'Verify'
       if (!game.installed) action = 'Install'
-
       return `${action}Action`
     }
   }

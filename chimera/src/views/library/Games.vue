@@ -14,6 +14,7 @@
           dense
           static
           show-action
+          show-profile
         />
       </v-col>
     </v-row>
