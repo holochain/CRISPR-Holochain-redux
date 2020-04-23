@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      Settings
+      <span class="title">Settings</span>
     </v-toolbar>
     <v-divider />
     <div class="pa-3">

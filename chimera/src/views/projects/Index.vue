@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      Projects
+      <span class="title">Projects</span>
       <v-spacer></v-spacer>
       <v-btn text to="modules">
         <v-icon>mdi-view-module</v-icon>

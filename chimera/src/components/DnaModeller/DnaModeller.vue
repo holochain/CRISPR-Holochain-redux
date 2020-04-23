@@ -84,8 +84,8 @@
 <script>
 import * as fs from 'fs'
 import * as path from 'path'
+import { mapGetters } from 'vuex'
 import { developer, zomes } from '../../store/zome.js'
-import { projects } from '../../store/projects.js'
 import { items } from '../../store/foldersFilesCode.js'
 
 function ensureDirectoryExistence (filePath) {
@@ -270,11 +270,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('portfolio', ['projectById']),
     project () {
-      const filtered = projects.filter(project => {
-        return project.id === this.$route.params.id
-      })
-      return filtered[0]
+      return this.projectById(this.$route.params.id)
     }
   }
 }

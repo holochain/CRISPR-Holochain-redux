@@ -8,6 +8,9 @@ export default {
         projects.push(project)
       }
       return projects
+    },
+    projectById: (state, getters, rootState, rootGetters) => (projectId) => {
+      return rootGetters['projects/projectById'](projectId)
     }
   }
 }
