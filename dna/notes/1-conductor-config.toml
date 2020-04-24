@@ -1,20 +1,20 @@
 bridges = []
-persistence_dir = '/tmp/tmp.Xt12OIH5RG/tryorama/CsHduJ'
+persistence_dir = '/tmp/tmp.iLzYEUUCEx/tryorama/rIlOyj'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'alice::notes::fc99c0c2-3559-4db1-bc56-a5f5cda3529a'
-public_address = 'HcSCJkadE35b8R8zd4CWcV4NAUH6d6rckrq4I8tUVdnxx5oaRaje93Z7a3KNisi'
+name = 'alice::notes::74a4920d-452d-49c8-9657-f5b10d68ed05'
+public_address = 'HcSCiD3q3a7yjb7x7kazSvWoFswqdxyymSqHabDPdesnejmhw87B7cSbGDZzmma'
 test_agent = true
 
 [[dnas]]
-file = '/Users/philipbeadle/holochain/CRISPR2/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmQKhoh5ARFwMwp6GBuyHmWXjiz34B4ou3ZAu5Dju5Y3v8'
+file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
+hash = 'QmYFWoHmNfQEmPSDRMoVA5vMetCqG9KXViVJ4XVuESRWeA'
 id = 'notes-test'
-uuid = 'fc99c0c2-3559-4db1-bc56-a5f5cda3529a'
+uuid = '74a4920d-452d-49c8-9657-f5b10d68ed05'
 
 [[instances]]
 agent = 'notes'
@@ -22,7 +22,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.Xt12OIH5RG/tryorama/CsHduJ/notes'
+path = '/tmp/tmp.iLzYEUUCEx/tryorama/rIlOyj/notes'
 type = 'lmdb'
 
 [[interfaces]]

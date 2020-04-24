@@ -53,6 +53,16 @@ const router = new Router({
       path: '/profiles',
       name: 'Profiles',
       component: () => import('@/views/profiles/Index')
+    },
+    {
+      path: '/personas',
+      name: 'Personas',
+      component: () => import('@/views/personas/Index')
+    },
+    {
+      path: '/notes',
+      name: 'Notes',
+      component: () => import('@/views/notes/NotesModule')
     }
   ]
 })

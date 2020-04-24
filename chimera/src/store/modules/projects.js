@@ -41,7 +41,6 @@ export default {
       return state.projects
     },
     projectById: (state) => (projectId) => {
-      console.log(projectId)
       return state.projects.find(p => p.id === projectId)
     }
   }

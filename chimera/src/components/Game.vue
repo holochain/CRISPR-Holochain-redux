@@ -26,11 +26,13 @@
           </v-row>
         </v-img>
       </router-link>
-
+      <profile-card v-if="getAction(value) === 'LaunchAction'" :profile="profileByDna(value.id)" :personas="personas">
+        <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
+      </profile-card>
       <v-fade-transition mode="out-in">
         <component
           :is="getAction(value)"
-          v-if="showAction"
+          v-if="getAction(value) !== 'LaunchAction'"
           :key="getAction(value)"
           :value="value"
         />
@@ -40,18 +42,18 @@
 </template>
 
 <script>
-// Utilities
 import {
+  mapGetters,
   mapState
 } from 'vuex'
-
 export default {
   name: 'Game',
 
   components: {
     InstallAction: () => import('@/views/library/InstallAction'),
     LaunchAction: () => import('@/views/library/LaunchAction'),
-    VerifyAction: () => import('@/views/library/VerifyAction')
+    VerifyAction: () => import('@/views/library/VerifyAction'),
+    ProfileCard: () => import('@/components/personas/ProfileCard')
   },
 
   inheritAttrs: false,
@@ -93,6 +95,7 @@ export default {
 
   computed: {
     ...mapState('verify', ['verifying']),
+    ...mapGetters('personalInformation', ['profileByDna', 'personas']),
     height () {
       if (this.tall) return 524
       if (this.dense) return 150
@@ -101,26 +104,21 @@ export default {
     },
     styles () {
       let backgroundColor
-
       if (this.understate) {
         backgroundColor = 'rgba(117, 117, 117, .72)'
       } else if (!this.static && this.hover) {
         backgroundColor = 'rgba(255, 255, 255, .16)'
       }
-
       return {
         backgroundColor
       }
     }
   },
-
   methods: {
     getAction (game) {
       let action = 'Launch'
-
       if (this.verifying === game.id) action = 'Verify'
       if (!game.installed) action = 'Install'
-
       return `${action}Action`
     }
   }
