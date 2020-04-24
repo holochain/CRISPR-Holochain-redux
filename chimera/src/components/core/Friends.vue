@@ -49,11 +49,11 @@
                   <v-list-item @click="inviteFriend">
                     <v-list-item-action>
                       <v-btn icon>
-                        <v-icon>mdi-chat</v-icon>
+                        <v-icon>mdi-account-plus</v-icon>
                       </v-btn>
                     </v-list-item-action>
                     <v-list-item-content>
-                      <v-list-item-title>Chat</v-list-item-title>
+                      <v-list-item-title>Invite</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item @click="removeFriend">

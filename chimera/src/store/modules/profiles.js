@@ -26,9 +26,9 @@ export default {
         ]
       },
       {
-        id: 'QmhashProjectCRISPR',
+        id: 'QmhashProfileCRISPR',
         name: 'CRISPR',
-        game: 'QmHashyCRISPR',
+        dna: 'QmHashyCRISPR',
         fields: [
           {
             anchor: 'nickname',
@@ -49,8 +49,9 @@ export default {
         ]
       },
       {
-        id: 'QmhashProjectNotes',
+        id: 'QmhashProfileNotes',
         name: 'Project - Notes',
+        dna: 'QmHashyNotes',
         fields: [
           {
             anchor: 'nickname',
@@ -71,8 +72,9 @@ export default {
         ]
       },
       {
-        id: 'QmhashProjectMyInfo',
-        name: 'Project - My Info',
+        id: 'QmhashProfileSiteBuilder',
+        name: 'Site Builder',
+        dna: 'QmHashySiteBuilder',
         fields: [
           {
             anchor: 'nickname',
@@ -100,6 +102,9 @@ export default {
     },
     profileById: (state) => (profileId) => {
       return state.profiles.find(p => p.id === profileId)
+    },
+    profileByDna: (state) => (dna) => {
+      return state.profiles.find(p => p.dna === dna)
     }
   }
 }

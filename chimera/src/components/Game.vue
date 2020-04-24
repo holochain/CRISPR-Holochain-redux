@@ -26,11 +26,13 @@
           </v-row>
         </v-img>
       </router-link>
-      <profile-card v-if="getAction(value) === 'LaunchAction'" :profile="profile" :personas="personas"/>
+      <profile-card v-if="getAction(value) === 'LaunchAction'" :profile="profileByDna(value.id)" :personas="personas">
+        <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
+      </profile-card>
       <v-fade-transition mode="out-in">
         <component
           :is="getAction(value)"
-          v-if="showAction"
+          v-if="getAction(value) !== 'LaunchAction'"
           :key="getAction(value)"
           :value="value"
         />
@@ -69,10 +71,6 @@ export default {
       type: Boolean,
       default: false
     },
-    profileId: {
-      type: String,
-      default: ''
-    },
     static: {
       type: Boolean,
       default: false
@@ -97,10 +95,7 @@ export default {
 
   computed: {
     ...mapState('verify', ['verifying']),
-    ...mapGetters('personalInformation', ['profiles', 'personas']),
-    profile () {
-      return this.profiles[0]
-    },
+    ...mapGetters('personalInformation', ['profileByDna', 'personas']),
     height () {
       if (this.tall) return 524
       if (this.dense) return 150
@@ -109,19 +104,16 @@ export default {
     },
     styles () {
       let backgroundColor
-
       if (this.understate) {
         backgroundColor = 'rgba(117, 117, 117, .72)'
       } else if (!this.static && this.hover) {
         backgroundColor = 'rgba(255, 255, 255, .16)'
       }
-
       return {
         backgroundColor
       }
     }
   },
-
   methods: {
     getAction (game) {
       let action = 'Launch'

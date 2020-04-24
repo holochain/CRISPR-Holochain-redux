@@ -22,10 +22,7 @@
             width="200"
           />
 
-          <v-btn
-            :color="game.buyColor || 'blue'"
-            style="min-width: 225px; height: 52px;"
-          >
+          <v-btn v-if="!game.launch" :color="game.buyColor || 'blue'" style="min-width: 225px; height: 52px;">
             Add to Cart
           </v-btn>
         </v-col>
@@ -116,7 +113,8 @@ export default {
     ...mapGetters('games', ['parsedGames']),
     ...mapState('route', ['params']),
     game () {
-      return this.parsedGames.find(game => Number(game.id) === Number(this.params.id))
+      console.log(this.params.id, this.parsedGames)
+      return this.parsedGames.find(game => game.id === this.params.id)
     }
   }
 }

@@ -5,6 +5,7 @@
       <profile-field :profileName="profile.name" :profileFieldValue="field" :fieldType="field.fieldType" :personas="personas" @profile-field-changed="fieldChanged"/>
     </v-col>
     <v-card-actions>
+      <slot></slot>
       <v-spacer></v-spacer>
       <v-btn color="action darken-1" text @click="saveProfile">Update Profile</v-btn>
     </v-card-actions>

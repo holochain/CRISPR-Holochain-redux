@@ -173,7 +173,7 @@ export default {
       this.setValue(true)
     },
     launch () {
-      this.dialog = true
+      this.$router.push({ path: this.value.launch })
     },
     async verify () {
       this.menu = false

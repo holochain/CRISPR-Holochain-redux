@@ -11,6 +11,9 @@ export default {
     profileById: (state, getters, rootState, rootGetters) => (profileId) => {
       return rootGetters['profiles/profileById'](profileId)
     },
+    profileByDna: (state, getters, rootState, rootGetters) => (dna) => {
+      return rootGetters['profiles/profileByDna'](dna)
+    },
     personas: (state, getters, rootState, rootGetters) => {
       const personas = []
       for (const persona of rootGetters['personas/allPersonas']) {

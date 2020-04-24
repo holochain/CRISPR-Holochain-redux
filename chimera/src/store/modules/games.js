@@ -5,16 +5,17 @@ export default {
     featured: [],
     games: [
       {
-        id: 1,
-        name: 'Elder Earth',
-        src: 'elder-earth',
+        id: 'QmHashySiteBuilder',
+        name: 'Profile Site Builder',
+        src: 'profile-site-builder',
+        launch: '/profile-site-builder',
         price: 19.99,
         compareAt: 27.99,
         publisher: 'Creten Studios',
-        updated: 1545864353040
+        updated: 1587694679490
       },
       {
-        id: 2,
+        id: 'QmHashyPhase',
         name: 'Phase',
         src: 'phase',
         price: 19.99,
@@ -23,7 +24,7 @@ export default {
         updated: 1545864353031
       },
       {
-        id: 3,
+        id: 'QmHashyReplicate',
         name: 'Replicate',
         src: 'replicate',
         price: 19.99,
@@ -32,7 +33,7 @@ export default {
         updated: 1545864353040
       },
       {
-        id: 4,
+        id: 'QmHashysol643',
         name: 'SOL 643',
         src: 'sol643',
         price: 19.99,
@@ -41,7 +42,7 @@ export default {
         updated: 1545864353039
       },
       {
-        id: 5,
+        id: 'QmHashystar-watch',
         name: 'Star Watch',
         src: 'star-watch',
         price: 19.99,
@@ -50,7 +51,7 @@ export default {
         updated: 1545864353040
       },
       {
-        id: 6,
+        id: 'QmHashyfallen-kingdoms',
         buyColor: '#3675A6',
         name: 'Fallen Kingdoms',
         src: 'fallen-kingdoms',
@@ -60,7 +61,7 @@ export default {
         updated: 1545864353030
       },
       {
-        id: 7,
+        id: 'QmHashyastras',
         buyColor: '#804C9D',
         name: 'Astras II',
         src: 'astras',
@@ -70,7 +71,7 @@ export default {
         updated: 1545864353030
       },
       {
-        id: 8,
+        id: 'QmHashystorm-peak',
         name: 'Storm Peak',
         src: 'storm-peak',
         price: 6.99,
@@ -82,6 +83,7 @@ export default {
         id: 'QmHashyCRISPR',
         name: 'CRISPR',
         src: 'crispr',
+        launch: '/projects',
         description: 'Each CRISPR Project gets its own DHT and can be linked to the same store info sp many profiles can have the same looking store images. So Profiles page shows the current Apps page. Click on  an Apps link to see the list of profiles you have. Projects can use their store info as well. Install --> Profile added.',
         price: 59.99,
         compareAt: 54.34,
@@ -89,9 +91,10 @@ export default {
         updated: 1545864353030
       },
       {
-        id: 10,
-        name: 'Down Below',
-        src: 'down-below',
+        id: 'QmHashyNotes',
+        name: 'Notes',
+        src: 'notes',
+        launch: '/notes',
         price: 19.99,
         compareAt: 19.99,
         publisher: 'Deepdive',
