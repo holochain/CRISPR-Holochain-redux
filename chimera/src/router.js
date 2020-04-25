@@ -19,9 +19,10 @@ const router = new Router({
       component: () => import('@/views/article/Index')
     },
     {
-      path: '/library',
+      path: '/library/:profiles',
       name: 'Library',
-      component: () => import('@/views/library/Index')
+      component: () => import('@/views/library/Index'),
+      props: true
     },
     {
       path: '/store',

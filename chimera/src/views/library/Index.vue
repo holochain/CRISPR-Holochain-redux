@@ -7,7 +7,6 @@
 <script>
 export default {
   name: 'Library',
-
   components: {
     Games: () => import('./Games')
   }

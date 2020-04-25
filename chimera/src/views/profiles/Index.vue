@@ -7,7 +7,7 @@
       <v-divider class="mx-3" inset vertical />
       <span class="title">Profiles</span>
       <v-spacer></v-spacer>
-      <v-btn text to="modules">
+      <v-btn text to="/personas">
         <v-icon>mdi-account</v-icon>
         Personas
       </v-btn>

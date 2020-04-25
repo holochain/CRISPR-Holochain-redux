@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto pb-3 pt-2">
-    <!-- <v-list-item-title class="headline ml-2 mb-2">Profile - {{ profile.name }}</v-list-item-title> -->
+    <v-list-item-title class="headline ml-2 mb-2">Profile - {{ profile.name }}</v-list-item-title>
     <v-col v-for="(field) in profileFields" :key="field.fieldName" cols="12" class="ma-0 pt-0 pb-1">
       <profile-field :profileName="profile.name" :profileFieldValue="field" :fieldType="field.fieldType" :personas="personas" @profile-field-changed="fieldChanged"/>
     </v-col>
