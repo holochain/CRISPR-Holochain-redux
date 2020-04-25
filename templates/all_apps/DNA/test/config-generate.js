@@ -41,22 +41,19 @@ const conductorConfig = Config.gen({notes: dna}, {
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
   const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title first note", "content":"Content first note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title second note", "content":"Content second note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title third note", "content":"Content third note"}})
-  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Alice Title fourth note", "content":"Content fourth note"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Find out who creates invite and room\nScript out what to deep dive on"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Stepper for add new entry", "content":"Setup- for existing"}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Scale the zome model surface", "content":"Set it up so the model fits exactly."}})
+  await alice.call("notes", "notes", "create_note", {"note_input" : {"title":"Get theme colours", "content":"Use Holochain brand colours."}})
   await s.consistency()
 
-  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title first note", "content":"Content first note"}})
-  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title second note", "content":"Content second note"}})
-  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title third note", "content":"Content third note"}})
-  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Bob Title fourth note", "content":"Content fourth note"}})
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Agent Id Link", "content":"Add list notes by agent"}})
+  await bob.call("notes", "notes", "create_note", {"note_input" : {"title":"Entry type code viewer", "content":"decide on DNA pattern to use for Notes hApp."}})
   await s.consistency()
 
-  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title first note", "content":"Content first note"}})
-  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title second note", "content":"Content second note"}})
-  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title third note", "content":"Content third note"}})
-  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Phil Title fourth note", "content":"Content fourth note"}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"DNA Modeller toolbar", "content":"Add the buttons"}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Show profile information on each installed app", "content":"Makes it easy to see where your personal data is."}})
+  await phil.call("notes", "notes", "create_note", {"note_input" : {"title":"Be able to workflowe any entry", "content":"Worflow as a feature you add to existing app."}})
   await s.consistency()
 
   await lucy.call("notes", "notes", "create_note", {"note_input" : {"title":"Lucy Title first note", "content":"Content first note"}})

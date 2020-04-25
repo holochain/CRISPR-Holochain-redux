@@ -40,7 +40,7 @@ export default {
       if (this.instanceNote.id === '' || this.instanceNote.id === undefined) {
         makeHolochainCall(this.holochainConnection, 'notes/notes/create_note', { note_input: { title: this.instanceNote.title, content: this.instanceNote.content } }, (result) => {
           if (result.Ok === undefined) {
-            this.$emit('note-created-failed', result)
+            this.$emit('note-created-failed', JSON.parse(result.Err.Internal).kind)
           } else {
             const newNote = result.Ok
             this.instanceNote.id = newNote.id
@@ -54,7 +54,7 @@ export default {
         makeHolochainCall(this.holochainConnection, 'notes/notes/update_note', { id: this.instanceNote.id, created_at: this.instanceNote.createdAt, address: this.instanceNote.address, note_input: { title: this.instanceNote.title, content: this.instanceNote.content } }, (result) => {
           if (result.Ok === undefined) {
             this.instanceNote = this.clean
-            this.$emit('note-updated-failed', result)
+            this.$emit('note-updated-failed', JSON.parse(result.Err.Internal).kind)
           } else {
             const newNote = result.Ok
             this.instanceNote.address = newNote.address
@@ -67,8 +67,9 @@ export default {
     },
     deleteNote () {
       makeHolochainCall(this.holochainConnection, 'notes/notes/delete_note', { id: this.instanceNote.id, created_at: this.instanceNote.createdAt, address: this.instanceNote.address }, (result) => {
+        console.log(result)
         if (result.Ok === undefined) {
-          this.$emit('note-deleted-failed', result)
+          this.$emit('note-deleted-failed', JSON.parse(result.Err.Internal).kind)
         } else {
           this.$emit('note-deleted', this.instanceNote)
         }
