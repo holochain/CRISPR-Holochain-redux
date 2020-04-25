@@ -56,7 +56,7 @@ export default {
         {
           icon: 'mdi-view-grid',
           text: 'Apps',
-          to: '/library'
+          to: '/library/false'
         },
         {
           icon: 'mdi-newspaper',

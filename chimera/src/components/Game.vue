@@ -26,13 +26,13 @@
           </v-row>
         </v-img>
       </router-link>
-      <profile-card v-if="getAction(value) === 'LaunchAction'" :profile="profileByDna(value.id)" :personas="personas">
+      <profile-card v-if="showProfiles === 'true'" :profile="profileByDna(value.id)" :personas="personas">
         <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
       </profile-card>
       <v-fade-transition mode="out-in">
         <component
           :is="getAction(value)"
-          v-if="getAction(value) !== 'LaunchAction'"
+          v-if="showProfiles === 'false'"
           :key="getAction(value)"
           :value="value"
         />
@@ -89,9 +89,12 @@ export default {
     }
   },
 
-  data: () => ({
-    hover: false
-  }),
+  data () {
+    return {
+      hover: false,
+      showProfiles: this.$route.params.profiles
+    }
+  },
 
   computed: {
     ...mapState('verify', ['verifying']),

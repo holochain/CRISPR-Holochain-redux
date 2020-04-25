@@ -11,7 +11,7 @@
     </v-list-item-content>
 
     <v-list-item-action>
-      <v-btn icon to="/profiles" >
+      <v-btn icon to="/library/true" >
         <v-icon>mdi-account-edit</v-icon>
       </v-btn>
     </v-list-item-action>
