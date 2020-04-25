@@ -1,13 +1,13 @@
 <template>
   <v-row>
     <v-col cols="12" md="4">
-      <notes :notes="projectNotes[0].notes" title="To do"/>
+      <notes key="To do" :notes="projectNotes[0].notes" title="To do"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes :notes="projectNotes[1].notes" title="In progress"/>
+      <notes key="In progress" :notes="projectNotes[1].notes" title="In progress"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes :notes="projectNotes[2].notes" title="Done"/>
+      <notes key="Done" :notes="projectNotes[2].notes" title="Done"/>
     </v-col>
   </v-row>
 </template>
@@ -115,10 +115,15 @@ export default {
     console.log('mounted')
     this.holochainConnection = connect({ url: 'ws://localhost:33000' })
     makeHolochainCall(this.holochainConnection, 'notes/notes/list_notes', { }, (result) => {
-      console.log('retrieved notes', result)
-      this.projectNotes[0].notes = result.Ok.filter(n => n.title.startsWith('Alice'))
-      this.projectNotes[1].notes = result.Ok.filter(n => n.title.startsWith('Lucy'))
-      this.projectNotes[2].notes = result.Ok.filter(n => n.title.startsWith('Phil'))
+      const allNotes = result.Ok.sort((a, b) => {
+        if (a.updatedAt < b.updatedAt) return -1
+        if (a.updatedAt > b.updatedAt) return 1
+        return 0
+      })
+
+      this.projectNotes[0].notes = allNotes.splice(0, 2)
+      this.projectNotes[1].notes = allNotes.splice(0, 6)
+      this.projectNotes[2].notes = allNotes.splice(0, 8)
     })
   }
 }
