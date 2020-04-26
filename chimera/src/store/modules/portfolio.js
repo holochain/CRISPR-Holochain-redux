@@ -11,6 +11,16 @@ export default {
     },
     projectById: (state, getters, rootState, rootGetters) => (projectId) => {
       return rootGetters['projects/projectById'](projectId)
+    },
+    zomes: (state, getters, rootState, rootGetters) => {
+      const zomes = []
+      for (const zome of rootGetters['zomes/allZomes']) {
+        zomes.push(zome)
+      }
+      return zomes
+    },
+    zomeById: (state, getters, rootState, rootGetters) => (zomeId) => {
+      return rootGetters['zomes/zomeById'](zomeId)
     }
   }
 }

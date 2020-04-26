@@ -16,6 +16,9 @@ import personalInformation from '@/store/modules/personalInformation'
 import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
+import notes from '@/store/modules/notes'
+import tasks from '@/store/modules/tasks'
+import zomes from '@/store/modules/zomes'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
@@ -36,6 +39,9 @@ const store = new Vuex.Store({
     profiles,
     personas,
     snackbar,
+    notes,
+    tasks,
+    zomes,
     verify
   },
   actions: {

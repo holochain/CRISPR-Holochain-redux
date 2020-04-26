@@ -26,6 +26,16 @@ export default {
         modules: []
       },
       {
+        id: 'QmmorehashyTasks',
+        name: 'Tasks',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        url: '/store/games/QmHashyTasks',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'A clone of Notes DNA. CRUD functions also pass the id of the entry they link to so anchor with anchorText=entryid.',
+        zomes: []
+      },
+      {
         name: 'personas-profiles',
         folder: '/Users/philipbeadle/holochain/hApps/personas-profiles',
         url: '/entry-types',

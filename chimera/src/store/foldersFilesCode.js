@@ -5,7 +5,7 @@ export const developer = {
 export const items = [
   {
     id: 1,
-    name: 'Notes',
+    name: 'Tasks',
     children: [
       { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/all_apps/config.nix`, 'utf8') },
       { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/all_apps/default.nix`, 'utf8') },
