@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-toolbar flat>
-      <v-btn icon to="/">
+      <v-btn icon to="/library/true">
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
@@ -9,7 +9,6 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-divider />
-    kkk
       <v-row>
         <v-col v-for="(persona) in personas" :key="persona.id" cols="12" md="6" class="pl-10 pr-10">
           <persona-card :persona="persona" @delete-persona="deletePersona"/>

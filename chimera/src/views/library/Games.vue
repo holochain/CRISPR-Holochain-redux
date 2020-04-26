@@ -14,6 +14,7 @@
           dense
           static
           show-action
+          :showProfile="showProfile"
         />
       </v-col>
     </v-row>
@@ -32,7 +33,7 @@ export default {
   components: {
     Game: () => import('@/components/Game')
   },
-
+  props: ['showProfile'],
   computed: {
     ...mapGetters('library', ['games'])
   }
