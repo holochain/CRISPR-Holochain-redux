@@ -26,7 +26,7 @@
           </v-row>
         </v-img>
       </router-link>
-      <profile-card v-if="showProfiles === 'true'" :profile="profileByDna(value.id)" :personas="personas">
+      <profile-card v-if="showProfile && getAction(value) ==='LaunchAction'" :profile="profileByDna(value.id)" :personas="personas">
         <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
       </profile-card>
       <v-fade-transition mode="out-in">
@@ -86,13 +86,16 @@ export default {
     value: {
       type: Object,
       default: () => ({})
+    },
+    showProfiles: {
+      type: String,
+      default: 'false'
     }
   },
 
   data () {
     return {
-      hover: false,
-      showProfiles: this.$route.params.profiles
+      hover: false
     }
   },
 
@@ -115,6 +118,11 @@ export default {
       return {
         backgroundColor
       }
+    },
+    showProfile () {
+      const a = this.showProfiles === 'true'
+      const r = this.$route.params.profiles === 'true'
+      return a || r
     }
   },
   methods: {
