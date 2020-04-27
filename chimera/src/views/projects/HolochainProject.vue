@@ -25,7 +25,7 @@
       <v-btn color="action" icon>
         <v-icon>mdi-publish</v-icon>
       </v-btn>
-      <v-btn color="action" icon>
+      <v-btn color="action" icon to="/notes">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
     </v-card-actions>

@@ -182,6 +182,7 @@ export default {
       this.refreshKey += '1'
     },
     editPermissions (entryType) {
+      console.log('entryType', entryType)
       this.entryType = entryType
       let updatePermission = ''
       let deletePermission = ''
