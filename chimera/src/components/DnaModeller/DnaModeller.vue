@@ -1,7 +1,7 @@
 <template>
   <v-card flat tile>
     <v-toolbar dark>
-      <v-toolbar-title>Project [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title>
+      <!-- <v-toolbar-title>Project [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title> -->
       <v-btn icon>
         <v-icon @click="exportFiles">
           mdi-application-export
@@ -85,7 +85,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { mapGetters } from 'vuex'
-import { developer, zomes } from '../../store/zome.js'
+import { developer } from '../../store/zome.js'
 import { items } from '../../store/foldersFilesCode.js'
 
 function ensureDirectoryExistence (filePath) {
@@ -130,17 +130,15 @@ export default {
     CodeWindow: () => import('./CodeWindow'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
+  props: ['base'],
   data () {
     return {
-      applicationName: 'Holochain-IDE',
       zomeTab: null,
-      zomes: zomes,
-      zome: zomes[0],
       entryType: {},
       refreshKey: 'clean',
       items: items,
       tree: [],
-      open: ['Notes', 'DNA', 'Test', 'Zomes', 'UI'],
+      open: ['Tasks', 'DNA', 'Test', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',
@@ -165,9 +163,10 @@ export default {
   },
   methods: {
     loadZome (item) {
-      this.zome = this.zomes[item.index]
+      console.log(item)
       item.children = this.zome.items
       findItem(this.items, 'Entry Types').children = this.zome.testItems
+      console.log(item)
       this.showModel = true
       this.showCode = false
     },
@@ -183,6 +182,7 @@ export default {
       this.refreshKey += '1'
     },
     editPermissions (entryType) {
+      console.log('entryType', entryType)
       this.entryType = entryType
       let updatePermission = ''
       let deletePermission = ''
@@ -205,7 +205,8 @@ export default {
       }
       this.permissionsDialog = true
     },
-    entryTypeFunctionsCodeUpdated (entryTypeName, handlersCode, permissionsCode, testCode) {
+    entryTypeFunctionsCodeUpdated (base, entryTypeName, handlersCode, permissionsCode, testCode) {
+      console.log('entryTypeFunctionsCodeUpdated', this.zome, base, entryTypeName)
       const entryTypeNameItem = findItem(this.zome.items, entryTypeName).children
       entryTypeNameItem[0].code = handlersCode
       entryTypeNameItem[2].code = permissionsCode
@@ -270,9 +271,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('portfolio', ['projectById']),
+    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId']),
     project () {
       return this.projectById(this.$route.params.id)
+    },
+    zome () {
+      return this.zomeByBaseId(this.$route.params.id)
     }
   }
 }

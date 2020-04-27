@@ -18,7 +18,9 @@
       </v-row>
     </v-alert>
     <v-col cols="12" v-for="note in notes" :key="note.id">
-      <note :note="note" @note-updated="updated" @note-updated-failed="noteUpdateFailed" @note-deleted="noteDeleted" @note-deleted-failed="noteDeleteFailed"/>
+      <note :note="note" @note-updated="updated" @note-updated-failed="noteUpdateFailed" @note-deleted="noteDeleted" @note-deleted-failed="noteDeleteFailed">
+        <task-manager :key="note.id" :base="note.id" />
+      </note>
     </v-col>
   </v-card>
 </template>
@@ -26,7 +28,8 @@
 export default {
   name: 'Notes',
   components: {
-    Note: () => import('./Note')
+    Note: () => import('./Note'),
+    TaskManager: () => import('../Tasks/Tasks')
   },
   props: ['notes', 'title'],
   data () {

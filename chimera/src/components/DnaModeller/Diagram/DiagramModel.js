@@ -73,7 +73,7 @@ class DiagramModel {
       entryTypeNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
     })
     const entryTypeOutPort = node.addOutPort(`${entryType.name.toLowerCase()}_link`)
-    const entryTypeInPort = entryTypeNode.addInPort('id:initial_note_entry_address')
+    const entryTypeInPort = entryTypeNode.addInPort(`id:initial_${entryType.name.toLowerCase()}_entry_address`)
     this.addLink(entryTypeOutPort, entryTypeInPort, tag, context)
     return entryTypeNode
   }

@@ -10,7 +10,7 @@
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
     <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
     <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
-    <task-manager :tasks="note.tasks"/>
+    <task-manager :key="note.id" :base="note.id" />
   </v-card>
 </template>
 <script>

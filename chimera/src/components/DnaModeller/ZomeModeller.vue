@@ -113,6 +113,7 @@ export default {
       let entryTypeIndex = 0
       let libCode = ''
       let testCode = ''
+      const that = this
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
       let entryTypeOffset = col2Offset
       if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
@@ -125,7 +126,7 @@ export default {
         libCode += anchorType.libCode
         testCode += anchorType.testCode
         anchorType.entryTypes.forEach(entryType => {
-          const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+          const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
           let handlersCode = ''
           let permissionsCode = ''
           entryType.functions.forEach(f => {
@@ -142,7 +143,7 @@ export default {
             if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
           })
           testCode += '}'
-          this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
+          this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
           nodes.push({ id: entryType.id, node: entryTypeNode })
           entryTypeIndex += 1
           entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
@@ -159,21 +160,27 @@ export default {
             const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
             if (!existingEntryTypeNode) {
-              const entryTypeNode = dnaModel.addEntryType(this.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+              const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
               let handlersCode = ''
               let permissionsCode = ''
               entryType.functions.forEach(f => {
                 if (f.permission !== 'remove') {
                   if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
                   libCode += f.libCode + '\n\n'
+                  if (f.testCode) testCode += f.testCode + '\n\n'
                   handlersCode += f.code + '\n\n'
+                } else {
+                  libCode += `\t// No-one allowed to ${f.name}\n\n`
+                  if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
+                  handlersCode += `\t// No-one allowed to ${f.name}\n\n`
                 }
                 if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
               })
+              testCode += '}'
               nodes.push({ id: entryType.id, node: entryTypeNode })
-              this.$emit('entry-type-functions-code-updated', entryType.name.toLowerCase(), handlersCode, permissionsCode)
+              this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode)
             } else {
-              entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === 'id:initial_note_entry_address').id
+              entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
               const entryTypeOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
               dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
             }

@@ -32,7 +32,7 @@
       <v-fade-transition mode="out-in">
         <component
           :is="getAction(value)"
-          v-if="showProfiles === 'false'"
+          v-if="!showProfile"
           :key="getAction(value)"
           :value="value"
         />

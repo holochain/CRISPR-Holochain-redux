@@ -1,18 +1,19 @@
 <template>
   <v-row>
     <v-col cols="12" md="4">
-      <notes key="To do" :notes="projectNotes[0].notes" title="To do"/>
+      <notes key="To do" :notes="listNotes[0].notes" title="To do"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes key="In progress" :notes="projectNotes[1].notes" title="In progress"/>
+      <notes key="In progress" :notes="listNotes[1].notes" title="In progress"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes key="Done" :notes="projectNotes[2].notes" title="Done"/>
+      <notes key="Done" :notes="listNotes[2].notes" title="Done"/>
     </v-col>
   </v-row>
 </template>
 <script>
 import { connect } from '@holochain/hc-web-client'
+import { mapGetters } from 'vuex'
 
 function makeHolochainCall (holochainConnection, callString, params, callback) {
   const [instanceId, zome, func] = callString.split('/')
@@ -28,86 +29,6 @@ export default {
   },
   data () {
     return {
-      projectNotes: [
-        {
-          anchorText: 'To do',
-          notes: [
-            {
-              id: 'QmhashTodo1',
-              title: 'Note with no tasks',
-              content: 'A simple note card - phase 1 of Hoplochain IDE project',
-              tasks: []
-            },
-            {
-              id: 'Qmhash2',
-              title: 'Note with tasks',
-              content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.',
-              tasks: [
-                {
-                  done: false,
-                  title: 'Click <-- to see progress.'
-                },
-                {
-                  done: false,
-                  title: 'Generate DNA from model'
-                },
-                {
-                  done: false,
-                  title: 'Hook up this Note component to DNA.'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          anchorText: 'In Progress',
-          notes: [
-            {
-              id: 'QmhashProgress1',
-              title: 'In Progress Note with no tasks',
-              content: 'A simple note card - phase 1 of Hoplochain IDE project',
-              tasks: []
-            },
-            {
-              id: 'QmhashProgress2',
-              title: 'In Progress Note with tasks',
-              content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.',
-              tasks: [
-                {
-                  done: false,
-                  title: 'Pick a name for the project.'
-                },
-                {
-                  done: false,
-                  title: 'Generate DNA from model'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          anchorText: 'Done',
-          notes: [
-            {
-              id: 'QmhashDone1',
-              title: 'Done Note with no tasks',
-              content: 'A simple note card - phase 1 of Hoplochain IDE project',
-              tasks: []
-            },
-            {
-              id: 'QmhashDone2',
-              title: 'Done Note with tasks',
-              content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.',
-              tasks: [
-                {
-                  done: false,
-                  title: 'Show Profile on the app card.'
-                }
-              ]
-            }
-          ]
-        }
-      ],
       holochainConnection: {}
     }
   },
@@ -121,10 +42,13 @@ export default {
         return 0
       })
 
-      this.projectNotes[0].notes = allNotes.splice(0, 2)
-      this.projectNotes[1].notes = allNotes.splice(0, 6)
-      this.projectNotes[2].notes = allNotes.splice(0, 8)
+      this.listNotes[0].notes = allNotes.splice(0, 2)
+      this.listNotes[1].notes = allNotes.splice(0, 6)
+      this.listNotes[2].notes = allNotes.splice(0, 8)
     })
+  },
+  computed: {
+    ...mapGetters('notes', ['listNotes'])
   }
 }
 </script>

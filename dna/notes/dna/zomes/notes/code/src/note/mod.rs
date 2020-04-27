@@ -30,6 +30,8 @@ const NOTES_ANCHOR_TYPE: &str = "list_notes";
 const NOTES_ANCHOR_TEXT: &str = "";
 const NOTE_ENTRY_LINK_TYPE: &str = "note_link";
 const NOTE_ENTRY_NAME: &str = "note";
+const NOTE_ENTRY_PERMISSION_UPDATE: &str = "anyone";
+const NOTE_ENTRY_PERMISSION_DELETE: &str = "anyone";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
@@ -92,8 +94,8 @@ impl Note {
     }
 }
 
-pub fn definition() -> ValidatingEntryType {
-    entry!(
+pub fn crispr() -> ValidatingEntryType {
+    crispr_entry!(
         name: NOTE_ENTRY_NAME,
         description: "The entry with the content.",
         sharing: Sharing::Public,

@@ -1,7 +1,7 @@
 <template>
-  <v-card v-if="tasks && tasks.length > 0">
+  <v-card v-if="listTasks && listTasks.length > 0" :key="base">
     <v-slide-y-transition class="py-0" group tag="v-list">
-      <template v-for="(task, i) in tasks">
+      <template v-for="(task, i) in listTasks">
         <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
         <v-list-item :key="`${i}-${task.title}`">
           <v-list-item-action>
@@ -25,7 +25,7 @@
         {{ completedTasks }} of
       </strong>
       <strong class="ml-0 white--text text--darken-2">
-        {{ tasks.length }}
+        {{ listTasks.length }}
       </strong>
       </template>
       </v-progress-linear>
@@ -37,44 +37,46 @@
   </v-card>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Tasks',
-  props: ['tasks'],
+  props: ['base'],
   data: () => ({
     task: {
       done: false,
-      title: '',
-      content: ''
+      title: ''
     }
   }),
   computed: {
+    ...mapGetters('tasks', ['listTasks']),
     completedTasks () {
-      return this.tasks.filter(task => task.done).length
+      return this.listTasks.filter(task => task.done).length
     },
     progress () {
-      return this.completedTasks / this.tasks.length * 100
+      return this.completedTasks / this.listTasks.length * 100
     },
     remainingTasks () {
-      return this.tasks.length - this.completedTasks
+      return this.listTasks.length - this.completedTasks
     }
   },
-
   methods: {
     create () {
-      if (this.tasks === undefined) {
-        this.tasks = []
+      if (this.listTasks === undefined) {
+        this.listTasks = []
       }
-      this.tasks.push({
+      this.listTasks.push({
         done: false,
-        title: this.task.title,
-        content: this.task.content
+        title: this.task.title
       })
       this.task = {
         done: false,
-        title: '',
-        content: ''
+        title: ''
       }
     }
+  },
+  created () {
+    console.log('create', this.listTasks.length)
   }
 }
 </script>
