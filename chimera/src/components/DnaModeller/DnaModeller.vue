@@ -51,7 +51,7 @@
             </v-card>
           </v-col>
           <v-col v-if="showModel" cols="12">
-            <zome-modeller :zome="this.zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
+            <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
           </v-col>
           <v-col v-if="showCode" cols="12">
             <code-window :code="code" :options="options"/>
@@ -163,9 +163,10 @@ export default {
   },
   methods: {
     loadZome (item) {
-      // this.zome = this.zomes[item.index]
+      console.log(item)
       item.children = this.zome.items
       findItem(this.items, 'Entry Types').children = this.zome.testItems
+      console.log(item)
       this.showModel = true
       this.showCode = false
     },
@@ -203,7 +204,8 @@ export default {
       }
       this.permissionsDialog = true
     },
-    entryTypeFunctionsCodeUpdated (entryTypeName, handlersCode, permissionsCode, testCode) {
+    entryTypeFunctionsCodeUpdated (base, entryTypeName, handlersCode, permissionsCode, testCode) {
+      console.log('entryTypeFunctionsCodeUpdated', this.zome, base, entryTypeName)
       const entryTypeNameItem = findItem(this.zome.items, entryTypeName).children
       entryTypeNameItem[0].code = handlersCode
       entryTypeNameItem[2].code = permissionsCode
@@ -268,13 +270,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('portfolio', ['projectById', 'zomeById']),
+    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId']),
     project () {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      console.log('this.base', this.base)
-      return this.zomeById(this.base)
+      return this.zomeByBaseId(this.$route.params.id)
     }
   }
 }

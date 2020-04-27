@@ -97,7 +97,7 @@ export default {
     return {
       nodeStrokeWidth: 0,
       titleFillOpacity: 0.25,
-      metaFieldsHeight: 78,
+      metaFieldsHeight: 117,
       baseTargetHeight: 20
     }
   },

@@ -19,8 +19,8 @@ export default {
       }
       return zomes
     },
-    zomeById: (state, getters, rootState, rootGetters) => (zomeId) => {
-      return rootGetters['zomes/zomeById'](zomeId)
+    zomeByBaseId: (state, getters, rootState, rootGetters) => (zomeBaseId) => {
+      return rootGetters['zomes/zomeByBaseId'](zomeBaseId)
     }
   }
 }

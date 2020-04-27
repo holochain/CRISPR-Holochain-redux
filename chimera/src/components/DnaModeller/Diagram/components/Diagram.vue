@@ -362,6 +362,7 @@ export default {
       this.initialDragY = y
     },
     showFunctionCode (name) {
+      console.log('show-function-code', name)
       this.$emit('show-function-code', name)
     }
   },

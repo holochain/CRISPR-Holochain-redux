@@ -1,7 +1,9 @@
 use hdk::holochain_core_types::chain_header::ChainHeader;
 use crate::note::{
     NoteEntry,
-    validation
+    validation,
+    NOTE_ENTRY_PERMISSION_UPDATE,
+    NOTE_ENTRY_PERMISSION_DELETE
 };
 
 
@@ -12,6 +14,8 @@ pub fn validate_permissions_entry_create(entry: NoteEntry, validation_data: hdk:
 
 // Author only allowed to update
 pub fn validate_permissions_entry_modify(new_entry: NoteEntry, old_entry: NoteEntry, old_entry_header: ChainHeader, validation_data: hdk::ValidationData) -> Result<(), String> {
+
+  switch NOTE_ENTRY_PERMISSION_UPDATE --> no need for code generation
   match (old_entry_header.provenances().get(0), validation_data.package.chain_header.provenances().get(0)) {
     (Some(o), Some(p))  if o.source() == p.source() => {
         validation::validate_entry_modify(new_entry, old_entry, old_entry_header, validation_data)  
