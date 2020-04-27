@@ -19,6 +19,8 @@ import snackbar from '@/store/modules/snackbar'
 import notes from '@/store/modules/notes'
 import tasks from '@/store/modules/tasks'
 import zomes from '@/store/modules/zomes'
+import mediaLibrary from '@/store/modules/mediaLibrary'
+import tracks from '@/store/modules/tracks'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
@@ -42,7 +44,9 @@ const store = new Vuex.Store({
     notes,
     tasks,
     zomes,
-    verify
+    verify,
+    mediaLibrary,
+    tracks
   },
   actions: {
     init: async () => {

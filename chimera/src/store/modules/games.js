@@ -42,12 +42,13 @@ export default {
         updated: 1545864353039
       },
       {
-        id: 'QmHashystar-watch',
-        name: 'Star Watch',
-        src: 'star-watch',
+        id: 'QmHashyholopunk-records',
+        name: 'Holopunk Records',
+        src: 'holopunk-records',
+        launch: '/holopunk-records/library',
         price: 19.99,
         compareAt: 27.99,
-        publisher: 'Creten Studios',
+        publisher: 'Holopunk Records',
         updated: 1545864353040
       },
       {

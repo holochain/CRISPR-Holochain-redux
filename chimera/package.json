@@ -19,7 +19,8 @@
     "@mdi/font": "^5.1.45",
     "vue-codemirror": "^4.0.6",
     "vue-svg-pan-zoom": "^1.1.0",
-    "vuetify-image-input": "^19.1.0"
+    "vuetify-image-input": "^19.1.0",
+    "wavesurfer.js": "^3.3.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.2",
