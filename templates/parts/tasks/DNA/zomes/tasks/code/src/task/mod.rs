@@ -27,14 +27,14 @@ pub mod link_permissions;
 pub mod validation;
 
 const TASKS_ANCHOR_TYPE: &str = "list_tasks";
-const TASKS_ANCHOR_TEXT: &str = "";
 const TASK_ENTRY_LINK_TYPE: &str = "task_link";
 const TASK_ENTRY_NAME: &str = "task";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct TaskEntry {
-	title: String
+    title: String,
+    done: bool
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -44,7 +44,8 @@ pub struct Task {
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
-	title: String
+	title: String,
+    done: bool
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -67,7 +68,8 @@ impl Task {
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-			title: entry.title
+			title: entry.title,
+            done: entry.done
         })
     }
 }
@@ -79,7 +81,8 @@ impl Task {
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-			title: entry.title
+			title: entry.title,
+            done: entry.done
         })
     }
 }

@@ -14,19 +14,18 @@ use hdk::{
 use holochain_anchors::anchor;
 use crate::task::{
     TASKS_ANCHOR_TYPE,
-    TASKS_ANCHOR_TEXT,
     TASK_ENTRY_LINK_TYPE,
     TASK_ENTRY_NAME,
     TaskEntry,
     Task,
 };
 
-fn tasks_anchor() -> ZomeApiResult<Address> {
-    anchor(TASKS_ANCHOR_TYPE.to_string(), TASKS_ANCHOR_TEXT.to_string())
+fn tasks_anchor(anchor_text: String) -> ZomeApiResult<Address> {
+    anchor(TASKS_ANCHOR_TYPE.to_string(), anchor_text.to_string())
 }
 
-pub fn create(task_entry: TaskEntry) -> ZomeApiResult<Task> {
-    let task_anchor = tasks_anchor()?;
+pub fn create(base: String, task_entry: TaskEntry) -> ZomeApiResult<Task> {
+    let task_anchor = tasks_anchor(base)?;
     let entry = Entry::App(TASK_ENTRY_NAME.into(), task_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let task = Task::new(entry_address.clone(), task_entry)?;
@@ -45,13 +44,13 @@ pub fn update(id: Address, created_at: Iso8601, address: Address, task_input: Ta
     Task::existing(id.clone(), created_at, updated_entry_address, task_input)
 }
 
-pub fn delete(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-    hdk::remove_link(&tasks_anchor()?, &id, TASK_ENTRY_LINK_TYPE, &created_at.to_string())?;
+pub fn delete(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+    hdk::remove_link(&tasks_anchor(base)?, &id, TASK_ENTRY_LINK_TYPE, &created_at.to_string())?;
     hdk::remove_entry(&address)
 }
 
-pub fn list() -> ZomeApiResult<Vec<Task>> {
-    hdk::get_links(&tasks_anchor()?, LinkMatch::Exactly(TASK_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
+pub fn list(base: String) -> ZomeApiResult<Vec<Task>> {
+    hdk::get_links(&tasks_anchor(base)?, LinkMatch::Exactly(TASK_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
     .iter()
     .map(|link| read(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
     .collect()

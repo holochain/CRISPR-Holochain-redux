@@ -1,5 +1,5 @@
-pub fn create(task_entry: TaskEntry) -> ZomeApiResult<Task> {
-    let task_anchor = tasks_anchor()?;
+pub fn create(base: String, task_entry: TaskEntry) -> ZomeApiResult<Task> {
+    let task_anchor = tasks_anchor(base)?;
     let entry = Entry::App(TASK_ENTRY_NAME.into(), task_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let task = Task::new(entry_address.clone(), task_entry)?;

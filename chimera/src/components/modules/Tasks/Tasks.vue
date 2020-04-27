@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="listTasks && listTasks.length > 0">
+  <v-card v-if="listTasks && listTasks.length > 0" :key="base">
     <v-slide-y-transition class="py-0" group tag="v-list">
       <template v-for="(task, i) in listTasks">
         <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
@@ -41,7 +41,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Tasks',
-  props: ['tasks'],
+  props: ['base'],
   data: () => ({
     task: {
       done: false,

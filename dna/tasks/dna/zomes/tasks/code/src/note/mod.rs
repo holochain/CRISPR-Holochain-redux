@@ -26,25 +26,29 @@ pub mod entry_permissions;
 pub mod link_permissions;
 pub mod validation;
 
-const TASKS_ANCHOR_TYPE: &str = "list_tasks";
-const TASKS_ANCHOR_TEXT: &str = "";
-const TASK_ENTRY_LINK_TYPE: &str = "task_link";
-const TASK_ENTRY_NAME: &str = "task";
+const NOTES_ANCHOR_TYPE: &str = "list_notes";
+const NOTES_ANCHOR_TEXT: &str = "";
+const NOTE_ENTRY_LINK_TYPE: &str = "note_link";
+const NOTE_ENTRY_NAME: &str = "note";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct TaskEntry {
-	title: String
+pub struct NoteEntry {
+    // properties
+	title: String,
+	content: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Task {
+pub struct Note {
     id: Address,
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
-	title: String
+    // properties
+	title: String,
+	content: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -60,39 +64,43 @@ fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
     }
 }
 
-impl Task {
-    pub fn new(address: Address, entry: TaskEntry) -> ZomeApiResult<Task> {
-        Ok(Task{
+impl Note {
+    pub fn new(address: Address, entry: NoteEntry) -> ZomeApiResult<Note> {
+        Ok(Note{
             id: address.clone(),
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-			title: entry.title
+            // entry properties
+			title: entry.title,
+			content: entry.content,
         })
     }
 }
 
-impl Task {
-    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: TaskEntry) -> ZomeApiResult<Task> {
-        Ok(Task{
+impl Note {
+    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: NoteEntry) -> ZomeApiResult<Note> {
+        Ok(Note{
             id: id.clone(),
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-			title: entry.title
+            // entry properties
+			title: entry.title,
+			content: entry.content,
         })
     }
 }
 
 pub fn definition() -> ValidatingEntryType {
     entry!(
-        name: TASK_ENTRY_NAME,
+        name: NOTE_ENTRY_NAME,
         description: "The entry with the content.",
         sharing: Sharing::Public,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
-        validation: | validation_data: hdk::EntryValidationData<TaskEntry>| {
+        validation: | validation_data: hdk::EntryValidationData<NoteEntry>| {
             match validation_data
             {
                 // entry_validation_functions
@@ -116,7 +124,7 @@ pub fn definition() -> ValidatingEntryType {
         links: [
             from!(      
                 holochain_anchors::ANCHOR_TYPE,
-                link_type: TASK_ENTRY_LINK_TYPE,
+                link_type: NOTE_ENTRY_LINK_TYPE,
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
                 },

@@ -36,8 +36,8 @@ mod tasks {
     }
 
     #[zome_fn("hc_public")]
-    fn create_task(task_input: TaskEntry) -> ZomeApiResult<Task> {
-        task::handlers::create(task_input)
+    fn create_task(base: String, task_input: TaskEntry) -> ZomeApiResult<Task> {
+        task::handlers::create(base, task_input)
     }
 
     #[zome_fn("hc_public")]
@@ -51,13 +51,13 @@ mod tasks {
     }
 
     #[zome_fn("hc_public")]
-    fn delete_task(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-        task::handlers::delete(id, created_at, address)
+    fn delete_task(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+        task::handlers::delete(base, id, created_at, address)
     }
 
     #[zome_fn("hc_public")]
-    fn list_tasks() -> ZomeApiResult<Vec<Task>> {
-        task::handlers::list()
+    fn list_tasks(base: String) -> ZomeApiResult<Vec<Task>> {
+        task::handlers::list(base)
     }
 
 }

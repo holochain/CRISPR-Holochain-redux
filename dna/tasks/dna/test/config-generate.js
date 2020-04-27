@@ -41,25 +41,25 @@ const conductorConfig = Config.gen({tasks: dna}, {
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
   const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
-  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Find out who creates invite and room\nScript out what to deep dive on"}})
-  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Stepper for add new entry", "content":"Setup- for existing"}})
-  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Scale the zome model surface", "content":"Set it up so the model fits exactly."}})
-  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Get theme colours", "content":"Use Holochain brand colours."}})
+  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Stepper for add new entry", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Scale the zome model surface", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Get theme colours", "done":"false"}})
   await s.consistency()
 
-  await bob.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Agent Id Link", "content":"Add list tasks by agent"}})
-  await bob.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Entry type code viewer", "content":"decide on DNA pattern to use for Notes hApp."}})
+  await bob.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Agent Id Link", "done":"false"}})
+  await bob.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Entry type code viewer", "done":"false"}})
   await s.consistency()
 
-  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"DNA Modeller toolbar", "content":"Add the buttons"}})
-  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Show profile information on each installed app", "content":"Makes it easy to see where your personal data is."}})
-  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Be able to workflowe any entry", "content":"Worflow as a feature you add to existing app."}})
+  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"DNA Modeller toolbar", "done":"false"}})
+  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Show profile information on each installed app", "done":"false"}})
+  await phil.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Be able to workflowe any entry", "done":"false"}})
   await s.consistency()
 
-  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title first task", "content":"Content first task"}})
-  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title second task", "content":"Content second task"}})
-  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title third task", "content":"Content third task"}})
-  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title fourth task", "content":"Content fourth task"}})
+  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title first task", "done":"false"}})
+  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title second task", "done":"false"}})
+  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title third task", "done":"false"}})
+  await lucy.call("tasks", "tasks", "create_task", {"task_input" : {"title":"Lucy Title fourth task", "done":"false"}})
   await s.consistency()
 })
 
