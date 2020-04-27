@@ -32,7 +32,14 @@
           class="grey--text text--darken-2 title font-weight-light"
         >
           <p>
-            Holochain CRISPR lets you slice asnd dice your own Holochain experience by combining different DNA's & modules as well build your own with the DNA Modeller.
+            In the works: RAD tools and IDE progress
+You may have heard about the first iteration of our rapid application development tools, which scaffolds and runs a note-taking hApp for you. If you’re a developer, you might have even tried it out and discovered how easy it is to get started.
+
+But as a RAD scaffolding tool, it’s necessarily limited—it was meant to demonstrate a front-end stack and developer tooling within a precreated hApp. We’re rolling out functionality in stages, where the next iteration(s) will generate code from your own specifications.
+
+There are two projects being developed in tandem. First, the second iteration of the RAD tool, which will auto-generate front-end and DNA code from your spec file. This spec file format will be easy to write by hand, so in a sense it will be the tool's UI.
+
+Philip Beadle, team alumnus and close collaborator, is also working on an IDE with a graphical builder for creating a data schema. The IDE will also likely include Guillem’s Holochain Playground, described above. As you can see from the GitHub repo, it’s still in early stages but in active development. Take a look at the wiki to see what features are planned.
           </p>
 
           <p>

@@ -49,8 +49,31 @@ export default {
         ]
       },
       {
+        id: 'QmhashProfileHolopunkRecords',
+        name: 'Holopunk Records',
+        dna: 'QmHashyholopunk-records',
+        fields: [
+          {
+            anchor: 'nickname',
+            fieldName: 'Nick Name',
+            fieldType: 'singleLineText',
+            linkContract: 'persist',
+            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'nickname' }
+          },
+          {
+            anchor: 'avatar',
+            fieldName: 'Avatar',
+            fieldType: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'avatar' }
+          }
+        ]
+      },
+      {
         id: 'QmhashProfileNotes',
-        name: 'Project - Notes',
+        name: 'Notes',
         dna: 'QmHashyNotes',
         fields: [
           {

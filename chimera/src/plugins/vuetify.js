@@ -15,14 +15,15 @@ export default new Vuetify({
     dark: true,
     themes: {
       dark: {
-        primary: '#FFF',
+        primary: '#ffffff',
         secondary: '#1697F6',
         accent: '#8D99AE',
         anchor: '#000051',
         portBase: '#ffb300',
         portTarget: '#ff6f00',
         entry: '#5e35b1',
-        fillFunction: '#76ff03'
+        fillFunction: '#76ff03',
+        wave: '#673ab7'
       }
     }
   }

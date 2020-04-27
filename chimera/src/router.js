@@ -64,6 +64,11 @@ const router = new Router({
       path: '/notes',
       name: 'Notes',
       component: () => import('@/views/notes/NotesModule')
+    },
+    {
+      path: '/holopunk-records/library',
+      name: 'Holopunk Records',
+      component: () => import('@/components/MusicLibrary/MusicManager')
     }
   ]
 })
