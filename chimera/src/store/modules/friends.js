@@ -15,7 +15,7 @@ export default {
           avatar: 'avatars/arthur.brock.png',
           name: 'Holochain'
         },
-        notifications: 1,
+        notifications: 0,
         value: 60,
         start: 300
       },
@@ -35,7 +35,7 @@ export default {
       {
         id: 2,
         name: 'Tom Gowan',
-        online: true,
+        online: false,
         info: {
           id: 10,
           avatar: 'avatars/tom.gowan.jpeg',
@@ -48,13 +48,13 @@ export default {
       {
         id: 2,
         name: 'ErrolJ',
-        online: true,
+        online: false,
         info: {
           id: 10,
           avatar: 'avatars/errolj.jpeg',
           name: '@pherrol'
         },
-        notifications: 1,
+        notifications: 0,
         value: 15,
         start: 200
       },
@@ -74,7 +74,7 @@ export default {
       {
         id: 4,
         name: 'David Meister',
-        online: false,
+        online: true,
         info: {
           id: 10,
           avatar: 'avatars/david.meister.jpeg',

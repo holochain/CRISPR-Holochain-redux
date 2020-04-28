@@ -10,6 +10,7 @@
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
     <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
     <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
+    <slot></slot>
     <v-avatar left v-if="chimeraOn">
       <v-icon small @click="addPart">mdi-dna</v-icon>
     </v-avatar>
@@ -17,9 +18,8 @@
       <v-avatar left>
         <v-icon small @click="acceptInvite">mdi-dna</v-icon>
       </v-avatar>
-      Tasks - Art Brock
+      Ratings - thedavidmeister
     </v-chip>
-    <slot></slot>
   </v-card>
 </template>
 <script>
