@@ -10,6 +10,7 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
+const dnaNotesPath = path.join(__dirname, "../dist/dna.dna.json")
 const dnaPath = path.join(__dirname, "../dist/dna.dna.json")
 
 const orchestrator = new Orchestrator({
@@ -30,7 +31,8 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const dna = Config.dna(dnaPath, 'tasks-test')
+const notesDna = Config.dna(dnaPath, 'notes-test')
+const tasksDna = Config.dna(dnaPath, 'tasks-test')
 // const conductorConfig = Config.gen({tasks: dna})
 const conductorConfig = Config.gen({tasks: dna}, {
   network: {

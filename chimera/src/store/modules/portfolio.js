@@ -21,6 +21,9 @@ export default {
     },
     zomeByBaseId: (state, getters, rootState, rootGetters) => (zomeBaseId) => {
       return rootGetters['zomes/zomeByBaseId'](zomeBaseId)
+    },
+    fileItemsForZome: (state, getters, rootState, rootGetters) => (zomeName) => {
+      return rootGetters['foldersFiles/items'](zomeName)
     }
   }
 }

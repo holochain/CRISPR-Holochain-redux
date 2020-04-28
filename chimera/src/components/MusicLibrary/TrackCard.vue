@@ -45,6 +45,12 @@
             </template>
           </v-btn>
           <span class="subheading ml-n2 mr-2">45</span>
+          <span class="mr-1">·</span>
+          <v-btn icon class="mr-1 ml-n1">
+            <template>
+              <img src="@/assets/icons/ableton.png" style="height: 20px">
+            </template>
+          </v-btn>
         </v-row>
       </v-list-item>
     </v-card-actions>
