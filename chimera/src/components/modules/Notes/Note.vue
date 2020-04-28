@@ -13,7 +13,7 @@
     <v-avatar left v-if="chimeraOn">
       <v-icon small @click="addPart">mdi-dna</v-icon>
     </v-avatar>
-    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-delete" @click:close="close">
+    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
       <v-avatar left>
         <v-icon small @click="acceptInvite">mdi-dna</v-icon>
       </v-avatar>

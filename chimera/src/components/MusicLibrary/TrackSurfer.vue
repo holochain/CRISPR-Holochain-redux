@@ -21,22 +21,22 @@ export default {
   props: ['track', 'play', 'playedTime'],
   methods: {
     skipForward: function () {
-      console.log('skip f')
+      // console.log('skip f')
       const skipTime = this.wavesurfer.getCurrentTime() + this.wavesurfer.getDuration() / 25
       this.wavesurfer.setCurrentTime(skipTime)
     },
     skipBackward: function () {
-      console.log('skip b')
+      // console.log('skip b')
       const skipTime = Math.max(0, this.wavesurfer.getCurrentTime() - this.wavesurfer.getDuration() / 25)
       this.wavesurfer.setCurrentTime(skipTime)
     },
     stop: function () {
-      console.log('stop')
+      // console.log('stop')
       this.wavesurfer.stop()
       this.$emit('played', 0, 'stop')
     },
     setCurrentTime: function (playedTime) {
-      console.log('setCurrentTime')
+      // console.log('setCurrentTime')
 
       this.wavesurfer.setCurrentTime(playedTime)
     }
@@ -53,7 +53,7 @@ export default {
       backend: 'MediaElement'
     })
 
-    console.log('this.track.src', this.track.src)
+    // console.log('this.track.src', this.track.src)
     if (this.track.pcm) {
       this.wavesurfer.load(this.track.src, this.track.pcm)
     } else {
@@ -70,10 +70,10 @@ export default {
 
     this.wavesurfer.on('waveform-ready', function () {
       if (!that.track.pcm) {
-        var pcmData = that.wavesurfer.exportPCM(1024, 10000, false)
-        console.log('pcm: ' + pcmData)
-        console.log('')
-        console.log('')
+        that.track.pcm = that.wavesurfer.exportPCM(1024, 10000, false)
+        // console.log('pcm: ', pcmData)
+        // console.log('')
+        // console.log('')
       }
     })
 

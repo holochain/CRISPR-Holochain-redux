@@ -15,7 +15,9 @@ export default {
           avatar: 'avatars/arthur.brock.png',
           name: 'Holochain'
         },
-        notifications: 1
+        notifications: 1,
+        value: 60,
+        start: 300
       },
       {
         id: 2,
@@ -26,7 +28,9 @@ export default {
           avatar: 'avatars/guillem.png',
           name: '_protocol'
         },
-        notifications: 0
+        notifications: 0,
+        value: 50,
+        start: 40
       },
       {
         id: 2,
@@ -37,18 +41,22 @@ export default {
           avatar: 'avatars/tom.gowan.jpeg',
           name: 'Holochain'
         },
-        notifications: 0
+        notifications: 0,
+        value: 45,
+        start: 80
       },
       {
         id: 2,
-        name: 'Hedayat',
+        name: 'ErrolJ',
         online: true,
         info: {
           id: 10,
-          avatar: 'avatars/hedayat.png',
-          name: 'Holochain'
+          avatar: 'avatars/errolj.jpeg',
+          name: '@pherrol'
         },
-        notifications: 0
+        notifications: 1,
+        value: 15,
+        start: 200
       },
       {
         id: 3,
@@ -59,7 +67,9 @@ export default {
           avatar: 'avatars/mary.camacho.png',
           name: 'Holochain'
         },
-        notifications: 0
+        notifications: 0,
+        value: 55,
+        start: 0
       },
       {
         id: 4,
@@ -70,7 +80,9 @@ export default {
           avatar: 'avatars/david.meister.jpeg',
           name: 'Holochain'
         },
-        notifications: 1
+        notifications: 1,
+        value: 60,
+        start: 0
       }
     ]
   },

@@ -17,7 +17,9 @@
                 <template v-slot:activator="{ attrs, on }">
                   <v-list-item link v-bind="attrs" class="mx-n3" v-on="on">
                     <v-list-item-action class="justify-center">
-                      <v-avatar :color="friend.online ? 'green' : 'red'" size="14" />
+                        <div class="text-center">
+                          <v-progress-circular :color="friend.online ? 'green' : 'red'" size="24" :value="friend.value" :rotate="friend.start"></v-progress-circular>
+                        </div>
                     </v-list-item-action>
                     <v-list-item-content>
                       <v-list-item-title v-text="friend.name" />

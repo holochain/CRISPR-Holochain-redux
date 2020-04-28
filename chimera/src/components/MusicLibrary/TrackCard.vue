@@ -46,7 +46,13 @@
           </v-btn>
           <span class="subheading ml-n2 mr-2">45</span>
           <span class="mr-1">·</span>
-          <v-btn icon class="mr-1 ml-n1">
+          <v-chip key="track.id" v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
+            <v-avatar left>
+              <v-icon small @click="acceptInvite">mdi-dna</v-icon>
+            </v-avatar>
+            Collab - ErrolJ
+          </v-chip>
+          <v-btn v-if="!chimeraOn" icon class="mr-1 ml-n1">
             <template>
               <img src="@/assets/icons/ableton.png" style="height: 20px">
             </template>
@@ -94,6 +100,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'TrackCard',
   components: {
@@ -164,6 +171,9 @@ export default {
     setCurrentTime: function () {
       this.$refs.track.setCurrentTime(this.progress * this.duration / 100)
     }
+  },
+  computed: {
+    ...mapState('auth', ['chimeraOn'])
   }
 }
 </script>
