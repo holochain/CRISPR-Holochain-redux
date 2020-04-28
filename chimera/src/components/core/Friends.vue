@@ -7,9 +7,14 @@
             <auth />
             <template>
               <v-divider />
-              <v-list-item>
+              <v-list-item class="mx-n3">
+                <v-list-item-action>
+                  <v-progress-circular color="green" size="24" :value="100" :rotate="0"></v-progress-circular>
+                </v-list-item-action>
                 <v-list-item-title class="subheading font-weight-light pl-4">
-                  Friends Online {{ online }}
+                  <v-badge color="info" class="title" :content="online" overlap>
+                    <span class="title">Tasks Team</span>
+                  </v-badge>
                 </v-list-item-title>
               </v-list-item>
               <v-divider />

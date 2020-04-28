@@ -3,9 +3,7 @@ import * as fs from 'fs'
 function changeFileName (item, zomeName) {
   if (item.children) {
     item.children.forEach(item => {
-      if (item.file) {
-        item.name = item.name.replace(new RegExp('Tasks', 'g'), zomeName)
-      }
+      item.name = item.name.replace(new RegExp('Notes', 'g'), zomeName)
       changeFileName(item, zomeName)
     })
   }
@@ -20,7 +18,7 @@ export default {
     items: [
       {
         id: 1,
-        name: 'Tasks',
+        name: 'Notes',
         children: [
           { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/parts/tasks/config.nix`, 'utf8') },
           { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/parts/tasks/default.nix`, 'utf8') },
@@ -51,7 +49,7 @@ export default {
                 children: [
                   {
                     id: 11,
-                    name: 'Tasks',
+                    name: 'Notes',
                     index: 0,
                     children: []
                   }

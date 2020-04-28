@@ -1,7 +1,7 @@
 <template>
   <v-card flat tile>
     <v-toolbar dark>
-      <!-- <v-toolbar-title>Project [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title> -->
+      <v-toolbar-title>CRISPR Part [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title>
       <v-btn icon>
         <v-icon @click="exportFiles">
           mdi-application-export
@@ -61,7 +61,7 @@
     </v-row>
     <v-dialog v-model="permissionsDialog" max-width="700px">
       <v-card flat>
-        <v-toolbar color="primary" dark>
+        <v-toolbar dark>
           <v-toolbar-title class="display-1">Permissions - {{this.entryType.name}}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
@@ -137,7 +137,7 @@ export default {
       entryType: {},
       refreshKey: 'clean',
       tree: [],
-      open: ['Tasks', 'DNA', 'Test', 'Zomes', 'UI'],
+      open: ['Tasks', 'Notes', 'DNA', 'Test', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',

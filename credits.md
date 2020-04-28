@@ -18,3 +18,6 @@ https://adobe-fonts.github.io/source-code-pro/
 
 ## Vue Prose
 https://github.com/alidlo/vue-prosemirror-editor
+
+## Code 
+https://itnext.io/anyway-this-is-how-to-use-v-model-with-vuex-computed-setter-in-action-320eb682c976

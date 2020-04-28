@@ -7,7 +7,7 @@
     </v-row>
     <v-dialog v-model="codeDialog" max-width="1000px">
       <v-card flat>
-        <v-toolbar color="primary" dark>
+        <v-toolbar dark>
           <v-toolbar-title class="display-1">{{this.functionName}}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>

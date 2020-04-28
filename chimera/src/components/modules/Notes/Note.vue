@@ -18,7 +18,7 @@
       <v-avatar left>
         <v-icon small @click="acceptInvite">mdi-dna</v-icon>
       </v-avatar>
-      Ratings - thedavidmeister
+      Tasks - Art Brock
     </v-chip>
   </v-card>
 </template>
