@@ -1,20 +1,33 @@
 bridges = []
-persistence_dir = '/tmp/tmp.iLzYEUUCEx/tryorama/fnWTmA'
+persistence_dir = '/tmp/tmp.iLzYEUUCEx/tryorama/iqxe3k'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'alice::notes::3c45f876-0e13-4b6a-ac6f-915886fadea1'
-public_address = 'HcScjsQz6rforxm448XcBgV4jU8SuawcyhTwZ485gtE89d7xtT55aJiQhRmfgya'
+name = 'alice::notes::7810d194-2287-4178-a6b4-bd4aadd54e0c'
+public_address = 'HcSCiJyZzR4SzvofgfTA3YDigzaqcrw5vUKc9wIeOPcquaqeGPty34du6jx9hoa'
+test_agent = true
+
+[[agents]]
+id = 'tasks'
+keystore_file = '[UNUSED]'
+name = 'alice::tasks::7810d194-2287-4178-a6b4-bd4aadd54e0c'
+public_address = 'HcScJHDIMMczckpifsSSJjacDuqjzrj5gcq445dq8b7o8u9WeK5kXMJ4mxbouvz'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmTTjEHcKPvmp1nXnbQ7yaYghxsEiH5C8JSxVB4QEoAtZd'
+hash = 'Qmc1vmVPN5fCe1AvUpmbN4ibHxURMf7GDJZAHcQjMkeXrN'
 id = 'notes-test'
-uuid = '3c45f876-0e13-4b6a-ac6f-915886fadea1'
+uuid = '7810d194-2287-4178-a6b4-bd4aadd54e0c'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
+hash = 'QmPyL2nD1zupb9fjbsAXkPTcnuiSndGAgsmqKFH5BRWLwy'
+id = 'tasks-test'
+uuid = '7810d194-2287-4178-a6b4-bd4aadd54e0c'
 
 [[instances]]
 agent = 'notes'
@@ -22,7 +35,16 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.iLzYEUUCEx/tryorama/fnWTmA/notes'
+path = '/tmp/tmp.iLzYEUUCEx/tryorama/iqxe3k/notes'
+type = 'lmdb'
+
+[[instances]]
+agent = 'tasks'
+dna = 'tasks-test'
+id = 'tasks'
+
+[instances.storage]
+path = '/tmp/tmp.iLzYEUUCEx/tryorama/iqxe3k/tasks'
 type = 'lmdb'
 
 [[interfaces]]
@@ -32,6 +54,9 @@ id = 'tryorama-interface'
 
 [[interfaces.instances]]
 id = 'notes'
+
+[[interfaces.instances]]
+id = 'tasks'
 
 [interfaces.driver]
 port = 33000

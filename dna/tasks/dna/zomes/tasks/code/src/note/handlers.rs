@@ -25,7 +25,7 @@ fn notes_anchor() -> ZomeApiResult<Address> {
     anchor(NOTES_ANCHOR_TYPE.to_string(), NOTES_ANCHOR_TEXT.to_string())
 }
 
-pub fn create(base: Srting, note_entry: NoteEntry) -> ZomeApiResult<Note> {
+pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
     let note_anchor = notes_anchor()?;
     let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;

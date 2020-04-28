@@ -8,7 +8,7 @@ export default {
     zomes: [
       {
         id: 'QmZome1hash',
-        name: 'NotesA',
+        name: 'Notes',
         base: 'Qmmorebighashes333',
         items: [
           { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/zomes/notes/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },

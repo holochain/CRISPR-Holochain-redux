@@ -4,11 +4,11 @@ export default {
     featured: [],
     tasks: [
       {
-        anchorText: 'Stepper for add new entry',
+        base: 'Stepper for add new entry',
         tasks: [
           {
             id: 'QmhashTask1',
-            done: false,
+            done: true,
             title: 'Task 1'
           },
           {
@@ -31,6 +31,9 @@ export default {
     listTasks: state => {
       console.log('listTasks')
       return state.tasks[0].tasks
+    },
+    tasksByBaseId: (state) => (baseId) => {
+      return state.tasks.find(t => t.base === baseId)
     }
   }
 }

@@ -86,7 +86,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { mapGetters } from 'vuex'
 import { developer } from '../../store/zome.js'
-import { items } from '../../store/foldersFilesCode.js'
+// import { items } from '../../store/foldersFilesCode.js'
 
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
@@ -136,7 +136,6 @@ export default {
       zomeTab: null,
       entryType: {},
       refreshKey: 'clean',
-      items: items,
       tree: [],
       open: ['Tasks', 'DNA', 'Test', 'Zomes', 'UI'],
       files: {
@@ -271,12 +270,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId']),
+    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId', 'fileItemsForZome']),
     project () {
       return this.projectById(this.$route.params.id)
     },
     zome () {
       return this.zomeByBaseId(this.$route.params.id)
+    },
+    items () {
+      return this.fileItemsForZome(this.zome.name)
     }
   }
 }

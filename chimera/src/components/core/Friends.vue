@@ -46,6 +46,16 @@
                       <v-list-item-title>Whisper</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
+                  <v-list-item @click="whisperFriend">
+                    <v-list-item-action>
+                      <v-btn icon>
+                        <v-icon>mdi-message-video</v-icon>
+                      </v-btn>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                      <v-list-item-title>Connect</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
                   <v-list-item @click="inviteFriend">
                     <v-list-item-action>
                       <v-btn icon>
