@@ -10,11 +10,20 @@
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
     <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
     <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
-    <v-btn icon><v-icon>mdi-plus</v-icon></v-btn>
+    <v-avatar left v-if="chimeraOn">
+      <v-icon small @click="addPart">mdi-dna</v-icon>
+    </v-avatar>
+    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-delete" @click:close="close">
+      <v-avatar left>
+        <v-icon small @click="acceptInvite">mdi-dna</v-icon>
+      </v-avatar>
+      Tasks - Art Brock
+    </v-chip>
     <slot></slot>
   </v-card>
 </template>
 <script>
+import { mapState } from 'vuex'
 import { connect } from '@holochain/hc-web-client'
 function makeHolochainCall (holochainConnection, callString, params, callback) {
   const [instanceId, zome, func] = callString.split('/')
@@ -36,6 +45,15 @@ export default {
     }
   },
   methods: {
+    close () {
+      alert('Chip close clicked')
+    },
+    acceptInvite () {
+      alert('Accept the invite')
+    },
+    addPart () {
+      alert('Add a new part like Tasks')
+    },
     saveNote () {
       if (this.instanceNote.id === '' || this.instanceNote.id === undefined) {
         makeHolochainCall(this.holochainConnection, 'notes/notes/create_note', { note_input: { title: this.instanceNote.title, content: this.instanceNote.content } }, (result) => {
@@ -80,6 +98,9 @@ export default {
     this.holochainConnection = connect({ url: 'ws://localhost:33000' })
     this.clean = { ...this.note }
     this.instanceNote = { ...this.note }
+  },
+  computed: {
+    ...mapState('auth', ['chimeraOn'])
   }
 }
 </script>

@@ -4,7 +4,8 @@ export default {
   namespaced: true,
 
   state: {
-    loggedIn: false
+    loggedIn: false,
+    chimeraOn: false
   },
 
   actions: {
@@ -13,10 +14,17 @@ export default {
     },
     logout: async ({ commit }) => {
       commit('setLoggedIn', false)
+    },
+    turnChimeraOn: async ({ commit }) => {
+      commit('setChimeraOn', true)
+    },
+    turnChimeraOff: async ({ commit }) => {
+      commit('setChimeraOn', false)
     }
   },
 
   mutations: {
-    setLoggedIn: set('loggedIn')
+    setLoggedIn: set('loggedIn'),
+    setChimeraOn: set('chimeraOn')
   }
 }

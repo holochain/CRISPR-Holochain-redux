@@ -16,7 +16,7 @@
         <v-select v-model="language" :items="items" label="Language" flat solo style="max-width: 400px" />
         <v-checkbox label="Minimize To System Tray" />
         <v-checkbox label="Run Holochain when my computer starts" />
-        <v-checkbox label="Enable Chimera mode" />
+        <v-checkbox v-model="chimera" label="Enable Chimera mode" />
         <v-checkbox label="Hide Purchased Products" />
         <v-divider />
         <v-checkbox label="Show my friends when I'm online" />
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   data: () => ({
     items: [{
@@ -40,7 +42,28 @@ export default {
       value: 'es',
       text: '🇪🇸 Spanish'
     }],
-    language: 'en'
-  })
+    language: 'en',
+    checkboxChimera: false
+  }),
+  methods: {
+    ...mapActions('auth', ['turnChimeraOn', 'turnChimeraOff', ''])
+  },
+  watch: {
+    checkboxChimera (newVal, oldVal) {
+      this.chimera = newVal
+    }
+  },
+  computed: {
+    ...mapState('auth', ['chimeraOn']),
+    chimera: {
+      set (value) {
+        if (value) this.turnChimeraOn()
+        if (!value) this.turnChimeraOff()
+      },
+      get () {
+        return this.chimeraOn
+      }
+    }
+  }
 }
 </script>
