@@ -2,9 +2,9 @@ export default {
   namespaced: true,
   state: {
     featured: [],
-    notes: [
+    baseNotes: [
       {
-        anchorText: 'To do',
+        base: 'demoAlice',
         notes: [
           {
             id: 'QmhashTodo1',
@@ -19,7 +19,7 @@ export default {
         ]
       },
       {
-        anchorText: 'In Progress',
+        base: 'demoPhil',
         notes: [
           {
             id: 'QmhashProgress1',
@@ -34,7 +34,7 @@ export default {
         ]
       },
       {
-        anchorText: 'Done',
+        base: 'demoLucy',
         notes: [
           {
             id: 'QmhashDone1',
@@ -50,6 +50,16 @@ export default {
       }
     ]
   },
+  mutations: {
+    setNotesList (state, baseNotes) {
+      const baseNote = state.baseNotes.find(b => b.base === baseNotes.base)
+      if (baseNote) {
+        baseNote.notes = baseNotes.notes
+      } else {
+        state.baseNotes.push(baseNotes)
+      }
+    }
+  },
   getters: {
     featured: (state, getters) => {
       return getters.parsedGames.sort((a, b) => {
@@ -58,8 +68,22 @@ export default {
         return 0
       }).slice(0, 3)
     },
-    listNotes: state => {
-      return state.notes
+    listNotes: state => (base) => {
+      return state.baseNotes.find(n => n.base === base).notes
+    }
+  },
+  actions: {
+    fetchNotes: ({ state, commit, rootState }, base) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
+          const res = JSON.parse(result)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            commit('setNotesList', { base: base, notes: res.Ok })
+          }
+        })
+      })
     }
   }
 }

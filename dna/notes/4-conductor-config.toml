@@ -1,20 +1,20 @@
 bridges = []
-persistence_dir = '/tmp/tmp.vrITXeHM1T/tryorama/Xp0PSq'
+persistence_dir = '/tmp/tmp.vrITXeHM1T/tryorama/0087Jc'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'lucy::notes::36b2c7de-3130-4c7c-9027-c61e8543123c'
-public_address = 'HcSCiUJXVmX5tigox3rVHtTsoqw4hmzxwj6p9WEo3hUZb3raeBMCJ6g488JY8jz'
+name = 'lucy::notes::6da21106-88a6-45f1-bb20-9b34bc5dbcad'
+public_address = 'HcScI5zGo6zo7TqzqzQ9skwHC74IGrpdp8pGZ5o6m4bR487r58enwOKBR4Yw3yi'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmY5dCNb7x2s8icdT21DfctLs1Qp8Zz9ZuRfWhJJAtprT6'
+hash = 'QmcRe6mc5rV2n5oycW2uNdU9Uirf7yb2at6oK32eAF7o48'
 id = 'notes-test'
-uuid = '36b2c7de-3130-4c7c-9027-c61e8543123c'
+uuid = '6da21106-88a6-45f1-bb20-9b34bc5dbcad'
 
 [[instances]]
 agent = 'notes'
@@ -22,7 +22,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.vrITXeHM1T/tryorama/Xp0PSq/notes'
+path = '/tmp/tmp.vrITXeHM1T/tryorama/0087Jc/notes'
 type = 'lmdb'
 
 [[interfaces]]

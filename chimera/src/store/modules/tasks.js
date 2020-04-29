@@ -29,7 +29,6 @@ export default {
       }).slice(0, 3)
     },
     listTasks: state => {
-      console.log('listTasks')
       return state.tasks[0].tasks
     },
     tasksByBaseId: (state) => (baseId) => {

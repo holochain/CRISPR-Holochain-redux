@@ -2,7 +2,7 @@
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-note-multiple-outline</v-icon>
-      <span class="subtitle">{{title}}</span>
+      <span class="subtitle">Title</span>
       <v-spacer></v-spacer>
       <v-icon @click="add">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
@@ -25,6 +25,7 @@
   </v-card>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Notes',
   components: {
@@ -32,7 +33,7 @@ export default {
     // NoteProseMirror: () => import('./NoteProseMirror')
     TaskManager: () => import('../Tasks/Tasks')
   },
-  props: ['notes', 'title'],
+  props: ['base', 'title'],
   data () {
     return {
       errorAlert: false,
@@ -58,10 +59,19 @@ export default {
       this.errorAlert = true
     },
     noteDeleted (note) {
-      console.log(note)
       const index = this.notes.findIndex(n => n.id === note.id)
       this.notes.splice(index, 1)
+    },
+    ...mapActions('notes', ['fetchNotes'])
+  },
+  computed: {
+    ...mapGetters('notes', ['listNotes']),
+    notes () {
+      return this.listNotes(this.base)
     }
+  },
+  created () {
+    this.fetchNotes(this.base)
   }
 }
 </script>
