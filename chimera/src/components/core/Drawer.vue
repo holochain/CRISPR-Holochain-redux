@@ -2,8 +2,8 @@
   <v-navigation-drawer v-model="drawer" app class="grey darken-4" :mini-variant.sync="mini" mini-variant-width="70" permanent>
     <v-list dense color="transparent">
       <v-list-item class="mb-4">
-        <v-list-item-avatar>
-          <v-img :src="require('@/assets/dna-replication.svg')" />
+        <v-list-item-avatar color="#80deea">
+          <v-img :src="require('@/assets/chimera.png')" />
         </v-list-item-avatar>
         <v-list-item-title>Chimera</v-list-item-title>
         <v-btn icon @click.stop="mini = !mini">

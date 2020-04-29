@@ -16,25 +16,54 @@
     </v-card-text>
     <v-divider />
     <v-card-actions>
+      <v-btn color="action" icon :to="`/notes`">
+        <v-icon>mdi-notebook-outline</v-icon>
+      </v-btn>
+      <v-btn color="action" icon :to="`/part/${project.id}`">
+        <v-icon>mdi-application</v-icon>
+      </v-btn>
       <v-btn color="action" icon :to="`/project/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
-      </v-btn>
-      <v-btn color="action" icon href="http://localhost:8080" target="_blank">
-        <v-icon>mdi-bell-outline</v-icon>
       </v-btn>
       <v-btn color="action" icon>
         <v-icon>mdi-publish</v-icon>
       </v-btn>
-      <v-btn color="action" icon to="/notes">
-        <v-icon>mdi-notebook-outline</v-icon>
+      <v-btn color="alert" icon @click="cloningDialog = true">
+        <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>
+    <v-dialog v-model="cloningDialog" max-width="700px">
+      <v-card flat>
+        <v-toolbar dark>
+          <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-row no-gutters align="start" justify="center">
+          <v-col cols="12">
+            <v-text-field class="ml-2 white--text" v-model="clone.name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
+            <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
+          </v-col>
+        </v-row>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="cloningDialog = false">
+            Clone
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script>
 export default {
   name: 'HolochainProject',
+  data () {
+    return {
+      cloningDialog: false
+    }
+  },
   props: {
     project: {
       type: Object,
@@ -44,6 +73,15 @@ export default {
           domain: 'escr',
           player: 'Philip Beadle',
           mobile: '0417301024'
+        }
+      }
+    },
+    clone: {
+      type: Object,
+      default: function () {
+        return {
+          name: '',
+          description: ''
         }
       }
     }

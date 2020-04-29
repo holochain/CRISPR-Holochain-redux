@@ -35,7 +35,8 @@ export default {
   created () {
     console.log('mounted')
     this.holochainConnection = connect({ url: 'ws://localhost:33000' })
-    makeHolochainCall(this.holochainConnection, 'notes/notes/list_notes', { }, (result) => {
+    makeHolochainCall(this.holochainConnection, 'notes/notes/list_notes', { base: 'demoLucy' }, (result) => {
+      console.log('result', result)
       const allNotes = result.Ok.sort((a, b) => {
         if (a.updatedAt < b.updatedAt) return -1
         if (a.updatedAt > b.updatedAt) return 1

@@ -13,7 +13,7 @@ use crate::note::NoteEntry;
 use crate::note::Note;
 
 #[zome]
-mod notes {
+mod tasks {
 
     #[init]
     fn init() {
@@ -36,8 +36,8 @@ mod notes {
     }
 
     #[zome_fn("hc_public")]
-    fn create_note(note_input: NoteEntry) -> ZomeApiResult<Note> {
-        note::handlers::create(note_input)
+    fn create_note(base: String, note_input: NoteEntry) -> ZomeApiResult<Note> {
+        note::handlers::create(base, note_input)
     }
 
     #[zome_fn("hc_public")]
@@ -51,13 +51,13 @@ mod notes {
     }
 
     #[zome_fn("hc_public")]
-    fn delete_note(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-        note::handlers::delete(id, created_at, address)
+    fn delete_note(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+        note::handlers::delete(base, id, created_at, address)
     }
 
     #[zome_fn("hc_public")]
-    fn list_notes() -> ZomeApiResult<Vec<Note>> {
-        note::handlers::list()
+    fn list_notes(base: String) -> ZomeApiResult<Vec<Note>> {
+        note::handlers::list(base)
     }
 
 }
