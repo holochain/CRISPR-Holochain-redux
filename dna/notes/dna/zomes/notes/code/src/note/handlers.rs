@@ -14,19 +14,18 @@ use hdk::{
 use holochain_anchors::anchor;
 use crate::note::{
     NOTES_ANCHOR_TYPE,
-    NOTES_ANCHOR_TEXT,
     NOTE_ENTRY_LINK_TYPE,
     NOTE_ENTRY_NAME,
     NoteEntry,
     Note,
 };
 
-fn notes_anchor() -> ZomeApiResult<Address> {
-    anchor(NOTES_ANCHOR_TYPE.to_string(), NOTES_ANCHOR_TEXT.to_string())
+fn notes_anchor(anchor_text: String) -> ZomeApiResult<Address> {
+    anchor(NOTES_ANCHOR_TYPE.to_string(), anchor_text.to_string())
 }
 
-pub fn create(note_entry: NoteEntry) -> ZomeApiResult<Note> {
-    let note_anchor = notes_anchor()?;
+pub fn create(base: String, note_entry: NoteEntry) -> ZomeApiResult<Note> {
+    let note_anchor = notes_anchor(base)?;
     let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let note = Note::new(entry_address.clone(), note_entry)?;
@@ -45,13 +44,13 @@ pub fn update(id: Address, created_at: Iso8601, address: Address, note_input: No
     Note::existing(id.clone(), created_at, updated_entry_address, note_input)
 }
 
-pub fn delete(id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-    hdk::remove_link(&notes_anchor()?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
+pub fn delete(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+    hdk::remove_link(&notes_anchor(base)?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
     hdk::remove_entry(&address)
 }
 
-pub fn list() -> ZomeApiResult<Vec<Note>> {
-    hdk::get_links(&notes_anchor()?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
+pub fn list(base: String) -> ZomeApiResult<Vec<Note>> {
+    hdk::get_links(&notes_anchor(base)?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()
     .iter()
     .map(|link| read(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
     .collect()

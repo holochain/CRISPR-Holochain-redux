@@ -120,6 +120,9 @@ export default {
         entryTypeOffset = col3Offset
       }
       this.zome.anchorTypes.forEach(anchorType => {
+        if (anchorType.anchors.length > 0) {
+          entryTypeOffset = col3Offset
+        }
         anchorsOffset = anchorsYIndex * 185
         const anchorTypeNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + anchorsOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
@@ -157,7 +160,11 @@ export default {
           const anchorNode = dnaModel.addAnchor(anchor, anchorTypeOutPort, col2Offset, yOffset + anchorsOffset, cardWidth, anchorIndex, this.$vuetify.theme.themes.dark.anchor)
           let entryTypeInPort = 0
           anchor.links.forEach(link => {
-            const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
+            let entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
+            if (entryType === undefined) {
+              entryType = anchorType.entryTypes.find(entryType => entryType.id === link.entityId)
+            }
+            console.log('entryType', entryType)
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
             if (!existingEntryTypeNode) {
               const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
