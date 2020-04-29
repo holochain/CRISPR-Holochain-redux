@@ -1,13 +1,13 @@
 <template>
   <v-row>
     <v-col cols="12" md="4">
-      <notes key="To do" base="demoAlice"/>
+      <notes key="demoAlice" base="demoAlice" title="Do"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes key="In progress" base="demoPhil"/>
+      <notes key="demoPhil" base="demoPhil" title="Doing"/>
     </v-col>
     <v-col cols="12" md="4">
-      <notes key="Done" base="demoLucy"/>
+      <notes key="demoLucy" base="demoLucy" title="Done"/>
     </v-col>
   </v-row>
 </template>

@@ -2,7 +2,7 @@
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-note-multiple-outline</v-icon>
-      <span class="subtitle">Title</span>
+      <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
       <v-icon @click="add">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
@@ -22,10 +22,20 @@
         <task-manager :key="note.id" :base="note.id" />
       </note>
     </v-col>
+    <slot></slot>
+    <v-avatar left v-if="chimeraOn">
+      <v-icon small @click="addPart">mdi-dna</v-icon>
+    </v-avatar>
+    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
+      <v-avatar left>
+        <v-icon small @click="acceptInvite">mdi-dna</v-icon>
+      </v-avatar>
+      Tasks - Art Brock
+    </v-chip>
   </v-card>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Notes',
   components: {
@@ -65,6 +75,7 @@ export default {
     ...mapActions('notes', ['fetchNotes'])
   },
   computed: {
+    ...mapState('auth', ['chimeraOn']),
     ...mapGetters('notes', ['listNotes']),
     notes () {
       return this.listNotes(this.base)

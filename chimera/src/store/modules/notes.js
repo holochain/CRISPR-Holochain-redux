@@ -2,55 +2,18 @@ export default {
   namespaced: true,
   state: {
     featured: [],
-    baseNotes: [
-      {
-        base: 'demoAlice',
-        notes: [
-          {
-            id: 'QmhashTodo1',
-            title: 'Note with no tasks',
-            content: 'A simple note card - phase 1 of Hoplochain IDE project'
-          },
-          {
-            id: 'QmhashTodo2',
-            title: 'Note with tasks',
-            content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.'
-          }
-        ]
-      },
-      {
-        base: 'demoPhil',
-        notes: [
-          {
-            id: 'QmhashProgress1',
-            title: 'In Progress Note with no tasks',
-            content: 'A simple note card - phase 1 of Hoplochain IDE project'
-          },
-          {
-            id: 'QmhashProgress2',
-            title: 'In Progress Note with tasks',
-            content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.'
-          }
-        ]
-      },
-      {
-        base: 'demoLucy',
-        notes: [
-          {
-            id: 'QmhashDone1',
-            title: 'Done Note with no tasks',
-            content: 'A simple note card - phase 1 of Hoplochain IDE project'
-          },
-          {
-            id: 'QmhashDone2',
-            title: 'Done Note with tasks',
-            content: 'Just like github projects but better😎Check out the cool system bar for edit, save, delete and archive.'
-          }
-        ]
-      }
-    ]
+    baseNotes: [],
+    editing: false
   },
   mutations: {
+    createNote (state, baseNote) {
+      const base = state.baseNotes.find(b => b.base === baseNote.base)
+      if (base) {
+        base.notes.push(baseNote.note)
+      } else {
+        state.baseNotes.push((baseNote))
+      }
+    },
     setNotesList (state, baseNotes) {
       const baseNote = state.baseNotes.find(b => b.base === baseNotes.base)
       if (baseNote) {
@@ -69,7 +32,12 @@ export default {
       }).slice(0, 3)
     },
     listNotes: state => (base) => {
-      return state.baseNotes.find(n => n.base === base).notes
+      const baseNote = state.baseNotes.find(n => n.base === base)
+      if (baseNote) {
+        return baseNote.notes
+      } else {
+        return []
+      }
     }
   },
   actions: {
@@ -81,6 +49,44 @@ export default {
             console.log(res)
           } else {
             commit('setNotesList', { base: base, notes: res.Ok })
+          }
+        })
+      })
+    },
+    saveNote: ({ state, commit, rootState }, base, note) => {
+      if (this.note.id === '' || this.note.id === undefined) {
+        rootState.holochainConnection.then(({ callZome }) => {
+          callZome('notes', 'notes', 'create_note')({ base: base, note_input: { title: note.title, content: note.content } }).then((result) => {
+            const res = JSON.parse(result)
+            if (res.Ok === undefined) {
+              console.log(res)
+            } else {
+              commit('createNote', { base: base, note: res.Ok })
+            }
+          })
+        })
+      } else {
+        rootState.holochainConnection.then(({ callZome }) => {
+          callZome('notes', 'notes', 'update_note')({ id: note.id, created_at: note.createdAt, address: note.address, note_input: { title: note.title, content: note.content } }).then((result) => {
+            const res = JSON.parse(result)
+            if (res.Ok === undefined) {
+              console.log(res)
+            } else {
+              console.log(res.Ok)
+              commit('updateNote', { base: base, note: res.Ok })
+            }
+          })
+        })
+      }
+    },
+    deleteNote: ({ state, commit, rootState }, base, note) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('notes', 'notes', 'delete_note')({ base: base, id: note.id, created_at: note.createdAt, address: note.address }).then((result) => {
+          const res = JSON.parse(result)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            commit('deleteNote', { base: base, note: res.Ok })
           }
         })
       })

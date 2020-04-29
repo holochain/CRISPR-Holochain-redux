@@ -34,15 +34,6 @@ export default {
         mobile: '+61 999 999 999',
         description: 'A clone of Notes DNA. CRUD functions also pass the id of the entry they link to so anchor with anchorText=entryid.',
         zomes: []
-      },
-      {
-        name: 'personas-profiles',
-        folder: '/Users/philipbeadle/holochain/hApps/personas-profiles',
-        url: '/entry-types',
-        contact: 'Philip Beadle',
-        mobile: '+61 999 999 999',
-        description: 'Manage personal information.\nEasily add profiles to your hApp to integrate the information requested from the players personal my-info hApp. Players manage their own information.',
-        zomes: []
       }
     ]
   },
