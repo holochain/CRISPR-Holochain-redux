@@ -3,8 +3,8 @@
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveNote, isEditing = false">mdi-content-save</v-icon>
-      <v-icon @click="deleteNote">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing" @click="saveNote({ base: base, note: instanceNote})">mdi-content-save</v-icon>
+      <v-icon @click="deleteNote({ base: base, note: instanceNote})">mdi-delete-outline</v-icon>
     </v-system-bar>
     <v-card-title v-if="!isEditing">{{instanceNote.title}}</v-card-title>
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
@@ -28,12 +28,12 @@ export default {
   name: 'Note',
   components: {
   },
-  props: ['note'],
+  props: ['base', 'note'],
   data () {
     return {
       instanceNote: {},
       clean: {},
-      isEditing: false
+      isEditing: this.note.id === undefined
     }
   },
   methods: {

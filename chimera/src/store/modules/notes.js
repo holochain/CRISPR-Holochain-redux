@@ -6,20 +6,35 @@ export default {
     editing: false
   },
   mutations: {
-    createNote (state, baseNote) {
-      const base = state.baseNotes.find(b => b.base === baseNote.base)
+    createNote (state, payload) {
+      const base = state.baseNotes.find(b => b.base === payload.base)
       if (base) {
-        base.notes.push(baseNote.note)
+        base.notes.push(payload.data)
       } else {
-        state.baseNotes.push((baseNote))
+        state.baseNotes.push((payload))
       }
     },
-    setNotesList (state, baseNotes) {
-      const baseNote = state.baseNotes.find(b => b.base === baseNotes.base)
-      if (baseNote) {
-        baseNote.notes = baseNotes.notes
+    updateNote (state, payload) {
+      const base = state.baseNotes.find(e => e.base === payload.base)
+      if (!base) {
+        state.baseNotes.push(payload)
       } else {
-        state.baseNotes.push(baseNotes)
+        const updatedNotes = base.notes.map(note => {
+          if (note.id === payload.data.id) {
+            return Object.assign({}, note, payload.data)
+          }
+          return note
+        })
+        state.baseNotes.find(e => e.base === payload.base).notes = updatedNotes
+      }
+    },
+    setNotesList (state, payload) {
+      const base = state.baseNotes.find(b => b.base === payload.base)
+      console.log(base)
+      if (base !== undefined) {
+        base.notes = payload.data
+      } else {
+        state.baseNotes.push(payload)
       }
     }
   },
@@ -53,40 +68,42 @@ export default {
         })
       })
     },
-    saveNote: ({ state, commit, rootState }, base, note) => {
-      if (this.note.id === '' || this.note.id === undefined) {
+    saveNote: ({ state, commit, rootState }, baseNote) => {
+      if (baseNote.note.id === '' || baseNote.note.id === undefined) {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'create_note')({ base: base, note_input: { title: note.title, content: note.content } }).then((result) => {
+          callZome('notes', 'notes', 'create_note')({ base: baseNote.base, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
             const res = JSON.parse(result)
+            console.log(res)
             if (res.Ok === undefined) {
               console.log(res)
             } else {
-              commit('createNote', { base: base, note: res.Ok })
+              commit('createNote', { base: baseNote.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'update_note')({ id: note.id, created_at: note.createdAt, address: note.address, note_input: { title: note.title, content: note.content } }).then((result) => {
+          callZome('notes', 'notes', 'update_note')({ id: baseNote.note.id, created_at: baseNote.note.createdAt, address: baseNote.note.address, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
             const res = JSON.parse(result)
+            console.log(res)
             if (res.Ok === undefined) {
               console.log(res)
             } else {
-              console.log(res.Ok)
-              commit('updateNote', { base: base, note: res.Ok })
+              commit('updateNote', { base: baseNote.base, data: res.Ok })
             }
           })
         })
       }
     },
-    deleteNote: ({ state, commit, rootState }, base, note) => {
+    deleteNote: ({ state, commit, rootState }, payload) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('notes', 'notes', 'delete_note')({ base: base, id: note.id, created_at: note.createdAt, address: note.address }).then((result) => {
+        callZome('notes', 'notes', 'delete_note')({ base: payload.base, id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address }).then((result) => {
           const res = JSON.parse(result)
+          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('deleteNote', { base: base, note: res.Ok })
+            commit('deleteNote', { base: payload.base, note: res.Ok })
           }
         })
       })
