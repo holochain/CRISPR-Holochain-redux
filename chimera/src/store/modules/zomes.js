@@ -10,6 +10,7 @@ export default {
         id: 'QmZome1hash',
         name: 'Notes',
         base: 'Qmmorebighashes333',
+        template: 'notes',
         items: [
           { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
           {

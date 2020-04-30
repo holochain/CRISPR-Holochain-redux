@@ -5,7 +5,10 @@ export default {
 
   state: {
     loggedIn: false,
-    chimeraOn: false
+    chimera: false,
+    developer: {
+      folder: '/Users/philipbeadle/holochain/CRISPR'
+    }
   },
 
   actions: {
@@ -25,6 +28,6 @@ export default {
 
   mutations: {
     setLoggedIn: set('loggedIn'),
-    setChimeraOn: set('chimeraOn')
+    setChimeraOn: set('chimera')
   }
 }

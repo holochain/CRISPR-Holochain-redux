@@ -76,7 +76,7 @@ export default {
     }
   },
   created () {
-    console.log('create', this.listTasks.length)
+    // console.log('create', this.listTasks.length)
   }
 }
 </script>

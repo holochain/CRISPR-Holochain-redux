@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { connect } from '@holochain/hc-web-client'
 
 // Modules
 import app from '@/store/modules/app'
@@ -25,8 +26,10 @@ import tracks from '@/store/modules/tracks'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
-
 const store = new Vuex.Store({
+  state: {
+    holochainConnection: connect({ url: 'ws://localhost:33000' })
+  },
   modules: {
     app,
     auth,
@@ -53,6 +56,12 @@ const store = new Vuex.Store({
   actions: {
     init: async () => {
       await Promise.all([])
+    },
+    makeHolochainCall (callString, params, callback) {
+      const [instanceId, zome, func] = callString.split('/')
+      this.state.holochainConnection.then(({ callZome }) => {
+        callZome(instanceId, zome, func)(params).then((result) => callback(JSON.parse(result)))
+      })
     }
   }
 })
