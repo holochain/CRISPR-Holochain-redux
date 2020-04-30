@@ -174,7 +174,7 @@ export default {
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/notes/${role}-${entryFunction}-note.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/${this.entryType.name.toLowerCase()}/${role}-${entryFunction}-${this.entryType.name.toLowerCase()}.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
