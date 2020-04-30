@@ -84,9 +84,7 @@
 <script>
 import * as fs from 'fs'
 import * as path from 'path'
-import { mapGetters } from 'vuex'
-import { developer } from '../../store/zome.js'
-// import { items } from '../../store/foldersFilesCode.js'
+import { mapGetters, mapState } from 'vuex'
 
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
@@ -172,11 +170,11 @@ export default {
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
-      functionInfo.permissionsCode = fs.readFileSync(`${developer.folder}/templates/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${developer.folder}/templates/dna_templates/anchor_link_to_initial/test/notes/${role}-${entryFunction}-note.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/notes/${role}-${entryFunction}-note.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
@@ -270,6 +268,7 @@ export default {
     }
   },
   computed: {
+    ...mapState('auth', ['developer']),
     ...mapGetters('portfolio', ['projectById', 'zomeByBaseId', 'fileItemsForZome']),
     project () {
       return this.projectById(this.$route.params.id)

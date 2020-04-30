@@ -3,7 +3,8 @@ export default {
   state: {
     featured: [],
     baseNotes: [],
-    editing: false
+    editing: false,
+    errors: []
   },
   mutations: {
     createNote (state, payload) {
@@ -28,9 +29,21 @@ export default {
         state.baseNotes.find(e => e.base === payload.base).notes = updatedNotes
       }
     },
+    deleteNote (state, payload) {
+      console.log(state, payload)
+      const base = state.baseNotes.find(b => b.base === payload.base)
+      if (base) {
+        state.baseNotes.find(e => e.base === payload.base).notes = base.notes.filter(e => e.id !== payload.data)
+      }
+    },
+    error (state, payload) {
+      state.errors.push(payload)
+    },
+    resetErrors (state, payload) {
+      state.errors = state.errors.filter(e => e.base !== payload)
+    },
     setNotesList (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
-      console.log(base)
       if (base !== undefined) {
         base.notes = payload.data
       } else {
@@ -53,9 +66,20 @@ export default {
       } else {
         return []
       }
+    },
+    listErrors: state => (base) => {
+      const baseErrors = state.errors.filter(e => e.base === base)
+      if (baseErrors) {
+        return baseErrors.map(b => JSON.parse(b.error).kind)
+      } else {
+        return []
+      }
     }
   },
   actions: {
+    acknowledgeErrors: ({ state, commit, rootState }, base) => {
+      commit('resetErrors', base)
+    },
     fetchNotes: ({ state, commit, rootState }, base) => {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
@@ -73,9 +97,8 @@ export default {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'create_note')({ base: baseNote.base, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
             if (res.Ok === undefined) {
-              console.log(res)
+              commit('error', { base: baseNote.base, error: res.Err.Internal })
             } else {
               commit('createNote', { base: baseNote.base, data: res.Ok })
             }
@@ -85,9 +108,8 @@ export default {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'update_note')({ id: baseNote.note.id, created_at: baseNote.note.createdAt, address: baseNote.note.address, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
             if (res.Ok === undefined) {
-              console.log(res)
+              commit('error', { base: baseNote.base, error: res.Err.Internal })
             } else {
               commit('updateNote', { base: baseNote.base, data: res.Ok })
             }
@@ -99,11 +121,10 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'delete_note')({ base: payload.base, id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
-            console.log(res)
+            commit('error', { base: payload.base, error: res.Err.Internal })
           } else {
-            commit('deleteNote', { base: payload.base, note: res.Ok })
+            commit('deleteNote', { base: payload.base, data: payload.note.id })
           }
         })
       })

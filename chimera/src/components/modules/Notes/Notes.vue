@@ -7,26 +7,26 @@
       <v-icon @click="add">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
     </v-system-bar>
-    <v-alert v-if="errorAlert" type="error">
+    <v-alert v-if="errors.length" type="error">
       <v-row no-gutters>
         <v-col cols="11">
-          {{error}}
+          {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="errorAlert = false">mdi-close-box-outline</v-icon>
+          <v-icon @click="acknowledgeErrors(base)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
     <v-col cols="12" v-for="note in notes" :key="note.id">
-      <note :key="note.id" :base="base" :note="note" @note-updated="updated" @note-updated-failed="noteUpdateFailed" @note-deleted="noteDeleted" @note-deleted-failed="noteDeleteFailed">
+      <note :key="note.id" :base="base" :note="note">
         <task-manager :key="note.id" :base="note.id" />
       </note>
     </v-col>
     <slot></slot>
-    <v-avatar left v-if="chimeraOn">
+    <v-avatar left v-if="chimera">
       <v-icon small @click="addPart">mdi-dna</v-icon>
     </v-avatar>
-    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
+    <v-chip v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
       <v-avatar left>
         <v-icon small @click="acceptInvite">mdi-dna</v-icon>
       </v-avatar>
@@ -44,12 +44,6 @@ export default {
     TaskManager: () => import('../Tasks/Tasks')
   },
   props: ['base', 'title'],
-  data () {
-    return {
-      errorAlert: false,
-      error: ''
-    }
-  },
   methods: {
     add () {
       this.notes.splice(0, 0, {
@@ -57,28 +51,17 @@ export default {
         content: ''
       })
     },
-    updated () {
-
-    },
-    noteUpdateFailed (error) {
-      this.error = error
-      this.errorAlert = true
-    },
-    noteDeleteFailed (error) {
-      this.error = error
-      this.errorAlert = true
-    },
-    noteDeleted (note) {
-      const index = this.notes.findIndex(n => n.id === note.id)
-      this.notes.splice(index, 1)
-    },
-    ...mapActions('notes', ['fetchNotes'])
+    ...mapActions('notes', ['fetchNotes', 'acknowledgeErrors'])
   },
   computed: {
-    ...mapState('auth', ['chimeraOn']),
-    ...mapGetters('notes', ['listNotes']),
+    ...mapState('auth', ['chimera']),
+    ...mapState('notes', ['errors']),
+    ...mapGetters('notes', ['listNotes', 'listErrors']),
     notes () {
       return this.listNotes(this.base)
+    },
+    errors () {
+      return this.listErrors(this.base)
     }
   },
   created () {
