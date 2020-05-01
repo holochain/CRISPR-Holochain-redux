@@ -54,7 +54,7 @@ export default {
           avatar: 'avatars/errolj.jpeg',
           name: '@pherrol'
         },
-        notifications: 0,
+        notifications: 1,
         value: 15,
         start: 200
       },

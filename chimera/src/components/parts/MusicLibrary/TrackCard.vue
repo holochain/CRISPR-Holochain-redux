@@ -45,7 +45,7 @@
             </template>
           </v-btn>
           <span class="subheading ml-n2 mr-2">45</span>
-          <v-chip key="track.id" v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
+          <v-chip key="track.id" v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
             <v-avatar left>
               <v-icon small @click="acceptInvite">mdi-dna</v-icon>
             </v-avatar>
@@ -167,7 +167,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['chimeraOn'])
+    ...mapState('auth', ['chimera'])
   }
 }
 </script>
