@@ -77,6 +77,11 @@ export default {
   },
   created () {
     this.fetchTasks(this.base)
+  },
+  watch: {
+    tasks () {
+      this.task.title = ''
+    }
   }
 }
 </script>

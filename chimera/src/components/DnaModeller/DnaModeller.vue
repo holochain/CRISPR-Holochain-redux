@@ -8,10 +8,6 @@
         </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn text v-if="showModel">
-        <v-icon>mdi-plus</v-icon>
-        Entry Type
-      </v-btn>
       <v-btn color="action" icon :to="`/partNotes/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>

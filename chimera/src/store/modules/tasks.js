@@ -98,7 +98,7 @@ export default {
       commit('resetErrors', base)
     },
     fetchTasks: ({ state, commit, rootState }, base) => {
-      rootState.holochainConnection.then(({ callZome }) => {
+      rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'list_tasks')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
@@ -111,10 +111,10 @@ export default {
     },
     saveTask: ({ state, commit, rootState }, baseTask) => {
       if (baseTask.task.id === '' || baseTask.task.id === undefined) {
-        rootState.holochainConnection.then(({ callZome }) => {
+        rootState.devHolochainConnection.then(({ callZome }) => {
           callZome('tasks', 'tasks', 'create_task')({ base: baseTask.base, task_input: { title: baseTask.task.title, done: baseTask.task.done } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(baseTask, res)
+            // console.log(baseTask, res)
             if (res.Ok === undefined) {
               commit('error', { base: baseTask.base, error: res.Err.Internal })
             } else {
@@ -123,7 +123,7 @@ export default {
           })
         })
       } else {
-        rootState.holochainConnection.then(({ callZome }) => {
+        rootState.devHolochainConnection.then(({ callZome }) => {
           callZome('tasks', 'tasks', 'update_task')({ id: baseTask.task.id, created_at: baseTask.task.createdAt, address: baseTask.task.address, task_input: { title: baseTask.task.title, done: baseTask.task.done } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
@@ -136,7 +136,7 @@ export default {
       }
     },
     deleteTask: ({ state, commit, rootState }, payload) => {
-      rootState.holochainConnection.then(({ callZome }) => {
+      rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'delete_task')({ base: payload.base, id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

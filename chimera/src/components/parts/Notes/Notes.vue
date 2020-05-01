@@ -19,7 +19,7 @@
     </v-alert>
     <v-col cols="12" v-for="note in notes" :key="note.id">
       <note :key="note.id" :base="base" :note="note">
-        <!-- <task-manager :key="note.id" :base="note.id" /> -->
+        <task-manager v-if="note.id" :key="note.id" :base="note.id" />
       </note>
     </v-col>
     <slot></slot>
@@ -39,13 +39,14 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Notes',
   components: {
-    // TaskManager: () => import('../Tasks/Tasks'),
+    TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('./Note')
     // NoteProseMirror: () => import('./NoteProseMirror')
   },
   props: ['base', 'title'],
   methods: {
     add () {
+      console.log('this.notes', this.notes)
       this.notes.splice(0, 0, {
         title: '',
         content: ''
