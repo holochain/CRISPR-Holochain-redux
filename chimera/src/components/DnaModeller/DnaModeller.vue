@@ -8,9 +8,11 @@
         </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn text v-if="showModel">
-        <v-icon>mdi-plus</v-icon>
-        Entry Type
+      <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+        <v-icon>mdi-notebook-outline</v-icon>
+      </v-btn>
+      <v-btn color="action" icon :to="`/part/${project.id}`">
+        <v-icon>mdi-application</v-icon>
       </v-btn>
     </v-toolbar>
     <v-row no-gutters>
@@ -174,7 +176,7 @@ export default {
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/notes/${role}-${entryFunction}-note.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/${this.entryType.name.toLowerCase()}/${role}-${entryFunction}-${this.entryType.name.toLowerCase()}.js`, 'utf8')
       }
       this.refreshKey += '1'
     },

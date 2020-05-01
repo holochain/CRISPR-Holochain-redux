@@ -1,20 +1,20 @@
 bridges = []
-persistence_dir = '/tmp/tmp.iLzYEUUCEx/tryorama/V65ZZ7'
+persistence_dir = '/tmp/tmp.4dgCkC2Dj3/tryorama/QTVddK'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'phil::tasks::7db5d34b-0363-4109-9f2f-7019114e7f8b'
-public_address = 'HcScjuNfaeVvxsq5ngwI6Qui5xKSnf99m4nWH3YWNGZ3tepyRX9d3TIzSi66zsr'
+name = 'phil::tasks::6ebb9bca-6329-47f4-9c47-7f98d0c889c4'
+public_address = 'HcSCiGb5abCrxoj3jfU94AXc7TTgmqmegzriMq7OvKczneiuxB7RjM5MGt6gt9z'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'Qmb1kXRuLg8ot68Cp2SN23m6oRyF7G56X1XHgeUew7zxUJ'
+hash = 'QmTJkXSd9rpCeCy6fjchM19TGMCAiyFCB7o9Di5mHdesHn'
 id = 'tasks-test'
-uuid = '7db5d34b-0363-4109-9f2f-7019114e7f8b'
+uuid = '6ebb9bca-6329-47f4-9c47-7f98d0c889c4'
 
 [[instances]]
 agent = 'tasks'
@@ -22,7 +22,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.iLzYEUUCEx/tryorama/V65ZZ7/tasks'
+path = '/tmp/tmp.4dgCkC2Dj3/tryorama/QTVddK/tasks'
 type = 'lmdb'
 
 [[interfaces]]

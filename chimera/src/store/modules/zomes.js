@@ -57,7 +57,7 @@ export default {
             tag: ' ',
             context: 'permanent',
             libCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/lib.rs`, 'utf8'),
-            testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/notes/index.js`, 'utf8'),
+            testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/note/index.js`, 'utf8'),
             entryTypes: [
               {
                 id: 'QmNoteEntryTypeHash1',
@@ -136,7 +136,7 @@ export default {
                     permission: 'author-only',
                     permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/notes/author-only-update-note.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/note/author-only-update-note.js`, 'utf8')
                   },
                   {
                     name: 'delete',
@@ -146,7 +146,7 @@ export default {
                     permission: 'anyone',
                     permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/notes/anyone-delete-note.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/note/anyone-delete-note.js`, 'utf8')
                   },
                   {
                     name: 'list',
@@ -241,6 +241,7 @@ export default {
         id: 'QmZome2hashTasks',
         name: 'Tasks',
         base: 'QmmorehashyTasks',
+        template: 'tasks',
         items: [
           { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/zomes/tasks/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
           {
@@ -287,7 +288,7 @@ export default {
             tag: ' ',
             context: 'permanent',
             libCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/zomes/tasks/code/src/lib.rs`, 'utf8'),
-            testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/tasks/index.js`, 'utf8'),
+            testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/task/index.js`, 'utf8'),
             entryTypes: [
               {
                 id: 'QmNoteTaskEntryTypeAddress',
@@ -366,7 +367,7 @@ export default {
                     permission: 'author-only',
                     permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/tasks/author-only-update-task.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/task/author-only-update-task.js`, 'utf8')
                   },
                   {
                     name: 'delete',
@@ -376,7 +377,7 @@ export default {
                     permission: 'anyone',
                     permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/tasks/anyone-delete-task.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/task/anyone-delete-task.js`, 'utf8')
                   },
                   {
                     name: 'list',

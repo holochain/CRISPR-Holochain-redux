@@ -2,7 +2,23 @@ export default {
   namespaced: true,
   state: {
     featured: [],
-    baseNotes: [],
+    baseNotes: [
+      {
+        base: 'Demo Note List',
+        notes: [
+          {
+            id: 'QmhashNote1',
+            title: 'Demo Note 1',
+            content: 'Content for Note 1'
+          },
+          {
+            id: 'QmhashNote2',
+            title: 'Demo Note 2',
+            content: 'Content for Note 2'
+          }
+        ]
+      }
+    ],
     editing: false,
     errors: []
   },
@@ -10,7 +26,7 @@ export default {
     createNote (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
       if (base) {
-        base.notes.push(payload.data)
+        // base.notes.push(payload.data)
       } else {
         state.baseNotes.push((payload))
       }
@@ -45,10 +61,11 @@ export default {
     setNotesList (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
       if (base !== undefined) {
-        base.notes = payload.data
+        base.notes = payload.notes
       } else {
         state.baseNotes.push(payload)
       }
+      // console.log(state)
     }
   },
   getters: {
@@ -81,9 +98,11 @@ export default {
       commit('resetErrors', base)
     },
     fetchNotes: ({ state, commit, rootState }, base) => {
+      console.log(rootState.holochainConnection)
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
           const res = JSON.parse(result)
+          // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -97,6 +116,7 @@ export default {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'create_note')({ base: baseNote.base, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
             const res = JSON.parse(result)
+            console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: baseNote.base, error: res.Err.Internal })
             } else {
