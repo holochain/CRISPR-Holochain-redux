@@ -12,6 +12,12 @@
         <v-icon>mdi-plus</v-icon>
         Entry Type
       </v-btn>
+      <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+        <v-icon>mdi-notebook-outline</v-icon>
+      </v-btn>
+      <v-btn color="action" icon :to="`/part/${project.id}`">
+        <v-icon>mdi-application</v-icon>
+      </v-btn>
     </v-toolbar>
     <v-row no-gutters>
       <v-col cols="3">

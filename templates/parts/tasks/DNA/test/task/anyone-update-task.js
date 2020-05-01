@@ -15,5 +15,5 @@ scenario("anyone-update-task", async (s, t) => {
   t.deepEqual(update_task_result_2, read_task_result_2)
   t.deepEqual(read_task_result_2.Ok.id, create_task_result.Ok.id)
   t.deepEqual(read_task_result_2.Ok.title, 'Updated again title first task')
-  t.deepEqual(read_task_result.done, false)
+  t.deepEqual(read_task_result.Ok.done, false)
 })

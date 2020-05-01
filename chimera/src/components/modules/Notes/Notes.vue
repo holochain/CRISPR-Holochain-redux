@@ -58,8 +58,6 @@ export default {
     ...mapState('notes', ['errors']),
     ...mapGetters('notes', ['listNotes', 'listErrors']),
     notes () {
-      console.log('notes', this.base)
-      console.log('notes', this.listNotes(this.base))
       return this.listNotes(this.base)
     },
     errors () {

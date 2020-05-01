@@ -1,7 +1,8 @@
 <template>
-  <v-card v-if="listTasks && listTasks.length > 0" :key="base">
+  <v-card v-if="tasks && tasks.length > 0" :key="base">
+    <v-card-title v-if="title">{{title}}</v-card-title>
     <v-slide-y-transition class="py-0" group tag="v-list">
-      <template v-for="(task, i) in listTasks">
+      <template v-for="(task, i) in tasks">
         <v-divider v-if="i !== 0" :key="`${i}-divider`"></v-divider>
         <v-list-item :key="`${i}-${task.title}`">
           <v-list-item-action>
@@ -25,58 +26,57 @@
         {{ completedTasks }} of
       </strong>
       <strong class="ml-0 white--text text--darken-2">
-        {{ listTasks.length }}
+        {{ tasks.length }}
       </strong>
       </template>
       </v-progress-linear>
     </v-row>
-    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
+    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/>
   </v-card>
   <v-card v-else>
-    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="create" append-icon="mdi-plus" @click:append="create"/>
+    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/>
   </v-card>
 </template>
 <script>
-import { mapGetters } from 'vuex'
-
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Tasks',
-  props: ['base'],
-  data: () => ({
-    task: {
-      done: false,
-      title: ''
-    }
-  }),
-  computed: {
-    ...mapGetters('tasks', ['listTasks']),
-    completedTasks () {
-      return this.listTasks.filter(task => task.done).length
-    },
-    progress () {
-      return this.completedTasks / this.listTasks.length * 100
-    },
-    remainingTasks () {
-      return this.listTasks.length - this.completedTasks
+  components: {
+  },
+  props: ['base', 'title'],
+  data () {
+    return {
+      task: {
+        title: '',
+        done: false
+      }
     }
   },
   methods: {
-    create () {
-      if (this.listTasks === undefined) {
-        this.listTasks = []
-      }
-      this.listTasks.push({
-        done: false,
-        title: this.task.title
-      })
-      this.task = {
-        done: false,
-        title: ''
-      }
+    ...mapActions('tasks', ['fetchTasks', 'saveTask', 'deleteTask', 'acknowledgeErrors'])
+  },
+  computed: {
+    ...mapState('auth', ['chimera']),
+    ...mapState('tasks', ['errors']),
+    ...mapGetters('tasks', ['listTasks', 'listErrors']),
+    tasks () {
+      return this.listTasks(this.base)
+    },
+    errors () {
+      return this.listErrors(this.base)
+    },
+    completedTasks () {
+      return this.tasks.filter(task => task.done).length
+    },
+    progress () {
+      return this.completedTasks / this.tasks.length * 100
+    },
+    remainingTasks () {
+      return this.tasks.length - this.completedTasks
     }
   },
   created () {
-    // console.log('create', this.listTasks.length)
+    this.fetchTasks(this.base)
   }
 }
 </script>

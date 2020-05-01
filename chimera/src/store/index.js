@@ -56,12 +56,6 @@ const store = new Vuex.Store({
   actions: {
     init: async () => {
       await Promise.all([])
-    },
-    makeHolochainCall (callString, params, callback) {
-      const [instanceId, zome, func] = callString.split('/')
-      this.state.holochainConnection.then(({ callZome }) => {
-        callZome(instanceId, zome, func)(params).then((result) => callback(JSON.parse(result)))
-      })
     }
   }
 })

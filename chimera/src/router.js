@@ -51,6 +51,11 @@ const router = new Router({
       component: () => import('@/views/store-page/Index')
     },
     {
+      path: '/part/:id',
+      name: 'Parts',
+      component: () => import('@/views/parts/tasks/TasksModule')
+    },
+    {
       path: '/profiles',
       name: 'Profiles',
       component: () => import('@/views/profiles/Index')
@@ -61,9 +66,9 @@ const router = new Router({
       component: () => import('@/views/personas/Index')
     },
     {
-      path: '/notes',
-      name: 'Notes',
-      component: () => import('@/views/notes/NotesModule')
+      path: '/partNotes/:id',
+      name: 'Part Notes',
+      component: () => import('@/views/partNotes/NotesModule')
     },
     {
       path: '/holopunk-records/library',
