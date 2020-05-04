@@ -19,19 +19,28 @@
     </v-alert>
     <v-col cols="12" v-for="note in notes" :key="note.id">
       <note :key="note.id" :base="base" :note="note">
-        <task-manager v-if="note.id" :key="note.id" :base="note.id" />
+        <v-menu open-on-hover bottom offset-y>
+          <template v-slot:activator="{ on }">
+            <v-avatar left v-if="chimera">
+              <v-icon small v-on="on">mdi-dna</v-icon>
+            </v-avatar>
+          </template>
+          <v-list>
+            <v-list-item v-for="(item, index) in items" :key="index">
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-chip v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard">
+          <v-avatar left>
+            <v-icon small>mdi-dna</v-icon>
+          </v-avatar>
+          Tasks - Art Brock
+        </v-chip>
+        <!-- <task-manager v-if="note.id" :key="note.id" :base="note.id" /> -->
       </note>
     </v-col>
     <slot></slot>
-    <v-avatar left v-if="chimera">
-      <v-icon small @click="addPart">mdi-dna</v-icon>
-    </v-avatar>
-    <v-chip v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
-      <v-avatar left>
-        <v-icon small @click="acceptInvite">mdi-dna</v-icon>
-      </v-avatar>
-      Tasks - Art Brock
-    </v-chip>
   </v-card>
 </template>
 <script>
@@ -39,14 +48,23 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Notes',
   components: {
-    TaskManager: () => import('../Tasks/Tasks'),
+    // TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('./Note')
     // NoteProseMirror: () => import('./NoteProseMirror')
   },
   props: ['base', 'title'],
+  data () {
+    return {
+      items: [
+        { title: 'Tasks' },
+        { title: 'Ratings' },
+        { title: 'Comments' },
+        { title: 'Files' }
+      ]
+    }
+  },
   methods: {
     add () {
-      console.log('this.notes', this.notes)
       this.notes.splice(0, 0, {
         title: '',
         content: ''

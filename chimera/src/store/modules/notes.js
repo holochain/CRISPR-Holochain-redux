@@ -98,7 +98,6 @@ export default {
       commit('resetErrors', base)
     },
     fetchNotes: ({ state, commit, rootState }, base) => {
-      console.log(rootState.holochainConnection)
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
           const res = JSON.parse(result)

@@ -3,8 +3,11 @@
     <v-list-item>
      <v-list-item-avatar>
        <v-img :src="avatarData"></v-img>
-     </v-list-item-avatar>
-     <v-list-item-avatar class="ml-n5 mr-1">
+      </v-list-item-avatar>
+      <v-text-field v-model="persona.title" :disabled="!isEditing" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
+      <v-list-item-title class="headline" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
+      <v-spacer></v-spacer>
+      <v-list-item-avatar class="ml-n5 mr-1">
        <v-slide-x-reverse-transition mode="out-in">
          <v-icon
            large
@@ -15,10 +18,6 @@
          </v-icon>
        </v-slide-x-reverse-transition>
      </v-list-item-avatar>
-     <v-list-item-content>
-        <v-text-field v-model="persona.title" :disabled="!isEditing" label="Enter Field Value" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
-        <v-list-item-title class="headline" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
-     </v-list-item-content>
      <v-list-item-action v-if="isEditing">
        <v-dialog v-model="dialog" persistent max-width="290">
           <template v-slot:activator="{ on }">
@@ -65,7 +64,6 @@ export default {
     return {
       personaFields: this.persona.fields,
       isEditing: '',
-      avatarData: this.persona.fields[0].fieldValue,
       dialog: false
     }
   },
@@ -74,16 +72,16 @@ export default {
       console.log(persona)
       this.persona.fields.push({})
     },
-    saveField (field, fieldData) {
+    saveField (field, fieldValue) {
       field.personaId = this.persona.id
       console.log(field.fieldName)
       if (field.fieldName === 'Avatar') {
-        this.avatarData = fieldData
+        this.avatarData = fieldValue
       }
       // fields for Holochain entry
       // console.log(this.persona)
       // console.log(field)
-      console.log(fieldData)
+      console.log(fieldValue)
     },
     deleteField (field) {
       console.log('delete field')
@@ -95,6 +93,16 @@ export default {
     },
     deletePersona (persona) {
       this.$emit('delete-persona', persona)
+    }
+  },
+  computed: {
+    avatarData () {
+      const avatarField = this.personaFields.find(f => f.fieldName === 'Avatar')
+      if (avatarField) {
+        return avatarField.fieldValue
+      } else {
+        return ''
+      }
     }
   }
 }

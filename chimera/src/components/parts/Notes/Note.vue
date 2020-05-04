@@ -11,15 +11,6 @@
     <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
     <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
     <slot></slot>
-    <v-avatar left v-if="chimeraOn">
-      <v-icon small @click="addPart">mdi-dna</v-icon>
-    </v-avatar>
-    <v-chip v-if="chimeraOn" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="close">
-      <v-avatar left>
-        <v-icon small @click="acceptInvite">mdi-dna</v-icon>
-      </v-avatar>
-      Tasks - Art Brock
-    </v-chip>
   </v-card>
 </template>
 <script>
@@ -53,7 +44,7 @@ export default {
     this.instanceNote = { ...this.note }
   },
   computed: {
-    ...mapState('auth', ['chimeraOn'])
+    ...mapState('auth', ['chimera'])
   }
 }
 </script>
