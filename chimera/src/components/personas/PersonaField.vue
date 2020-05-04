@@ -117,7 +117,6 @@ export default {
       if (field.fieldType === undefined) {
         this.isEditing = true
       }
-      console.log(field)
       this.showSingleLineTextField = field.fieldType === 'singleLineText'
       this.showMultiLineTextField = field.fieldType === 'multiLineText'
       this.showImage = field.fieldType === 'image'

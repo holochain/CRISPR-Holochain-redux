@@ -2,14 +2,14 @@
 <v-card class="ma-5">
   <v-card-title>Tasks Part
     <v-spacer></v-spacer>
-    <v-card-title-actions>
+    <v-card-actions>
       <v-btn color="action" icon :to="`/part/QmmorehashyTasks`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/project/QmmorehashyTasks`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-    </v-card-title-actions>
+    </v-card-actions>
   </v-card-title>
   <v-row>
     <v-col cols="12" md="4">

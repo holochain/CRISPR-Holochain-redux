@@ -20,7 +20,7 @@
     </v-col>
     <v-col cols="4">
       <v-card class="ma-1">
-        <v-card-title>Task Part Developer Preview
+        <v-card-title>Task Part Preview
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-btn color="action" icon :to="`/partNotes/${id}`">

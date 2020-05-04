@@ -23,6 +23,11 @@ export default {
   components: {
     PersonaCard: () => import('@/components/personas/PersonaCard')
   },
+  methods: {
+    deletePersona () {
+      console.log('delete persona')
+    }
+  },
   computed: {
     ...mapGetters('personalInformation', ['profiles', 'personas'])
   }

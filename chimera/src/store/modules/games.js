@@ -11,7 +11,7 @@ export default {
         launch: '/profile-site-builder',
         price: 19.99,
         compareAt: 27.99,
-        publisher: 'Creten Studios',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1587694679490
       },
       {
@@ -49,7 +49,7 @@ export default {
         price: 19.99,
         compareAt: 27.99,
         publisher: 'Holopunk Records',
-        updated: 1545864353040
+        updated: 1585864353040
       },
       {
         id: 'QmHashyfallen-kingdoms',
@@ -98,8 +98,17 @@ export default {
         launch: '/notes',
         price: 19.99,
         compareAt: 19.99,
-        publisher: 'Deepdive',
+        publisher: 'Holochain.org',
         updated: 1545864353040
+      },
+      {
+        id: 'QmHashyTaskss',
+        name: 'Tasks',
+        src: 'tasks',
+        price: 9.99,
+        compareAt: 12.99,
+        publisher: 'Holochain.org',
+        updated: 1588546955113
       }
     ]
   },
