@@ -40,6 +40,9 @@
             <v-col v-if="project.name === 'Notes'" cols="12">
               <notes key="Demo Notes" base="PartEditor" title="Demo"/>
             </v-col>
+            <v-col v-if="project.name === 'Kanban'" cols="12">
+              <kanban key="Demo Kanban" base="PartEditor" title="Demo"/>
+            </v-col>
           </v-row>
         </v-card>
       </v-col>
@@ -58,6 +61,7 @@ export default {
   components: {
     Notes: () => import('@/components/parts/Notes/Notes'),
     Tasks: () => import('@/components/parts/Tasks/Tasks'),
+    Kanban: () => import('@/components/parts/Kanban/Kanban'),
     codemirror
   },
   data () {

@@ -7,12 +7,12 @@ export default {
         base: 'PartEditor',
         tasks: [
           {
-            id: 'QmhashTask1',
+            id: 'PartEditor',
             done: true,
             title: 'Demo Task 1'
           },
           {
-            id: 'QmhashTask2',
+            id: 'PartEditor',
             done: false,
             title: 'Demo Task 2'
           }

@@ -7,12 +7,12 @@ export default {
         base: 'PartEditor',
         notes: [
           {
-            id: 'QmhashNote1',
+            id: 'PartEditor',
             title: 'Demo Note 1',
             content: 'Content for Note 1'
           },
           {
-            id: 'QmhashNote2',
+            id: 'PartEditor',
             title: 'Demo Note 2',
             content: 'Content for Note 2'
           }
@@ -26,7 +26,7 @@ export default {
     createNote (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
       if (base) {
-        // base.notes.push(payload.data)
+        base.notes.push(payload.data)
       } else {
         state.baseNotes.push((payload))
       }

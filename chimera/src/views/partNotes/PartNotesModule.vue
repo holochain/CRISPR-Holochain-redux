@@ -12,14 +12,8 @@
     </v-card-actions>
   </v-card-title>
   <v-row>
-    <v-col cols="12" md="4">
-      <notes key="TasksDo" :base="`${project.name}Do`" title="Do"/>
-    </v-col>
-    <v-col cols="12" md="4">
-      <notes key="TasksDoing" :base="`${project.name}Doing`" title="Doing"/>
-    </v-col>
-    <v-col cols="12" md="4">
-      <notes key="TasksDone" :base="`${project.name}Done`" title="Done"/>
+    <v-col cols="12">
+      <kanban :key="project.id" :base="project.id" :title="project.name"/>
     </v-col>
   </v-row>
 </v-card>
@@ -29,7 +23,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'PartNotesModule',
   components: {
-    Notes: () => import('@/components/parts/Notes/Notes')
+    Kanban: () => import('@/components/parts/Kanban/Kanban')
   },
   computed: {
     ...mapGetters('portfolio', ['projectById']),

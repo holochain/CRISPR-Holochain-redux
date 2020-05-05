@@ -1,0 +1,88 @@
+bridges = []
+persistence_dir = '/tmp/tmp.wkFrnuddpG/tryorama/CU4ka0'
+ui_bundles = []
+ui_interfaces = []
+
+[[agents]]
+id = 'columns'
+keystore_file = '[UNUSED]'
+name = 'phil::columns::db068c26-86a2-4e2b-b4f9-38f24e3a01a7'
+public_address = 'HcScJzamyR96865UhrTyhj6KGhSavx5scBmptrYGO4w5kjrsR8tbsFSE9poi59i'
+test_agent = true
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
+hash = 'Qmc3jANUn5u2GLzWrYK4oQxnmXDb75eDY3MSNvxUsSnmDg'
+id = 'columns-test'
+uuid = 'db068c26-86a2-4e2b-b4f9-38f24e3a01a7'
+
+[[instances]]
+agent = 'columns'
+dna = 'columns-test'
+id = 'columns'
+
+[instances.storage]
+path = '/tmp/tmp.wkFrnuddpG/tryorama/CU4ka0/columns'
+type = 'lmdb'
+
+[[interfaces]]
+admin = true
+choose_free_port = false
+id = 'tryorama-interface'
+
+[[interfaces.instances]]
+id = 'columns'
+
+[interfaces.driver]
+port = 33002
+type = 'websocket'
+
+[logger]
+state_dump = false
+type = 'debug'
+[[logger.rules.rules]]
+exclude = true
+pattern = '^parity'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^mio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^tokio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^hyper'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rusoto_core'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^want'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rpc'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^holochain'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^lib3h'
+
+[network]
+sim2h_url = 'ws://localhost:9000'
+type = 'sim2h'
+
+[passphrase_service]
+type = 'cmd'
+
+[signals]
+consistency = true
+trace = false

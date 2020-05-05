@@ -1,88 +1,63 @@
 <template>
-  <v-card class="mx-auto" max-width="520" color="secondary" dark>
+  <v-card class="mx-auto" color="accent" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-note-multiple-outline</v-icon>
       <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
-      <v-icon @click="add">mdi-note-plus-outline</v-icon>
+      <v-icon @click="newColumn = true">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
     </v-system-bar>
-    <v-alert v-if="errors.length" type="error">
-      <v-row no-gutters>
-        <v-col cols="11">
-          {{errors}}
-        </v-col>
-        <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(base)">mdi-close-box-outline</v-icon>
-        </v-col>
-      </v-row>
-    </v-alert>
-    <v-col cols="12" v-for="note in notes" :key="note.id">
-      <note :key="note.id" :base="base" :note="note">
-        <v-menu open-on-hover bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-avatar left v-if="chimera">
-              <v-icon small v-on="on">mdi-dna</v-icon>
-            </v-avatar>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-chip v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard">
-          <v-avatar left>
-            <v-icon small>mdi-dna</v-icon>
-          </v-avatar>
-          Tasks - Art Brock
-        </v-chip>
-        <task-manager v-if="note.id" :key="note.id" :base="note.id" />
-      </note>
-    </v-col>
-    <slot></slot>
+    <v-row>
+      <v-col cols="12" md="4" v-for="column in columns" :key="column.id">
+        <kanban-column :key="column.id" :column="column"/>
+      </v-col>
+      <v-col cols="12" md="4" v-if="newColumn">
+        <v-card class="mx-auto" max-width="520" color="secondary" dark>
+          <v-system-bar color="indigo darken-2" dark>
+            <v-icon>mdi-note-multiple-outline</v-icon>
+            <span class="subtitle">{{title}}</span>
+            <v-spacer></v-spacer>
+            <v-icon @click="add">mdi-note-plus-outline</v-icon>
+            <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
+          </v-system-bar>
+          <v-text-field class="ml-2 white--text" v-model="newColumnTitle" label="Column Title" @keydown.enter="saveColumn({ base: base, column: { title: newColumnTitle, order: 1}}); newColumn=false" append-icon="mdi-content-save" @click:append="saveColumn({ base: base, column: { title: newColumnTitle, order: 1}}); newColumn=false"/>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Kanban',
   components: {
-    TaskManager: () => import('../Tasks/Tasks'),
-    Note: () => import('./Note')
+    KanbanColumn: () => import('@/components/parts/Kanban/KanbanColumn')
   },
   props: ['base', 'title'],
   data () {
     return {
-      items: [
-        { title: 'Tasks' },
-        { title: 'Ratings' },
-        { title: 'Comments' }
-      ]
+      newColumn: false,
+      newColumnTitle: ''
     }
   },
   methods: {
     add () {
-      this.notes.splice(0, 0, {
+      this.columns.splice(0, 0, {
         title: '',
-        content: ''
+        order: this.columns.length
       })
+      console.log('add', this.columns)
     },
-    ...mapActions('notes', ['fetchNotes', 'acknowledgeErrors'])
+    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors'])
   },
   computed: {
-    ...mapState('auth', ['chimera']),
-    ...mapState('notes', ['errors']),
-    ...mapGetters('notes', ['listNotes', 'listErrors']),
-    notes () {
-      return this.listNotes(this.base)
-    },
-    errors () {
-      return this.listErrors(this.base)
+    ...mapGetters('kanban', ['listColumns']),
+    columns () {
+      return this.listColumns(this.base)
     }
   },
   created () {
-    this.fetchNotes(this.base)
+    this.fetchColumns(this.base)
   }
 }
 </script>
