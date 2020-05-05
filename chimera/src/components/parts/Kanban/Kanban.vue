@@ -7,7 +7,7 @@
       <v-icon @click="newColumn = true">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
     </v-system-bar>
-    <v-row>
+    <v-row class="pl-1 pr-1">
       <v-col cols="12" md="4" v-for="column in columns" :key="column.id">
         <kanban-column :key="column.id" :column="column"/>
       </v-col>

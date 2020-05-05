@@ -13,12 +13,12 @@
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(column.base)">mdi-close-box-outline</v-icon>
+          <v-icon @click="acknowledgeErrors(column.id)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
     <v-col cols="12" v-for="note in notes" :key="note.id">
-      <note :key="note.id" :base="base" :note="note">
+      <note :key="note.id" :base="column.id" :note="note">
         <v-menu open-on-hover bottom offset-y>
           <template v-slot:activator="{ on }">
             <v-avatar left v-if="chimera">
@@ -57,7 +57,6 @@ export default {
   },
   methods: {
     add () {
-      console.log('add', this.listNotes(this.column.id))
       this.notes.splice(0, 0, {
         title: '',
         content: ''

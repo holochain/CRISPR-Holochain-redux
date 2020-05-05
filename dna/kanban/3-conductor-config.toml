@@ -1,20 +1,20 @@
 bridges = []
-persistence_dir = '/tmp/tmp.wkFrnuddpG/tryorama/CU4ka0'
+persistence_dir = '/tmp/tmp.wkFrnuddpG/tryorama/zdOz0z'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'columns'
 keystore_file = '[UNUSED]'
-name = 'phil::columns::db068c26-86a2-4e2b-b4f9-38f24e3a01a7'
-public_address = 'HcScJzamyR96865UhrTyhj6KGhSavx5scBmptrYGO4w5kjrsR8tbsFSE9poi59i'
+name = 'phil::columns::e04289d6-7ac2-442c-bf69-abdb11dbace4'
+public_address = 'HcScIGGv9GXBrussetXJ8dpHUNJ3d9taoivHNjKnQquskjb5nWasxDrnt89nnwa'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'Qmc3jANUn5u2GLzWrYK4oQxnmXDb75eDY3MSNvxUsSnmDg'
+hash = 'QmWfFMm6yi75eCoaK3FfRof2eDiRRzc9cZ6gkiQrxvj1J7'
 id = 'columns-test'
-uuid = 'db068c26-86a2-4e2b-b4f9-38f24e3a01a7'
+uuid = 'e04289d6-7ac2-442c-bf69-abdb11dbace4'
 
 [[instances]]
 agent = 'columns'
@@ -22,7 +22,7 @@ dna = 'columns-test'
 id = 'columns'
 
 [instances.storage]
-path = '/tmp/tmp.wkFrnuddpG/tryorama/CU4ka0/columns'
+path = '/tmp/tmp.wkFrnuddpG/tryorama/zdOz0z/columns'
 type = 'lmdb'
 
 [[interfaces]]

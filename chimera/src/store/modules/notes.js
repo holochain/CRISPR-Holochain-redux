@@ -26,6 +26,7 @@ export default {
     createNote (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
       if (base) {
+        base.notes = base.notes.filter(n => n.id !== undefined)
         base.notes.push(payload.data)
       } else {
         state.baseNotes.push((payload))
@@ -65,7 +66,6 @@ export default {
       } else {
         state.baseNotes.push(payload)
       }
-      // console.log(state)
     }
   },
   getters: {
