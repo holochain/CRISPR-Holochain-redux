@@ -58,7 +58,7 @@ const router = new Router({
     {
       path: '/part/:id',
       name: 'Parts',
-      component: () => import('@/views/parts/tasks/TasksModule')
+      component: () => import('@/views/parts/PartEditor')
     },
     {
       path: '/profiles',

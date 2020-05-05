@@ -1,0 +1,11 @@
+scenario("author-only-delete-column", async (s, t) => {
+  const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
+  const createNoteResult = await alice.call("columns", "columns", "create_column", {"base": "testbase", "column_input" : {"title":"Title first column", "order": 1}})
+  await s.consistency()
+  const listNotesResult = await alice.call("columns", "columns", "list_columns", {"base": "testbase"})
+  t.deepEqual(listNotesResult.Ok.length, 1)
+  const deleteResult = await bob.call("columns", "columns", "delete_column", { "base": "testbase", "id": createNoteResult.Ok.id, "created_at": createNoteResult.Ok.createdAt, "address": createNoteResult.Ok.address })
+  t.deepEqual(JSON.parse(deleteResult.Err.Internal).kind, { ValidationFailed: 'Agent who did not author is trying to delete' })
+  const listNotesResult2 = await alice.call("columns", "columns", "list_columns", {"base": "testbase"})
+  t.deepEqual(listNotesResult2.Ok.length, 1)
+})

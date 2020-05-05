@@ -4,15 +4,15 @@ export default {
     featured: [],
     baseTasks: [
       {
-        base: 'Demo Task List',
+        base: 'PartEditor',
         tasks: [
           {
-            id: 'QmhashTask1',
+            id: 'PartEditor',
             done: true,
             title: 'Demo Task 1'
           },
           {
-            id: 'QmhashTask2',
+            id: 'PartEditor',
             done: false,
             title: 'Demo Task 2'
           }
@@ -98,6 +98,7 @@ export default {
       commit('resetErrors', base)
     },
     fetchTasks: ({ state, commit, rootState }, base) => {
+      if (base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'list_tasks')({ base: base }).then((result) => {
           const res = JSON.parse(result)
@@ -109,33 +110,35 @@ export default {
         })
       })
     },
-    saveTask: ({ state, commit, rootState }, baseTask) => {
-      if (baseTask.task.id === '' || baseTask.task.id === undefined) {
+    saveTask: ({ state, commit, rootState }, payload) => {
+      if (payload.base === 'PartEditor') return
+      if (payload.task.id === '' || payload.task.id === undefined) {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('tasks', 'tasks', 'create_task')({ base: baseTask.base, task_input: { title: baseTask.task.title, done: baseTask.task.done } }).then((result) => {
+          callZome('tasks', 'tasks', 'create_task')({ base: payload.base, task_input: { title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
-            // console.log(baseTask, res)
+            // console.log(payload, res)
             if (res.Ok === undefined) {
-              commit('error', { base: baseTask.base, error: res.Err.Internal })
+              commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('createTask', { base: baseTask.base, data: res.Ok })
+              commit('createTask', { base: payload.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('tasks', 'tasks', 'update_task')({ id: baseTask.task.id, created_at: baseTask.task.createdAt, address: baseTask.task.address, task_input: { title: baseTask.task.title, done: baseTask.task.done } }).then((result) => {
+          callZome('tasks', 'tasks', 'update_task')({ id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address, task_input: { title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
-              commit('error', { base: baseTask.base, error: res.Err.Internal })
+              commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('updateTask', { base: baseTask.base, data: res.Ok })
+              commit('updateTask', { base: payload.base, data: res.Ok })
             }
           })
         })
       }
     },
     deleteTask: ({ state, commit, rootState }, payload) => {
+      if (payload.base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'delete_task')({ base: payload.base, id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address }).then((result) => {
           const res = JSON.parse(result)

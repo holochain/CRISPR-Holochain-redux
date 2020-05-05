@@ -45,15 +45,7 @@
           cols="12"
           md="6"
         >
-          <p>
-            Holochain CRISPR brings you all the power of building your own Holochain Apps without writing any code. You can assemble your own apps from pre-built modules as well as get right into the technical side and build new DNA's with the DNA Modeller.
-            Once you are confident customising your own Holochain experience you can even make a income building apps for others.............
-          </p>
-          <p>
-            CRISPR runs inside Chimera and comes with Holochain Version Control System (HVCS) and a Workflow project management system so you know exactly what needs doing and who is doing it. Each project has its own DHT and you control who is on your team and what team members can do.
-          </p>
-          <p>
-          </p>
+          <p v-text="game.description" />
         </v-col>
         <v-col
           cols="12"

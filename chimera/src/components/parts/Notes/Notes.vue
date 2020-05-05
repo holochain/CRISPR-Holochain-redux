@@ -37,7 +37,7 @@
           </v-avatar>
           Tasks - Art Brock
         </v-chip>
-        <!-- <task-manager v-if="note.id" :key="note.id" :base="note.id" /> -->
+        <task-manager v-if="note.id" :key="note.id" :base="note.id" />
       </note>
     </v-col>
     <slot></slot>
@@ -48,7 +48,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Notes',
   components: {
-    // TaskManager: () => import('../Tasks/Tasks'),
+    TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('./Note')
     // NoteProseMirror: () => import('./NoteProseMirror')
   },
@@ -58,8 +58,7 @@ export default {
       items: [
         { title: 'Tasks' },
         { title: 'Ratings' },
-        { title: 'Comments' },
-        { title: 'Files' }
+        { title: 'Comments' }
       ]
     }
   },

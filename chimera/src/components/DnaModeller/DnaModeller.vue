@@ -137,7 +137,6 @@ export default {
       entryType: {},
       refreshKey: 'clean',
       tree: [],
-      open: ['Tasks', 'Notes', 'DNA', 'Test', 'Zomes', 'UI'],
       files: {
         html: 'mdi-language-html5',
         js: 'mdi-nodejs',
@@ -280,6 +279,9 @@ export default {
     },
     items () {
       return this.fileItemsForZome(this.zome.name)
+    },
+    open () {
+      return [this.project.name, 'DNA', 'Test', 'Zomes', 'UI']
     }
   }
 }

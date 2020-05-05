@@ -10,7 +10,8 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
-const dnaPath = path.join(__dirname, "../dist/dna.dna.json")
+const notesDnaPath = path.join(__dirname, "../dist/dna.dna.json")
+const tasksDnaPath = path.join(__dirname, "/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json")
 
 const orchestrator = new Orchestrator({
   middleware: combine(
@@ -30,37 +31,44 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const dna = Config.dna(dnaPath, 'notes-test')
+const notesDna = Config.dna(dnaPath, 'notes-test')
+const tasksDna = Config.dna(tasksDnaPath, 'notes-test')
+
 // const conductorConfig = Config.gen({notes: dna})
-const conductorConfig = Config.gen({notes: dna}, {
+const conductorConfig = Config.gen({notes: notesDna}, {tasks: tasksDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
   }
 })
 
-orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
+orchestrator.registerScenario("Demo mode for Workflow Notes with Tasks", async (s, t) => {
   const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
-  await alice.call("notes", "notes", "create_note", {"base":"demoAlice", "note_input": {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Content for the note"}})
-  await alice.call("notes", "notes", "create_note", {"base":"demoAlice", "note_input": {"title":"Stepper for add new entry", "content":"Content for the note"}})
-  await alice.call("notes", "notes", "create_note", {"base":"demoAlice", "note_input": {"title":"Scale the zome model surface", "content":"Content for the note"}})
-  await alice.call("notes", "notes", "create_note", {"base":"demoAlice", "note_input": {"title":"Get theme colours", "content":"Content for the note"}})
+  let taskBase = await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Content for the note"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Locate a Zoom room.", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Invite enthusiastic peopole.", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Demo script.", "done":"false"}})
+
+  await alice.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"title":"Stepper for add new entry", "content":"Content for the note"}})
+  await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Scale the zome model surface", "content":"Content for the note"}})
+  await alice.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"title":"Get theme colours", "content":"Content for the note"}})
   await s.consistency()
 
-  await bob.call("notes", "notes", "create_note", {"base":"demoBob", "note_input": {"title":"Agent Id Link", "content":"Content for the note"}})
-  await bob.call("notes", "notes", "create_note", {"base":"demoBob", "note_input": {"title":"Entry type code viewer", "content":"Content for the note"}})
+  await bob.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"title":"Agent Id Link", "content":"Content for the note"}})
+  await bob.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Entry type code viewer", "content":"Content for the note"}})
   await s.consistency()
 
-  await phil.call("notes", "notes", "create_note", {"base":"demoPhil", "note_input": {"title":"DNA Modeller toolbar", "content":"Content for the note"}})
-  await phil.call("notes", "notes", "create_note", {"base":"demoPhil", "note_input": {"title":"Show profile information on each installed app", "content":"Content for the note"}})
-  await phil.call("notes", "notes", "create_note", {"base":"demoPhil", "note_input": {"title":"Be able to workflowe any entry", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"title":"DNA Modeller toolbar", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"title":"Show profile information on each installed app", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"title":"Be able to workflowe any entry", "content":"Content for the note"}})
   await s.consistency()
 
-  await lucy.call("notes", "notes", "create_note", {"base":"demoLucy", "note_input": {"title":"Finish off tasks", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"demoLucy", "note_input": {"title":"Deep dive", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"demoLucy", "note_input": {"title":"Another note", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"demoLucy", "note_input": {"title":"Awesome.", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Finish off tasks", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"title":"Deep dive", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"title":"Another note", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"NotesDone", "note_input": {"title":"Awesome.", "content":"Content for the note"}})
   await s.consistency()
 })
 
 orchestrator.run()
+

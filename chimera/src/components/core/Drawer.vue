@@ -65,7 +65,7 @@ export default {
         },
         {
           icon: 'mdi-fire',
-          text: 'Store',
+          text: 'Parts Store',
           to: '/store'
         },
         { spacer: true },

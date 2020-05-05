@@ -467,6 +467,204 @@ export default {
         ],
         entryTypes: [],
         profileSpecs: []
+      },
+      {
+        id: 'QmZome3hash',
+        name: 'Kanban',
+        base: 'QmHashyKanban',
+        template: 'kanban',
+        items: [
+          { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'columns') },
+          {
+            id: 11,
+            name: 'code',
+            children: [
+              { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/.hcbuild`, 'utf8') },
+              { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/Cargo.toml`, 'utf8') },
+              {
+                id: 11,
+                name: 'src',
+                children: [
+                  { id: 12, name: 'lib.rs', file: 'rs', code: '' },
+                  {
+                    id: 11,
+                    name: 'column',
+                    children: [
+                      { id: 12, name: 'handlers.rs', file: 'rs', code: '' },
+                      { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/mod.rs`, 'utf8') },
+                      { id: 14, name: 'entry_permissions.rs', file: 'rs', code: '' },
+                      { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/link_permissions.rs`, 'utf8') },
+                      { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/validation.rs`, 'utf8') }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        testItems: [
+          {
+            id: 7,
+            name: 'Column',
+            children: [
+              { id: 9, name: 'index.js', file: 'js', code: '' }
+            ]
+          }
+        ],
+        anchorTypes: [
+          {
+            id: 'Qmlist_Columns1',
+            type: 'list_columns',
+            text: '',
+            tag: ' ',
+            context: 'permanent',
+            libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/lib.rs`, 'utf8'),
+            testCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/test/column/index.js`, 'utf8'),
+            entryTypes: [
+              {
+                id: 'QmColumnEntryTypeHash',
+                name: 'Column',
+                fields: [
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'title',
+                    fieldType: 'String'
+                  },
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'order',
+                    fieldType: 'u32'
+                  }
+                ],
+                metaFields: [
+                  {
+                    id: 'Qm111',
+                    fieldName: 'id',
+                    fieldType: 'Address'
+                  },
+                  {
+                    id: 'Qm126',
+                    fieldName: 'created_at',
+                    fieldType: 'Iso8601'
+                  },
+                  {
+                    id: 'Qm126',
+                    fieldName: 'created_by',
+                    fieldType: 'Address'
+                  },
+                  {
+                    id: 'Qm116',
+                    fieldName: 'address',
+                    fieldType: 'Address'
+                  },
+                  {
+                    id: 'Qm126',
+                    fieldName: 'updated_at',
+                    fieldType: 'Iso8601'
+                  },
+                  {
+                    id: 'Qm126',
+                    fieldName: 'updated_by',
+                    fieldType: 'Address'
+                  }
+                ],
+                functions: [
+                  {
+                    name: 'declarations',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_entry_def.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/handlers.rs`, 'utf8'),
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/entry_permissions.rs`, 'utf8')
+                  },
+                  {
+                    name: 'create',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_create.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/create.rs`, 'utf8'),
+                    explanation: '',
+                    permission: 'anyone',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/permissions_rule_templates/validate_permissions_entry_create/anyone.rs`, 'utf8'),
+                    permissionsExplanation: 'Docs go here'
+                  },
+                  {
+                    name: 'read',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_read.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/read.rs`, 'utf8'),
+                    explanation: 'Docs go here'
+                  },
+                  {
+                    name: 'update',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_update.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/update.rs`, 'utf8'),
+                    explanation: 'Docs go here',
+                    permission: 'author-only',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
+                    permissionsExplanation: 'Docs go here',
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/test/column/author-only-update-column.js`, 'utf8')
+                  },
+                  {
+                    name: 'delete',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_delete.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/delete.rs`, 'utf8'),
+                    explanation: 'Docs go here',
+                    permission: 'anyone',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
+                    permissionsExplanation: 'Docs go here',
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/test/column/anyone-delete-column.js`, 'utf8')
+                  },
+                  {
+                    name: 'list',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_list.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/list.rs`, 'utf8'),
+                    explanation: 'Docs go here'
+                  }
+                ],
+                examples: []
+              }
+            ],
+            anchors: [
+              {
+                id: 'Qmlist_QmhashColumn1',
+                type: 'list_columns',
+                text: 'Notes Project',
+                links: [
+                  {
+                    entityId: 'QmColumnEntryTypeHash',
+                    type: 'column_link',
+                    tag: ' ',
+                    context: 'exclusive'
+                  }
+                ]
+              },
+              {
+                id: 'Qmlist_QmhashColumn2',
+                type: 'list_columns',
+                text: 'Tasks Project',
+                links: [
+                  {
+                    entityId: 'QmColumnEntryTypeHash',
+                    type: 'column_link',
+                    tag: ' ',
+                    context: 'exclusive'
+                  }
+                ]
+              },
+              {
+                id: 'Qmlist_QmhashColumn3',
+                type: 'list_columns',
+                text: 'Kanban Project',
+                links: [
+                  {
+                    entityId: 'QmColumnEntryTypeHash',
+                    type: 'column_link',
+                    tag: ' ',
+                    context: 'exclusive'
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        entryTypes: [],
+        profileSpecs: []
       }
     ]
   },

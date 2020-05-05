@@ -25,19 +25,38 @@
       <v-btn color="action" icon :to="`/project/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-      <v-btn color="action" icon>
+      <v-btn color="action" icon @click="publishDialog = true">
         <v-icon>mdi-publish</v-icon>
       </v-btn>
       <v-btn color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>
+    <v-dialog v-model="publishDialog" max-width="700px">
+      <v-card flat>
+        <v-toolbar dark>
+          <v-toolbar-title class="display-1">Publish {{project.name}} to the Store</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-card-subtitle>(This feature is incomplete at this time)</v-card-subtitle>
+        <v-content>
+          When your part is ready publish it to the Parts Store.
+        </v-content>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="publishDialog = false">
+            Publish
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="cloningDialog" max-width="700px">
       <v-card flat>
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
-          <v-spacer></v-spacer>
         </v-toolbar>
+        <v-card-subtitle>(This feature is incomplete at this time)</v-card-subtitle>
         <v-row no-gutters align="start" justify="center">
           <v-col cols="12">
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
@@ -61,7 +80,8 @@ export default {
   name: 'HolochainProject',
   data () {
     return {
-      cloningDialog: false
+      cloningDialog: false,
+      publishDialog: false
     }
   },
   props: {
