@@ -5,18 +5,18 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      <span class="title">Store</span>
+      <span class="title">Parts Store</span>
     </v-toolbar>
     <featured />
-    <games />
+    <!-- <games /> -->
   </section>
 </template>
 
 <script>
 export default {
   components: {
-    Featured: () => import('./Featured'),
-    Games: () => import('./Games')
+    Featured: () => import('./Featured')
+    // Games: () => import('./Games')
   },
 
   metaInfo () {

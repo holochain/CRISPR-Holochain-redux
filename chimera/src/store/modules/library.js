@@ -4,8 +4,8 @@ export default {
   namespaced: true,
 
   state: {
-    installed: ['QmHashyNotes', 'QmHashyCRISPR', 'QmHashyholopunk-records'],
-    games: ['QmHashySiteBuilder', 'QmHashyholopunk-records', 'QmHashyastras', 'QmHashystorm', 'QmHashyPhase', 'QmHashyNotes', 'QmHashyCRISPR']
+    installed: ['QmHashyNotes', 'QmHashyCRISPR'],
+    games: ['QmHashyNotes', 'QmHashyCRISPR']
   },
 
   getters: {

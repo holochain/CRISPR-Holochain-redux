@@ -4,7 +4,7 @@ export default {
     featured: [],
     baseNotes: [
       {
-        base: 'Demo Note List',
+        base: 'PartEditor',
         notes: [
           {
             id: 'QmhashNote1',
@@ -98,6 +98,7 @@ export default {
       commit('resetErrors', base)
     },
     fetchNotes: ({ state, commit, rootState }, base) => {
+      if (base === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
           const res = JSON.parse(result)
@@ -110,33 +111,35 @@ export default {
         })
       })
     },
-    saveNote: ({ state, commit, rootState }, baseNote) => {
-      if (baseNote.note.id === '' || baseNote.note.id === undefined) {
+    saveNote: ({ state, commit, rootState }, payload) => {
+      if (payload.base === 'PartEditor') return
+      if (payload.note.id === '' || payload.note.id === undefined) {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'create_note')({ base: baseNote.base, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
+          callZome('notes', 'notes', 'create_note')({ base: payload.base, note_input: { title: payload.note.title, content: payload.note.content } }).then((result) => {
             const res = JSON.parse(result)
             console.log(res)
             if (res.Ok === undefined) {
-              commit('error', { base: baseNote.base, error: res.Err.Internal })
+              commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('createNote', { base: baseNote.base, data: res.Ok })
+              commit('createNote', { base: payload.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'update_note')({ id: baseNote.note.id, created_at: baseNote.note.createdAt, address: baseNote.note.address, note_input: { title: baseNote.note.title, content: baseNote.note.content } }).then((result) => {
+          callZome('notes', 'notes', 'update_note')({ id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address, note_input: { title: payload.note.title, content: payload.note.content } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
-              commit('error', { base: baseNote.base, error: res.Err.Internal })
+              commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('updateNote', { base: baseNote.base, data: res.Ok })
+              commit('updateNote', { base: payload.base, data: res.Ok })
             }
           })
         })
       }
     },
     deleteNote: ({ state, commit, rootState }, payload) => {
+      if (payload.base === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'delete_note')({ base: payload.base, id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address }).then((result) => {
           const res = JSON.parse(result)
