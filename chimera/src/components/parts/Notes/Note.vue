@@ -24,7 +24,7 @@ export default {
     return {
       instanceNote: {},
       clean: {},
-      isEditing: this.note.id === undefined
+      isEditing: this.note.id === 'new'
     }
   },
   methods: {

@@ -33,13 +33,9 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-            <task-manager v-if="note.id" :key="note.id" :base="note.id" />
+            <task-manager v-if="note.id !== 'new'" :key="note.id" :base="note.id" />
           </note>
         </v-col>
-        <!-- <li class="list-group-item" v-for="element in list" :key="element.order">
-          <v-icon v-text="element.fixed ? 'mdi-anchor' : 'mdi-pin-outline'" @click="element.fixed =! element.fixed" />
-          {{element.name}}
-        </li> -->
       </transition-group>
     </draggable>
     <slot></slot>
@@ -71,20 +67,15 @@ export default {
   methods: {
     add () {
       this.notes.splice(0, 0, {
-        base: this.column.id,
-        note: {
-          title: '',
-          content: ''
-        }
+        id: 'new',
+        title: '',
+        content: '',
+        order: 0
       })
+      console.log(this.notes)
     },
     ...mapActions('notes', ['fetchNotes', 'acknowledgeErrors']),
     ...mapActions('kanban', ['deleteColumn']),
-    orderList () {
-      this.list = this.list.sort((one, two) => {
-        return one.order - two.order
-      })
-    },
     onMove ({ relatedContext, draggedContext }) {
       const relatedElement = relatedContext.element
       const draggedElement = draggedContext.element
@@ -99,10 +90,16 @@ export default {
     ...mapGetters('notes', ['listNotes', 'listErrors']),
     notes: {
       get () {
+        console.log(this.listNotes(this.column.id))
         return this.listNotes(this.column.id)
       },
       set (val) {
+        val.map((note, index) => ({
+          ...note,
+          order: index
+        }))
         console.log(val)
+        this.$store.dispatch('notes/order', { base: this.column.id, notes: val })
       }
     },
     errors () {

@@ -50,7 +50,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnKanbanDo = await alice.call("columns", "columns", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
   console.log('columnKanbanDo', columnKanbanDo)
   await s.consistency()
-  const doNote1 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop Notes", "content":"An agent should be able to drag Notes between columns"}})
+  const doNote1 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop Notes", "content":"An agent should be able to drag Notes between columns", "order": 1}})
   console.log('doNote1', doNote1)
   await s.consistency()
   const doTask1 = await alice.call("tasks", "tasks", "create_task", {"base": doNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":false}})
@@ -61,7 +61,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('doTask3', doTask3)
   await s.consistency()
 
-  const doNote2 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns"}})
+  const doNote2 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns", "order": 2}})
   console.log('doNote1', doNote1)
   await s.consistency()
   const doNote2Task1 = await alice.call("tasks", "tasks", "create_task", {"base": doNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":false}})
@@ -73,7 +73,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnKanbanDoing = await alice.call("columns", "columns", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 2}})
   console.log('columnKanbanDoing', columnKanbanDoing)
   await s.consistency()
-  const doingNote1 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Demo Setup", "content":"Work out how to write try-o-rama test to setup all the demo data for multiple DNAs"}})
+  const doingNote1 = await alice.call("notes", "notes", "create_note", {"base":columnKanbanDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Demo Setup", "content":"Work out how to write try-o-rama test to setup all the demo data for multiple DNAs", "order": 1}})
   console.log('doingNote1', doingNote1)
   await s.consistency()
   const doingTask1 = await alice.call("tasks", "tasks", "create_task", {"base": doingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Create new Demo folder", "done":false}})
@@ -91,7 +91,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnTasksDo = await alice.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
   console.log('columnTasksDo', columnTasksDo)
   await s.consistency()
-  const columnTasksDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a task", "content":"An agent should be able to edit a task"}})
+  const columnTasksDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a task", "content":"An agent should be able to edit a task", "order": 1}})
   console.log('columnTasksDoNote1', columnTasksDoNote1)
   await s.consistency()
   const columnTasksDoNote1Task1 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add Edit icon where tick is", "done":false}})
@@ -102,7 +102,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnTasksDoNote1Task3', columnTasksDoNote1Task3)
   await s.consistency()
 
-  const columnTasksDoNote2 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Delete a task", "content":"An agent should be able to delete a task"}})
+  const columnTasksDoNote2 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Delete a task", "content":"An agent should be able to delete a task", "order": 2}})
   console.log('columnTasksDoNote2', columnTasksDoNote2)
   await s.consistency()
   const columnTasksDoNote2Task1 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add deletge icon right of edit", "done":false}})
@@ -118,6 +118,19 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
 
   const columnTasksDone = await alice.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 3}})
   console.log('columnTasksDone', columnTasksDone)
+
+
+  const columnNotesDo = await alice.call("columns", "columns", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
+  console.log('columnNotesDo', columnNotesDo)
+  await s.consistency()
+  const columnNotesDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnNotesDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add order field", "content":"Notes should be orderable so they need an order field", "order": 1}})
+  console.log('columnNotesDoNote1', columnNotesDoNote1)
+  await s.consistency()
+  const columnNotesDoNote1Task1 = await alice.call("tasks", "tasks", "create_task", {"base": columnNotesDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add order field", "done":false}})
+  console.log('columnNotesDoNote1Task1', columnNotesDoNote1Task1)
+  const columnNotesDoNote1Task2 = await alice.call("tasks", "tasks", "create_task", {"base": columnNotesDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update listNotes to be ordered", "done":false}})
+  console.log('columnNotesDoNote1Task2', columnNotesDoNote1Task2)
+  await s.consistency()
   
 })
 
