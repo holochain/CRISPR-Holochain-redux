@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 /// NB: The tryorama config patterns are still not quite stabilized.
 /// See the tryorama README [https://github.com/holochain/tryorama]
 /// for a potentially more accurate example
@@ -41,9 +42,9 @@ const conductorConfig = Config.gen({columns: dna}, {
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
   const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
-  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"title":"Do", "order": 1}})
-  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"title":"Doing", "order": 1}})
-  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"title":"Done", "order": 1}})
+  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
+  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  await alice.call("columns", "columns", "create_column", {"base": "test", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 1}})
 })
 
 orchestrator.run()

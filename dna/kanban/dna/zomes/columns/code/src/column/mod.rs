@@ -33,6 +33,7 @@ const COLUMN_ENTRY_NAME: &str = "column";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ColumnEntry {
+    uuid: String,
     title: String,
     order: u32
 }
@@ -44,6 +45,7 @@ pub struct Column {
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
+    uuid: String,
 	title: String,
     order: u32
 }
@@ -68,6 +70,7 @@ impl Column {
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
             order: entry.order
         })
@@ -81,6 +84,7 @@ impl Column {
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
             order: entry.order
         })

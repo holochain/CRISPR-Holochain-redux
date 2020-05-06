@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 export default {
   namespaced: true,
   state: {
@@ -114,7 +115,7 @@ export default {
       if (payload.base === 'PartEditor') return
       if (payload.task.id === '' || payload.task.id === undefined) {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('tasks', 'tasks', 'create_task')({ base: payload.base, task_input: { title: payload.task.title, done: payload.task.done } }).then((result) => {
+          callZome('tasks', 'tasks', 'create_task')({ base: payload.base, task_input: { uuid: uuidv4(), title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(payload, res)
             if (res.Ok === undefined) {
@@ -126,7 +127,7 @@ export default {
         })
       } else {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('tasks', 'tasks', 'update_task')({ id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address, task_input: { title: payload.task.title, done: payload.task.done } }).then((result) => {
+          callZome('tasks', 'tasks', 'update_task')({ id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address, task_input: { uuid: payload.task.uuid, title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })

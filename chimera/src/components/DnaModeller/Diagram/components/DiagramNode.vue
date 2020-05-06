@@ -86,7 +86,7 @@ export default {
     selected: Boolean,
     entryDefHeight: {
       type: Number,
-      default: 58
+      default: 78
     },
     functionsHeight: {
       type: Number,

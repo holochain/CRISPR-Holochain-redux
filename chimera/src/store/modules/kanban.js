@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 export default {
   namespaced: true,
   state: {
@@ -72,7 +73,12 @@ export default {
     listColumns: state => (base) => {
       const baseColumn = state.baseColumns.find(n => n.base === base)
       if (baseColumn) {
-        return baseColumn.columns
+        console.log(baseColumn.columns)
+        return baseColumn.columns.sort((a, b) => {
+          if (a.order < b.order) return -1
+          if (a.order > b.order) return 1
+          return 0
+        })
       } else {
         return []
       }
@@ -108,7 +114,7 @@ export default {
       if (payload.base === 'PartEditor') return
       if (payload.column.id === '' || payload.column.id === undefined) {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('columns', 'columns', 'create_column')({ base: payload.base, column_input: { title: payload.column.title, order: payload.column.order } }).then((result) => {
+          callZome('columns', 'columns', 'create_column')({ base: payload.base, column_input: { uuid: uuidv4(), title: payload.column.title, order: payload.column.order } }).then((result) => {
             const res = JSON.parse(result)
             console.log(res)
             if (res.Ok === undefined) {
@@ -120,7 +126,7 @@ export default {
         })
       } else {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('columns', 'columns', 'update_column')({ id: payload.column.id, created_at: payload.column.createdAt, address: payload.column.address, column_input: { title: payload.column.title, order: payload.column.order } }).then((result) => {
+          callZome('columns', 'columns', 'update_column')({ id: payload.column.id, created_at: payload.column.createdAt, address: payload.column.address, column_input: { uuid: payload.column.uuid, title: payload.column.title, order: payload.column.order } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })

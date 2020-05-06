@@ -43,7 +43,7 @@
                   </v-list-item>
                 </template>
                 <v-list :color="$vuetify.breakpoint.mdAndUp ? 'black' : 'grey darken-4'">
-                  <v-list-item @click="whisperFriend">
+                  <v-list-item @click="whisperFriend(friend.info.name)">
                     <v-list-item-action>
                       <v-btn icon>
                         <v-icon>mdi-chat</v-icon>
@@ -53,7 +53,7 @@
                       <v-list-item-title>Whisper</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="whisperFriend">
+                  <!-- <v-list-item @click="whisperFriend">
                     <v-list-item-action>
                       <v-btn icon>
                         <v-icon>mdi-message-video</v-icon>
@@ -62,8 +62,8 @@
                     <v-list-item-content>
                       <v-list-item-title>Connect</v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="inviteFriend">
+                  </v-list-item> -->
+                  <!-- <v-list-item @click="inviteFriend">
                     <v-list-item-action>
                       <v-btn icon>
                         <v-icon>mdi-account-plus</v-icon>
@@ -82,7 +82,7 @@
                     <v-list-item-content>
                       <v-list-item-title>Remove</v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                 </v-list>
               </v-menu>
             </template>
@@ -91,6 +91,27 @@
       </v-row>
     </v-navigation-drawer>
     <core-fab />
+    <v-dialog v-model="chatDialog" max-width="700px">
+      <v-card flat>
+        <v-toolbar dark>
+          <v-toolbar-title class="display-1">Whisper</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+        <v-content>
+          When your part is ready publish it to the Parts Store.
+        </v-content>
+        <v-spacer></v-spacer>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text>
+            Send
+          </v-btn>
+          <v-btn color="action darken-1" text @click="publishDialog = false">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -107,6 +128,11 @@ export default {
   components: {
     Auth: () => import('@/components/friends/Auth'),
     CoreFab: () => import('./Fab')
+  },
+  data () {
+    return {
+      chatDialog: false
+    }
   },
   computed: {
     ...mapGetters('friends', ['online']),
@@ -132,7 +158,7 @@ export default {
     removeFriend () {
       //
     },
-    whisperFriend () {
+    whisperFriend (name) {
       //
     },
     inviteFriend () {

@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid')
 /// NB: The tryorama config patterns are still not quite stabilized.
 /// See the tryorama README [https://github.com/holochain/tryorama]
 /// for a potentially more accurate example
@@ -44,29 +45,29 @@ const conductorConfig = Config.gen({notes: notesDna}, {tasks: tasksDna}, {
 
 orchestrator.registerScenario("Demo mode for Workflow Notes with Tasks", async (s, t) => {
   const {alice, bob, phil, lucy} = await s.players({alice: conductorConfig, bob: conductorConfig, phil: conductorConfig, lucy: conductorConfig}, true)
-  let taskBase = await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Content for the note"}})
-  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Locate a Zoom room.", "done":"false"}})
-  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Invite enthusiastic peopole.", "done":"false"}})
-  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"title":"Demo script.", "done":"false"}})
+  let taskBase = await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"uuid":uuidv4(), "title":"Set up 2 hour deep dive on CRISPR with community leaders.", "content":"Content for the note"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Locate a Zoom room.", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Invite enthusiastic peopole.", "done":"false"}})
+  await alice.call("tasks", "tasks", "create_task", {"base": taskBase.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Demo script.", "done":"false"}})
 
-  await alice.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"title":"Stepper for add new entry", "content":"Content for the note"}})
-  await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Scale the zome model surface", "content":"Content for the note"}})
-  await alice.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"title":"Get theme colours", "content":"Content for the note"}})
+  await alice.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"uuid":uuidv4(), "title":"Stepper for add new entry", "content":"Content for the note"}})
+  await alice.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"uuid":uuidv4(), "title":"Scale the zome model surface", "content":"Content for the note"}})
+  await alice.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"uuid":uuidv4(), "title":"Get theme colours", "content":"Content for the note"}})
   await s.consistency()
 
-  await bob.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"title":"Agent Id Link", "content":"Content for the note"}})
-  await bob.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Entry type code viewer", "content":"Content for the note"}})
+  await bob.call("notes", "notes", "create_note", {"base":"TasksDo", "note_input": {"uuid":uuidv4(), "title":"Agent Id Link", "content":"Content for the note"}})
+  await bob.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"uuid":uuidv4(), "title":"Entry type code viewer", "content":"Content for the note"}})
   await s.consistency()
 
-  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"title":"DNA Modeller toolbar", "content":"Content for the note"}})
-  await phil.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"title":"Show profile information on each installed app", "content":"Content for the note"}})
-  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"title":"Be able to workflowe any entry", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"uuid":uuidv4(), "title":"DNA Modeller toolbar", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"NotesDoing", "note_input": {"uuid":uuidv4(), "title":"Show profile information on each installed app", "content":"Content for the note"}})
+  await phil.call("notes", "notes", "create_note", {"base":"TasksDoing", "note_input": {"uuid":uuidv4(), "title":"Be able to workflowe any entry", "content":"Content for the note"}})
   await s.consistency()
 
-  await lucy.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"title":"Finish off tasks", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"title":"Deep dive", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"title":"Another note", "content":"Content for the note"}})
-  await lucy.call("notes", "notes", "create_note", {"base":"NotesDone", "note_input": {"title":"Awesome.", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"NotesDo", "note_input": {"uuid":uuidv4(), "title":"Finish off tasks", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"uuid":uuidv4(), "title":"Deep dive", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"TasksDone", "note_input": {"uuid":uuidv4(), "title":"Another note", "content":"Content for the note"}})
+  await lucy.call("notes", "notes", "create_note", {"base":"NotesDone", "note_input": {"uuid":uuidv4(), "title":"Awesome.", "content":"Content for the note"}})
   await s.consistency()
 })
 

@@ -2,10 +2,10 @@
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-note-multiple-outline</v-icon>
+      <v-icon @click="deleteColumn({ column: column})">mdi-delete-outline</v-icon>
       <span class="subtitle">{{column.title}}</span>
       <v-spacer></v-spacer>
       <v-icon @click="add">mdi-note-plus-outline</v-icon>
-      <v-icon @click="deleteColumn({ column: column})">mdi-delete-outline</v-icon>
     </v-system-bar>
     <v-alert v-if="errors.length" type="error">
       <v-row no-gutters>
@@ -58,8 +58,11 @@ export default {
   methods: {
     add () {
       this.notes.splice(0, 0, {
-        title: '',
-        content: ''
+        base: this.column.id,
+        note: {
+          title: '',
+          content: ''
+        }
       })
     },
     ...mapActions('notes', ['fetchNotes', 'acknowledgeErrors']),

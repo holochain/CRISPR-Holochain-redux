@@ -58,11 +58,11 @@ export default {
           text: 'Apps',
           to: '/library/false'
         },
-        {
-          icon: 'mdi-newspaper',
-          text: 'News',
-          to: '/'
-        },
+        // {
+        //   icon: 'mdi-newspaper',
+        //   text: 'News',
+        //   to: '/'
+        // },
         {
           icon: 'mdi-fire',
           text: 'Parts Store',
