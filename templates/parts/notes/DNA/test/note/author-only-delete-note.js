@@ -1,6 +1,6 @@
   scenario("author-only-delete-note", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
-    const createNoteResult = await alice.call("notes", "notes", "create_note", {"base": "testbase", "note_input" : {"title":"Title first note", "content": "Content"}})
+    const createNoteResult = await alice.call("notes", "notes", "create_note", {"base": "testbase", "note_input" : {"uuid":uuidv4(), "title":"Title first note", "content": "Content"}})
     await s.consistency()
     const listNotesResult = await alice.call("notes", "notes", "list_notes", {"base": "testbase"})
     t.deepEqual(listNotesResult.Ok.length, 1)

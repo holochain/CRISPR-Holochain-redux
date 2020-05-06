@@ -29,8 +29,8 @@ import verify from '@/store/modules/verify'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
-    devHolochainConnection: connect({ url: 'ws://localhost:33000' }),
-    holochainConnection: connect({ url: 'ws://localhost:4435' })
+    // holochainConnection: connect({ url: 'ws://localhost:4435' }),
+    devHolochainConnection: connect({ url: 'ws://localhost:33000' })
   },
   modules: {
     app,

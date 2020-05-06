@@ -11,7 +11,7 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: () => import('@/views/home/Index')
+      component: () => import('@/views/library/Index')
     },
     {
       path: '/article/:slug',

@@ -1,0 +1,22 @@
+{
+  "devDependencies": {},
+  "dependencies": {
+    "@holochain/tryorama": "^0.3.0",
+    "faucet": "0.0.1",
+    "json3": "*",
+    "sleep": "^6.1.0",
+    "tape": "^4.9.1",
+    "uuid": "^8.0.0",
+    "foreman": "^3.0.1"
+  },
+  "scripts": {
+    "demo:setup": "node demo.js | tee conductor-output.txt && node config-copy.js",
+    "hc:run:alice": "holochain -c ./1-conductor-config.toml",
+    "hc:run:bob": "holochain -c ./2-conductor-config.toml",
+    "hc:run:phil": "holochain -c ./3-conductor-config.toml",
+    "hc:run:lucy": "holochain -c ./4-conductor-config.toml",
+    "hc:run:all": "npm run hc:run:alice & npm run hc:run:bob & npm run hc:run:phil & npm run hc:run:lucy",
+    "hc:start": "npm run demo:setup && npm run hc:run:all",
+    "demo": "nf start"
+  }
+}

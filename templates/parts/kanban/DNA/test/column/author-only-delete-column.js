@@ -1,6 +1,6 @@
 scenario("author-only-delete-column", async (s, t) => {
   const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
-  const createNoteResult = await alice.call("columns", "columns", "create_column", {"base": "testbase", "column_input" : {"title":"Title first column", "order": 1}})
+  const createNoteResult = await alice.call("columns", "columns", "create_column", {"base": "testbase", "column_input" : {"uuid":uuidv4(), "title":"Title first column", "order": 1}})
   await s.consistency()
   const listNotesResult = await alice.call("columns", "columns", "list_columns", {"base": "testbase"})
   t.deepEqual(listNotesResult.Ok.length, 1)

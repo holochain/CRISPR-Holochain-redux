@@ -7,10 +7,6 @@
       <v-divider class="mx-3" inset vertical />
       <span class="title">Projects</span>
       <v-spacer></v-spacer>
-      <v-btn text to="modules">
-        <v-icon>mdi-view-module</v-icon>
-        CRISPR Modules
-      </v-btn>
     </v-toolbar>
     <v-row no-gutters>
       <v-col v-for="(project) in projects" :key="project.name" cols="12" sm="6" md="4">

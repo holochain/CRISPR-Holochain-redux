@@ -1,7 +1,0 @@
-bridges = []
-UIs = []
-[[instances]]
-name = "notes"
-id = "notes"
-dna_hash = "QmQRKZdTk6NSW5eg8UaSwcJCKgu9pHEcHhezM5yc9vtcZa"
-uri = "file:./dna/dist/dna.dna.json"

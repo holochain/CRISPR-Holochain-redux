@@ -1,0 +1,138 @@
+bridges = []
+persistence_dir = '/tmp/tmp.RKtVZnekW0/tryorama/85I0Pm'
+ui_bundles = []
+ui_interfaces = []
+
+[[agents]]
+id = 'columns'
+keystore_file = '[UNUSED]'
+name = 'phil::columns::9cd14346-037b-4efb-8900-13fba8da1418'
+public_address = 'HcSCJTqz8wfNxpbwsdfZn5ZGtmvwmidinn8AgyIBbmsu8ehd7I5ueG98goCaroi'
+test_agent = true
+
+[[agents]]
+id = 'notes'
+keystore_file = '[UNUSED]'
+name = 'phil::notes::9cd14346-037b-4efb-8900-13fba8da1418'
+public_address = 'HcSCih58vh5SHEw5ybIRm7tcGIFsamo7fcPPCgv7Kz3ccfcecjM5GEgU47m5nia'
+test_agent = true
+
+[[agents]]
+id = 'tasks'
+keystore_file = '[UNUSED]'
+name = 'phil::tasks::9cd14346-037b-4efb-8900-13fba8da1418'
+public_address = 'HcSCJT6Ft78fbrt9xr9B487Ta5djBYip6uiNueJpi5verjggRnV9IK5N7v6K4qi'
+test_agent = true
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
+hash = 'QmTmAGzX8jUirfVQvnybMSv51kk1ago9zuKNLUQgM8qjGX'
+id = 'columns-test'
+uuid = '9cd14346-037b-4efb-8900-13fba8da1418'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
+hash = 'Qmd9hZhorBWRKwKx4MGQteQpfnajnPVcFvX9MDhpEo5dpd'
+id = 'notes-test'
+uuid = '9cd14346-037b-4efb-8900-13fba8da1418'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
+hash = 'QmcektTyN4sBZtUBz4pM3Njohi7X82iE5gjWDLSmvZAmiQ'
+id = 'tasks-test'
+uuid = '9cd14346-037b-4efb-8900-13fba8da1418'
+
+[[instances]]
+agent = 'columns'
+dna = 'columns-test'
+id = 'columns'
+
+[instances.storage]
+path = '/tmp/tmp.RKtVZnekW0/tryorama/85I0Pm/columns'
+type = 'lmdb'
+
+[[instances]]
+agent = 'notes'
+dna = 'notes-test'
+id = 'notes'
+
+[instances.storage]
+path = '/tmp/tmp.RKtVZnekW0/tryorama/85I0Pm/notes'
+type = 'lmdb'
+
+[[instances]]
+agent = 'tasks'
+dna = 'tasks-test'
+id = 'tasks'
+
+[instances.storage]
+path = '/tmp/tmp.RKtVZnekW0/tryorama/85I0Pm/tasks'
+type = 'lmdb'
+
+[[interfaces]]
+admin = true
+choose_free_port = false
+id = 'tryorama-interface'
+
+[[interfaces.instances]]
+id = 'columns'
+
+[[interfaces.instances]]
+id = 'notes'
+
+[[interfaces.instances]]
+id = 'tasks'
+
+[interfaces.driver]
+port = 33002
+type = 'websocket'
+
+[logger]
+state_dump = false
+type = 'debug'
+[[logger.rules.rules]]
+exclude = true
+pattern = '^parity'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^mio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^tokio'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^hyper'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rusoto_core'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^want'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '^rpc'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^holochain'
+
+[[logger.rules.rules]]
+exclude = false
+pattern = '^lib3h'
+
+[network]
+sim2h_url = 'ws://localhost:9000'
+type = 'sim2h'
+
+[passphrase_service]
+type = 'cmd'
+
+[signals]
+consistency = true
+trace = false
