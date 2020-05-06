@@ -17,33 +17,43 @@
         </v-col>
       </v-row>
     </v-alert>
-    <v-col cols="12" v-for="note in notes" :key="note.id">
-      <note :key="note.id" :base="column.id" :note="note">
-        <v-menu open-on-hover bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-avatar left v-if="chimera">
-              <v-icon small v-on="on">mdi-dna</v-icon>
-            </v-avatar>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <task-manager v-if="note.id" :key="note.id" :base="note.id" />
-      </note>
-    </v-col>
+    <draggable class="list-group" tag="v-layout" v-model="notes" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
+      <transition-group type="transition" :name="'flip-list'">
+        <v-col cols="12" v-for="note in notes" :key="note.id">
+          <note :key="note.id" :base="column.id" :note="note">
+            <v-menu open-on-hover bottom offset-y>
+              <template v-slot:activator="{ on }">
+                <v-avatar left v-if="chimera">
+                  <v-icon small v-on="on">mdi-dna</v-icon>
+                </v-avatar>
+              </template>
+              <v-list>
+                <v-list-item v-for="(item, index) in items" :key="index">
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <task-manager v-if="note.id" :key="note.id" :base="note.id" />
+          </note>
+        </v-col>
+        <!-- <li class="list-group-item" v-for="element in list" :key="element.order">
+          <v-icon v-text="element.fixed ? 'mdi-anchor' : 'mdi-pin-outline'" @click="element.fixed =! element.fixed" />
+          {{element.name}}
+        </li> -->
+      </transition-group>
+    </draggable>
     <slot></slot>
   </v-card>
 </template>
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import draggable from 'vuedraggable'
 export default {
   name: 'KanbanColumn',
   components: {
     TaskManager: () => import('../Tasks/Tasks'),
-    Note: () => import('../Notes/Note')
+    Note: () => import('../Notes/Note'),
+    draggable
   },
   props: ['column'],
   data () {
@@ -52,7 +62,10 @@ export default {
         { title: 'Tasks' },
         { title: 'Ratings' },
         { title: 'Comments' }
-      ]
+      ],
+      editable: true,
+      isDragging: false,
+      delayedDragging: false
     }
   },
   methods: {
@@ -66,21 +79,79 @@ export default {
       })
     },
     ...mapActions('notes', ['fetchNotes', 'acknowledgeErrors']),
-    ...mapActions('kanban', ['deleteColumn'])
+    ...mapActions('kanban', ['deleteColumn']),
+    orderList () {
+      this.list = this.list.sort((one, two) => {
+        return one.order - two.order
+      })
+    },
+    onMove ({ relatedContext, draggedContext }) {
+      const relatedElement = relatedContext.element
+      const draggedElement = draggedContext.element
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      )
+    }
   },
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapState('notes', ['errors']),
     ...mapGetters('notes', ['listNotes', 'listErrors']),
-    notes () {
-      return this.listNotes(this.column.id)
+    notes: {
+      get () {
+        return this.listNotes(this.column.id)
+      },
+      set (val) {
+        console.log(val)
+      }
     },
     errors () {
       return this.listErrors(this.column.id)
+    },
+    dragOptions () {
+      return {
+        animation: 0,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost'
+      }
     }
   },
   created () {
     this.fetchNotes(this.column.id)
+  },
+  watch: {
+    isDragging (newValue) {
+      if (newValue) {
+        this.delayedDragging = true
+        return
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false
+      })
+    }
   }
 }
 </script>
+
+<style>
+.flip-list-move {
+  transition: transform 0.5s;
+}
+.no-move {
+  transition: transform 0s;
+}
+.ghost {
+  opacity: 0.5;
+  background: #c8ebfb;
+}
+.list-group {
+  min-height: 20px;
+}
+.list-group-item {
+  cursor: move;
+}
+.list-group-item i {
+  cursor: pointer;
+}
+</style>
