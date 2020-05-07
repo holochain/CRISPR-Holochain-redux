@@ -50,9 +50,7 @@ class DiagramNode {
       type: 'out',
       name
     }
-
     this.ports.push(newPort)
-
     return newPort.id
   }
 

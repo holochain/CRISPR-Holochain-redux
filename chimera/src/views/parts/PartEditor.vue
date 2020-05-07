@@ -1,10 +1,13 @@
 <template>
-  <v-card v-resize="onResizeCode">
-    <v-row>
+  <section>
+    <v-row no-gutters>
       <v-col cols="8">
-        <v-card class="ma-1" height="88vh">
+        <v-card height="88vh">
           <v-toolbar dark>
-            <v-toolbar-title class="display-1">{{project.name}} UI Code</v-toolbar-title>
+            <v-btn icon @click="$router.go(-1)">
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-toolbar-title>{{project.name}} UI Code</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card v-resize="onResizeCode">
@@ -20,8 +23,9 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="ma-1">
-          <v-card-title>{{project.name}} UI Preview
+        <v-card>
+          <v-toolbar dark>
+            <v-toolbar-title>{{project.name}} UI Preview</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-card-actions>
               <v-btn color="action" icon :to="`/partNotes/${project.id}`">
@@ -31,8 +35,7 @@
                 <v-icon>mdi-code-braces</v-icon>
               </v-btn>
             </v-card-actions>
-          </v-card-title>
-          <v-divider />
+          </v-toolbar>
           <v-row>
             <v-col v-if="project.name === 'Tasks'" cols="12">
               <tasks key="Demo Tasks" base="PartEditor"/>
@@ -47,7 +50,7 @@
         </v-card>
       </v-col>
     </v-row>
-  </v-card>
+  </section>
 </template>
 <script>
 import { mapGetters } from 'vuex'

@@ -1,15 +1,8 @@
 <template>
   <v-app class="grey darken-4">
-    <core-app-bar />
-
-    <core-downloads />
-
     <core-drawer />
-
     <core-view />
-
     <core-friends />
-
     <core-snackbar />
   </v-app>
 </template>
@@ -17,8 +10,8 @@
 <script>
 export default {
   components: {
-    CoreAppBar: () => import('@/components/core/AppBar'),
-    CoreDownloads: () => import('@/components/core/Downloads'),
+    // CoreAppBar: () => import('@/components/core/AppBar'),
+    // CoreDownloads: () => import('@/components/core/Downloads'),
     CoreDrawer: () => import('@/components/core/Drawer'),
     CoreFriends: () => import('@/components/core/Friends'),
     CoreSnackbar: () => import('@/components/core/Snackbar'),
