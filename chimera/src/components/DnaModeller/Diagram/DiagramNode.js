@@ -18,7 +18,7 @@ class DiagramNode {
    * @param  {String} color [description]
    * @param  {Integer} typeIndex  [description]
    */
-  constructor (id, title, x, y, width, height, type, typeIndex, color, entryDefHeight = 78, functionsHeight = 20) {
+  constructor (id, title, x, y, width, height, type, typeIndex, color, entryDefHeight, functionsHeight = 20) {
     this.title = title
     this.x = x
     this.y = y
@@ -50,9 +50,7 @@ class DiagramNode {
       type: 'out',
       name
     }
-
     this.ports.push(newPort)
-
     return newPort.id
   }
 

@@ -31,6 +31,7 @@
     "uuid": "^8.0.0",
     "vue-codemirror": "^4.0.6",
     "vue-svg-pan-zoom": "^1.1.0",
+    "vuedraggable": "^2.23.2",
     "vuetify-image-input": "^19.1.0",
     "wavesurfer.js": "^3.3.3"
   },

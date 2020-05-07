@@ -14,7 +14,7 @@
           class="text-uppercase fill-height d-flex align-center ml-4 grow"
           @click="launch"
         >
-          {{ hoverInner || menu ? 'Settings' : 'Launch' }}
+          {{ hoverInner || menu ? '⚙️ Settings' : '💻 Open' }}
         </div>
 
         <v-menu

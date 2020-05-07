@@ -98,15 +98,12 @@
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-content>
-          When your part is ready publish it to the Parts Store.
+         Chat window
         </v-content>
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="action darken-1" text>
-            Send
-          </v-btn>
-          <v-btn color="action darken-1" text @click="publishDialog = false">
+          <v-btn color="action darken-1" text @click="chatDialog = false">
             Close
           </v-btn>
         </v-card-actions>

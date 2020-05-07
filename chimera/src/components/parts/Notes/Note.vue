@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="500" dark>
+  <v-card class="mx-auto" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
@@ -24,7 +24,7 @@ export default {
     return {
       instanceNote: {},
       clean: {},
-      isEditing: this.note.id === undefined
+      isEditing: this.note.id === 'new'
     }
   },
   methods: {

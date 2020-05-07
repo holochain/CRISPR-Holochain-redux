@@ -21,7 +21,7 @@ export default {
         url: '/happ-store/Notes',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'This is the project management tool with Notes in workflow swim lanes that is being built with CRISPR.\nSelecting permissions and roles generates the code for the Zome & UI based on Entry Type fields and links.',
+        description: 'Notes have a title, content and order. Set the permissions at build time to control who can update and delete notes.',
         zomes: [],
         modules: []
       },
@@ -32,7 +32,7 @@ export default {
         url: '/store/games/QmHashyTasks',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'A clone of Notes DNA. CRUD functions also pass the id of the entry they link to so anchor with anchorText=entryid.',
+        description: 'A clone of Notes DNA. Tasks have title, done and order.',
         zomes: []
       },
       {
@@ -42,7 +42,7 @@ export default {
         url: '/happ-store/Kanban',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'A kanban board that you can kanban any type of part.',
+        description: 'A kanban board that you can kanban any type of part using the slot.',
         zomes: []
       }
     ]

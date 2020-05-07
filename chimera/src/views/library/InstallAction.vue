@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    :disabled="isLoading"
-    max-width="600"
-  >
+  <v-dialog v-model="dialog" :disabled="isLoading" max-width="600">
     <template v-slot:activator="{ attrs, on }">
       <v-hover v-model="hover">
         <v-sheet
@@ -21,7 +17,7 @@
           >
             <div class="text-uppercase pa-3">
               <span v-if="!isLoading">
-                Install
+                🧬 Install
               </span>
               <v-progress-circular
                 v-else
@@ -36,65 +32,13 @@
 
     <v-card light>
       <v-card-title>
-        Choose install location
+        Download and Install
       </v-card-title>
-
+      <v-card-subtitle>
+        (Coming soon)
+      </v-card-subtitle>
       <v-card-text>
-        <v-form>
-          <v-text-field
-            v-model="folder"
-            class="mb-3"
-            hide-details
-            flat
-            solo-inverted
-          >
-            <template
-              v-if="$vuetify.breakpoint.mdAndUp"
-              v-slot:prepend-inner
-            >
-              <v-sheet
-                class="mr-3 pa-2"
-                color="grey darken-3"
-                dark
-              >
-                Folder
-              </v-sheet>
-            </template>
-          </v-text-field>
-
-          <v-text-field
-            :value="path"
-            disabled
-            flat
-            hide-details
-            solo-inverted
-          >
-            <template
-              v-if="$vuetify.breakpoint.mdAndUp"
-              v-slot:prepend-inner
-            >
-              <v-sheet
-                class="mr-3 pa-2"
-                color="grey darken-3"
-                dark
-              >
-                Path&nbsp;&nbsp;&nbsp;
-              </v-sheet>
-            </template>
-          </v-text-field>
-
-          <div>
-            <v-checkbox
-              hide-details
-              label="Auto-Update"
-            />
-
-            <v-checkbox
-              hide-details
-              label="Create Shortcut"
-            />
-          </div>
-        </v-form>
+        This will make the part available in Chimera mode for you to add it to any other part.
       </v-card-text>
 
       <v-card-actions class="justify-space-between grey darken-4">
@@ -115,7 +59,7 @@
           depressed
           @click="isLoading = true"
         >
-          Install
+          🧬 Install
         </v-btn>
       </v-card-actions>
     </v-card>

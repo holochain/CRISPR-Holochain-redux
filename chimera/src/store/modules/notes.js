@@ -10,12 +10,14 @@ export default {
           {
             id: 'PartEditor',
             title: 'Demo Note 1',
-            content: 'Content for Note 1'
+            content: 'Content for Note 1',
+            order: 1
           },
           {
             id: 'PartEditor',
             title: 'Demo Note 2',
-            content: 'Content for Note 2'
+            content: 'Content for Note 2',
+            order: 2
           }
         ]
       }
@@ -27,7 +29,7 @@ export default {
     createNote (state, payload) {
       const base = state.baseNotes.find(b => b.base === payload.base)
       if (base) {
-        base.notes = base.notes.filter(n => n.id !== undefined)
+        base.notes = base.notes.filter(n => n.id !== 'new')
         base.notes.splice(0, 0, payload.data)
       } else {
         state.baseNotes.push((payload))
@@ -80,7 +82,11 @@ export default {
     listNotes: state => (base) => {
       const baseNote = state.baseNotes.find(n => n.base === base)
       if (baseNote) {
-        return baseNote.notes
+        return baseNote.notes.sort((a, b) => {
+          if (a.order < b.order) return -1
+          if (a.order > b.order) return 1
+          return 0
+        })
       } else {
         return []
       }
@@ -98,6 +104,33 @@ export default {
     acknowledgeErrors: ({ state, commit, rootState }, base) => {
       commit('resetErrors', base)
     },
+    order: ({ state, commit, rootState }, payload) => {
+      commit('setNotesList', { base: payload.base, notes: payload.notes })
+      payload.notes.forEach(note => {
+        rootState.devHolochainConnection.then(({ callZome }) => {
+          callZome('notes', 'notes', 'update_note')({ id: note.id, created_at: note.createdAt, address: note.address, note_input: { uuid: note.uuid, title: note.title, content: note.content, order: note.order } }).then((result) => {
+            const res = JSON.parse(result)
+            // console.log(res)
+            if (res.Ok === undefined) {
+              commit('error', { base: payload.base, error: res.Err.Internal })
+            } else {
+              commit('updateNote', { base: payload.base, data: res.Ok })
+            }
+          })
+        })
+      })
+    },
+    rebase: ({ state, commit, rootState }, payload) => {
+      rootState.devHolochainConnection.then(({ callZome }) => {
+        callZome('notes', 'notes', 'rebase_note')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
+          const res = JSON.parse(result)
+          console.log(res)
+          if (res.Ok === undefined) {
+            commit('error', { base: payload.base, error: res.Err.Internal })
+          }
+        })
+      })
+    },
     fetchNotes: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
@@ -114,11 +147,11 @@ export default {
     },
     saveNote: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      if (payload.note.id === '' || payload.note.id === undefined) {
+      if (payload.note.id === 'new' || payload.note.id === undefined) {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'create_note')({ base: payload.base, note_input: { uuid: uuidv4(), title: payload.note.title, content: payload.note.content } }).then((result) => {
+          callZome('notes', 'notes', 'create_note')({ base: payload.base, note_input: { uuid: uuidv4(), title: payload.note.title, content: payload.note.content, order: payload.note.order } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
+            // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
@@ -128,8 +161,9 @@ export default {
         })
       } else {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'update_note')({ id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address, note_input: { uuid: payload.note.uuid, title: payload.note.title, content: payload.note.content } }).then((result) => {
+          callZome('notes', 'notes', 'update_note')({ id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address, note_input: { uuid: payload.note.uuid, title: payload.note.title, content: payload.note.content, order: payload.note.order } }).then((result) => {
             const res = JSON.parse(result)
+            // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {

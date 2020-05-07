@@ -2,14 +2,14 @@
   <v-card class="mx-auto" color="accent" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-note-multiple-outline</v-icon>
-      <span class="subtitle">{{title}}</span>
+      <span class="subtitle">{{title}} Project Kanban Board</span>
       <v-spacer></v-spacer>
       <v-icon @click="newColumn = true">mdi-note-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
     </v-system-bar>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <kanban-column :key="column.id" :column="column"/>
+        <kanban-column :key="column.id" :base="base" :column="column"/>
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>
