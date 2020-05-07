@@ -33,6 +33,7 @@ const NOTE_ENTRY_NAME: &str = "note";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct NoteEntry {
+    uuid: String,
     title: String,
     content: String,
     order: u32
@@ -45,7 +46,8 @@ pub struct Note {
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
-	title: String,
+    uuid: String,
+    title: String,
     content: String,
     order: u32
 }
@@ -70,6 +72,7 @@ impl Note {
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
             content: entry.content,
             order: entry.order
@@ -84,6 +87,7 @@ impl Note {
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
             content: entry.content,
             order: entry.order

@@ -25,11 +25,10 @@ fn notes_anchor(anchor_text: String) -> ZomeApiResult<Address> {
 }
 
 pub fn create(base: String, note_entry: NoteEntry) -> ZomeApiResult<Note> {
-    let note_anchor = notes_anchor(base)?;
     let entry = Entry::App(NOTE_ENTRY_NAME.into(), note_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let note = Note::new(entry_address.clone(), note_entry)?;
-    hdk::link_entries(&note_anchor, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
+    hdk::link_entries(&notes_anchor(base)?, &entry_address, NOTE_ENTRY_LINK_TYPE, &note.created_at.to_string())?;
     Ok(note)
 }
 
@@ -54,5 +53,10 @@ pub fn list(base: String) -> ZomeApiResult<Vec<Note>> {
     .iter()
     .map(|link| read(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
     .collect()
+}
+
+pub fn rebase(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+    hdk::remove_link(&notes_anchor(base_from)?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
+    hdk::link_entries(&notes_anchor(base_to)?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())
 }
 

@@ -73,7 +73,6 @@ export default {
     listColumns: state => (base) => {
       const baseColumn = state.baseColumns.find(n => n.base === base)
       if (baseColumn) {
-        console.log(baseColumn.columns)
         return baseColumn.columns.sort((a, b) => {
           if (a.order < b.order) return -1
           if (a.order > b.order) return 1
@@ -116,7 +115,6 @@ export default {
         rootState.devHolochainConnection.then(({ callZome }) => {
           callZome('columns', 'columns', 'create_column')({ base: payload.base, column_input: { uuid: uuidv4(), title: payload.column.title, order: payload.column.order } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
@@ -142,8 +140,9 @@ export default {
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('columns', 'columns', 'delete_column')({ base: payload.base, id: payload.column.id, created_at: payload.column.createdAt, address: payload.column.address }).then((result) => {
           const res = JSON.parse(result)
+          console.log(res)
           if (res.Ok === undefined) {
-            commit('error', { base: payload.base, error: res.Err.Internal })
+            commit('error', { base: payload.column.id, error: res.Err.Internal })
           } else {
             commit('deleteColumn', { base: payload.base, data: payload.column.id })
           }

@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <v-col v-for="(project) in projects" :key="project.name" cols="12">
       <v-card class="ma-5">
-      <v-card-title>{{project.name}}
+      <v-card-title>{{project.name}} Project Kanban Board
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-btn color="action" icon :to="`/partNotes/${project.id}`">

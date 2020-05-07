@@ -1,6 +1,6 @@
 <template>
 <v-card class="ma-5">
-  <v-card-title>{{project.name}} Kanban
+  <v-card-title>{{project.name}} Project Kanban Board
     <v-spacer></v-spacer>
     <v-card-actions>
       <v-btn color="action" icon :to="`/part/${project.id}`">

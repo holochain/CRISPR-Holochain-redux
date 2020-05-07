@@ -133,10 +133,10 @@ export default {
                     libCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/lib_update.rs`, 'utf8'),
                     code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/update.rs`, 'utf8'),
                     explanation: 'Docs go here',
-                    permission: 'author-only',
-                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
+                    permission: 'anyone',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/permissions_rule_templates/validate_permissions_entry_update/anyone.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/note/author-only-update-note.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/note/anyone-update-note.js`, 'utf8')
                   },
                   {
                     name: 'delete',
@@ -152,6 +152,12 @@ export default {
                     name: 'list',
                     libCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/lib_list.rs`, 'utf8'),
                     code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/list.rs`, 'utf8'),
+                    explanation: 'Docs go here'
+                  },
+                  {
+                    name: 'rebase',
+                    libCode: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/lib_rebase.rs`, 'utf8'),
+                    code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/rebase.rs`, 'utf8'),
                     explanation: 'Docs go here'
                   }
                 ],
@@ -364,10 +370,10 @@ export default {
                     libCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/zomes/tasks/code/src/task/lib_update.rs`, 'utf8'),
                     code: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/zomes/tasks/code/src/task/update.rs`, 'utf8'),
                     explanation: 'Docs go here',
-                    permission: 'author-only',
-                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
+                    permission: 'anyone',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/permissions_rule_templates/validate_permissions_entry_update/anyone.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/task/author-only-update-task.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/tasks/DNA/test/task/anyone-update-task.js`, 'utf8')
                   },
                   {
                     name: 'delete',
@@ -595,10 +601,10 @@ export default {
                     libCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/lib_update.rs`, 'utf8'),
                     code: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/zomes/columns/code/src/column/update.rs`, 'utf8'),
                     explanation: 'Docs go here',
-                    permission: 'author-only',
-                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/permissions_rule_templates/validate_permissions_entry_update/author-only.rs`, 'utf8'),
+                    permission: 'anyone',
+                    permissionsCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/permissions_rule_templates/validate_permissions_entry_update/anyone.rs`, 'utf8'),
                     permissionsExplanation: 'Docs go here',
-                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/test/column/author-only-update-column.js`, 'utf8')
+                    testCode: fs.readFileSync(`${developer.folder}/templates/parts/kanban/DNA/test/column/anyone-update-column.js`, 'utf8')
                   },
                   {
                     name: 'delete',
