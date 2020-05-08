@@ -7,26 +7,21 @@
       <v-divider class="mx-3" inset vertical />
       <span class="title">Parts Store</span>
     </v-toolbar>
-    <featured />
-    <!-- <games /> -->
+    <!-- <featured /> -->
+    <games />
   </section>
 </template>
 
 <script>
 export default {
   components: {
-    Featured: () => import('./Featured')
-    // Games: () => import('./Games')
+    // Featured: () => import('./Featured')
+    Games: () => import('./Games')
   },
-
   metaInfo () {
     return {
       title: this.$i18n.t('Home.title')
     }
-  },
-
-  data: () => ({
-
-  })
+  }
 }
 </script>

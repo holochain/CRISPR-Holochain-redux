@@ -1,10 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <game
-        :value="game"
-        prominent
-      />
+      <holochain-part :value="part" prominent />
     </v-col>
   </v-row>
 </template>
@@ -12,18 +9,16 @@
 <script>
 export default {
   components: {
-    Game: () => import('@/components//Game')
+    HolochainPart: () => import('@/components/HolochainPart')
   },
-
   props: {
     value: {
       type: Array,
       default: () => ([])
     }
   },
-
   computed: {
-    game () {
+    part () {
       return this.value[0]
     }
   }

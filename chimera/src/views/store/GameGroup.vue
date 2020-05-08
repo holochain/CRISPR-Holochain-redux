@@ -1,8 +1,5 @@
 <template>
-  <component
-    :is="value.component"
-    :value="value.group"
-  />
+  <component :is="value.component" :value="value.group" />
 </template>
 
 <script>
@@ -13,7 +10,6 @@ export default {
     Row3: () => import('./Row3'),
     Row4: () => import('./Row4')
   },
-
   props: {
     value: {
       type: Object,

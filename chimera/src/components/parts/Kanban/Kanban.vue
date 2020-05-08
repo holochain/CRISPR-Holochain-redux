@@ -9,7 +9,8 @@
     </v-system-bar>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <kanban-column :key="column.id" :base="base" :column="column"/>
+        <kanban-column :key="column.id" :base="base" :column="column">
+        </kanban-column>
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>

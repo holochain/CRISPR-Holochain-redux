@@ -1,18 +1,11 @@
 <template>
   <v-container class="pt-0">
-    <game-group
-      v-for="(group, i) in groups"
-      :key="i"
-      :value="group"
-    />
+    <game-group v-for="(group, i) in groups" :key="i" :value="group" />
   </v-container>
 </template>
 
 <script>
-// Utilities
-import {
-  mapGetters
-} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -31,27 +24,20 @@ export default {
   }),
 
   computed: {
-    ...mapGetters('games', ['parsedGames']),
+    ...mapGetters('parts', ['parsedParts']),
     groups () {
-      const games = this.parsedGames.slice(3)
+      const parts = this.parsedParts
       const groups = []
-
       for (const order of this.order) {
-        if (
-          groups.length === games.length ||
-            !games.length
-        ) {
+        if (groups.length === parts.length || !parts.length) {
           break
         }
-
-        const group = games.splice(0, order.count)
-
+        const group = parts.splice(0, order.count)
         groups.push({
           ...order,
           group
         })
       }
-
       return groups
     }
   }

@@ -1,27 +1,17 @@
 <template>
   <v-row>
-    <v-col
-      cols="12"
-      md="6"
-    >
+    <v-col cols="12" md="6">
       <v-row>
         <v-col cols="12">
-          <game :value="leftTop" />
+          <part :value="leftTop" />
         </v-col>
         <v-col cols="12">
-          <game :value="leftBottom" />
+          <part :value="leftBottom" />
         </v-col>
       </v-row>
     </v-col>
-    <v-col
-      cols="12"
-      md="6"
-    >
-      <game
-        :value="right"
-        tall
-        prominent
-      />
+    <v-col cols="12" md="6">
+      <holochain-part :value="right" tall prominent />
     </v-col>
   </v-row>
 </template>
@@ -29,16 +19,14 @@
 <script>
 export default {
   components: {
-    Game: () => import('@/components//Game')
+    HolochainPart: () => import('@/components/HolochainPart')
   },
-
   props: {
     value: {
       type: Array,
       default: () => ([])
     }
   },
-
   computed: {
     right () {
       return this.value[2]

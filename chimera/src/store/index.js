@@ -7,7 +7,8 @@ import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
 import downloads from '@/store/modules/downloads'
 import friends from '@/store/modules/friends'
-import games from '@/store/modules/games'
+import happs from '@/store/modules/happs'
+import parts from '@/store/modules/parts'
 import home from '@/store/modules/home'
 import install from '@/store/modules/install'
 import library from '@/store/modules/library'
@@ -37,7 +38,8 @@ const store = new Vuex.Store({
     auth,
     downloads,
     friends,
-    games,
+    happs,
+    parts,
     home,
     install,
     library,

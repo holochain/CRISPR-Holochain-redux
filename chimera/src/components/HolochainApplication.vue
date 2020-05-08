@@ -1,28 +1,10 @@
 <template>
   <v-hover v-model="hover">
-    <v-card
-      class="v-card--game"
-      elevation="6"
-    >
-      <router-link :to="`/store/games/${value.id}`">
-        <v-img
-          v-bind="$attrs"
-          :height="height"
-          :src="require(`@/assets/${value.bg}`)"
-          style="border-radius: inherit;"
-        >
-          <v-row
-            :style="styles"
-            align="center"
-            class="fill-height ma-0 transition-swing"
-            justify="center"
-          >
-            <v-img
-              :src="require(`@/assets/${value.logo}`)"
-              contain
-              max-width="180"
-              style="z-index: -1;"
-            />
+    <v-card class="v-card--game" elevation="6">
+      <router-link :to="`/store/happ/${value.id}`">
+        <v-img v-bind="$attrs" :height="height" :src="require(`@/assets/${value.bg}`)" style="border-radius: inherit;">
+          <v-row :style="styles" align="center" class="fill-height ma-0 transition-swing" justify="center">
+            <v-img :src="require(`@/assets/${value.logo}`)" contain max-width="180" style="z-index: -1;" />
           </v-row>
         </v-img>
       </router-link>
@@ -30,34 +12,23 @@
         <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
       </profile-card>
       <v-fade-transition mode="out-in">
-        <component
-          :is="getAction(value)"
-          v-if="!showProfile"
-          :key="getAction(value)"
-          :value="value"
-        />
+        <component :is="getAction(value)" v-if="!showProfile" :key="getAction(value)" :value="value" />
       </v-fade-transition>
     </v-card>
   </v-hover>
 </template>
 
 <script>
-import {
-  mapGetters,
-  mapState
-} from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
-  name: 'Game',
-
+  name: 'HolochainApplication',
   components: {
     InstallAction: () => import('@/views/library/InstallAction'),
     LaunchAction: () => import('@/views/library/LaunchAction'),
     VerifyAction: () => import('@/views/library/VerifyAction'),
     ProfileCard: () => import('@/components/personas/ProfileCard')
   },
-
   inheritAttrs: false,
-
   props: {
     dense: {
       type: Boolean,
@@ -92,13 +63,11 @@ export default {
       default: 'false'
     }
   },
-
   data () {
     return {
       hover: false
     }
   },
-
   computed: {
     ...mapState('verify', ['verifying']),
     ...mapGetters('personalInformation', ['profileByDna', 'personas']),
@@ -126,10 +95,10 @@ export default {
     }
   },
   methods: {
-    getAction (game) {
+    getAction (happ) {
       let action = 'Launch'
-      if (this.verifying === game.id) action = 'Verify'
-      if (!game.installed) action = 'Install'
+      if (this.verifying === happ.id) action = 'Verify'
+      if (!happ.installed) action = 'Install'
       return `${action}Action`
     }
   }
