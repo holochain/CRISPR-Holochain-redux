@@ -19,25 +19,7 @@
     </v-alert>
     <draggable v-model="notes" :id="column.id" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
       <note v-for="note in notes" :key="note.id" :base="column.id" :note="note" class="mb-1 cursor-move">
-        <v-menu open-on-hover bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-avatar left v-if="chimera">
-              <v-icon small v-on="on">mdi-dna</v-icon>
-            </v-avatar>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-        <v-chip v-if="chimera" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard">
-          <v-avatar left>
-            <v-icon small>mdi-dna</v-icon>
-          </v-avatar>
-          Tasks - Art Brock
-        </v-chip>
-        <task-manager v-if="note.id !== 'new'" :key="note.id" :base="note.id" />
+        <!-- <task-manager v-if="note.id !== 'new'" :key="note.id" :base="note.id" /> -->
       </note>
       <slot></slot>
     </draggable>
@@ -49,21 +31,11 @@ import draggable from 'vuedraggable'
 export default {
   name: 'KanbanColumn',
   components: {
-    TaskManager: () => import('../Tasks/Tasks'),
+    // TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('../Notes/Note'),
     draggable
   },
   props: ['base', 'column'],
-  data () {
-    return {
-      items: [
-        { title: 'Tasks' },
-        { title: 'Ratings' },
-        { title: 'Comments' }
-      ],
-      baseFrom: ''
-    }
-  },
   methods: {
     add () {
       this.notes.splice(0, 0, {

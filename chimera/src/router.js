@@ -46,14 +46,19 @@ const router = new Router({
       component: () => import('@/views/settings/Index')
     },
     {
-      path: '/store/games/:id',
-      name: 'StorePage',
-      component: () => import('@/views/store-page/Index')
+      path: '/store/part/:id',
+      name: 'PartStorePage',
+      component: () => import('@/views/store-page/Part')
     },
     {
-      path: '/notes',
-      name: 'Notes',
-      component: () => import('@/views/notes/NotesModule')
+      path: '/store/happ/:id',
+      name: 'HappStorePage',
+      component: () => import('@/views/store-page/Happ')
+    },
+    {
+      path: '/kanbans',
+      name: 'Kanbans',
+      component: () => import('@/views/kanbans/Kanbans')
     },
     {
       path: '/part/:id',

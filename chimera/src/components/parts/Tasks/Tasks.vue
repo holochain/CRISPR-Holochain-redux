@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="tasks && tasks.length > 0" :key="base">
+  <v-card flat v-if="tasks && tasks.length > 0" :key="base">
     <v-card-title v-if="title">{{title}}</v-card-title>
     <v-slide-y-transition class="py-0" group tag="v-list">
       <template v-for="(task, i) in tasks">

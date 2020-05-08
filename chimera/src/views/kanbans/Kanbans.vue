@@ -43,7 +43,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'NotesModule',
+  name: 'Kanbans',
   components: {
     Kanban: () => import('@/components/parts/Kanban/Kanban')
   },

@@ -13,14 +13,19 @@
       </v-btn>
     </v-toolbar>
     <v-divider />
-    <games :showProfile="showProfile"/>
-  </section>
+    <h2>Holochain Applications</h2>
+    <applications :showProfile="showProfile"/>
+    <v-divider />
+    <h2>Chimera Parts</h2>
+    <parts :showProfile="showProfile"/>
+    </section>
 </template>
 <script>
 export default {
   name: 'Library',
   components: {
-    Games: () => import('./Games')
+    Applications: () => import('./Applications'),
+    Parts: () => import('./Parts')
   },
   data () {
     return {

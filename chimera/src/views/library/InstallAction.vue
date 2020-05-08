@@ -92,7 +92,7 @@ export default {
 
   computed: {
     ...mapState('downloads', ['downloading']),
-    ...mapState('library', ['installed']),
+    ...mapState('library', ['installedHapps']),
     path () {
       return `${this.folder}Game`
     }
@@ -101,18 +101,13 @@ export default {
   watch: {
     isLoading (val) {
       const downloading = this.downloading.slice()
-
       downloading.push(this.value.id)
-
       this.setDownloading(downloading)
       this.dialog = false
-
       val && setTimeout(() => {
         this.isLoading = false
-        const installed = this.installed
-
+        const installed = this.installedHapps
         installed.push(this.value.id)
-
         this.setInstalled(installed)
         this.setDownloading(
           this.downloading.filter(id => id !== this.value.id)
@@ -120,10 +115,9 @@ export default {
       }, 3000)
     }
   },
-
   methods: {
     ...mapMutations('downloads', ['setDownloading']),
-    ...mapMutations('library', ['setInstalled'])
+    ...mapMutations('library', ['setInstalledHapps'])
   }
 }
 </script>

@@ -55,7 +55,7 @@ export default {
       return [
         {
           icon: 'mdi-view-grid',
-          text: 'Apps',
+          text: 'Apps & Parts',
           to: '/library/false'
         },
         // {
@@ -63,11 +63,11 @@ export default {
         //   text: 'News',
         //   to: '/'
         // },
-        {
-          icon: 'mdi-fire',
-          text: 'Parts Store',
-          to: '/store'
-        },
+        // {
+        //   icon: 'mdi-fire',
+        //   text: 'Parts Store',
+        //   to: '/store'
+        // },
         { spacer: true },
         {
           icon: 'mdi-source-pull',
