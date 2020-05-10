@@ -13,19 +13,14 @@
       </v-btn>
     </v-toolbar>
     <v-divider />
-    <h2>Holochain Applications</h2>
     <applications :showProfile="showProfile"/>
-    <v-divider />
-    <h2>Chimera Parts</h2>
-    <parts :showProfile="showProfile"/>
-    </section>
+  </section>
 </template>
 <script>
 export default {
   name: 'Library',
   components: {
-    Applications: () => import('./Applications'),
-    Parts: () => import('./Parts')
+    Applications: () => import('./Applications')
   },
   data () {
     return {

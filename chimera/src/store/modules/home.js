@@ -1,24 +1,46 @@
+const Parser = require('rss-parser')
+const parser = new Parser()
+
 export default {
   namespaced: true,
 
   state: {
-    articles: [
-      {
-        img: 'articles/article1a.png',
-        altImg: 'articles/article1b.png',
-        title: 'RAD Tools',
-        slug: 'alienware-area-51',
-        author: 'Paul DAOust',
-        ago: '6h ago'
-      },
-      {
-        img: 'articles/article2a.png',
-        altImg: 'articles/article2b.png',
-        title: 'Holochain & Sustainable Energy',
-        slug: 'alienware-area-52',
-        author: 'Arthur Brock',
-        ago: '12h ago'
-      }
-    ]
+    articles: []
+  },
+  mutations: {
+    setArticles (state, payload) {
+      state.articles = payload.articles
+    }
+  },
+  getters: {
+    listArticles: state => (base) => {
+      return state.articles
+    }
+  },
+  actions: {
+    fetchNews: ({ state, commit, rootState }, base) => {
+      parser.parseURL('https://blog.holochain.org/rss/').then((result) => {
+        if (result.items === undefined) {
+          console.log(result)
+        } else {
+          console.log(result)
+          const articles = []
+          result.items.forEach(item => {
+            const imgStartIndex = item['content:encoded'].indexOf('https://')
+            const imgEndIndex = item['content:encoded'].indexOf('"', imgStartIndex)
+            articles.push({
+              img: item['content:encoded'].substring(imgStartIndex, imgEndIndex),
+              title: item.title,
+              link: item.link,
+              content: item['content:encoded'],
+              author: item.creator,
+              date: item.pubDate,
+              guid: item.guid
+            })
+          })
+          commit('setArticles', { articles: articles })
+        }
+      })
+    }
   }
 }

@@ -6,10 +6,9 @@ export default {
         id: 'QmHashyNotes',
         name: 'Notes',
         src: 'notes',
-        launch: '/notes',
         description: 'The Notes part has a title and content field for you to record simple notes. You can add edit and delete notes and if an agent tries to edit or delete a note they do not have permission to a validation error will show.',
-        price: 19.99,
-        compareAt: 19.99,
+        price: 1.99,
+        compareAt: 1.99,
         publisher: 'Holochain.org',
         updated: 1585864353040
       },
@@ -17,7 +16,7 @@ export default {
         id: 'QmHashyTasks',
         name: 'Tasks',
         src: 'tasks',
-        description: 'Task lists are super handy. Manage your tasks in a list or combine with other parts such as Notes and Kanban to get the kanban board in the image above.',
+        description: 'Task lists are super handy. Manage your tasks in a list or combine with other parts such as Parts and Kanban to get the kanban board in the image above.',
         price: 9.99,
         compareAt: 12.99,
         publisher: 'Holochain.org',
@@ -37,13 +36,19 @@ export default {
     baseParts: [
       {
         base: 'PartEditor',
-        parts: ['QmHashyTasks', 'QmHashyratings']
+        parts: [{
+          title: 'tasks',
+          order: 1
+        },
+        {
+          title: 'ratings',
+          order: 0
+        }]
       }
     ]
   },
   getters: {
     parsedParts: state => {
-      console.log(state.parts)
       return state.parts.map(part => ({
         ...part,
         bg: `parts/${part.src}/bg.png`,
@@ -51,6 +56,22 @@ export default {
         logo: `parts/${part.src}/logo.png`,
         avatar: `parts/${part.src}/avatar.png`
       }))
+    },
+    partParts: state => (base) => {
+      const basePart = state.baseParts.find(p => p.base === base)
+      if (basePart) {
+        return basePart.parts.sort((a, b) => {
+          if (a.order < b.order) return -1
+          if (a.order > b.order) return 1
+          return 0
+        })
+      } else {
+        return []
+      }
+    },
+    allParts: state => {
+      console.log(state.parts)
+      return state.parts
     }
   }
 }

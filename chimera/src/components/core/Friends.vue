@@ -13,7 +13,7 @@
                 </v-list-item-action>
                 <v-list-item-title class="subheading font-weight-light pl-4">
                   <v-badge color="info" class="title" :content="online" overlap>
-                    <span class="title">Tasks Team</span>
+                    <span class="title">Contacts</span>
                   </v-badge>
                 </v-list-item-title>
               </v-list-item>
