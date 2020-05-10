@@ -29,7 +29,6 @@ export default {
         id: 'QmHashySiteBuilder',
         name: 'Profile Site Builder',
         src: 'profile-site-builder',
-        launch: '/profile-site-builder',
         description: 'Build and deploy super fast static websites based on people\'s profiles. Awesome for artist websites and anyone promoting themselves. The image above is for DJ @philt3r\'s website http://philt3r.rocks',
         price: 19.99,
         compareAt: 27.99,

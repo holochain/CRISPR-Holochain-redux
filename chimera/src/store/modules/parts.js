@@ -33,17 +33,32 @@ export default {
         updated: 1588890779424
       }
     ],
-    baseParts: [
+    partParts: [
       {
-        base: 'PartEditor',
-        parts: [{
-          title: 'tasks',
-          order: 1
-        },
-        {
-          title: 'ratings',
-          order: 0
-        }]
+        base: 'Qmmorebighashes333',
+        parts: [
+          {
+            title: 'tasks',
+            order: 1
+          }
+        ]
+      },
+      {
+        base: 'QmmorehashyTasks',
+        parts: []
+      },
+      {
+        base: 'QmHashyKanban',
+        parts: [
+          {
+            title: 'tasks',
+            order: 1
+          },
+          {
+            title: 'ratings',
+            order: 0
+          }
+        ]
       }
     ]
   },
@@ -58,7 +73,7 @@ export default {
       }))
     },
     partParts: state => (base) => {
-      const basePart = state.baseParts.find(p => p.base === base)
+      const basePart = state.partParts.find(p => p.base === base)
       if (basePart) {
         return basePart.parts.sort((a, b) => {
           if (a.order < b.order) return -1
@@ -70,7 +85,6 @@ export default {
       }
     },
     allParts: state => {
-      console.log(state.parts)
       return state.parts
     }
   }

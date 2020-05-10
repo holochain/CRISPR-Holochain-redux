@@ -17,9 +17,9 @@
       <v-row class="fill-height" justify="center" align="center">
         <v-col class="text-center">
           <v-img :src="require(`@/assets/${storePart.logo}`)" contain class="mx-auto mb-5" width="200" />
-          <v-btn v-if="!storePart.launch" :color="storePart.buyColor || 'blue'" style="min-width: 225px; height: 52px;">
+          <!-- <v-btn v-if="!storePart.launch" :color="storePart.buyColor || 'blue'" style="min-width: 225px; height: 52px;">
             Add to Cart
-          </v-btn>
+          </v-btn> -->
         </v-col>
       </v-row>
     </v-img>
@@ -34,13 +34,8 @@
             <v-img max-height="250" :src="require(`@/assets/${storePart.bg2}`)" />
           </v-card>
         </v-col>
-        <!-- <v-col class="text-center my-5" cols="12">
-          <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/7X8II6J-6mU"  width="100%" />
-        </v-col> -->
       </v-row>
     </v-sheet>
-    <v-sheet height="400" color="grey darken-2" tile />
-    <v-sheet height="200" color="grey darken-3" tile />
   </v-container>
 </template>
 <script>

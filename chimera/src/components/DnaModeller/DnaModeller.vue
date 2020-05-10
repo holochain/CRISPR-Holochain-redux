@@ -14,7 +14,15 @@
       <v-btn color="action" icon :to="`/part/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
+      <v-btn color="action" icon @click="help=!help">
+        <v-icon>mdi-help</v-icon>
+      </v-btn>
     </v-toolbar>
+    <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      Click <v-icon>mdi-notebook-outline</v-icon> to go to the Kanban Board.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click <v-icon>mdi-application</v-icon> to go to the Part Editor.
+    </v-alert>
     <v-row no-gutters>
       <v-col cols="3">
         <v-card flat tile height="94vh" class="pa-0 ma-0 overflow-auto">
@@ -134,6 +142,7 @@ export default {
   data () {
     return {
       zomeTab: null,
+      help: false,
       entryType: {},
       refreshKey: 'clean',
       tree: [],

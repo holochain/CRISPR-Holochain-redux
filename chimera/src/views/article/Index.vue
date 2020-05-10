@@ -12,12 +12,11 @@ import {
 
 export default {
   name: 'Article',
-
   computed: {
     ...mapState('home', ['articles']),
     ...mapState('route', ['params']),
     article () {
-      return this.articles.find(article => article.slug === this.params.slug)
+      return this.articles.find(article => article.guid === this.params.id)
     }
   }
 }

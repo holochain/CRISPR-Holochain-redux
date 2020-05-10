@@ -13,16 +13,15 @@
         Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to the Kanban board.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
+      Drag & Drop Notes between columns.
       Click <v-icon>mdi-table-column-plus-after</v-icon> to add a new column.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-table-column-remove</v-icon> on a column to remove that column.
-      <v-divider class="my-4 info" style="opacity: 0.22" />
-      Drag & Drop Notes between columns.
     </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <kanban-column :key="column.id" :base="base" :column="column">
-        </kanban-column>
+        <notes-kanban-column :key="column.id" :base="base" :column="column">
+        </notes-kanban-column>
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>
@@ -43,7 +42,7 @@ export default {
   name: 'Kanban',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
-    KanbanColumn: () => import('@/components/parts/Kanban/KanbanColumn')
+    NotesKanbanColumn: () => import('@/components/parts/Kanban/NotesKanbanColumn')
   },
   props: ['base', 'title'],
   data () {

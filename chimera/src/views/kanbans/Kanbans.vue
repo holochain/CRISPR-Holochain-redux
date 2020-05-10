@@ -9,7 +9,15 @@
             </v-btn>
             <v-toolbar-title>All Project Kanban Boards</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-icon @click="help=!help">mdi-help</v-icon>
           </v-toolbar>
+          <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+            Click <v-icon>mdi-notebook-outline</v-icon> to go to the Kanban Board for that project.
+            <v-divider class="my-4 info" style="opacity: 0.22" />
+            Click <v-icon>mdi-application</v-icon> to go to the Part Editor for that project.
+            <v-divider class="my-4 info" style="opacity: 0.22" />
+            Click <v-icon>mdi-code-braces</v-icon> to go to the Zome Modeller for that project.
+          </v-alert>
           <v-row no-gutters>
             <v-col v-for="(project) in projects" :key="project.name" cols="12">
               <v-card class="ma-5">
@@ -46,6 +54,11 @@ export default {
   name: 'Kanbans',
   components: {
     Kanban: () => import('@/components/parts/Kanban/Kanban')
+  },
+  data () {
+    return {
+      help: false
+    }
   },
   computed: {
     ...mapGetters('portfolio', ['projects'])
