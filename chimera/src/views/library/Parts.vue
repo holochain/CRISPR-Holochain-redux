@@ -12,7 +12,7 @@
     <h2 class="pl-5">Chimera Parts</h2>
     <v-row>
       <v-col v-for="part in parts" :key="part.id" cols="12" sm="6" md="4">
-        <holochain-part :value="part" :understate="!part.installed" dense static show-action :showProfile="showProfile" />
+        <holochain-part :value="part" :understate="!part.installed" dense static show-action />
       </v-col>
     </v-row>
   </section>

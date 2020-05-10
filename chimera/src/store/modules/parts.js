@@ -52,11 +52,11 @@ export default {
         parts: [
           {
             title: 'tasks',
-            order: 1
+            order: 0
           },
           {
             title: 'ratings',
-            order: 0
+            order: 1
           }
         ]
       }
