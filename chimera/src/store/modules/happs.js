@@ -4,6 +4,17 @@ export default {
     featured: [],
     happs: [
       {
+        id: 'QmHashykanban',
+        name: 'Kanban',
+        src: 'kanban',
+        launch: '/kanbans',
+        description: 'From Japanese, kanban is literally translated as billboard or signboard. Add the Kanban part and you can Kanban any other part you need. The image above shows the Notes List part being used in the Kanban board.',
+        price: 6.99,
+        compareAt: 6.99,
+        publisher: 'Holochain.org',
+        updated: 1545864353031
+      },
+      {
         id: 'QmHashyCRISPR',
         name: 'CRISPR',
         src: 'crispr',
@@ -34,17 +45,6 @@ export default {
         compareAt: 27.99,
         publisher: 'Holopunk Records',
         updated: 1585864353040
-      },
-      {
-        id: 'QmHashykanban',
-        name: 'Kanban',
-        src: 'kanban',
-        launch: '/kanbans',
-        description: 'From Japanese, kanban is literally translated as billboard or signboard. Add the Kanban part and you can Kanban any other part you need. The image above shows the Notes List part being used in the Kanban board.',
-        price: 6.99,
-        compareAt: 6.99,
-        publisher: 'Holochain.org',
-        updated: 1545864353031
       }
     ]
   },

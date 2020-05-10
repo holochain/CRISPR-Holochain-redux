@@ -1,12 +1,24 @@
 <template>
   <v-card class="mx-auto" color="accent" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <v-icon>mdi-note-multiple-outline</v-icon>
+      <v-icon>mdi-table</v-icon>
       <span class="subtitle">{{title}} Project Kanban Board</span>
       <v-spacer></v-spacer>
-      <v-icon @click="newColumn = true">mdi-note-plus-outline</v-icon>
-      <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
+      <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
+      <part-manager :base="base" @add-part="addPart"/>
+      <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
+    <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      <div v-if="chimera">
+        Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to the Kanban board.
+        <v-divider class="my-4 info" style="opacity: 0.22" />
+      </div>
+      Click <v-icon>mdi-table-column-plus-after</v-icon> to add a new column.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click <v-icon>mdi-table-column-remove</v-icon> on a column to remove that column.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Drag & Drop Notes between columns.
+    </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
         <kanban-column :key="column.id" :base="base" :column="column">
@@ -26,23 +38,29 @@
   </v-card>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Kanban',
   components: {
+    PartManager: () => import('@/components/chimera/PartManager'),
     KanbanColumn: () => import('@/components/parts/Kanban/KanbanColumn')
   },
   props: ['base', 'title'],
   data () {
     return {
       newColumn: false,
-      newColumnTitle: ''
+      newColumnTitle: '',
+      help: false
     }
   },
   methods: {
-    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors'])
+    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors']),
+    addPart (name) {
+      alert(name)
+    }
   },
   computed: {
+    ...mapState('auth', ['chimera']),
     ...mapGetters('kanban', ['listColumns']),
     columns () {
       return this.listColumns(this.base)

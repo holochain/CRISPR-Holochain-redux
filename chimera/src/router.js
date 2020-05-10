@@ -14,9 +14,15 @@ const router = new Router({
       component: () => import('@/views/library/Index')
     },
     {
-      path: '/article/:slug',
+      path: '/news',
+      name: 'News',
+      component: () => import('@/views/home/Index')
+    },
+    {
+      path: '/article/:id',
       name: 'Article',
-      component: () => import('@/views/article/Index')
+      component: () => import('@/views/article/Index'),
+      props: true
     },
     {
       path: '/library/:profiles',
@@ -61,8 +67,14 @@ const router = new Router({
       component: () => import('@/views/kanbans/Kanbans')
     },
     {
-      path: '/part/:id',
+      path: '/parts',
       name: 'Parts',
+      component: () => import('@/views/library/Parts'),
+      props: true
+    },
+    {
+      path: '/part/:id',
+      name: 'Part',
       component: () => import('@/views/parts/PartEditor')
     },
     {

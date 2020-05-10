@@ -5,7 +5,7 @@
         <v-list-item-avatar color="#80deea">
           <v-img :src="require('@/assets/chimera.png')" />
         </v-list-item-avatar>
-        <v-list-item-title>Chimera</v-list-item-title>
+        <v-list-item-title class="title">Chimera</v-list-item-title>
         <v-btn icon @click.stop="mini = !mini">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -19,7 +19,7 @@
             <v-list-item-title v-text="item.text" />
           </v-list-item-content>
         </v-list-item>
-        <div v-else :key="`divider-${i}`" class="my-auto" />
+        <v-divider v-else :key="`divider-${i}`" class="my-4 info" style="opacity: 0.22" />
       </template>
     </v-list>
   </v-navigation-drawer>
@@ -55,29 +55,34 @@ export default {
       return [
         {
           icon: 'mdi-view-grid',
-          text: 'Apps & Parts',
+          text: 'Applications',
           to: '/library/false'
         },
-        // {
-        //   icon: 'mdi-newspaper',
-        //   text: 'News',
-        //   to: '/'
-        // },
-        // {
-        //   icon: 'mdi-fire',
-        //   text: 'Parts Store',
-        //   to: '/store'
-        // },
-        { spacer: true },
         {
-          icon: 'mdi-source-pull',
-          text: 'CRISPR',
-          to: '/projects'
+          icon: 'mdi-newspaper',
+          text: 'News',
+          to: '/news'
         },
         {
           icon: 'mdi-head-cog-outline',
           text: 'Settings',
           to: '/settings'
+        },
+        { spacer: true },
+        {
+          icon: 'mdi-plus-box-multiple-outline',
+          text: 'Parts',
+          to: '/parts'
+        },
+        // {
+        //   icon: 'mdi-fire',
+        //   text: 'Parts Store',
+        //   to: '/store'
+        // },
+        {
+          icon: 'mdi-source-pull',
+          text: 'CRISPR',
+          to: '/projects'
         }
       ]
     }

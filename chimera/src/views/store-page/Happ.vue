@@ -34,9 +34,9 @@
             <v-img max-height="250" :src="require(`@/assets/${storeHapp.bg2}`)" />
           </v-card>
         </v-col>
-        <v-col class="text-center my-5" cols="12">
+        <!-- <v-col class="text-center my-5" cols="12">
           <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0" height="315" src="https://www.youtube.com/embed/7X8II6J-6mU"  width="100%" />
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-sheet>
     <v-sheet height="400" color="grey darken-2" tile />
