@@ -28,10 +28,11 @@ import kanban from '@/store/modules/kanban'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
+console.log(process.env.VUE_APP_HOLOCHAIN_URL)
 const store = new Vuex.Store({
   state: {
     // holochainConnection: connect({ url: 'ws://localhost:4435' }),
-    devHolochainConnection: connect({ url: 'ws://localhost:33000' })
+    devHolochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
     app,

@@ -55,7 +55,6 @@ export default {
   created () {
     this.clean = { ...this.note }
     this.instanceNote = { ...this.note }
-    console.log(this.partBase)
     this.parts = this.partParts(this.partBase)
   },
   computed: {

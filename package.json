@@ -15,6 +15,10 @@
     "hc:start": "npm run hc:config && npm run hc:run",
     "chimera": "cd chimera && yarn electron:serve",
     "chimera:lint": "cd chimera && yarn lint",
+    "chimera:phil": "cd chimera && yarn electron:serve:phil",
+    "chimera:bob": "cd chimera && yarn electron:serve:bob",
+    "chimera:alice": "cd chimera && yarn electron:serve:alice",
+    "chimera:lucy": "cd chimera && yarn electron:serve:lucy",
     "start": "nf start"
   },
   "dependencies": {

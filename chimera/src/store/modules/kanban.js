@@ -66,7 +66,6 @@ export default {
       } else {
         state.baseColumns.push(payload)
       }
-      // console.log(state)
     }
   },
   getters: {

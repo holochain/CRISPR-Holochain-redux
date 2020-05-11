@@ -59,19 +59,6 @@ export default {
         start: 200
       },
       {
-        id: 3,
-        name: 'Mary Camacho',
-        online: false,
-        info: {
-          id: 10,
-          avatar: 'avatars/mary.camacho.png',
-          name: 'Holochain'
-        },
-        notifications: 0,
-        value: 55,
-        start: 0
-      },
-      {
         id: 4,
         name: 'David Meister',
         online: false,

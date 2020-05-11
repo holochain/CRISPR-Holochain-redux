@@ -5,7 +5,7 @@
       <span class="subtitle">{{title}} Project Kanban Board</span>
       <v-spacer></v-spacer>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
-      <part-manager :base="base" @add-part="addPart"/>
+      <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -54,9 +54,7 @@ export default {
   },
   methods: {
     ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors']),
-    addPart (name) {
-      alert(name)
-    }
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),

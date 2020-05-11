@@ -50,7 +50,10 @@ mod tasks {
         task::handlers::update(id, created_at, address, task_input)
     }
 
-	// No-one allowed to delete
+    #[zome_fn("hc_public")]
+    fn delete_task(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+        task::handlers::delete(base, id, created_at, address)
+    }
 
     #[zome_fn("hc_public")]
     fn list_tasks(base: String) -> ZomeApiResult<Vec<Task>> {

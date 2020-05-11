@@ -10,14 +10,12 @@
           <v-list-item v-for="(part, index) in parts" :key="index" @click="addPart(part.name)">
             <v-list-item-title>{{ part.name }}</v-list-item-title>
           </v-list-item>
-        </v-list>
-        <v-list>
-          <v-list-item v-for="(part, index) in parts" :key="index" @click="addPart(part.name)">
-            <v-chip v-if="chimera && showChip" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard">
+          <v-list-item v-for="(invite) in invites" :key="invite.id">
+            <v-chip v-if="chimera && showChip" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="rejectInvite(invite)">
               <v-avatar left>
-                <v-icon small @click="addPart('tasks')">mdi-dna</v-icon>
+                <v-icon small @click="acceptInvite(invite)">mdi-dna</v-icon>
               </v-avatar>
-              Tasks - Art Brock
+              {{invite.part.title}} - {{invite.from}}
             </v-chip>
           </v-list-item>
         </v-list>
@@ -37,21 +35,24 @@ export default {
   },
   props: ['base'],
   methods: {
-    close () {
-      alert('Chip close clicked')
+    acceptInvite (invite) {
+      this.$emit('accept-invite', invite)
     },
-    acceptInvite () {
-      alert('Accept the invite')
+    rejectInvite (invite) {
+      this.$emit('reject-invite', invite)
     },
     addPart (name) {
-      this.$emit('add-part', name)
+      this.$emit('add-part', { base: this.base, part: { title: name } })
     }
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('parts', ['allParts']),
+    ...mapGetters('parts', ['allParts', 'partInvites']),
     parts () {
       return this.allParts
+    },
+    invites () {
+      return this.partInvites(this.base)
     }
   }
 }
