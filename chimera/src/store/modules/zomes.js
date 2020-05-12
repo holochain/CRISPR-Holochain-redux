@@ -66,17 +66,23 @@ export default {
                   {
                     id: 'Qm1333',
                     fieldName: 'title',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    fieldDescription: 'Title of the note',
+                    required: true
                   },
                   {
                     id: 'QM234566777887',
                     fieldName: 'content',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the note',
+                    required: false
                   },
                   {
                     id: 'QM2345667778871',
                     fieldName: 'order',
-                    fieldType: 'u32'
+                    fieldType: 'u32',
+                    fieldDescription: '',
+                    required: false
                   }
                 ],
                 metaFields: [
@@ -308,12 +314,16 @@ export default {
                   {
                     id: 'Qm1333',
                     fieldName: 'title',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    fieldDescription: 'The task',
+                    required: true
                   },
                   {
                     id: 'QM234566777887',
                     fieldName: 'done',
-                    fieldType: 'Bool'
+                    fieldType: 'bool',
+                    fieldDescription: '',
+                    required: false
                   }
                 ],
                 metaFields: [
@@ -539,12 +549,16 @@ export default {
                   {
                     id: 'Qm1333',
                     fieldName: 'title',
-                    fieldType: 'String'
+                    fieldType: 'String',
+                    fieldDescription: 'Name of the column',
+                    required: false
                   },
                   {
                     id: 'QM234566777887',
                     fieldName: 'order',
-                    fieldType: 'u32'
+                    fieldType: 'u32',
+                    fieldDescription: '',
+                    required: false
                   }
                 ],
                 metaFields: [

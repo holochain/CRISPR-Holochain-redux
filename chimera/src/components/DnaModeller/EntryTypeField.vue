@@ -1,11 +1,17 @@
 <template>
   <v-card width="100%" flat class="pl-5">
     <v-row align="center" justify="start" no-gutters>
-      <v-col cols="4">
+      <v-col cols="3">
         <v-text-field v-model="fieldName" :disabled="!isEditing" label="Field Name" hint="eg. full_name" persistent-hint ></v-text-field>
       </v-col>
-      <v-col cols="8" align="center">
-        <v-text-field v-model="fieldType" :disabled="!isEditing" label="Field Type" hint="singleLineText" persistent-hint ></v-text-field>
+      <v-col cols="2" align="center">
+        <v-select :items="fieldTypes" v-model="fieldType" :disabled="!isEditing" label="Field Type" hint="singleLineText" persistent-hint></v-select>
+      </v-col>
+      <v-col cols="5" align="center">
+        <v-text-field label="Field description" v-model="fieldDescription" :disabled="!isEditing" hint="Description used in tooltip" persistent-hint></v-text-field>
+      </v-col>
+      <v-col cols="2" align="center">
+        <v-checkbox v-model="required" :disabled="!isEditing" label="Required"></v-checkbox>
       </v-col>
     </v-row>
     <v-card-actions>
@@ -52,6 +58,8 @@ export default {
       fieldTypes: ['String', 'bool', 'u16', 'u32'],
       fieldName: this.field.fieldName,
       fieldType: this.field.fieldType,
+      fieldDescription: this.field.fieldDescription,
+      required: this.field.required,
       isEditing: false,
       selected: []
     }
@@ -70,6 +78,8 @@ export default {
         console.log(this.field, this.fieldName + this.fieldType)
         this.field.fieldName = this.fieldName
         this.field.fieldType = this.fieldType
+        this.field.fieldDescription = this.fieldDescription
+        this.field.required = this.required
         this.$emit('save-entry-type-field', this.index, this.field)
       }
     },
@@ -78,6 +88,12 @@ export default {
     },
     fieldType (newVal) {
       this.fieldType = newVal
+    },
+    fieldDescription (newVal) {
+      this.fieldDescription = newVal
+    },
+    required (newVal) {
+      this.required = newVal
     }
   },
   mounted () {

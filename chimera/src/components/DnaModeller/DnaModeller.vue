@@ -69,32 +69,30 @@
                   </v-col>
                   <v-col cols="6">
                     <v-card class="mx-auto">
-                        <p class="display-1 text--primary">
-                          CRISPR - Cas
-                        </p>
-                        <p>Holochain DNA Editing</p>
-                        <div class="text--primary">
-                          Clone Rearrange Identify Socialise Personalise Repeat
-                        </div>
-                        <div class="text--primary">
-                          (Content addressable system)
-                        </div>
+                      <p class="display-1 text--primary">
+                        CRISPR - Cas
+                      </p>
+                      <p>Holochain DNA Editing</p>
+                      <div class="text--primary">
+                        Clone Rearrange Identify Socialise Personalise Repeat
+                      </div>
+                      <div class="text--primary">
+                        (Content addressable system)
+                      </div>
                     </v-card>
                   </v-col>
                   <v-col cols="6">
                     <v-card class="mx-auto">
-                      <v-card-text>
-                        <p class="display-1 text--primary">
-                          C•R•I•S•P•R - Cas9
-                        </p>
-                        <p>Genetic DNA Editing</p>
-                        <div class="text--primary">
-                          Clustered Regularly Interspaced Short Palindromic Repeats
-                        </div>
-                        <div class="text--primary">
-                          (CRISPR associated protein 9)
-                        </div>
-                      </v-card-text>
+                      <p class="display-1 text--primary">
+                        C•R•I•S•P•R - Cas9
+                      </p>
+                      <p>Genetic DNA Editing</p>
+                      <div class="text--primary">
+                        Clustered Regularly Interspaced Short Palindromic Repeats
+                      </div>
+                      <div class="text--primary">
+                        (CRISPR associated protein 9)
+                      </div>
                     </v-card>
                   </v-col>
                 </v-row>
