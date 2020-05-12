@@ -44,7 +44,10 @@ pub fn update(id: Address, created_at: Iso8601, address: Address, task_input: Ta
     Task::existing(id.clone(), created_at, updated_entry_address, task_input)
 }
 
-	// No-one allowed to delete
+pub fn delete(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+    hdk::remove_link(&tasks_anchor(base)?, &id, TASK_ENTRY_LINK_TYPE, &created_at.to_string())?;
+    hdk::remove_entry(&address)
+}
 
 pub fn list(base: String) -> ZomeApiResult<Vec<Task>> {
     hdk::get_links(&tasks_anchor(base)?, LinkMatch::Exactly(TASK_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()

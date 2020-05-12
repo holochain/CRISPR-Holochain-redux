@@ -1,30 +1,23 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="friendsDrawer" app class="black overflow-visible" right width="325" static style="overflow: visible">
+    <v-navigation-drawer v-model="friendsDrawer" app class="black overflow-visible" right width="225" static style="overflow: visible">
       <v-row class="mx-0 flex-column fill-height" justify="center">
         <v-col>
           <v-list class="py-0" color="transparent" two-line>
             <auth />
             <template>
               <v-divider />
-              <v-list-item class="mx-n3">
-                <v-list-item-action>
-                  <v-progress-circular color="green" size="24" :value="100" :rotate="0"></v-progress-circular>
-                </v-list-item-action>
-                <v-list-item-title class="subheading font-weight-light pl-4">
-                  <v-badge color="info" class="title" :content="online" overlap>
-                    <span class="title">Contacts</span>
-                  </v-badge>
-                </v-list-item-title>
-              </v-list-item>
-              <v-divider />
               <v-menu v-for="(friend, i) in friends" :key="i" :offset-x="$vuetify.breakpoint.mdAndUp" :offset-y="$vuetify.breakpoint.smAndDown" :left="$vuetify.breakpoint.mdAndUp" :min-width="$vuetify.breakpoint.smAndDown ? '100%' : undefined" attach :max-width="$vuetify.breakpoint.mdAndUp ? 200 : undefined" style="max-height: 0; max-width: 0;">
                 <template v-slot:activator="{ attrs, on }">
                   <v-list-item link v-bind="attrs" class="mx-n3" v-on="on">
                     <v-list-item-action class="justify-center">
-                        <div class="text-center">
-                          <v-progress-circular :color="friend.online ? 'green' : 'red'" size="24" :value="friend.value" :rotate="friend.start"></v-progress-circular>
-                        </div>
+                      <v-progress-circular :color="friend.online ? 'green' : 'red'" size="48" :value="friend.value" :rotate="friend.start">
+                        <v-badge overlap :content="friend.notifications" :value="friend.notifications" color="green" offset-x="23" offset-y="23">
+                            <v-list-item-avatar v-if="friend.info">
+                              <v-img :src="require(`@/assets/${friend.info.avatar}`)" />
+                            </v-list-item-avatar>
+                        </v-badge>
+                      </v-progress-circular>
                     </v-list-item-action>
                     <v-list-item-content>
                       <v-list-item-title v-text="friend.name" />
@@ -35,11 +28,6 @@
                         {{ friend.online ? 'Online' : 'Offline' }}
                       </v-list-item-subtitle>
                     </v-list-item-content>
-                    <v-badge overlap :content="friend.notifications" :value="friend.notifications" color="green" offset-x="30" offset-y="30">
-                      <v-list-item-avatar v-if="friend.info">
-                        <v-img :src="require(`@/assets/${friend.info.avatar}`)" />
-                      </v-list-item-avatar>
-                    </v-badge>
                   </v-list-item>
                 </template>
                 <v-list :color="$vuetify.breakpoint.mdAndUp ? 'black' : 'grey darken-4'">

@@ -33,19 +33,70 @@ export default {
         updated: 1588890779424
       }
     ],
-    baseParts: [
+    partParts: [],
+    invites: [
       {
-        base: 'PartEditor',
-        parts: [{
+        id: 'Qmhashyinvite1',
+        base: 'QmHashyKanban',
+        from: 'Art Brock', // Use AgentId and pick up name from Address book
+        part: {
           title: 'tasks',
-          order: 1
-        },
-        {
+          dna: ''
+        }
+      },
+      {
+        id: 'Qmhashyinvite2',
+        base: 'Qmmorebighashes333',
+        from: 'David Meister', // Use AgentId and pick up name from Address book
+        part: {
           title: 'ratings',
-          order: 0
-        }]
+          dna: ''
+        }
       }
     ]
+  },
+  actions: {
+    addPart: ({ state, commit, rootState }, payload) => {
+      commit('addPart', payload)
+    },
+    acceptInvite: ({ state, commit, rootState }, payload) => {
+      commit('acceptInvite', payload)
+      commit('addPart', payload)
+    },
+    rejectInvite: ({ state, commit, rootState }, payload) => {
+      commit('rejectInvite', payload)
+    }
+  },
+  mutations: {
+    addPart (state, payload) {
+      const basePart = state.partParts.find(p => p.base === payload.base)
+      if (basePart) {
+        basePart.parts.push(
+          {
+            title: payload.part.title,
+            order: basePart.parts.length
+          }
+        )
+      } else {
+        state.partParts.push(
+          {
+            base: payload.base,
+            parts: [
+              {
+                title: payload.part.title,
+                order: 0
+              }
+            ]
+          }
+        )
+      }
+    },
+    acceptInvite (state, payload) {
+      state.invites = state.invites.filter(i => i.id !== payload.id)
+    },
+    rejectInvite (state, payload) {
+      state.invites = state.invites.filter(i => i.id !== payload)
+    }
   },
   getters: {
     parsedParts: state => {
@@ -58,7 +109,7 @@ export default {
       }))
     },
     partParts: state => (base) => {
-      const basePart = state.baseParts.find(p => p.base === base)
+      const basePart = state.partParts.find(p => p.base === base)
       if (basePart) {
         return basePart.parts.sort((a, b) => {
           if (a.order < b.order) return -1
@@ -66,12 +117,20 @@ export default {
           return 0
         })
       } else {
+        state.partParts.push(
+          {
+            base: base,
+            parts: []
+          }
+        )
         return []
       }
     },
     allParts: state => {
-      console.log(state.parts)
       return state.parts
+    },
+    partInvites: state => (base) => {
+      return state.invites.filter(p => p.base === base)
     }
   }
 }

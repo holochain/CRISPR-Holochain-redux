@@ -25,17 +25,16 @@ export default {
         publisher: 'Holochain.org',
         updated: 1545864353030
       },
-      {
-        id: 'QmHashySiteBuilder',
-        name: 'Profile Site Builder',
-        src: 'profile-site-builder',
-        launch: '/profile-site-builder',
-        description: 'Build and deploy super fast static websites based on people\'s profiles. Awesome for artist websites and anyone promoting themselves. The image above is for DJ @philt3r\'s website http://philt3r.rocks',
-        price: 19.99,
-        compareAt: 27.99,
-        publisher: 'Eat Sleep Code Repeat',
-        updated: 1587694679490
-      },
+      // {
+      //   id: 'QmHashySiteBuilder',
+      //   name: 'Profile Site Builder',
+      //   src: 'profile-site-builder',
+      //   description: 'Build and deploy super fast static websites based on people\'s profiles. Awesome for artist websites and anyone promoting themselves. The image above is for DJ @philt3r\'s website http://philt3r.rocks',
+      //   price: 19.99,
+      //   compareAt: 27.99,
+      //   publisher: 'Eat Sleep Code Repeat',
+      //   updated: 1587694679490
+      // },
       {
         id: 'QmHashyholopunk-records',
         name: 'Holopunk Records',

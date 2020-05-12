@@ -23,20 +23,20 @@
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
     <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
     <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
+    <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
+      <component :is="part.title" :base="note.id" :key="part.title" />
+    </v-col>
     <slot></slot>
-    <template v-for="(part, index) in parts">
-      <component :key="index" :is="part" :base="instanceNote.id" />
-    </template>
   </v-card>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Note',
   components: {
     PartManager: () => import('@/components/chimera/PartManager')
   },
-  props: ['base', 'note'],
+  props: ['base', 'note', 'partBase'],
   data () {
     return {
       instanceNote: {},
@@ -55,9 +55,11 @@ export default {
   created () {
     this.clean = { ...this.note }
     this.instanceNote = { ...this.note }
+    this.parts = this.partParts(this.partBase)
   },
   computed: {
-    ...mapState('auth', ['chimera'])
+    ...mapState('auth', ['chimera']),
+    ...mapGetters('parts', ['partParts'])
   }
 }
 </script>

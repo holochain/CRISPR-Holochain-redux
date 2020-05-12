@@ -23,7 +23,7 @@ export default {
         if (result.items === undefined) {
           console.log(result)
         } else {
-          console.log(result)
+          // console.log(result)
           const articles = []
           result.items.forEach(item => {
             const imgStartIndex = item['content:encoded'].indexOf('https://')
@@ -33,6 +33,7 @@ export default {
               title: item.title,
               link: item.link,
               content: item['content:encoded'],
+              snippet: item.contentSnippet,
               author: item.creator,
               date: item.pubDate,
               guid: item.guid

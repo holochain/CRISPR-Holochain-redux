@@ -74,7 +74,7 @@ export default {
       {
         id: 'QmhashProfileNotes',
         name: 'Notes',
-        dna: 'QmHashyNotes',
+        dna: 'QmHashykanban',
         fields: [
           {
             anchor: 'nickname',

@@ -51,7 +51,7 @@ export default {
       deleteEntryPermission: this.permissions.delete,
       addLinkPermission: '',
       removeLinkPermission: '',
-      roles: [{ title: 'Remove', value: 'remove' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }]
+      roles: [{ title: 'No-one', value: 'remove' }, { title: 'Author Only', value: 'author-only' }, { title: 'Anyone', value: 'anyone' }]
     }
   },
   watch: {

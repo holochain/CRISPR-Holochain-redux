@@ -24,8 +24,7 @@
       </v-row>
     </v-alert>
     <draggable v-model="notes" :id="column.id" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
-      <note v-for="note in notes" :key="note.id" :base="column.id" :note="note" class="mb-1 cursor-move">
-        <!-- <task-manager v-if="note.id !== 'new'" :key="note.id" :base="note.id" /> -->
+      <note v-for="note in notes" :key="note.id" :base="column.id" :note="note" :partBase="base" class="mb-1 cursor-move">
       </note>
       <slot></slot>
     </draggable>
@@ -37,14 +36,14 @@ import draggable from 'vuedraggable'
 export default {
   name: 'KanbanColumn',
   components: {
-    // TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('../Notes/Note'),
     draggable
   },
-  props: ['base', 'column'],
+  props: ['base', 'column', 'partBase'],
   data () {
     return {
-      help: false
+      help: false,
+      parts: []
     }
   },
   methods: {
