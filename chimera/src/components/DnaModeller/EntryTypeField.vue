@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import { snakeCase } from 'snake-case'
 export default {
   name: 'EntryTypeField',
   props: ['index', 'field'],
@@ -76,7 +77,7 @@ export default {
       if (!save) {
         console.log('Saving ')
         console.log(this.field, this.fieldName + this.fieldType)
-        this.field.fieldName = this.fieldName
+        this.field.fieldName = snakeCase(this.fieldName)
         this.field.fieldType = this.fieldType
         this.field.fieldDescription = this.fieldDescription
         this.field.required = this.required
@@ -84,7 +85,8 @@ export default {
       }
     },
     fieldName (newVal) {
-      this.fieldName = newVal
+      console.log(snakeCase(newVal))
+      this.fieldName = snakeCase(newVal)
     },
     fieldType (newVal) {
       this.fieldType = newVal

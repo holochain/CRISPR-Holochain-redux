@@ -168,7 +168,6 @@ export default {
             if (entryType === undefined) {
               entryType = anchorType.entryTypes.find(entryType => entryType.id === link.entityId)
             }
-            console.log('entryType', entryType)
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
             if (!existingEntryTypeNode) {
               const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
