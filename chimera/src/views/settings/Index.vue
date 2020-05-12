@@ -46,7 +46,7 @@ export default {
     checkboxChimera: false
   }),
   methods: {
-    ...mapActions('auth', ['turnChimeraOn', 'turnChimeraOff', ''])
+    ...mapActions('auth', ['turnChimeraOn', 'turnChimeraOff'])
   },
   watch: {
     checkboxChimera (newVal, oldVal) {

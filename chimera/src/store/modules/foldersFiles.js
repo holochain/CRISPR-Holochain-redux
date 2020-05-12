@@ -33,8 +33,6 @@ export default {
                 id: 6,
                 name: 'Test',
                 children: [
-                  { id: 8, name: 'config-copy.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/config-copy.js`, 'utf8') },
-                  { id: 8, name: 'config-generate.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/config-generate.js`, 'utf8') },
                   { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/index.js`, 'utf8') },
                   { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/package.json`, 'utf8') },
                   {

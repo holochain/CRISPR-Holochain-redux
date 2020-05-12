@@ -14,39 +14,38 @@ let win
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
 function createWindow () {
-  // Create the browser window.
-  // win = new BrowserWindow({
-  //   fullscreen: true,
-  //   webPreferences: {
-  //     nodeIntegration: true
-  //   }
-  // })
-  console.log('process.env.VUE_APP_POSITION')
-  console.log(process.env.VUE_APP_POSITION)
-  let x = 0
-  let y = 0
-  switch (process.env.VUE_APP_POSITION) {
-    case '2':
-      x = 840
-      break
-    case '3':
-      y = 500
-      break    
-    case '4':
-      y = 500
-      x = 840
-      break
-  }
-
   win = new BrowserWindow({
-    width: 840,
-    height:500,
-    x: x,
-    y: y,
+    fullscreen: true,
     webPreferences: {
       nodeIntegration: true
     }
   })
+  // console.log('process.env.VUE_APP_POSITION')
+  // console.log(process.env.VUE_APP_POSITION)
+  // let x = 0
+  // let y = 0
+  // switch (process.env.VUE_APP_POSITION) {
+  //   case '2':
+  //     x = 840
+  //     break
+  //   case '3':
+  //     y = 500
+  //     break    
+  //   case '4':
+  //     y = 500
+  //     x = 840
+  //     break
+  // }
+
+  // win = new BrowserWindow({
+  //   width: 840,
+  //   height:500,
+  //   x: x,
+  //   y: y,
+  //   webPreferences: {
+  //     nodeIntegration: true
+  //   }
+  // })
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)

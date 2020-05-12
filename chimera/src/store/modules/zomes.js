@@ -72,6 +72,11 @@ export default {
                     id: 'QM234566777887',
                     fieldName: 'content',
                     fieldType: 'String'
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'order',
+                    fieldType: 'u32'
                   }
                 ],
                 metaFields: [

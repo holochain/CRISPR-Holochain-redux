@@ -19,9 +19,13 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
-      Click <v-icon>mdi-notebook-outline</v-icon> to go to the Kanban Board.
+      Click <v-icon>mdi-notebook-outline</v-icon> (Kanban) to go to the Kanban Board.
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-application</v-icon> to go to the Part Editor.
+      Click <v-icon>mdi-application</v-icon> (UI) to go to the Part Editor.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the Zome name in the tree to see the model for the Zome.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click on any file name in the tree to see the code.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="3">
@@ -54,10 +58,48 @@
         <v-card flat tile height="93vh">
           <v-col v-if="showCode === showModel" cols="12">
             <v-card class="mx-auto pt-10" max-width="900">
-              <v-img class="white--text align-end" width="900px" :src="require('@/assets/icons/holochain.png')">
-              </v-img>
-              <v-card-title>Holochain CRISPR</v-card-title>
+              <v-img width='300' :src="require('@/assets/happs/crispr/logo.png')" />
               <v-card-subtitle class="pb-0">Build & Connect DNA from Data Models</v-card-subtitle>
+              <v-card-text>
+                <v-row>
+                  <v-col cols="12">
+                    <div class="text--primary">
+                      Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.
+                    </div>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-card class="mx-auto">
+                        <p class="display-1 text--primary">
+                          CRISPR - Cas
+                        </p>
+                        <p>Holochain DNA Editing</p>
+                        <div class="text--primary">
+                          Clone Rearrange Identify Socialise Personalise Repeat
+                        </div>
+                        <div class="text--primary">
+                          (Content addressable system)
+                        </div>
+                    </v-card>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-card class="mx-auto">
+                      <v-card-text>
+                        <p class="display-1 text--primary">
+                          C•R•I•S•P•R - Cas9
+                        </p>
+                        <p>Genetic DNA Editing</p>
+                        <div class="text--primary">
+                          Clustered Regularly Interspaced Short Palindromic Repeats
+                        </div>
+                        <div class="text--primary">
+                          (CRISPR associated protein 9)
+                        </div>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-img width="640" :src="require('@/assets/icons/powered-by-holochain.png')" />
+              </v-card-text>
             </v-card>
           </v-col>
           <v-col v-if="showModel" cols="12">

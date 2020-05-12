@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      <span class="title">Apps</span>
+      <span class="title">Chimera Holochain Applications</span>
       <v-spacer></v-spacer>
       <v-btn text to="/personas">
         <v-icon>mdi-account</v-icon>
@@ -22,15 +22,23 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click 🧬 Install to start the Installation process
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-account</v-icon> to manage your personal information.
-
-      Click <v-icon>mdi-account-edit</v-icon> next to your name to manage your personal information for each application.
+      Click <v-icon>mdi-account</v-icon> (Personas) to manage your personal information.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click <v-icon>mdi-account-edit</v-icon> (Profiles) next to your name to manage your personal information for each application.
     </v-alert>
     <v-divider />
     <applications :showProfile="showProfile"/>
+    <v-overlay :absolute="true" :opacity="0.7" :value="splash">
+      <v-card flat>
+      <v-img height='600' :src="require('@/assets/icons/chimera-overlay.png')" @click="turnSplashOff" class="white--text align-end justify-center">
+      </v-img>
+      <v-img width="640" :src="require('@/assets/icons/powered-by-holochain.png')" />
+      </v-card>
+    </v-overlay>
   </section>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Library',
   components: {
@@ -41,6 +49,12 @@ export default {
       showProfile: false,
       help: false
     }
+  },
+  methods: {
+    ...mapActions('auth', ['turnSplashOff'])
+  },
+  computed: {
+    ...mapState('auth', ['splash'])
   }
 }
 </script>

@@ -6,6 +6,7 @@ export default {
   state: {
     loggedIn: false,
     chimera: false,
+    splash: true,
     developer: {
       folder: '/Users/philipbeadle/holochain/CRISPR'
     }
@@ -23,11 +24,15 @@ export default {
     },
     turnChimeraOff: async ({ commit }) => {
       commit('setChimeraOn', false)
+    },
+    turnSplashOff: async ({ commit }) => {
+      commit('setSplashOff', false)
     }
   },
 
   mutations: {
     setLoggedIn: set('loggedIn'),
-    setChimeraOn: set('chimera')
+    setChimeraOn: set('chimera'),
+    setSplashOff: set('splash')
   }
 }
