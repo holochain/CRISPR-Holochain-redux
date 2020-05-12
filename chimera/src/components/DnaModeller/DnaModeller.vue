@@ -103,7 +103,7 @@
             </v-card>
           </v-col>
           <v-col v-if="showModel" cols="12">
-            <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
+            <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-properties="editProperties" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
           </v-col>
           <v-col v-if="showCode" cols="12">
             <code-window :code="code" :options="options"/>
@@ -111,6 +111,17 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="fieldsDialog" max-width="700px">
+      <v-card flat>
+        <entry-type-properties :entryType="entryType" @entry-type-updated="entryTypeUpdated" />
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="fieldsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="permissionsDialog" max-width="700px">
       <v-card flat>
         <v-toolbar dark>
@@ -178,6 +189,7 @@ export default {
   components: {
     ZomeModeller: () => import('./ZomeModeller'),
     CodeWindow: () => import('./CodeWindow'),
+    EntryTypeProperties: () => import('./EntryTypeProperties'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
   props: ['base'],
@@ -206,6 +218,7 @@ export default {
       showCode: false,
       code: '',
       options: {},
+      fieldsDialog: false,
       permissionsDialog: false,
       permissions: {}
     }
@@ -218,6 +231,15 @@ export default {
       console.log(item)
       this.showModel = true
       this.showCode = false
+    },
+    editProperties (entryType) {
+      console.log('editProperties entryType', entryType)
+      this.entryType = entryType
+      this.fieldsDialog = true
+    },
+    entryTypeUpdated (entryType) {
+      this.entryType.fields = entryType.fields
+      this.refreshKey += '1'
     },
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)

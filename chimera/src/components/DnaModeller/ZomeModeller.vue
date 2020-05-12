@@ -2,7 +2,7 @@
   <v-card flat>
     <v-row no-gutters>
       <v-col cols="12" v-resize="onResize">
-        <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-84"></diagram>
+        <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @edit-properties="editProperties" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-84"></diagram>
       </v-col>
     </v-row>
     <v-dialog v-model="codeDialog" max-width="1000px">
@@ -82,6 +82,10 @@ export default {
           // this.profileSpecDialog = true
           break
       }
+    },
+    editProperties (entryTypeName) {
+      this.entryTypeName = entryTypeName
+      this.$emit('edit-properties', this.entryType)
     },
     editPermissions (entryTypeName) {
       this.entryTypeName = entryTypeName
