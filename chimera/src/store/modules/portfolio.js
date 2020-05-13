@@ -1,6 +1,5 @@
 export default {
   namespaced: true,
-
   getters: {
     projects: (state, getters, rootState, rootGetters) => {
       const projects = []
@@ -21,6 +20,9 @@ export default {
     },
     zomeByBaseId: (state, getters, rootState, rootGetters) => (zomeBaseId) => {
       return rootGetters['zomes/zomeByBaseId'](zomeBaseId)
+    },
+    zomeByBaseIdFromTemplate: (state, getters, rootState, rootGetters) => (zome) => {
+      return rootGetters['zomes/zomeByBaseIdFromTemplate'](zome)
     },
     fileItemsForZome: (state, getters, rootState, rootGetters) => (zomeName) => {
       return rootGetters['foldersFiles/items'](zomeName)

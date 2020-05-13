@@ -1,46 +1,46 @@
 bridges = []
-persistence_dir = '/tmp/tmp.4OYPJetHpj/tryorama/Q1pWGe'
+persistence_dir = '/tmp/tmp.4OYPJetHpj/tryorama/hsNgsT'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'columns'
 keystore_file = '[UNUSED]'
-name = 'bob::columns::00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
-public_address = 'HcSciBDmCy33kzzzphB8gXUYrpSg7imz498VCuufg85Zc79qeSUw89JZWrmpv9a'
+name = 'bob::columns::5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
+public_address = 'HcScI6oJmj7C4Ob9k4k7N6dvSOuh4ewpi6JFh4hyQR8ikdf5KN5YTyPah8pknia'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'bob::notes::00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
-public_address = 'HcScj7CMWz57y3t6voh8EqdK4iHnow4xqi6wjVXj3NR6qubcfGQSzxMdq9bn7nz'
+name = 'bob::notes::5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
+public_address = 'HcSCIUAFyjFab5k3bs4P8POoBa8t6Pru39krH9oW8bhz5wzcSTjYeDKRb5a64wz'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'bob::tasks::00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
-public_address = 'HcSCjr3Z8vItwavdynIsJnZidOs48qr6e6IO3rTXmrwpdd84FD68Vdf364M7KVi'
+name = 'bob::tasks::5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
+public_address = 'HcSCJ3beTB5O6mpxqybE8H9Mh8qet9394f8Rj3r3G4cSPtv6MEudwFhQ9yey3ua'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmZYjp2AhrBnVHxhKdG5aQ4nvM6fiU12pUQr4m4bfVkK14'
+hash = 'QmYYJmyGErtD88cFTTUsf48UeXMSwBLMLHakbTduHZg2U5'
 id = 'columns-test'
-uuid = '00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
+uuid = '5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'Qmc8ocDJrw32uGY99fYzkjifkSu2154oPoySLLxP7EtniJ'
+hash = 'QmZHCQNULeC2hhTvE2gk4kLN8UCArZm5ybYHTxYiqv1uZt'
 id = 'notes-test'
-uuid = '00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
+uuid = '5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmQHPDYeQ38gqbKQvciBp7xw8fdZx6B41F2BzU7irCPWvo'
+hash = 'QmW4cHiM2qeVjYuWgkVbB2YHAoP917yqHxxsxDAhE34sZr'
 id = 'tasks-test'
-uuid = '00f4adb2-0a2d-44e3-b0f0-b4d94de9b690'
+uuid = '5e4a15a2-d2bf-4f87-ab91-4db91b1348c6'
 
 [[instances]]
 agent = 'columns'
@@ -48,7 +48,7 @@ dna = 'columns-test'
 id = 'columns'
 
 [instances.storage]
-path = '/tmp/tmp.4OYPJetHpj/tryorama/Q1pWGe/columns'
+path = '/tmp/tmp.4OYPJetHpj/tryorama/hsNgsT/columns'
 type = 'lmdb'
 
 [[instances]]
@@ -57,7 +57,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.4OYPJetHpj/tryorama/Q1pWGe/notes'
+path = '/tmp/tmp.4OYPJetHpj/tryorama/hsNgsT/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -66,7 +66,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.4OYPJetHpj/tryorama/Q1pWGe/tasks'
+path = '/tmp/tmp.4OYPJetHpj/tryorama/hsNgsT/tasks'
 type = 'lmdb'
 
 [[interfaces]]

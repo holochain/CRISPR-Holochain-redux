@@ -58,7 +58,7 @@ class DiagramModel {
     return anchorTypeNode
   }
 
-  addEntryType (zomeName, entryType, node, tag, context, colOffset, yOffset, cardWidth, entryTypeIndex, color) {
+  addEntryType (zomeName, entryType, colOffset, yOffset, cardWidth, entryTypeIndex, color) {
     const entityName = `${zomeName.toLowerCase().replace(' ', '_')}::${entryType.name.toLowerCase()}`
     const entryTypeNodeHeight = 125 + (entryType.fields.length + entryType.metaFields.length) * 20
     const entryTypeNode = this.addNode(entityName, colOffset, yOffset, cardWidth, entryTypeNodeHeight, 'entryType', entryTypeIndex, color, 78)
@@ -73,9 +73,7 @@ class DiagramModel {
     entryType.metaFields.forEach(metaField => {
       entryTypeNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
     })
-    const entryTypeOutPort = node.addOutPort(`${entryType.name.toLowerCase()}_link`)
-    const entryTypeInPort = entryTypeNode.addInPort(`id:initial_${entryType.name.toLowerCase()}_entry_address`)
-    this.addLink(entryTypeOutPort, entryTypeInPort, tag, context)
+    entryTypeNode.addInPort(`id:initial_${entryType.name.toLowerCase()}_entry_address`)
     return entryTypeNode
   }
 

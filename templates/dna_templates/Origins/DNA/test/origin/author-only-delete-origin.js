@@ -1,0 +1,11 @@
+  scenario("author-only-delete-origin", async (s, t) => {
+    const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
+    const createNoteResult = await alice.call("origins", "origins", "create_origin", {"base": "testbase", "origin_input" : {"uuid":uuidv4(), "title":"Title first origin", "content": "Content", "order": 1}})
+    await s.consistency()
+    const listNotesResult = await alice.call("origins", "origins", "list_origins", {"base": "testbase"})
+    t.deepEqual(listNotesResult.Ok.length, 1)
+    const deleteResult = await bob.call("origins", "origins", "delete_origin", { "base": "testbase", "id": createNoteResult.Ok.id, "created_at": createNoteResult.Ok.createdAt, "address": createNoteResult.Ok.address })
+    t.deepEqual(JSON.parse(deleteResult.Err.Internal).kind, { ValidationFailed: 'Agent who did not author is trying to delete' })
+    const listNotesResult2 = await alice.call("origins", "origins", "list_origins", {"base": "testbase"})
+    t.deepEqual(listNotesResult2.Ok.length, 1)
+  })

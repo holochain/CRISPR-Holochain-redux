@@ -26,19 +26,19 @@ pub mod entry_permissions;
 pub mod link_permissions;
 pub mod validation;
 
-const NOTES_ANCHOR_TYPE: &str = "list_notes";
-const NOTE_ENTRY_LINK_TYPE: &str = "note_link";
-const NOTE_ENTRY_NAME: &str = "note";
+const ORIGINS_ANCHOR_TYPE: &str = "list_origins";
+const ORIGIN_ENTRY_LINK_TYPE: &str = "origin_link";
+const ORIGIN_ENTRY_NAME: &str = "origin";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct NoteEntry {
+pub struct OriginEntry {
     uuid: String,_commafields
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Note {
+pub struct Origin {
     id: Address,
     created_at: Iso8601,
     address: Address,
@@ -59,9 +59,9 @@ fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
     }
 }
 
-impl Note {
-    pub fn new(address: Address, entry: NoteEntry) -> ZomeApiResult<Note> {
-        Ok(Note{
+impl Origin {
+    pub fn new(address: Address, entry: OriginEntry) -> ZomeApiResult<Origin> {
+        Ok(Origin{
             id: address.clone(),
             created_at: timestamp(address.clone())?,
             address: address.clone(),
@@ -71,9 +71,9 @@ impl Note {
     }
 }
 
-impl Note {
-    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: NoteEntry) -> ZomeApiResult<Note> {
-        Ok(Note{
+impl Origin {
+    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: OriginEntry) -> ZomeApiResult<Origin> {
+        Ok(Origin{
             id: id.clone(),
             created_at: created_at.clone(),
             address: address.clone(),
@@ -85,13 +85,13 @@ impl Note {
 
 pub fn definition() -> ValidatingEntryType {
     entry!(
-        name: NOTE_ENTRY_NAME,
+        name: ORIGIN_ENTRY_NAME,
         description: "The entry with the content.",
         sharing: Sharing::Public,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
-        validation: | validation_data: hdk::EntryValidationData<NoteEntry>| {
+        validation: | validation_data: hdk::EntryValidationData<OriginEntry>| {
             match validation_data
             {
                 hdk::EntryValidationData::Create{entry, validation_data} =>
@@ -111,7 +111,7 @@ pub fn definition() -> ValidatingEntryType {
         links: [
             from!(      
                 holochain_anchors::ANCHOR_TYPE,
-                link_type: NOTE_ENTRY_LINK_TYPE,
+                link_type: ORIGIN_ENTRY_LINK_TYPE,
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
                 },

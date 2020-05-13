@@ -15,6 +15,93 @@ export const developer = {
 export default {
   namespaced: true,
   state: {
+    templateItems: [
+      {
+        template: 'Origin',
+        items: [
+          {
+            id: 1,
+            name: 'Origins',
+            children: [
+              { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/config.nix`, 'utf8') },
+              { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/default.nix`, 'utf8') },
+              {
+                id: 5,
+                name: 'DNA',
+                children: [
+                  { id: 2, name: '.hcignore', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/.hcignore`, 'utf8') },
+                  { id: 2, name: 'app.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/app.json`, 'utf8') },
+                  {
+                    id: 6,
+                    name: 'Test',
+                    children: [
+                      { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/index.js`, 'utf8') },
+                      { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/test/package.json`, 'utf8') },
+                      {
+                        id: 4445,
+                        name: 'Entry Types',
+                        children: [
+                          {
+                            id: 7,
+                            name: 'Origin',
+                            children: [
+                              { id: 9, name: 'index.js', file: 'js', code: '' }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    id: 10,
+                    name: 'Zomes',
+                    children: [
+                      {
+                        id: 11,
+                        name: 'Origins',
+                        index: 0,
+                        children: [
+                          { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'notes') },
+                          {
+                            id: 11,
+                            name: 'code',
+                            children: [
+                              { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/.hcbuild`, 'utf8') },
+                              { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/Cargo.toml`, 'utf8') },
+                              {
+                                id: 11,
+                                name: 'src',
+                                children: [
+                                  { id: 12, name: 'lib.rs', file: 'rs', code: '' },
+                                  {
+                                    id: 11,
+                                    name: 'origin',
+                                    children: [
+                                      { id: 12, name: 'handlers.rs', file: 'rs', code: '' },
+                                      { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/mod.rs`, 'utf8') },
+                                      { id: 14, name: 'entry_permissions.rs', file: 'rs', code: '' },
+                                      { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/link_permissions.rs`, 'utf8') },
+                                      { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/DNA/zomes/notes/code/src/note/validation.rs`, 'utf8') }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/package.json`, 'utf8') },
+              { id: 4, name: 'Procfile', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/Procfile`, 'utf8') },
+              { id: 3, name: 'README.md', file: 'md', code: fs.readFileSync(`${developer.folder}/templates/parts/notes/README.md`, 'utf8') }
+            ]
+          }
+        ]
+      }
+    ],
     items: [
       {
         id: 1,
@@ -159,7 +246,6 @@ export default {
   },
   getters: {
     items: (state) => (base) => {
-      console.log('base', base, state.items)
       return state.items.filter(i => i.name === base)
     }
   }

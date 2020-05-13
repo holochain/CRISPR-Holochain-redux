@@ -42,7 +42,7 @@
                   </v-icon>
                 </template>
                 <template v-slot:label="{ item }">
-                  <v-btn v-if="item.index!==undefined" text @click="loadZome(item)" class="text-none">
+                  <v-btn v-if="item.index!==undefined" text @click="showZomeModel(item)" class="text-none">
                     {{item.name}}
                   </v-btn>
                   <v-btn v-else text @click="loadFile(item)" class="text-none">
@@ -111,7 +111,7 @@
     </v-row>
     <v-dialog v-model="fieldsDialog" max-width="700px">
       <v-card flat>
-        <entry-type-properties :entryType="entryType" @entry-type-updated="entryTypeUpdated" />
+        <entry-type-properties :entryType="entryType" @entry-type-name-updated="entryTypeNameUpdated" @entry-type-fields-updated="entryTypeFieldsUpdated" />
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="fieldsDialog = false">
@@ -221,9 +221,7 @@ export default {
     }
   },
   methods: {
-    loadZome (item) {
-      item.children = this.zome.items
-      findItem(this.items, 'Entry Types').children = this.zome.testItems
+    showZomeModel (item) {
       this.showModel = true
       this.showCode = false
     },
@@ -231,8 +229,13 @@ export default {
       this.entryType = entryType
       this.fieldsDialog = true
     },
-    entryTypeUpdated (entryType) {
-      this.entryType.fields = entryType.fields
+    entryTypeNameUpdated (name) {
+      // Not updating name until items are stored in Holochain so we can use ids.
+      // this.entryType.name = name
+      // this.refreshKey += '1'
+    },
+    entryTypeFieldsUpdated (fields) {
+      this.entryType.fields = fields
       this.refreshKey += '1'
     },
     permissionChanged (entryFunction, role) {
@@ -270,10 +273,12 @@ export default {
       this.permissionsDialog = true
     },
     entryTypeFunctionsCodeUpdated (base, entryTypeName, handlersCode, permissionsCode, testCode) {
-      const entryTypeNameItem = findItem(this.zome.items, entryTypeName).children
+      const zomesItem = findItem(this.zome.items, 'Zomes')
+      const testItem = findItem(this.zome.items, 'Test')
+      const entryTypeNameItem = findItem(zomesItem.children, entryTypeName).children
       entryTypeNameItem[0].code = handlersCode
       entryTypeNameItem[2].code = permissionsCode
-      const entryTypeTestItems = findItem(this.zome.testItems, entryTypeName)
+      const entryTypeTestItems = findItem(testItem.children, entryTypeName)
       findItem(entryTypeTestItems.children, 'index.js').code = testCode
     },
     zomeModelUpdated (libCode) {
@@ -335,15 +340,15 @@ export default {
   },
   computed: {
     ...mapState('auth', ['developer']),
-    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId', 'fileItemsForZome']),
+    ...mapGetters('portfolio', ['projectById', 'zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     project () {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      return this.zomeByBaseId(this.$route.params.id)
+      return this.zomeByBaseIdFromTemplate(this.project.zomes[0])
     },
     items () {
-      return this.fileItemsForZome(this.zome.name)
+      return this.zome.items
     },
     open () {
       return [this.project.name, 'DNA', 'Test', 'Zomes', 'UI']

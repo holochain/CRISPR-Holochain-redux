@@ -73,14 +73,19 @@ export default {
         })
     },
     saveField (fieldIndex, field) {
-      console.log('Save Field')
       this.entryType.fields[fieldIndex] = field
-      this.$emit('entry-type-updated', this.entryType)
+      this.$emit('entry-type-fields-updated', this.entryType.fields)
     },
     deleteField (fieldIndex, field) {
-      console.log('Delete field')
       this.entryType.fields.splice(fieldIndex, 1)
-      this.$emit('entry-type-updated', this.entryType)
+      this.$emit('entry-type-fields-updated', this.entryType.fields)
+    }
+  },
+  watch: {
+    isEditing (save) {
+      if (!save) {
+        this.$emit('entry-type-name-updated', this.entryType.name)
+      }
     }
   }
 }
