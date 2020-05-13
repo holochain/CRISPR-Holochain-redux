@@ -25,6 +25,7 @@ export default {
         zomes: [
           {
             template: 'Origins',
+            templateTypeName: 'origin',
             name: 'Notes',
             entryTypes: [
               {
@@ -127,6 +128,7 @@ export default {
         zomes: [
           {
             template: 'Origins',
+            templateTypeName: 'origin',
             name: 'Tasks',
             entryTypes: [
               {
@@ -222,6 +224,7 @@ export default {
         zomes: [
           {
             template: 'Origins',
+            templateTypeName: 'origin',
             name: 'Kanban',
             entryTypes: [
               {

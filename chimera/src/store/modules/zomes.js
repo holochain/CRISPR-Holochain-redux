@@ -16,26 +16,29 @@ function replaceMod (modTemplate, entryType) {
   const constRustNewFields = []
   entryType.fields.forEach(field => {
     rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
-    constRustNewFields.push(`\n\t\t\t${field.fieldName}: ${entryType.name}_entry.${field.fieldName}`)
+    constRustNewFields.push(`\n\t\t\t${field.fieldName}: entry.${field.fieldName}`)
   })
-  const modContent = replacePlaceHolders(modTemplate, 'typePlaceHolder', entryType.name)
-  const modSplit = modContent.split('fields')
-  const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3]]
+  const modSplit = modTemplate.split('fields')
+  const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3], ...constRustNewFields, modSplit[4]]
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
-function setTypeNameAndFieldsInTemplateFiles (item, entryType) {
+function setTypeNameAndFieldsInTemplateFiles (item, templateTypeName, entryType) {
   if (entryType.fields === undefined) return
   if (item.children) {
     item.children.forEach(item => {
       if (item.file) {
-        item.code = replacePlaceHolders(item.code, 'origin', entryType.name)
+        item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         if (item.name === 'mod.rs') {
           item.code = replaceMod(item.code, entryType)
+        } else if (item.name === 'index.js') {
+          item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
+        } else {
+          item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         }
       }
-      item.name = replacePlaceHolders(item.name, 'origin', entryType.name)
-      setTypeNameAndFieldsInTemplateFiles(item, entryType)
+      item.name = replacePlaceHolders(item.name, templateTypeName, entryType.name)
+      setTypeNameAndFieldsInTemplateFiles(item, templateTypeName, entryType)
     })
   }
 }
@@ -311,18 +314,21 @@ export default {
       return state.zomes.find(z => z.base === base)
     },
     zomeByBaseIdFromTemplate: (state) => (zome) => {
-      const zomeTemplate = { ...state.zomeTemplates.find(t => t.name === zome.template) }
-      zomeTemplate.name = zome.name
-      zomeTemplate.items[0].name = zome.name
-      zomeTemplate.entryTypes.forEach((e, index) => {
+      const zomeTemplate = state.zomeTemplates.find(t => t.name === zome.template)
+      const template = JSON.parse(JSON.stringify(zomeTemplate))
+      template.name = zome.name
+      template.libCode = replacePlaceHolders(template.libCode, zome.template.toLowerCase(), zome.name.toLowerCase())
+      template.items[0].name = zome.name
+      template.entryTypes.forEach((e, index) => {
         const entryType = zome.entryTypes[index]
-        setTypeNameAndFieldsInTemplateFiles(zomeTemplate.items[0], entryType)
+        template.testCode = replacePlaceHolders(template.testCode, zome.templateTypeName, entryType.name.toLowerCase())
+        setTypeNameAndFieldsInTemplateFiles(template.items[0], zome.templateTypeName, entryType)
         e.id = entryType.id
         e.name = entryType.name
         e.fields = entryType.fields
       })
-      zomeTemplate.anchorTypes = zome.anchorTypes
-      return zomeTemplate
+      template.anchorTypes = zome.anchorTypes
+      return template
     }
   }
 }

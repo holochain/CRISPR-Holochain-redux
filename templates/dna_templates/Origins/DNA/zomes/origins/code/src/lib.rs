@@ -13,7 +13,7 @@ use crate::origin::OriginEntry;
 use crate::origin::Origin;
 
 #[zome]
-mod tasks {
+mod origins {
 
     #[init]
     fn init() {

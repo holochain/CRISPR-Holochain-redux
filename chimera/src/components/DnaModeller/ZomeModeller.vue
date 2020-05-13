@@ -33,6 +33,15 @@ import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/rust/rust.js'
 import 'codemirror/theme/base16-dark.css'
+
+function replacePlaceHolders (content, placeHolder, replacement) {
+  const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
+  const replacementAllC = replacement.toUpperCase()
+  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
+  const placeHolderAllC = placeHolder.toUpperCase()
+  return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
+}
+
 export default {
   name: 'ZomeModeller',
   components: {
@@ -146,6 +155,10 @@ export default {
           if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
         })
         testCode += '}'
+        handlersCode = replacePlaceHolders(handlersCode, 'origin', entryType.name.toLowerCase())
+        permissionsCode = replacePlaceHolders(permissionsCode, 'origin', entryType.name.toLowerCase())
+        testCode = replacePlaceHolders(testCode, 'origin', entryType.name.toLowerCase())
+        libCode = replacePlaceHolders(libCode, 'origin', entryType.name.toLowerCase())
         this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
         nodes.push({ id: entryType.id, node: entryTypeNode })
         entryTypeIndex += 1

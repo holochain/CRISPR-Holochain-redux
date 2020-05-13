@@ -13,7 +13,7 @@ use crate::note::NoteEntry;
 use crate::note::Note;
 
 #[zome]
-mod tasks {
+mod notes {
 
     #[init]
     fn init() {
