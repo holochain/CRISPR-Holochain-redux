@@ -42,6 +42,24 @@ function replacePlaceHolders (content, placeHolder, replacement) {
   return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
 }
 
+function replaceTest (testTemplate, entryType) {
+  const testFields = []
+  const testUpdateFields = []
+  entryType.fields.forEach(field => {
+    if (field.fieldType === 'String') {
+      testFields.push(`"${field.fieldName}": "String for testing"`)
+      testUpdateFields.push(`"${field.fieldName}": "Update string for testing"`)
+    } else if (field.fieldType === 'bool') {
+      testFields.push(`"${field.fieldName}": false`)
+      testUpdateFields.push(`"${field.fieldName}": true`)
+    } else {
+      testFields.push(`"${field.fieldName}": 0`)
+      testUpdateFields.push(`"${field.fieldName}": 1`)
+    }
+  })
+  return testTemplate.replace(new RegExp('_fields', 'g'), testFields.join()).replace(new RegExp('_updateFields', 'g'), testUpdateFields.join())
+}
+
 export default {
   name: 'ZomeModeller',
   components: {
@@ -158,6 +176,7 @@ export default {
         handlersCode = replacePlaceHolders(handlersCode, 'origin', entryType.name.toLowerCase())
         permissionsCode = replacePlaceHolders(permissionsCode, 'origin', entryType.name.toLowerCase())
         testCode = replacePlaceHolders(testCode, 'origin', entryType.name.toLowerCase())
+        testCode = replaceTest(testCode, entryType)
         libCode = replacePlaceHolders(libCode, 'origin', entryType.name.toLowerCase())
         this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
         nodes.push({ id: entryType.id, node: entryTypeNode })

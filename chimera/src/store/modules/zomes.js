@@ -27,12 +27,11 @@ function setTypeNameAndFieldsInTemplateFiles (item, templateTypeName, entryType)
   if (entryType.fields === undefined) return
   if (item.children) {
     item.children.forEach(item => {
+      console.log(item.name)
       if (item.file) {
         item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         if (item.name === 'mod.rs') {
           item.code = replaceMod(item.code, entryType)
-        } else if (item.name === 'index.js') {
-          item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         } else {
           item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         }
