@@ -37,27 +37,17 @@ module.exports = (scenario, conductorConfig) => {
   scenario("anyone-update-note", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
     const create_note_result = await alice.call("notes", "notes", "create_note", createParams)
-    const update_note_result = await alice.call("notes", "notes", "update_note", {"id": create_note_result.Ok.id, "created_at": create_note_result.Ok.createdAt, "address": create_note_result.Ok.address, "note_input" : {"uuid": create_note_result.Ok.uuid, "title":"Updated title first note", "content": "Content", "order": 1}})
+    const update_note_result = await alice.call("notes", "notes", "update_note", {"id": create_note_result.Ok.id, "created_at": create_note_result.Ok.createdAt, "address": create_note_result.Ok.address, "note_input" : {"uuid": create_note_result.Ok.uuid, "title": "Update string for testing","content": "Update string for testing","order": 1}})
     await s.consistency()
     const read_note_result = await alice.call("notes", "notes", "read_note", {"id": update_note_result.Ok.id, "created_at": update_note_result.Ok.createdAt})
     t.deepEqual(update_note_result, read_note_result)
 
-    const update_note_result_2 = await bob.call("notes", "notes", "update_note", {"id": update_note_result.Ok.id, "created_at": update_note_result.Ok.createdAt, "address": update_note_result.Ok.address, "note_input" : {"uuid": update_note_result.Ok.uuid, "title":"Updated again title first note", "content": "Content", "order": 1}})
+    const update_note_result_2 = await bob.call("notes", "notes", "update_note", {"id": update_note_result.Ok.id, "created_at": update_note_result.Ok.createdAt, "address": update_note_result.Ok.address, "note_input" : {"uuid": update_note_result.Ok.uuid, "title": "Update string for testing","content": "Update string for testing","order": 1}})
     await s.consistency()
     const read_note_result_2 = await alice.call("notes", "notes", "read_note", {"id": update_note_result_2.Ok.id, "created_at": update_note_result_2.Ok.createdAt})
     t.deepEqual(update_note_result_2, read_note_result_2)
   })
 
-  scenario("anyone-delete-note", async (s, t) => {
-    const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
-    const create_note_result = await alice.call("notes", "notes", "create_note", createParams)
-    await s.consistency()
-    const list_notes_result = await alice.call("notes", "notes", "list_notes", {"base": "testbase"})
-    t.deepEqual(list_notes_result.Ok.length, 1)
-    await bob.call("notes", "notes", "delete_note", {"base": "testbase", "id": create_note_result.Ok.id, "created_at": create_note_result.Ok.createdAt, "address": create_note_result.Ok.address })
-    await s.consistency()
-    const list_notes_result_2 = await alice.call("notes", "notes", "list_notes", {"base": "testbase"})
-    t.deepEqual(list_notes_result_2.Ok.length, 0)
-  })
+// No-one allowed to delete
 
 }

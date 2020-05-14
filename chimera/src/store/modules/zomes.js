@@ -18,7 +18,7 @@ function replaceMod (modTemplate, entryType) {
     rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
     constRustNewFields.push(`\n\t\t\t${field.fieldName}: entry.${field.fieldName}`)
   })
-  const modSplit = modTemplate.split('fields')
+  const modSplit = modTemplate.split('ReplaceFields')
   const modDone = [modSplit[0], ...rustFields, modSplit[1], ...rustFields, modSplit[2], ...constRustNewFields, modSplit[3], ...constRustNewFields, modSplit[4]]
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
@@ -27,7 +27,6 @@ function setTypeNameAndFieldsInTemplateFiles (item, templateTypeName, entryType)
   if (entryType.fields === undefined) return
   if (item.children) {
     item.children.forEach(item => {
-      console.log(item.name)
       if (item.file) {
         item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
         if (item.name === 'mod.rs') {

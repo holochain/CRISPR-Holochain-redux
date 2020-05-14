@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const createParams = {"base": "testbase", "origin_input" : {"uuid":uuidv4(), _fields}}
+const createParams = {"base": "testbase", "origin_input" : {"uuid":uuidv4(), _ReplaceFields}}
 module.exports = (scenario, conductorConfig) => {
   scenario("create_origin", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)

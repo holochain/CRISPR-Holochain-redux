@@ -1,5 +1,5 @@
 [package]
-name = "origins"
+name = "fields"
 version = "0.1.0"
 authors = ["Philip Beadle"]
 edition = "2018"

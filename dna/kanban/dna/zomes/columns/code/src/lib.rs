@@ -8,9 +8,9 @@ use hdk::{
     holochain_persistence_api::cas::content::Address,
 };
 
-pub mod kanban;
-use crate::kanban::KanbanEntry;
-use crate::kanban::Kanban;
+pub mod column;
+use crate::column::ColumnEntry;
+use crate::column::Column;
 
 #[zome]
 mod kanban {

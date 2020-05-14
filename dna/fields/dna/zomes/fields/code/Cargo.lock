@@ -198,6 +198,20 @@ version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "fields"
+version = "0.1.0"
+dependencies = [
+ "hdk 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "hdk_proc_macros 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors)",
+ "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_wasm_utils 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_derive 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
+ "serde_json 1.0.47 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "fuchsia-cprng"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1197,20 +1211,6 @@ dependencies = [
  "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "syn 0.15.31 (registry+https://github.com/rust-lang/crates.io-index)",
  "unicode-xid 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "tasks"
-version = "0.1.0"
-dependencies = [
- "hdk 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "hdk_proc_macros 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors)",
- "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_wasm_utils 0.0.47-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_derive 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
- "serde_json 1.0.47 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

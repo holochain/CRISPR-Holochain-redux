@@ -241,11 +241,11 @@ export default {
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
-      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/${this.entryType.name.toLowerCase()}/${role}-${entryFunction}-${this.entryType.name.toLowerCase()}.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/DNA/test/${this.zome.templateTypeName}/${role}-${entryFunction}-${this.zome.templateTypeName}.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
@@ -345,7 +345,10 @@ export default {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      return this.zomeByBaseIdFromTemplate(this.project.zomes[0])
+      const z = this.zomeByBaseIdFromTemplate(this.project.zomes[0])
+      z.template = this.project.zomes[0].template
+      z.templateTypeName = this.project.zomes[0].templateTypeName
+      return z
     },
     items () {
       return this.zome.items

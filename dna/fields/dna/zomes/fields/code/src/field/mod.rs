@@ -26,28 +26,28 @@ pub mod entry_permissions;
 pub mod link_permissions;
 pub mod validation;
 
-const COLUMNS_ANCHOR_TYPE: &str = "list_columns";
-const COLUMN_ENTRY_LINK_TYPE: &str = "column_link";
-const COLUMN_ENTRY_NAME: &str = "column";
+const FIELDS_ANCHOR_TYPE: &str = "list_fields";
+const FIELD_ENTRY_LINK_TYPE: &str = "field_link";
+const FIELD_ENTRY_NAME: &str = "field";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ColumnEntry {
+pub struct FieldEntry {
     uuid: String,
-	title: String,
-	order: u32,
+	name: String,
+	ui: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Column {
+pub struct Field {
     id: Address,
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
     uuid: String,
-	title: String,
-	order: u32,
+	name: String,
+	ui: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -63,43 +63,43 @@ fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
     }
 }
 
-impl Column {
-    pub fn new(address: Address, entry: ColumnEntry) -> ZomeApiResult<Column> {
-        Ok(Column{
+impl Field {
+    pub fn new(address: Address, entry: FieldEntry) -> ZomeApiResult<Field> {
+        Ok(Field{
             id: address.clone(),
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
-			title: entry.title,
-			order: entry.order,
+			name: entry.name,
+			ui: entry.ui,
         })
     }
 }
 
-impl Column {
-    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: ColumnEntry) -> ZomeApiResult<Column> {
-        Ok(Column{
+impl Field {
+    pub fn existing(id: Address, created_at: Iso8601, address: Address, entry: FieldEntry) -> ZomeApiResult<Field> {
+        Ok(Field{
             id: id.clone(),
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
-			title: entry.title,
-			order: entry.order,
+			name: entry.name,
+			ui: entry.ui,
         })
     }
 }
 
 pub fn definition() -> ValidatingEntryType {
     entry!(
-        name: COLUMN_ENTRY_NAME,
+        name: FIELD_ENTRY_NAME,
         description: "The entry with the content.",
         sharing: Sharing::Public,
         validation_package: || {
             hdk::ValidationPackageDefinition::Entry
         },
-        validation: | validation_data: hdk::EntryValidationData<ColumnEntry>| {
+        validation: | validation_data: hdk::EntryValidationData<FieldEntry>| {
             match validation_data
             {
                 hdk::EntryValidationData::Create{entry, validation_data} =>
@@ -119,7 +119,7 @@ pub fn definition() -> ValidatingEntryType {
         links: [
             from!(      
                 holochain_anchors::ANCHOR_TYPE,
-                link_type: COLUMN_ENTRY_LINK_TYPE,
+                link_type: FIELD_ENTRY_LINK_TYPE,
                 validation_package: || {
                     hdk::ValidationPackageDefinition::Entry
                 },

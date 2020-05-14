@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      <span class="title">Projects</span>
+      <span class="title">CRISPR Application Projects</span>
       <v-spacer></v-spacer>
       <v-btn color="action" icon @click="help=!help">
         <v-icon>mdi-help</v-icon>
@@ -63,7 +63,16 @@
       Click <v-icon>mdi-dna</v-icon> (Clone) to create a new DNA from an existing one.
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="(project) in projects" :key="project.name" cols="12" sm="6" md="4">
+      <v-col v-for="(project) in applicationProjects" :key="project.name" cols="12" sm="6" md="3">
+        <holochain-project :project="project"/>
+      </v-col>
+    </v-row>
+    <v-toolbar flat>
+      <span class="title">CRISPR Part Projects</span>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+    <v-row no-gutters>
+      <v-col v-for="(project) in partProjects" :key="project.name" cols="12" sm="6" md="3">
         <holochain-project :project="project"/>
       </v-col>
     </v-row>
@@ -83,7 +92,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('portfolio', ['projects'])
+    ...mapGetters('portfolio', ['applicationProjects', 'partProjects'])
   }
 }
 </script>

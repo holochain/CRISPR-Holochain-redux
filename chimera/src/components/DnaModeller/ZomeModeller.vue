@@ -57,7 +57,7 @@ function replaceTest (testTemplate, entryType) {
       testUpdateFields.push(`"${field.fieldName}": 1`)
     }
   })
-  return testTemplate.replace(new RegExp('_fields', 'g'), testFields.join()).replace(new RegExp('_updateFields', 'g'), testUpdateFields.join())
+  return testTemplate.replace(new RegExp('_ReplaceFields', 'g'), testFields.join()).replace(new RegExp('_updateFields', 'g'), testUpdateFields.join())
 }
 
 export default {
@@ -144,12 +144,14 @@ export default {
       let entryTypeIndex = 0
       let libCode = this.zome.libCode
       let testCode = this.zome.testCode
+      let hasAnchors = false
       const that = this
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
       let entryTypeOffset = col2Offset
       this.zome.anchorTypes.forEach(anchorType => {
         if (anchorType.anchors.length > 0) {
           entryTypeOffset = col3Offset
+          hasAnchors = true
         }
       })
       if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
@@ -161,7 +163,8 @@ export default {
         let permissionsCode = ''
         entryType.functions.forEach(f => {
           if (f.permission !== 'remove') {
-            if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            if (f.name !== 'declarations' && f.name !== 'rebase') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            if (f.name === 'rebase' && hasAnchors) entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
             libCode += f.libCode + '\n\n'
             if (f.testCode) testCode += f.testCode + '\n\n'
             handlersCode += f.code + '\n\n'

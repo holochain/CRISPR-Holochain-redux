@@ -32,6 +32,11 @@ export default {
   components: {
     HolochainPart: () => import('@/components/HolochainPart')
   },
+  data () {
+    return {
+      help: false
+    }
+  },
   computed: {
     ...mapGetters('library', ['parts'])
   }

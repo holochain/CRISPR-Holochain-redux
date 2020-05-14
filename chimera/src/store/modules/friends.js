@@ -78,7 +78,6 @@ export default {
     online: state => {
       const total = state.friends.length
       const online = state.friends.filter(friend => friend.online).length
-
       return `(${online}/${total})`
     }
   },

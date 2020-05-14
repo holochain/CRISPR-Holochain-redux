@@ -122,10 +122,7 @@ export default {
   computed: {
     ...mapGetters('friends', ['online']),
     ...mapState('auth', ['loggedIn']),
-    ...mapState('friends', [
-      'drawer',
-      'friends'
-    ]),
+    ...mapState('friends', ['drawer', 'friends']),
     friendsDrawer: {
       get () {
         return this.drawer
