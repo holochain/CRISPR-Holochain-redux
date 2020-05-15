@@ -45,7 +45,7 @@
      </v-list-item-action>
    </v-list-item>
     <v-container class="fill-height ma-0 pl-5" fluid>
-      <v-col v-for="(field) in personaFields" :key="field.fieldName" cols="12">
+      <v-col v-for="(field) in personaFields" :key="field.fieldId" cols="12">
         <persona-field :personaFieldValue="field" @save-persona-field="saveField" @delete-persona-field="deleteField"/>
       </v-col>
     </v-container>

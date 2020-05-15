@@ -40,7 +40,7 @@ const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
 const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test')
 
 // const conductorConfig = Config.gen({notes: dna})
-const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna}, {
+const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -204,11 +204,16 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnTasksDone', columnTasksDone)
 
 
-  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Full Name","ui": "textfield"}})
-  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Avatar","ui": "thumbnail"}})
-  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Bio","ui": "textarea"}})
-  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Handle","ui": "textfield"}})
-  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
+  const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Full Name", "ui": "text-field"}})
+  console.log('fullNameId', fullNameId)
+  const avatarId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Avatar","ui": "thumbnail"}})
+  console.log('avatarId', avatarId)
+  const bioId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Bio","ui": "text-area"}})
+  console.log('bioId', bioId)
+  const handleId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Handle","ui": "text-field"}})
+  console.log('handleId', handleId)
+  const profilePicId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
+  console.log('profilePicId', profilePicId)
 
 })
 

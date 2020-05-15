@@ -8,17 +8,17 @@ export default {
         name: 'Personal',
         fields: [
           {
-            anchor: 'nickname',
-            fieldName: 'Nick Name',
-            fieldType: 'singleLineText',
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'singleLineText',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
           },
           {
-            anchor: 'avatar',
-            fieldName: 'Avatar',
-            fieldType: 'thumbnail',
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
@@ -31,17 +31,17 @@ export default {
         dna: 'QmHashyCRISPR',
         fields: [
           {
-            anchor: 'nickname',
-            fieldName: 'Nick Name',
-            fieldType: 'singleLineText',
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'singleLineText',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
           },
           {
-            anchor: 'avatar',
-            fieldName: 'Avatar',
-            fieldType: 'thumbnail',
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
@@ -54,17 +54,17 @@ export default {
         dna: 'QmHashyholopunk-records',
         fields: [
           {
-            anchor: 'nickname',
-            fieldName: 'Nick Name',
-            fieldType: 'singleLineText',
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'singleLineText',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'nickname' }
           },
           {
-            anchor: 'avatar',
-            fieldName: 'Avatar',
-            fieldType: 'thumbnail',
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'avatar' }
@@ -77,17 +77,17 @@ export default {
         dna: 'QmHashykanban',
         fields: [
           {
-            anchor: 'nickname',
-            fieldName: 'Nick Name',
-            fieldType: 'singleLineText',
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'singleLineText',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
           },
           {
-            anchor: 'avatar',
-            fieldName: 'Avatar',
-            fieldType: 'thumbnail',
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
@@ -100,17 +100,17 @@ export default {
         dna: 'QmHashySiteBuilder',
         fields: [
           {
-            anchor: 'nickname',
-            fieldName: 'Nick Name',
-            fieldType: 'singleLineText',
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'singleLineText',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
           },
           {
-            anchor: 'avatar',
-            fieldName: 'Avatar',
-            fieldType: 'thumbnail',
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }

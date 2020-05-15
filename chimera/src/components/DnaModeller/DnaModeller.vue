@@ -354,7 +354,7 @@ export default {
       return this.zome.items
     },
     open () {
-      return [this.project.name, 'DNA', 'Test', 'Zomes', 'UI']
+      return [this.items[0].name, 'DNA', 'Test', 'Zomes', 'UI']
     }
   }
 }
