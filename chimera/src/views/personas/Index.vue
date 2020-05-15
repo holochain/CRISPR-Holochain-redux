@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   components: {
     PersonaCard: () => import('@/components/personas/PersonaCard')
@@ -26,10 +26,14 @@ export default {
   methods: {
     deletePersona () {
       console.log('delete persona')
-    }
+    },
+    ...mapActions('personas', ['fetchPersonas'])
   },
   computed: {
     ...mapGetters('personalInformation', ['profiles', 'personas'])
+  },
+  created () {
+    this.fetchPersonas()
   }
 }
 </script>

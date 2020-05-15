@@ -1,59 +1,72 @@
 bridges = []
-persistence_dir = '/tmp/tmp.aszRTGxx6O/tryorama/vKEuRx'
+persistence_dir = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'columns'
 keystore_file = '[UNUSED]'
-name = 'bob::columns::132d5403-13d5-4761-96c9-4586647e8e4a'
-public_address = 'HcScJqXNGG5Jeepv3z4zrwi3uHaryg5xfjP5PMKk7867J8Ab3yNFg7Z57AjOqoi'
+name = 'bob::columns::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+public_address = 'HcSCjHE96mmYcrwwtb9zngux8DsBtyw3z3Byv78dP77yaJknR59EYPAvchqfosz'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'bob::notes::132d5403-13d5-4761-96c9-4586647e8e4a'
-public_address = 'HcScjrmC38YOb5m3wfYZcFks4dJ7hs49x8dvnDs4g7ZOgpx4KEIRdoIxvn5rbnz'
+name = 'bob::notes::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+public_address = 'HcScIAuAUFQ3g4abtvdi58jm75f4m54v9Qf99NOwAdxfupcj79mnEq6iRVekw3i'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'bob::tasks::132d5403-13d5-4761-96c9-4586647e8e4a'
-public_address = 'HcScJnuATf9645xbfuVHZPjZebhn8w8jay7CPPOTCYvv9eszpIO3vF7H8xr4mcz'
+name = 'bob::tasks::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+public_address = 'HcSCjfR9c6ITvvincdp5ntB67mxTahd45g7yAGW8TGDweb7k7PeRagHgun6kxzr'
 test_agent = true
 
 [[agents]]
 id = 'fields'
 keystore_file = '[UNUSED]'
-name = 'bob::fields::132d5403-13d5-4761-96c9-4586647e8e4a'
-public_address = 'HcScjVAp8p7ot7iav4ZHM6VQNhkpph4ezK6jkvmXzSwf98psMjVQYuuvtcqdobz'
+name = 'bob::fields::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+public_address = 'HcScjenRbxDhkzfmsdbtNV6fAETcekqq8wu38k6tt456s588f64uosVOo5tqofi'
+test_agent = true
+
+[[agents]]
+id = 'personafields'
+keystore_file = '[UNUSED]'
+name = 'bob::personafields::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+public_address = 'HcSCItkW7a6Ej3955cafuNSpjRaw83v4s3FA4g8gs6cZSgpofEPFdv9YQgtvzfr'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmfV5VVt3MwHw3dwfTranbkTs7hhx5TE4sXt8aGzwYUVgf'
+hash = 'QmbM8tramuzDtJK8d1K2KLLpbgRg9r1vsqhbn7LRR9pLYo'
 id = 'columns-test'
-uuid = '132d5403-13d5-4761-96c9-4586647e8e4a'
+uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmfEa9ngNRkCZ4kTP7Z3AyWoJmSy61EiaVU4RKpzScnn4n'
+hash = 'QmQLtf5TGSQahsYTPBr6v22CDpCnPtcdz34PVUN9CznLBt'
 id = 'notes-test'
-uuid = '132d5403-13d5-4761-96c9-4586647e8e4a'
+uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmXisEqTPq6xKyLg4X7kG473wWDVN8XdvZSBMxax5gJEo6'
+hash = 'QmQ6G39mnxT6fQoVrXGuhtjhB68VYRWiXhA87oBcLEuWfC'
 id = 'tasks-test'
-uuid = '132d5403-13d5-4761-96c9-4586647e8e4a'
+uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/fields/dna/dist/dna.dna.json'
-hash = 'QmT1gmnhHTz1QaUDqUGto8ykhGFjjciu8DmD7bUyn9cuzs'
+hash = 'QmaKtTDpP1D1RQooGqkUkuEtNewTU3H8Wbvco5VDFVQTJV'
 id = 'fields-test'
-uuid = '132d5403-13d5-4761-96c9-4586647e8e4a'
+uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/personalinformation/dna/dist/dna.dna.json'
+hash = 'QmWx2M4aBvQ8awF4BhCMAKXBZPmGE1qNSXYyf3vQDJSrTv'
+id = 'personafields-test::e375ebe0-8a84-45f8-8b2c-df6988b51fc0'
+uuid = 'e375ebe0-8a84-45f8-8b2c-df6988b51fc0::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
 
 [[instances]]
 agent = 'columns'
@@ -61,7 +74,7 @@ dna = 'columns-test'
 id = 'columns'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/vKEuRx/columns'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L/columns'
 type = 'lmdb'
 
 [[instances]]
@@ -70,7 +83,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/vKEuRx/notes'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -79,7 +92,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/vKEuRx/tasks'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L/tasks'
 type = 'lmdb'
 
 [[instances]]
@@ -88,7 +101,16 @@ dna = 'fields-test'
 id = 'fields'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/vKEuRx/fields'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L/fields'
+type = 'lmdb'
+
+[[instances]]
+agent = 'personafields'
+dna = 'personafields-test::e375ebe0-8a84-45f8-8b2c-df6988b51fc0'
+id = 'personafields'
+
+[instances.storage]
+path = '/tmp/tmp.aszRTGxx6O/tryorama/X5dH9L/personafields'
 type = 'lmdb'
 
 [[interfaces]]
@@ -107,6 +129,9 @@ id = 'tasks'
 
 [[interfaces.instances]]
 id = 'fields'
+
+[[interfaces.instances]]
+id = 'personafields'
 
 [interfaces.driver]
 port = 33001

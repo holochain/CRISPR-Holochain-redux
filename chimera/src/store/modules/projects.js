@@ -24,13 +24,13 @@ export default {
         zomes: []
       },
       {
-        id: 'QmHashyPersonasProfiles',
+        id: 'QmHashyCuratedFields',
         name: 'Curated Fields',
         type: 'application',
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'Keep control of your personal information, know which apps are using it and update your info in one location.',
+        description: 'A managed list of fields that make it simple to map profile fields to personas.',
         zomes: [
           {
             template: 'Origins',
@@ -74,6 +74,109 @@ export default {
                   }
                 ],
                 anchors: []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'QmHashyPersonasProfiles',
+        name: 'Personal Information',
+        type: 'application',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Keep control of your personal information, know which apps are using it and update your info in one location.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            name: 'PersonalInformation',
+            entryTypes: [
+              {
+                id: 'QmPersonaFieldEntryTypeHash',
+                name: 'personafield',
+                fields: [
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'fields_field_id',
+                    fieldType: 'String',
+                    fieldDescription: 'id of the field from the curated and custom fields list',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'value',
+                    fieldType: 'String',
+                    fieldDescription: 'The value of the persona field',
+                    required: true
+                  }
+                ]
+              },
+              {
+                id: 'QmPersonaFieldEntryTypeHash',
+                name: 'profilefield',
+                fields: [
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'fields_field_id',
+                    fieldType: 'String',
+                    fieldDescription: 'id of the field from the curated and custom fields list',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'address',
+                    fieldType: 'String',
+                    fieldDescription: 'The address of the persona field entry for the profile field.',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'contract',
+                    fieldType: 'String',
+                    fieldDescription: 'The agreement for how the information is stored.',
+                    required: true
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_personas1',
+                type: 'Personas',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [],
+                anchors: [
+                  {
+                    id: 'Qmlist_Qmhashnote1',
+                    type: 'Personas',
+                    text: 'Personal',
+                    links: [
+                      {
+                        entityId: 'QmPersonaFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qmlist_Qmhashnote1',
+                    type: 'Personas',
+                    text: 'Music',
+                    links: [
+                      {
+                        entityId: 'QmPersonaFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           }

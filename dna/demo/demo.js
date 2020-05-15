@@ -1,10 +1,12 @@
 const { v4: uuidv4 } = require('uuid')
-/// NB: The tryorama config patterns are still not quite stabilized.
-/// See the tryorama README [https://github.com/holochain/tryorama]
-/// for a potentially more accurate example
 const path = require('path')
-
 const { Orchestrator, Config, combine, singleConductor, localOnly, tapeExecutor } = require('@holochain/tryorama')
+const fs = require('fs');
+
+function base64_encode(file) {
+    var bitmap = fs.readFileSync(file);
+    return `data:image/png;base64, ${new Buffer(bitmap).toString('base64')}`
+}
 
 process.on('unhandledRejection', error => {
   // Will print "unhandledRejection err is not defined"
@@ -15,6 +17,7 @@ const columnsDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
+const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const orchestrator = new Orchestrator({
   middleware: combine(
@@ -38,9 +41,10 @@ const columnsDna = Config.dna(columnsDnaPath, 'columns-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
 const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test')
+const personalInformationDna = Config.dna(personalInformationDnaPath, 'personafields-test', { uuid: uuidv4() })
 
 // const conductorConfig = Config.gen({notes: dna})
-const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna}, {
+const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personafields: personalInformationDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -203,7 +207,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnTasksDone = await phil.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnTasksDone', columnTasksDone)
 
-
+  // managed fields list
   const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Full Name", "ui": "text-field"}})
   console.log('fullNameId', fullNameId)
   const avatarId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Avatar","ui": "thumbnail"}})
@@ -214,6 +218,18 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('handleId', handleId)
   const profilePicId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
   console.log('profilePicId', profilePicId)
+
+  // Phil's Personal persona
+  const philPersonalHandle = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "philip.beadle"}})
+  console.log('philPersonalHandle', philPersonalHandle)
+  const philPersonalAvatar = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philip.beadle.png')}})
+  console.log('philPersonalAvatar', philPersonalAvatar)
+
+  // Phil's Music persona
+  const philMusicHandle = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "@philt3r"}})
+  console.log('philMusicHandle', philMusicHandle)
+  const philMusicAvatar = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
+  console.log('philMusicAvatar', philMusicAvatar)
 
 })
 
