@@ -34,8 +34,8 @@ const COLUMN_ENTRY_NAME: &str = "column";
 #[serde(rename_all = "camelCase")]
 pub struct ColumnEntry {
     uuid: String,
-    title: String,
-    order: u32
+	title: String,
+	order: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -47,7 +47,7 @@ pub struct Column {
     updated_at: Iso8601,
     uuid: String,
 	title: String,
-    order: u32
+	order: u32,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -72,7 +72,7 @@ impl Column {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			title: entry.title,
-            order: entry.order
+			order: entry.order,
         })
     }
 }
@@ -86,7 +86,7 @@ impl Column {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			title: entry.title,
-            order: entry.order
+			order: entry.order,
         })
     }
 }

@@ -103,6 +103,7 @@ export default {
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'list_tasks')({ base: base }).then((result) => {
           const res = JSON.parse(result)
+          console.log(base, res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {

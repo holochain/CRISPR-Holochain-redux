@@ -33,7 +33,12 @@ export default {
         updated: 1588890779424
       }
     ],
-    partParts: [],
+    partParts: [
+      {
+        base: 'QmHashyKanban',
+        parts: []
+      }
+    ],
     invites: [
       {
         id: 'Qmhashyinvite1',

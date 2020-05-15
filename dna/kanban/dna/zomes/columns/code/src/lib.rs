@@ -13,7 +13,7 @@ use crate::column::ColumnEntry;
 use crate::column::Column;
 
 #[zome]
-mod columns {
+mod kanban {
 
     #[init]
     fn init() {
@@ -58,6 +58,11 @@ mod columns {
     #[zome_fn("hc_public")]
     fn list_columns(base: String) -> ZomeApiResult<Vec<Column>> {
         column::handlers::list(base)
+    }
+
+    #[zome_fn("hc_public")]
+    fn rebase_column(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+        column::handlers::rebase(base_from, base_to, id, created_at)
     }
 
 }

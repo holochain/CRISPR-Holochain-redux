@@ -17,7 +17,7 @@ export default {
         },
         notifications: 1,
         value: 60,
-        start: 300
+        start: 250
       },
       {
         id: 2,
@@ -30,7 +30,7 @@ export default {
         },
         notifications: 0,
         value: 50,
-        start: 40
+        start: 140
       },
       {
         id: 2,
@@ -43,7 +43,7 @@ export default {
         },
         notifications: 0,
         value: 45,
-        start: 80
+        start: 20
       },
       {
         id: 2,
@@ -68,8 +68,8 @@ export default {
           name: 'Holochain'
         },
         notifications: 1,
-        value: 60,
-        start: 0
+        value: 40,
+        start: 100
       }
     ]
   },
@@ -78,7 +78,6 @@ export default {
     online: state => {
       const total = state.friends.length
       const online = state.friends.filter(friend => friend.online).length
-
       return `(${online}/${total})`
     }
   },

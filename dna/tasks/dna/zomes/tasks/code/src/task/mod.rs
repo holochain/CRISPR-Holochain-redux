@@ -33,8 +33,9 @@ const TASK_ENTRY_NAME: &str = "task";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct TaskEntry {
-    title: String,
-    done: bool
+    uuid: String,
+	title: String,
+	done: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -44,8 +45,9 @@ pub struct Task {
     created_at: Iso8601,
     address: Address,
     updated_at: Iso8601,
+    uuid: String,
 	title: String,
-    done: bool
+	done: bool,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -68,8 +70,9 @@ impl Task {
             created_at: timestamp(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
-            done: entry.done
+			done: entry.done,
         })
     }
 }
@@ -81,8 +84,9 @@ impl Task {
             created_at: created_at.clone(),
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
+            uuid: entry.uuid,
 			title: entry.title,
-            done: entry.done
+			done: entry.done,
         })
     }
 }

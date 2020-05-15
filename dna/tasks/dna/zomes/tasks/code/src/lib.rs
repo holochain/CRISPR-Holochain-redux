@@ -60,4 +60,9 @@ mod tasks {
         task::handlers::list(base)
     }
 
+    #[zome_fn("hc_public")]
+    fn rebase_task(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+        task::handlers::rebase(base_from, base_to, id, created_at)
+    }
+
 }

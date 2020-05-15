@@ -25,11 +25,10 @@ fn tasks_anchor(anchor_text: String) -> ZomeApiResult<Address> {
 }
 
 pub fn create(base: String, task_entry: TaskEntry) -> ZomeApiResult<Task> {
-    let task_anchor = tasks_anchor(base)?;
     let entry = Entry::App(TASK_ENTRY_NAME.into(), task_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let task = Task::new(entry_address.clone(), task_entry)?;
-    hdk::link_entries(&task_anchor, &entry_address, TASK_ENTRY_LINK_TYPE, &task.created_at.to_string())?;
+    hdk::link_entries(&tasks_anchor(base)?, &entry_address, TASK_ENTRY_LINK_TYPE, &task.created_at.to_string())?;
     Ok(task)
 }
 
@@ -54,5 +53,10 @@ pub fn list(base: String) -> ZomeApiResult<Vec<Task>> {
     .iter()
     .map(|link| read(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
     .collect()
+}
+
+pub fn rebase(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+    hdk::remove_link(&tasks_anchor(base_from)?, &id, TASK_ENTRY_LINK_TYPE, &created_at.to_string())?;
+    hdk::link_entries(&tasks_anchor(base_to)?, &id, TASK_ENTRY_LINK_TYPE, &created_at.to_string())
 }
 

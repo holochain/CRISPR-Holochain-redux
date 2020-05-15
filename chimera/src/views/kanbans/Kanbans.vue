@@ -19,9 +19,32 @@
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller for that project.
           </v-alert>
           <v-row no-gutters>
-            <v-col v-for="(project) in projects" :key="project.name" cols="12">
+            <v-col v-for="(project) in applicationProjects" :key="project.name" cols="12">
               <v-card class="ma-5">
               <v-card-title>{{project.name}} Project Kanban Board
+                <v-spacer></v-spacer>
+                <v-card-actions>
+                  <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+                    <v-icon>mdi-notebook-outline</v-icon>
+                  </v-btn>
+                  <v-btn color="action" icon :to="`/part/${project.id}`">
+                    <v-icon>mdi-application</v-icon>
+                  </v-btn>
+                  <v-btn color="action" icon :to="`/project/${project.id}`">
+                    <v-icon>mdi-code-braces</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card-title>
+                <v-row>
+                  <v-col>
+                    <kanban :key="project.id" :base="project.id" :title="project.name"/>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-col>
+            <v-col v-for="(project) in partProjects" :key="project.name" cols="12">
+              <v-card class="ma-5">
+              <v-card-title>{{project.name}} Part Kanban Board
                 <v-spacer></v-spacer>
                 <v-card-actions>
                   <v-btn color="action" icon :to="`/partNotes/${project.id}`">
@@ -61,7 +84,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('portfolio', ['projects'])
+    ...mapGetters('portfolio', ['applicationProjects', 'partProjects'])
   }
 }
 </script>

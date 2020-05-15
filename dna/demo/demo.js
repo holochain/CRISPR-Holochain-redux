@@ -14,6 +14,7 @@ process.on('unhandledRejection', error => {
 const columnsDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
+const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
 
 const orchestrator = new Orchestrator({
   middleware: combine(
@@ -36,6 +37,7 @@ const orchestrator = new Orchestrator({
 const columnsDna = Config.dna(columnsDnaPath, 'columns-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
+const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test')
 
 // const conductorConfig = Config.gen({notes: dna})
 const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna}, {
@@ -47,6 +49,48 @@ const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks:
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
   const {phil, bob, alice, lucy} = await s.players({phil: conductorConfig, bob: conductorConfig, alice: conductorConfig, lucy: conductorConfig}, true)
+
+  const chimeraDo = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  await s.consistency()
+  const chimeraDoing = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  await s.consistency()
+  const chimeraDone = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  await s.consistency()
+  const chimeraDoNote1 = await phil.call("notes", "notes", "create_note", {"base":chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA Model for Personas & Profiles", "content":"Create the DNA Model", "order": 0}})
+  await s.consistency()
+  const chimeraDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  console.log('chimeraDoNote1Task1', chimeraDoNote1Task1)
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  await s.consistency()
+  
+  await phil.call("notes", "notes", "create_note", {"base": chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Create Profile form for Chimera", "content":"Needs to have avatar and handle", "order": 1}})
+  await s.consistency()
+  const chimeraDoNote2 = await phil.call("notes", "notes", "create_note", {"base":chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA for Chimera Parts and invites", "content":"Currently hard coded into the vuex store. Needs to be editable", "order": 1}})
+  await s.consistency()
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  await s.consistency()
+
+  const crisprDo = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  await s.consistency()
+  const crisprDoing = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  await s.consistency()
+  const crisprDone = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  await s.consistency()
+  const crisprDoNote1 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Model for CRISPR", "content":"Create the DNA Model to store all the information in a project including the zome model", "order": 0}})
+  await s.consistency()
+  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  await s.consistency()
+
+  await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Promote project to Parts library", "content":"When a Part is ready to be used promote it to the Parts list.", "order": 1}})
+  await s.consistency()
 
   const columnNotesDo = await phil.call("columns", "columns", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   console.log('columnNotesDo', columnNotesDo)
@@ -158,6 +202,14 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
 
   const columnTasksDone = await phil.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnTasksDone', columnTasksDone)
+
+
+  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Full Name","ui": "textfield"}})
+  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Avatar","ui": "thumbnail"}})
+  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Bio","ui": "textarea"}})
+  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Handle","ui": "textfield"}})
+  await alice.call("fields", "fields", "create_field", {"base": "testbase", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
+
 })
 
 orchestrator.run()

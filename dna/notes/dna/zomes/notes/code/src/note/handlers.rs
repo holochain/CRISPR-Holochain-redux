@@ -43,10 +43,7 @@ pub fn update(id: Address, created_at: Iso8601, address: Address, note_input: No
     Note::existing(id.clone(), created_at, updated_entry_address, note_input)
 }
 
-pub fn delete(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
-    hdk::remove_link(&notes_anchor(base)?, &id, NOTE_ENTRY_LINK_TYPE, &created_at.to_string())?;
-    hdk::remove_entry(&address)
-}
+	// No-one allowed to delete
 
 pub fn list(base: String) -> ZomeApiResult<Vec<Note>> {
     hdk::get_links(&notes_anchor(base)?, LinkMatch::Exactly(NOTE_ENTRY_LINK_TYPE), LinkMatch::Any)?.links()

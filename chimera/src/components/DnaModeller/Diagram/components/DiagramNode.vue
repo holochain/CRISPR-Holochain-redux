@@ -103,7 +103,8 @@ export default {
       this.$emit('deleteModelNode', this.type, this.typeIndex)
     },
     editProperties () {
-      this.$emit('edit-properties', this.typeIndex, this.type)
+      const entryTypeName = this.title.split('::')[1]
+      this.$emit('edit-properties', entryTypeName)
     },
     editPermissions () {
       const entryTypeName = this.title.split('::')[1]

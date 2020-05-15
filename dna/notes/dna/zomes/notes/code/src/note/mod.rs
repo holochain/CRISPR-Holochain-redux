@@ -34,9 +34,9 @@ const NOTE_ENTRY_NAME: &str = "note";
 #[serde(rename_all = "camelCase")]
 pub struct NoteEntry {
     uuid: String,
-    title: String,
-    content: String,
-    order: u32
+	title: String,
+	content: String,
+	order: u32,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -47,9 +47,9 @@ pub struct Note {
     address: Address,
     updated_at: Iso8601,
     uuid: String,
-    title: String,
-    content: String,
-    order: u32
+	title: String,
+	content: String,
+	order: u32,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -74,8 +74,8 @@ impl Note {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			title: entry.title,
-            content: entry.content,
-            order: entry.order
+			content: entry.content,
+			order: entry.order,
         })
     }
 }
@@ -89,8 +89,8 @@ impl Note {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			title: entry.title,
-            content: entry.content,
-            order: entry.order
+			content: entry.content,
+			order: entry.order,
         })
     }
 }

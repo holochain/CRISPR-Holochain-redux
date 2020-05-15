@@ -2,7 +2,7 @@
   <v-card flat>
     <v-row no-gutters>
       <v-col cols="12" v-resize="onResize">
-        <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-84"></diagram>
+        <diagram :id="zome.id" :key="zome.id" :model="model" @edit-permissions="editPermissions" @edit-properties="editProperties" @show-function-code="showFunctionCode" :width="this.windowSize.x" :height="this.windowSize.y-84"></diagram>
       </v-col>
     </v-row>
     <v-dialog v-model="codeDialog" max-width="1000px">
@@ -33,6 +33,33 @@ import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/rust/rust.js'
 import 'codemirror/theme/base16-dark.css'
+
+function replacePlaceHolders (content, placeHolder, replacement) {
+  const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
+  const replacementAllC = replacement.toUpperCase()
+  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
+  const placeHolderAllC = placeHolder.toUpperCase()
+  return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
+}
+
+function replaceTest (testTemplate, entryType) {
+  const testFields = []
+  const testUpdateFields = []
+  entryType.fields.forEach(field => {
+    if (field.fieldType === 'String') {
+      testFields.push(`"${field.fieldName}": "String for testing"`)
+      testUpdateFields.push(`"${field.fieldName}": "Update string for testing"`)
+    } else if (field.fieldType === 'bool') {
+      testFields.push(`"${field.fieldName}": false`)
+      testUpdateFields.push(`"${field.fieldName}": true`)
+    } else {
+      testFields.push(`"${field.fieldName}": 0`)
+      testUpdateFields.push(`"${field.fieldName}": 1`)
+    }
+  })
+  return testTemplate.replace(new RegExp('_ReplaceFields', 'g'), testFields.join()).replace(new RegExp('_updateFields', 'g'), testUpdateFields.join())
+}
+
 export default {
   name: 'ZomeModeller',
   components: {
@@ -83,6 +110,10 @@ export default {
           break
       }
     },
+    editProperties (entryTypeName) {
+      this.entryTypeName = entryTypeName
+      this.$emit('edit-properties', this.entryType)
+    },
     editPermissions (entryTypeName) {
       this.entryTypeName = entryTypeName
       this.$emit('edit-permissions', this.entryType)
@@ -111,86 +142,76 @@ export default {
       let entryTypesOffset = 0
       let anchorIndex = 0
       let entryTypeIndex = 0
-      let libCode = ''
-      let testCode = ''
+      let libCode = this.zome.libCode
+      let testCode = this.zome.testCode
+      let hasAnchors = false
       const that = this
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
       let entryTypeOffset = col2Offset
-      if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
-        entryTypeOffset = col3Offset
-      }
       this.zome.anchorTypes.forEach(anchorType => {
         if (anchorType.anchors.length > 0) {
           entryTypeOffset = col3Offset
+          hasAnchors = true
         }
+      })
+      if (this.zome.anchorTypes.find(anchorType => anchorType.agentIdLinks !== undefined)) {
+        entryTypeOffset = col3Offset
+      }
+      this.zome.entryTypes.forEach(entryType => {
+        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+        let handlersCode = ''
+        let permissionsCode = ''
+        entryType.functions.forEach(f => {
+          if (f.permission !== 'remove') {
+            if (f.name !== 'declarations' && f.name !== 'rebase') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            if (f.name === 'rebase' && hasAnchors) entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
+            libCode += f.libCode + '\n\n'
+            if (f.testCode) testCode += f.testCode + '\n\n'
+            handlersCode += f.code + '\n\n'
+          } else {
+            libCode += `\t// No-one allowed to ${f.name}\n\n`
+            if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
+            handlersCode += `\t// No-one allowed to ${f.name}\n\n`
+          }
+          if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
+        })
+        testCode += '}'
+        handlersCode = replacePlaceHolders(handlersCode, 'origin', entryType.name.toLowerCase())
+        permissionsCode = replacePlaceHolders(permissionsCode, 'origin', entryType.name.toLowerCase())
+        testCode = replacePlaceHolders(testCode, 'origin', entryType.name.toLowerCase())
+        testCode = replaceTest(testCode, entryType)
+        libCode = replacePlaceHolders(libCode, 'origin', entryType.name.toLowerCase())
+        this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
+        nodes.push({ id: entryType.id, node: entryTypeNode })
+        entryTypeIndex += 1
+        entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
+      })
+      this.zome.anchorTypes.forEach(anchorType => {
         anchorsOffset = anchorsYIndex * 185
         const anchorTypeNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + anchorsOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
-        nodes.push({ id: anchorType.id, node: anchorTypeNode })
-        libCode += anchorType.libCode
-        testCode += anchorType.testCode
-        anchorType.entryTypes.forEach(entryType => {
-          const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorTypeNode, anchorType.tag, anchorType.context, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
-          let handlersCode = ''
-          let permissionsCode = ''
-          entryType.functions.forEach(f => {
-            if (f.permission !== 'remove') {
-              if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-              libCode += f.libCode + '\n\n'
-              if (f.testCode) testCode += f.testCode + '\n\n'
-              handlersCode += f.code + '\n\n'
-            } else {
-              libCode += `\t// No-one allowed to ${f.name}\n\n`
-              if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
-              handlersCode += `\t// No-one allowed to ${f.name}\n\n`
-            }
-            if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
-          })
-          testCode += '}'
-          this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode, testCode)
-          nodes.push({ id: entryType.id, node: entryTypeNode })
-          entryTypeIndex += 1
-          entryTypesOffset = entryTypesOffset + entryTypeNode.height + 20
+        let entryTypeInPort = 0
+        anchorType.links.forEach(link => {
+          const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
+          const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
+          entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
+          const entryTypeOutPort = anchorTypeNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
+          dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
         })
-        anchorsOffset += entryTypesOffset
+        nodes.push({ id: anchorType.id, node: anchorTypeNode })
         let anchorTypeOutPort = 0
         if (anchorType.anchors.length > 0) {
           anchorTypeOutPort = anchorTypeNode.addOutPort('anchor_link')
         }
+        anchorsOffset += entryTypesOffset
         anchorType.anchors.forEach((anchor, index) => {
           const anchorNode = dnaModel.addAnchor(anchor, anchorTypeOutPort, col2Offset, yOffset + anchorsOffset, cardWidth, anchorIndex, this.$vuetify.theme.themes.dark.anchor)
           let entryTypeInPort = 0
           anchor.links.forEach(link => {
-            let entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
-            if (entryType === undefined) {
-              entryType = anchorType.entryTypes.find(entryType => entryType.id === link.entityId)
-            }
-            console.log('entryType', entryType)
+            const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
             const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
-            if (!existingEntryTypeNode) {
-              const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, anchorNode, link.tag, link.context, col3Offset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
-              let handlersCode = ''
-              let permissionsCode = ''
-              entryType.functions.forEach(f => {
-                if (f.permission !== 'remove') {
-                  if (f.name !== 'declarations') entryTypeNode.addFunction(`${entryType.name.toLowerCase()}::${f.name}`)
-                  libCode += f.libCode + '\n\n'
-                  if (f.testCode) testCode += f.testCode + '\n\n'
-                  handlersCode += f.code + '\n\n'
-                } else {
-                  libCode += `\t// No-one allowed to ${f.name}\n\n`
-                  if (f.testCode) testCode += `// No-one allowed to ${f.name}\n\n`
-                  handlersCode += `\t// No-one allowed to ${f.name}\n\n`
-                }
-                if (f.permissionsCode) permissionsCode += f.permissionsCode + '\n\n'
-              })
-              testCode += '}'
-              nodes.push({ id: entryType.id, node: entryTypeNode })
-              this.$emit('entry-type-functions-code-updated', that.zome.base, entryType.name.toLowerCase(), handlersCode, permissionsCode)
-            } else {
-              entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
-              const entryTypeOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
-              dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
-            }
+            entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
+            const entryTypeOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
+            dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context)
           })
           nodes.push({ id: anchor.id, node: anchorNode })
           anchorIndex += 1
@@ -237,14 +258,7 @@ export default {
       return this.$refs.cmFunctionCode.codemirror
     },
     entryType () {
-      let entryType = {}
-      this.zome.anchorTypes.some(a => {
-        entryType = a.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
-      })
-      if (entryType === {}) {
-        entryType = this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
-      }
-      return entryType
+      return this.zome.entryTypes.find(e => e.name.toLowerCase() === this.entryTypeName.toLowerCase())
     }
   },
   mounted () {

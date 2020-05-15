@@ -42,7 +42,7 @@
                   </v-icon>
                 </template>
                 <template v-slot:label="{ item }">
-                  <v-btn v-if="item.index!==undefined" text @click="loadZome(item)" class="text-none">
+                  <v-btn v-if="item.index!==undefined" text @click="showZomeModel(item)" class="text-none">
                     {{item.name}}
                   </v-btn>
                   <v-btn v-else text @click="loadFile(item)" class="text-none">
@@ -69,32 +69,30 @@
                   </v-col>
                   <v-col cols="6">
                     <v-card class="mx-auto">
-                        <p class="display-1 text--primary">
-                          CRISPR - Cas
-                        </p>
-                        <p>Holochain DNA Editing</p>
-                        <div class="text--primary">
-                          Clone Rearrange Identify Socialise Personalise Repeat
-                        </div>
-                        <div class="text--primary">
-                          (Content addressable system)
-                        </div>
+                      <p class="display-1 text--primary">
+                        CRISPR - Cas
+                      </p>
+                      <p>Holochain DNA Editing</p>
+                      <div class="text--primary">
+                        Clone Rearrange Identify Socialise Personalise Repeat
+                      </div>
+                      <div class="text--primary">
+                        (Content addressable system)
+                      </div>
                     </v-card>
                   </v-col>
                   <v-col cols="6">
                     <v-card class="mx-auto">
-                      <v-card-text>
-                        <p class="display-1 text--primary">
-                          C•R•I•S•P•R - Cas9
-                        </p>
-                        <p>Genetic DNA Editing</p>
-                        <div class="text--primary">
-                          Clustered Regularly Interspaced Short Palindromic Repeats
-                        </div>
-                        <div class="text--primary">
-                          (CRISPR associated protein 9)
-                        </div>
-                      </v-card-text>
+                      <p class="display-1 text--primary">
+                        C•R•I•S•P•R - Cas9
+                      </p>
+                      <p>Genetic DNA Editing</p>
+                      <div class="text--primary">
+                        Clustered Regularly Interspaced Short Palindromic Repeats
+                      </div>
+                      <div class="text--primary">
+                        (CRISPR associated protein 9)
+                      </div>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -103,7 +101,7 @@
             </v-card>
           </v-col>
           <v-col v-if="showModel" cols="12">
-            <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
+            <zome-modeller :zome="zome" :key="refreshKey" @entry-type-functions-code-updated="entryTypeFunctionsCodeUpdated" @edit-properties="editProperties" @edit-permissions="editPermissions" @zome-model-updated="zomeModelUpdated"/>
           </v-col>
           <v-col v-if="showCode" cols="12">
             <code-window :code="code" :options="options"/>
@@ -111,6 +109,17 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="fieldsDialog" max-width="700px">
+      <v-card flat>
+        <entry-type-properties :entryType="entryType" @entry-type-name-updated="entryTypeNameUpdated" @entry-type-fields-updated="entryTypeFieldsUpdated" />
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="fieldsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-dialog v-model="permissionsDialog" max-width="700px">
       <v-card flat>
         <v-toolbar dark>
@@ -146,7 +155,6 @@ function ensureDirectoryExistence (filePath) {
 }
 
 function writeFiles (item, folder) {
-  console.log(folder)
   if (item.children) {
     folder += '/' + item.name
     item.children.forEach(item => {
@@ -178,6 +186,7 @@ export default {
   components: {
     ZomeModeller: () => import('./ZomeModeller'),
     CodeWindow: () => import('./CodeWindow'),
+    EntryTypeProperties: () => import('./EntryTypeProperties'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
   props: ['base'],
@@ -206,32 +215,41 @@ export default {
       showCode: false,
       code: '',
       options: {},
+      fieldsDialog: false,
       permissionsDialog: false,
       permissions: {}
     }
   },
   methods: {
-    loadZome (item) {
-      console.log(item)
-      item.children = this.zome.items
-      findItem(this.items, 'Entry Types').children = this.zome.testItems
-      console.log(item)
+    showZomeModel (item) {
       this.showModel = true
       this.showCode = false
+    },
+    editProperties (entryType) {
+      this.entryType = entryType
+      this.fieldsDialog = true
+    },
+    entryTypeNameUpdated (name) {
+      // Not updating name until items are stored in Holochain so we can use ids.
+      // this.entryType.name = name
+      // this.refreshKey += '1'
+    },
+    entryTypeFieldsUpdated (fields) {
+      this.entryType.fields = fields
+      this.refreshKey += '1'
     },
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
-      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/parts/${this.zome.template}/DNA/test/${this.entryType.name.toLowerCase()}/${role}-${entryFunction}-${this.entryType.name.toLowerCase()}.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/DNA/test/${this.zome.templateTypeName}/${role}-${entryFunction}-${this.zome.templateTypeName}.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
     editPermissions (entryType) {
-      console.log('entryType', entryType)
       this.entryType = entryType
       let updatePermission = ''
       let deletePermission = ''
@@ -255,11 +273,12 @@ export default {
       this.permissionsDialog = true
     },
     entryTypeFunctionsCodeUpdated (base, entryTypeName, handlersCode, permissionsCode, testCode) {
-      console.log('entryTypeFunctionsCodeUpdated', this.zome, base, entryTypeName)
-      const entryTypeNameItem = findItem(this.zome.items, entryTypeName).children
+      const zomesItem = findItem(this.zome.items, 'Zomes')
+      const testItem = findItem(this.zome.items, 'Test')
+      const entryTypeNameItem = findItem(zomesItem.children, entryTypeName).children
       entryTypeNameItem[0].code = handlersCode
       entryTypeNameItem[2].code = permissionsCode
-      const entryTypeTestItems = findItem(this.zome.testItems, entryTypeName)
+      const entryTypeTestItems = findItem(testItem.children, entryTypeName)
       findItem(entryTypeTestItems.children, 'index.js').code = testCode
     },
     zomeModelUpdated (libCode) {
@@ -321,15 +340,18 @@ export default {
   },
   computed: {
     ...mapState('auth', ['developer']),
-    ...mapGetters('portfolio', ['projectById', 'zomeByBaseId', 'fileItemsForZome']),
+    ...mapGetters('portfolio', ['projectById', 'zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     project () {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      return this.zomeByBaseId(this.$route.params.id)
+      const z = this.zomeByBaseIdFromTemplate(this.project.zomes[0])
+      z.template = this.project.zomes[0].template
+      z.templateTypeName = this.project.zomes[0].templateTypeName
+      return z
     },
     items () {
-      return this.fileItemsForZome(this.zome.name)
+      return this.zome.items
     },
     open () {
       return [this.project.name, 'DNA', 'Test', 'Zomes', 'UI']

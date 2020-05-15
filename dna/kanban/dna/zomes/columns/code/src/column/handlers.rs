@@ -25,11 +25,10 @@ fn columns_anchor(anchor_text: String) -> ZomeApiResult<Address> {
 }
 
 pub fn create(base: String, column_entry: ColumnEntry) -> ZomeApiResult<Column> {
-    let column_anchor = columns_anchor(base)?;
     let entry = Entry::App(COLUMN_ENTRY_NAME.into(), column_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let column = Column::new(entry_address.clone(), column_entry)?;
-    hdk::link_entries(&column_anchor, &entry_address, COLUMN_ENTRY_LINK_TYPE, &column.created_at.to_string())?;
+    hdk::link_entries(&columns_anchor(base)?, &entry_address, COLUMN_ENTRY_LINK_TYPE, &column.created_at.to_string())?;
     Ok(column)
 }
 
@@ -54,5 +53,10 @@ pub fn list(base: String) -> ZomeApiResult<Vec<Column>> {
     .iter()
     .map(|link| read(link.address.clone(), Iso8601::try_from(link.tag.clone()).unwrap()))
     .collect()
+}
+
+pub fn rebase(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+    hdk::remove_link(&columns_anchor(base_from)?, &id, COLUMN_ENTRY_LINK_TYPE, &created_at.to_string())?;
+    hdk::link_entries(&columns_anchor(base_to)?, &id, COLUMN_ENTRY_LINK_TYPE, &created_at.to_string())
 }
 

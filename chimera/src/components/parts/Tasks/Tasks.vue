@@ -60,6 +60,8 @@ export default {
     ...mapState('tasks', ['errors']),
     ...mapGetters('tasks', ['listTasks', 'listErrors']),
     tasks () {
+      console.log(this.base)
+      console.log(this.listTasks(this.base))
       return this.listTasks(this.base)
     },
     errors () {

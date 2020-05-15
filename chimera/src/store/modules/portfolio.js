@@ -1,10 +1,16 @@
 export default {
   namespaced: true,
-
   getters: {
-    projects: (state, getters, rootState, rootGetters) => {
+    applicationProjects: (state, getters, rootState, rootGetters) => {
       const projects = []
-      for (const project of rootGetters['projects/allProjects']) {
+      for (const project of rootGetters['projects/applicationProjects']) {
+        projects.push(project)
+      }
+      return projects
+    },
+    partProjects: (state, getters, rootState, rootGetters) => {
+      const projects = []
+      for (const project of rootGetters['projects/partProjects']) {
         projects.push(project)
       }
       return projects
@@ -19,11 +25,8 @@ export default {
       }
       return zomes
     },
-    zomeByBaseId: (state, getters, rootState, rootGetters) => (zomeBaseId) => {
-      return rootGetters['zomes/zomeByBaseId'](zomeBaseId)
-    },
-    fileItemsForZome: (state, getters, rootState, rootGetters) => (zomeName) => {
-      return rootGetters['foldersFiles/items'](zomeName)
+    zomeByBaseIdFromTemplate: (state, getters, rootState, rootGetters) => (zome) => {
+      return rootGetters['zomes/zomeByBaseIdFromTemplate'](zome)
     }
   }
 }

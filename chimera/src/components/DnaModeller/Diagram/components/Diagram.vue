@@ -197,8 +197,8 @@ export default {
     clearSelection () {
       this.selectedItem = {}
     },
-    editProperties (index) {
-      this.$emit('edit-properties', index)
+    editProperties (entryTypeName) {
+      this.$emit('edit-properties', entryTypeName)
     },
     editPermissions (entryTypeName) {
       this.$emit('edit-permissions', entryTypeName)

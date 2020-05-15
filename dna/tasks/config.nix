@@ -92,7 +92,7 @@ See:
    repo = "react-graphql-template";
 
    # canonical local upconversation name as per `git remote -v`
-   upconversation = "origin";
+   upconversation = "task";
   };
  };
 }
