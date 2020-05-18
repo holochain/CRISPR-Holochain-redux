@@ -20,11 +20,9 @@ export default {
       for (const persona of rootGetters['personas/allPersonas']) {
         persona.fields.forEach(pf => {
           const field = fields.find(f => f.id === pf.fieldsFieldId)
-          console.log(field)
           pf.ui = field.ui
           pf.name = field.name
         })
-        console.log(persona)
         personas.push(persona)
       }
       return personas

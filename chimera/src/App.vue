@@ -19,10 +19,12 @@ export default {
     CoreView: () => import('@/components/core/View')
   },
   methods: {
-    ...mapActions('fieldNames', ['fetchFields'])
+    ...mapActions('fieldNames', ['fetchFields']),
+    ...mapActions('personas', ['fetchPersonas'])
   },
   created () {
     this.fetchFields()
+    this.fetchPersonas()
   }
 }
 </script>

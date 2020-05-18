@@ -7,6 +7,7 @@ use hdk::{
     holochain_core_types::time::Iso8601,
     holochain_persistence_api::cas::content::Address,
 };
+use holochain_anchors;
 
 pub mod personafield;
 use crate::personafield::PersonafieldEntry;
@@ -32,6 +33,16 @@ mod personalinformation {
     #[entry_def]
     fn anchor_def() -> ValidatingEntryType {
         holochain_anchors::anchor_definition()
+    }
+
+    #[zome_fn("hc_public")]
+    fn list_anchor_types() -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_anchor_types()
+    }    
+    
+    #[zome_fn("hc_public")]
+    fn list_anchor_type_texts(anchor_type: String) -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_anchor_type_texts(anchor_type)
     }
 
     #[entry_def]

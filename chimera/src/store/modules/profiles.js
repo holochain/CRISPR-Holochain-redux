@@ -4,28 +4,6 @@ export default {
   state: {
     profiles: [
       {
-        id: 'QmhashPersonal',
-        name: 'Personal',
-        fields: [
-          {
-            id: 'nickname',
-            name: 'Nick Name',
-            ui: 'singleLineText',
-            linkContract: 'persist',
-            description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
-          },
-          {
-            id: 'avatar',
-            name: 'Avatar',
-            ui: 'thumbnail',
-            linkContract: 'persist',
-            description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
-          }
-        ]
-      },
-      {
         id: 'QmhashProfileCRISPR',
         name: 'CRISPR',
         dna: 'QmHashyCRISPR',
@@ -33,18 +11,9 @@ export default {
           {
             id: 'nickname',
             name: 'Nick Name',
-            ui: 'singleLineText',
+            ui: 'text-field',
             linkContract: 'persist',
-            description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
-          },
-          {
-            id: 'avatar',
-            name: 'Avatar',
-            ui: 'thumbnail',
-            linkContract: 'persist',
-            description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
+            description: 'Your nick name or handle that will show on Notes and projects you edit.'
           }
         ]
       },

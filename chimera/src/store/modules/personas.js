@@ -19,22 +19,23 @@ export default {
   actions: {
     fetchPersonas: ({ state, commit, rootState }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('personafields', 'personafields', 'list_personafields')({ base: 'Personal' }).then((result) => {
+        callZome('personalinformation', 'personalinformation', 'list_anchor_type_texts')({ anchor_type: 'list_personafields' }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setPersona', { title: 'Personal', fields: res.Ok })
-          }
-        })
-        callZome('personafields', 'personafields', 'list_personafields')({ base: 'Music' }).then((result) => {
-          const res = JSON.parse(result)
-          console.log(res)
-          if (res.Ok === undefined) {
-            console.log(res)
-          } else {
-            commit('setPersona', { title: 'Music', fields: res.Ok })
+            res.Ok.forEach(persona => {
+              callZome('personalinformation', 'personalinformation', 'list_personafields')({ base: persona }).then((result) => {
+                const pResult = JSON.parse(result)
+                // console.log(res)
+                if (pResult.Ok === undefined) {
+                  console.log(pResult)
+                } else {
+                  commit('setPersona', { title: persona, fields: pResult.Ok })
+                }
+              })
+            })
           }
         })
       })

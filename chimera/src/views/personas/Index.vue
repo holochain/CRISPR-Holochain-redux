@@ -30,7 +30,7 @@ export default {
     ...mapActions('personas', ['fetchPersonas'])
   },
   computed: {
-    ...mapGetters('personalInformation', ['profiles', 'personas'])
+    ...mapGetters('personalInformation', ['personas'])
   },
   created () {
     this.fetchPersonas()

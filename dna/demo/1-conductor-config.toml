@@ -1,80 +1,80 @@
 bridges = []
-persistence_dir = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436'
+persistence_dir = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
-id = 'columns'
+id = 'kanban'
 keystore_file = '[UNUSED]'
-name = 'phil::columns::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
-public_address = 'HcSCIsCBg9urpcmnx589RKM6i5ufQuuuoq84j8xMitrdr3opKqBd6bXjUd56nti'
+name = 'phil::kanban::6a05e60a-c931-471e-a476-b498bd2094bf'
+public_address = 'HcScJXFFOb765vupkjqOVAXhsNgibgawvpq487F46RBZczssW763vIwMu8XMcpz'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'phil::notes::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
-public_address = 'HcSCJDeoxPymivf7wsa4738vIBoZR9ycbaGBqek64jktx5s8gkEF65G5J3Ooiai'
+name = 'phil::notes::6a05e60a-c931-471e-a476-b498bd2094bf'
+public_address = 'HcSCjPpD799o7OCanvrK9psPCiYi58chuPiGFyjoason98rhPv6fN9KyWJjztta'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'phil::tasks::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
-public_address = 'HcScIQ9QnFE6eeedecV75eA894S9GFjb4iAFDuUnBxvr4v6c8Qu365PfO5C9MYa'
+name = 'phil::tasks::6a05e60a-c931-471e-a476-b498bd2094bf'
+public_address = 'HcScIoBsfRWagdhmvgK659mJg6fpGcth8Ib3RdpHFfyeg564dVR3UbTUdqgx9iz'
 test_agent = true
 
 [[agents]]
 id = 'fields'
 keystore_file = '[UNUSED]'
-name = 'phil::fields::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
-public_address = 'HcScixbVeTH5wehv6zQ5j6BxhDyC7qwthi7ViCC44R8Eigjci4t6mWnJinkhrwz'
+name = 'phil::fields::6a05e60a-c931-471e-a476-b498bd2094bf'
+public_address = 'HcScjgTb7qfiio4mpcmcRNmJOsziytjzb8vpgQ3d3Oa83a3ksp4gbAnqm8enggr'
 test_agent = true
 
 [[agents]]
-id = 'personafields'
+id = 'personalinformation'
 keystore_file = '[UNUSED]'
-name = 'phil::personafields::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
-public_address = 'HcSCJ3NsddDSyu7oyoT3iD9nmihCt9n4tjfbYo8Wt5hjt8m6goRzjrsQ958uu6r'
+name = 'phil::personalinformation::6a05e60a-c931-471e-a476-b498bd2094bf'
+public_address = 'HcScJXRH4OX8tzvon6sIH6Jx3K8Bucdz84w3a8987a3ex6wfDt5a5w5zfzEzgwi'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmbM8tramuzDtJK8d1K2KLLpbgRg9r1vsqhbn7LRR9pLYo'
-id = 'columns-test'
-uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+hash = 'QmeGe5MuSKojTvUGFt9QxZGycgnGw9BpFfbMMkTFgdggSb'
+id = 'kanban-test'
+uuid = '6a05e60a-c931-471e-a476-b498bd2094bf'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmQLtf5TGSQahsYTPBr6v22CDpCnPtcdz34PVUN9CznLBt'
+hash = 'Qme1Mahv3nrpSVzfntnsoyJe4Wp3sxxkYNfCSgVz584mav'
 id = 'notes-test'
-uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+uuid = '6a05e60a-c931-471e-a476-b498bd2094bf'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmQ6G39mnxT6fQoVrXGuhtjhB68VYRWiXhA87oBcLEuWfC'
+hash = 'Qmb5caoD7hoqqmiQWdTwALMjR3cdqnHG9tYnaowSaRFHQ8'
 id = 'tasks-test'
-uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+uuid = '6a05e60a-c931-471e-a476-b498bd2094bf'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/fields/dna/dist/dna.dna.json'
-hash = 'QmaKtTDpP1D1RQooGqkUkuEtNewTU3H8Wbvco5VDFVQTJV'
+hash = 'QmPFFprVyW1J1puJx9ttnw5CphsEpHy5Q7tj5jbhzXesmL'
 id = 'fields-test'
-uuid = '226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+uuid = '6a05e60a-c931-471e-a476-b498bd2094bf'
 
 [[dnas]]
-file = '/Users/philipbeadle/holochain/CRISPR/dna/personalinformation/dna/dist/dna.dna.json'
-hash = 'QmWx2M4aBvQ8awF4BhCMAKXBZPmGE1qNSXYyf3vQDJSrTv'
-id = 'personafields-test::e375ebe0-8a84-45f8-8b2c-df6988b51fc0'
-uuid = 'e375ebe0-8a84-45f8-8b2c-df6988b51fc0::226be721-d8aa-4a89-b7a3-b617b6ae2ff5'
+file = '/Users/philipbeadle/holochain/CRISPR/dna/personal information/dna/dist/dna.dna.json'
+hash = 'Qma6LYwkzKo2qhWryQDZbSuYmo2bvg37tfoPfuFAzFWx81'
+id = 'personalinformation-test::32d029a4-54e3-4762-a326-430da99b33a0'
+uuid = '32d029a4-54e3-4762-a326-430da99b33a0::6a05e60a-c931-471e-a476-b498bd2094bf'
 
 [[instances]]
-agent = 'columns'
-dna = 'columns-test'
-id = 'columns'
+agent = 'kanban'
+dna = 'kanban-test'
+id = 'kanban'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436/columns'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M/kanban'
 type = 'lmdb'
 
 [[instances]]
@@ -83,7 +83,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436/notes'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -92,7 +92,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436/tasks'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M/tasks'
 type = 'lmdb'
 
 [[instances]]
@@ -101,16 +101,16 @@ dna = 'fields-test'
 id = 'fields'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436/fields'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M/fields'
 type = 'lmdb'
 
 [[instances]]
-agent = 'personafields'
-dna = 'personafields-test::e375ebe0-8a84-45f8-8b2c-df6988b51fc0'
-id = 'personafields'
+agent = 'personalinformation'
+dna = 'personalinformation-test::32d029a4-54e3-4762-a326-430da99b33a0'
+id = 'personalinformation'
 
 [instances.storage]
-path = '/tmp/tmp.aszRTGxx6O/tryorama/Ucw436/personafields'
+path = '/tmp/tmp.aszRTGxx6O/tryorama/O9Rx3M/personalinformation'
 type = 'lmdb'
 
 [[interfaces]]
@@ -119,7 +119,7 @@ choose_free_port = false
 id = 'tryorama-interface'
 
 [[interfaces.instances]]
-id = 'columns'
+id = 'kanban'
 
 [[interfaces.instances]]
 id = 'notes'
@@ -131,50 +131,42 @@ id = 'tasks'
 id = 'fields'
 
 [[interfaces.instances]]
-id = 'personafields'
+id = 'personalinformation'
 
 [interfaces.driver]
 port = 33000
 type = 'websocket'
 
 [logger]
-state_dump = false
+state_dump = true
 type = 'debug'
 [[logger.rules.rules]]
 exclude = true
-pattern = '^parity'
+pattern = '.*parity.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^mio'
+pattern = '.*mio.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^tokio'
+pattern = '.*tokio.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^hyper'
+pattern = '.*hyper.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^rusoto_core'
+pattern = '.*rusoto_core.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^want'
+pattern = '.*want.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^rpc'
-
-[[logger.rules.rules]]
-exclude = false
-pattern = '^holochain'
-
-[[logger.rules.rules]]
-exclude = false
-pattern = '^lib3h'
+pattern = '.*rpc.*'
 
 [network]
 sim2h_url = 'ws://localhost:9000'

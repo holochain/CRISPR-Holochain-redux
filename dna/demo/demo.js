@@ -13,12 +13,48 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
-const columnsDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
+const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
-const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
+const personalInformationDnaPath = path.join(__dirname, "../personal information/dna/dist/dna.dna.json")
 
+const logger = {
+  type: 'debug',
+  rules: {
+    rules: [
+      {
+        exclude: true,
+        pattern: '.*parity.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*mio.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*tokio.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*hyper.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*rusoto_core.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*want.*'
+      },
+      {
+        exclude: true,
+        pattern: '.*rpc.*'
+      }
+    ]
+  },
+  state_dump: true
+}
 const orchestrator = new Orchestrator({
   middleware: combine(
     // use the tape harness to run the tests, injects the tape API into each scenario
@@ -37,28 +73,55 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const columnsDna = Config.dna(columnsDnaPath, 'columns-test')
+const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
 const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test')
-const personalInformationDna = Config.dna(personalInformationDnaPath, 'personafields-test', { uuid: uuidv4() })
+const philsPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+const lucysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-// const conductorConfig = Config.gen({notes: dna})
-const conductorConfig = Config.gen({columns: columnsDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personafields: personalInformationDna}, {
+const philsConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
-  }
+  },
+  logger: logger
+})
+
+const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna}, {
+  network: {
+    type: 'sim2h',
+    sim2h_url: 'ws://localhost:9000'
+  },
+  logger: logger
+})
+
+const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna}, {
+  network: {
+    type: 'sim2h',
+    sim2h_url: 'ws://localhost:9000'
+  },
+  logger: logger
+})
+
+const lucysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna}, {
+  network: {
+    type: 'sim2h',
+    sim2h_url: 'ws://localhost:9000'
+  },
+  logger: logger
 })
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
-  const {phil, bob, alice, lucy} = await s.players({phil: conductorConfig, bob: conductorConfig, alice: conductorConfig, lucy: conductorConfig}, true)
+  const {phil, arthur, alice, lucy} = await s.players({phil: philsConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, lucy: lucysConductorConfig}, true)
 
-  const chimeraDo = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()
-  const chimeraDoing = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  const chimeraDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
   await s.consistency()
-  const chimeraDone = await phil.call("columns", "columns", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  const chimeraDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   await s.consistency()
   const chimeraDoNote1 = await phil.call("notes", "notes", "create_note", {"base":chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA Model for Personas & Profiles", "content":"Create the DNA Model", "order": 0}})
   await s.consistency()
@@ -79,11 +142,11 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
   await s.consistency()
 
-  const crisprDo = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  const crisprDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()
-  const crisprDoing = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  const crisprDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
   await s.consistency()
-  const crisprDone = await phil.call("columns", "columns", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  const crisprDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   await s.consistency()
   const crisprDoNote1 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Model for CRISPR", "content":"Create the DNA Model to store all the information in a project including the zome model", "order": 0}})
   await s.consistency()
@@ -96,13 +159,13 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Promote project to Parts library", "content":"When a Part is ready to be used promote it to the Parts list.", "order": 1}})
   await s.consistency()
 
-  const columnNotesDo = await phil.call("columns", "columns", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  const columnNotesDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   console.log('columnNotesDo', columnNotesDo)
   await s.consistency()
-  const columnNotesDoing = await phil.call("columns", "columns", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  const columnNotesDoing = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
   console.log('columnNotesDoing', columnNotesDoing)
   await s.consistency()
-  const columnNotesDone = await phil.call("columns", "columns", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  const columnNotesDone = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnNotesDone', columnNotesDone)
   await s.consistency()
   const columnNotesDoneNote1 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add order field", "content":"Notes should be orderable so they need an order field", "order": 0}})
@@ -120,7 +183,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnNotesDoneNote3', columnNotesDoneNote3)
   await s.consistency()
 
-  const columnKanbanDo = await phil.call("columns", "columns", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  const columnKanbanDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   console.log('columnKanbanDo', columnKanbanDo)
   await s.consistency()
   const columnKanbanDoNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop Notes", "content":"An agent should be able to drag Notes between columns", "order": 0}})
@@ -134,16 +197,16 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnKanbanDoNote1Task3', columnKanbanDoNote1Task3)
   await s.consistency()
 
-  const columnKanbanDoNote2 = await bob.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns", "order": 1}})
+  const columnKanbanDoNote2 = await arthur.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns", "order": 1}})
   console.log('columnKanbanDoNote1', columnKanbanDoNote1)
   await s.consistency()
-  const columnKanbanDoNote2Task1 = await bob.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":true}})
+  const columnKanbanDoNote2Task1 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":true}})
   console.log('columnKanbanDoNote2Task1', columnKanbanDoNote2Task1)
-  const columnKanbanDoNote2Task2 = await bob.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column order on drop", "done":true}})
+  const columnKanbanDoNote2Task2 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column order on drop", "done":true}})
   console.log('columnKanbanDoNote2Task2', columnKanbanDoNote2Task2)
-  const columnKanbanDoNote2Task3 = await bob.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update base on drop", "done":true}})
+  const columnKanbanDoNote2Task3 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update base on drop", "done":true}})
   console.log('columnKanbanDoNote2Task3', columnKanbanDoNote2Task3)
-  const columnKanbanDoNote2Task4 = await bob.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add new handler to move link to new base", "done":true}})
+  const columnKanbanDoNote2Task4 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add new handler to move link to new base", "done":true}})
   console.log('columnKanbanDoNote2Task24', columnKanbanDoNote2Task4)
   await s.consistency()
 
@@ -154,7 +217,7 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnKanbanDoNote3Task1', columnKanbanDoNote3Task1)
   await s.consistency()
 
-  const columnKanbanDoing = await phil.call("columns", "columns", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  const columnKanbanDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
   console.log('columnKanbanDoing', columnKanbanDoing)
   await s.consistency()
   const columnKanbanDoingNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Demo Setup", "content":"Work out how to write try-o-rama test to setup all the demo data for multiple DNAs", "order": 0}})
@@ -168,10 +231,10 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('columnKanbanDoingNote1Task3', columnKanbanDoingNote1Task3)
   await s.consistency()
 
-  const columnKanbanDone = await phil.call("columns", "columns", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  const columnKanbanDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnKanbanDone', columnKanbanDone)
 
-  const columnTasksDo = await alice.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
+  const columnTasksDo = await alice.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
   console.log('columnTasksDo', columnTasksDo)
   await s.consistency()
   const columnTasksDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a task", "content":"An agent should be able to edit a task", "order": 0}})
@@ -201,10 +264,10 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnTasksDoNote3 = await lucy.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Rename task to Checklist", "content":"Checklist seems to be a more appropriate name", "order": 2}})
   console.log('columnTasksDoNote3', columnTasksDoNote3)
 
-  const columnTasksDoing = await lucy.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  const columnTasksDoing = await lucy.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
   console.log('columnTasksDoing', columnTasksDoing)
 
-  const columnTasksDone = await phil.call("columns", "columns", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  const columnTasksDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnTasksDone', columnTasksDone)
 
   // managed fields list
@@ -220,22 +283,33 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('profilePicId', profilePicId)
 
   // Phil's Personal persona
-  const philPersonalHandle = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "philip.beadle"}})
+  const philPersonalHandle = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "philip.beadle"}})
   console.log('philPersonalHandle', philPersonalHandle)
-  const philPersonalAvatar = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philip.beadle.png')}})
+  const philPersonalAvatar = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philip.beadle.png')}})
   console.log('philPersonalAvatar', philPersonalAvatar)
 
   // Phil's Music persona
-  const philMusicHandle = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "@philt3r"}})
+  const philMusicHandle = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "@philt3r"}})
   console.log('philMusicHandle', philMusicHandle)
-  const philMusicAvatar = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
+  const philMusicAvatar = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
   console.log('philMusicAvatar', philMusicAvatar)
 
-   // Bob's Personal persona
-   const bobMusicHandle = await bob.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "arthur"}})
-   console.log('bobPersonalHandle', bobPersonalHandle)
-   const bobPersonalAvatar = await bob.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/arthur.brock.png')}})
-   console.log('bobPersonalAvatar', bobPersonalAvatar)
+   // Arthur's Personal persona
+   const arthurPersonalFullName = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Arthur Brock"}})
+   console.log('arthurPersonalFullName', arthurPersonalFullName)
+   const arthurPersonalHandle = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "Art"}})
+   console.log('arthurPersonalHandle', arthurPersonalHandle)
+   const arthurPersonalAvatar = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/arthur.brock.png')}})
+   console.log('arthurPersonalAvatar', arthurPersonalAvatar)
+
+   // Arthur's Holochain persona
+   const arthurHolochainHandle = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "arthur.brock"}})
+   console.log('arthurHolochainHandle', arthurHolochainHandle)
+   const arthurHolochainAvatar = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/arthur.brock.png')}})
+   console.log('arthurHolochainAvatar', arthurHolochainAvatar)
+   const arthurHolochainProfilePic = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/art.profile.jpeg')}})
+   console.log('arthurHolochainProfilePic', arthurHolochainProfilePic)
+
 })
 
 orchestrator.run()

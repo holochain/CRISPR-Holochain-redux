@@ -110,7 +110,6 @@ export default {
   computed: {
     ...mapGetters('personalInformation', ['fields']),
     autocompleteFieldNames () {
-      console.log(this.fields)
       return this.fields
     }
   },
@@ -119,7 +118,6 @@ export default {
       if (field.id === undefined) {
         this.isEditing = true
       }
-      console.log('field.ui', field.ui)
       this.showTextField = field.ui === 'text-field'
       this.showTextArea = field.ui === 'text-area'
       this.showImage = field.ui === 'image'

@@ -8,7 +8,7 @@
           </v-row>
         </v-img>
       </router-link>
-      <profile-card v-if="showProfile && getAction(value) ==='LaunchAction'" :profile="profileByDna(value.id)" :personas="personas">
+      <profile-card v-if="showProfile && getAction(value) ==='LaunchAction'" :profile="profileByDna(value.id)">
         <component :is="getAction(value)" v-if="showAction" :key="getAction(value)" :value="value"/>
       </profile-card>
       <v-fade-transition mode="out-in">
@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     ...mapState('verify', ['verifying']),
-    ...mapGetters('personalInformation', ['profileByDna', 'personas']),
+    ...mapGetters('personalInformation', ['profileByDna']),
     height () {
       if (this.tall) return 524
       if (this.dense) return 150

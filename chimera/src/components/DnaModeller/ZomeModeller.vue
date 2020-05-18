@@ -134,11 +134,11 @@ export default {
       const dnaModel = new Diagram.Model()
       const nodes = []
       const col0Offset = 20
-      const col1Offset = 390
-      const col2Offset = 760
-      const col3Offset = 1140
+      const col1Offset = 420
+      const col2Offset = 820
+      const col3Offset = 1240
       const yOffset = 130
-      const cardWidth = 270
+      const cardWidth = 300
       let anchorsYIndex = 0
       let anchorsOffset = 0
       let entryTypesOffset = 0
@@ -160,7 +160,7 @@ export default {
       }
       this.zome.entryTypes.forEach(entryType => {
         let testCode = this.zome.testCode
-        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth + 100, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
         let handlersCode = ''
         let permissionsCode = ''
         entryType.functions.forEach(f => {

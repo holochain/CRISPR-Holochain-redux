@@ -35,11 +35,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Fields',
             entryTypes: [
               {
                 id: 'QmFieldEntryTypeHash',
                 name: 'field',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -233,11 +235,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Notes',
             entryTypes: [
               {
                 id: 'QmNoteEntryTypeHash',
                 name: 'note',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -336,11 +340,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Tasks',
             entryTypes: [
               {
                 id: 'QmTaskEntryTypeHash',
                 name: 'task',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -432,11 +438,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Kanban',
             entryTypes: [
               {
                 id: 'QmColumnEntryTypeHash',
                 name: 'column',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -528,11 +536,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Ratings',
             entryTypes: [
               {
                 id: 'QmRatingEntryTypeHash',
                 name: 'rating',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'QM2345667778871',

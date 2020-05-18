@@ -11,17 +11,17 @@
         @change="onChange"
         @blur="onBlur"
         color="blue-grey lighten-2"
-        :label="profileFieldValue.fieldName + this.selectedPersona"
+        :label="profileFieldValue.name + this.selectedPersona"
         :hint="profileFieldValue.description"
         persistent-hint
-        item-text="fieldName"
-        item-value="anchor"
+        item-text="name"
+        item-value="id"
         return-object>
         <template v-slot:selection="data">
-          <v-list-item-content>{{data.item.fieldValue}}</v-list-item-content>
+          <v-list-item-content>{{data.item.value}}</v-list-item-content>
         </template>
         <template v-slot:item="data">
-          <v-list-item-title>{{data.item.fieldValue}}</v-list-item-title>
+          <v-list-item-title>{{data.item.value}}</v-list-item-title>
           <v-list-item-subtitle v-html="'Persona - ' + data.item.personaTitle"></v-list-item-subtitle>
         </template>
       </v-combobox>
@@ -34,6 +34,7 @@ export default {
   name: 'ProfileFieldText',
   components: {
   },
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue'],
   data () {
     return {
       fieldTypeList: [],
@@ -43,32 +44,31 @@ export default {
       mapping: this.profileFieldValue.mapping
     }
   },
-  mounted () {
-    const personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
+  created () {
+    console.log(this.personas, this.fieldType)
+    let personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.ui === this.fieldType))
       .map(persona => {
-        const personaText = { ...persona }
-        const textFields = []
-        personaText.fields.filter((field) => field.fieldType === this.fieldType).forEach(function (field) {
-          textFields.push({ anchor: field.anchor, personaTitle: personaText.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+        persona.fields.map(field => {
+          field.personaTitle = persona.title
         })
-        return textFields
+        return persona.fields
       })
+    personaTexts = [].concat.apply([], personaTexts).filter(f => f.ui === this.fieldType)
     this.fieldTypeList = [].concat.apply([], personaTexts)
     this.fieldTypeList.unshift({ header: 'Select an option or create one' })
 
     if (this.mapping !== undefined) {
-      const anchor = this.mapping.tag
-      const id = this.mapping.persona
-      const mappedPersona = this.personas.filter((persona) => persona.id === id)
+      const mappedField = this.mapping.field
+      const title = this.mapping.persona
+      const mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
           const mappedPersonaCopy = { ...persona }
           const mappedFields = []
-          mappedPersonaCopy.fields.filter((field) => field.anchor === anchor).forEach(function (field) {
-            mappedFields.push({ anchor: field.anchor, personaTitle: persona.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+          mappedPersonaCopy.fields.filter((field) => field.name === mappedField).forEach(function (field) {
+            mappedFields.push({ id: field.id, personaTitle: persona.title, fieldName: field.name, fieldValue: field.value })
           })
           return mappedFields
         })
-
       const foundPersona = [].concat.apply([], mappedPersona)[0]
       if (foundPersona) {
         this.profileData = [].concat.apply([], mappedPersona)[0]
@@ -98,18 +98,14 @@ export default {
     },
     filter (item, queryText, itemText) {
       if (item.header) return false
-
       const hasValue = val => val != null ? val : ''
-
-      const text = hasValue(item.fieldValue)
+      const text = hasValue(item.value)
       const query = hasValue(queryText)
-
       return text.toString()
         .toLowerCase()
         .indexOf(query.toString().toLowerCase()) > -1
     }
-  },
-  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue']
+  }
 }
 </script>
 

@@ -41,7 +41,6 @@ export default {
   },
   getters: {
     fields: state => {
-      console.log(state.fields)
       return state.fields
     }
   },
