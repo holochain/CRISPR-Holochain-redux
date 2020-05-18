@@ -23,98 +23,204 @@ function replaceMod (modTemplate, entryType) {
   return modDone.join().replace(new RegExp('_comma,', 'g'), '')
 }
 
+function setZomeNameInTemplateFiles (item, templateName, zomeName) {
+  zomeName = zomeName.toLowerCase()
+  const replaceTemplateName = `${templateName}zome`.toLowerCase()
+  if (item.children) {
+    item.children.forEach(item => {
+      if (item.file) {
+        item.code = replacePlaceHolders(item.code, replaceTemplateName, zomeName)
+      }
+      item.name = replacePlaceHolders(item.name, replaceTemplateName, zomeName)
+      setZomeNameInTemplateFiles(item, templateName, zomeName)
+    })
+  }
+}
+
 function setTypeNameAndFieldsInTemplateFiles (item, templateTypeName, entryType) {
   if (entryType.fields === undefined) return
   if (item.children) {
     item.children.forEach(item => {
       if (item.file) {
         item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
-        if (item.name === 'mod.rs') {
-          item.code = replaceMod(item.code, entryType)
-        } else {
-          item.code = replacePlaceHolders(item.code, templateTypeName, entryType.name)
-        }
       }
       item.name = replacePlaceHolders(item.name, templateTypeName, entryType.name)
       setTypeNameAndFieldsInTemplateFiles(item, templateTypeName, entryType)
     })
   }
 }
+
+function findItem (items, name) {
+  function iter (a) {
+    if (a.name.toLowerCase() === name.toLowerCase()) {
+      result = a
+      return true
+    }
+    return Array.isArray(a.children) && a.children.some(iter)
+  }
+  var result
+  items.some(iter)
+  return result
+}
+
 export default {
   namespaced: true,
   state: {
     zomeTemplates: [
       {
-        id: 'QmZomeOrigin',
-        name: 'Origins',
-        libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/lib.rs`, 'utf8'),
-        testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/index.js`, 'utf8'),
+        template: 'Origins',
+        zome:
+        {
+          id: 'QmZomeOrigin',
+          name: 'Origins',
+          libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/lib.rs`, 'utf8'),
+          testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/index.js`, 'utf8'),
+          items: [],
+          anchorTypes: [],
+          entryTypes: []
+        }
+      }
+    ],
+    entryTypeTemplates: [
+      {
+        template: 'list_anchor_types_1',
+        entryType:
+        {
+          id: 'QmOriginEntryTypeHash',
+          name: 'origin',
+          fields: [],
+          metaFields: [
+            {
+              id: 'Qm111',
+              fieldName: 'id',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'created_at',
+              fieldType: 'Iso8601'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'created_by',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm116',
+              fieldName: 'address',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'updated_at',
+              fieldType: 'Iso8601'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'updated_by',
+              fieldType: 'Address'
+            }
+          ],
+          functions: [
+            {
+              name: 'declarations',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_entry_def.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/handlers.rs`, 'utf8'),
+              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/entry_permissions.rs`, 'utf8')
+            },
+            {
+              name: 'create',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_create.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/create.rs`, 'utf8'),
+              explanation: '',
+              permission: 'anyone',
+              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_create/anyone.rs`, 'utf8'),
+              permissionsExplanation: 'Docs go here'
+            },
+            {
+              name: 'read',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_read.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/read.rs`, 'utf8'),
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'update',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_update.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/update.rs`, 'utf8'),
+              explanation: 'Docs go here',
+              permission: 'anyone',
+              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_update/anyone.rs`, 'utf8'),
+              permissionsExplanation: 'Docs go here',
+              testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/anyone-update-origin.js`, 'utf8')
+            },
+            {
+              name: 'delete',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_delete.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/delete.rs`, 'utf8'),
+              explanation: 'Docs go here',
+              permission: 'anyone',
+              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
+              permissionsExplanation: 'Docs go here',
+              testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/anyone-delete-origin.js`, 'utf8')
+            },
+            {
+              name: 'list',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_list.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/list.rs`, 'utf8'),
+              explanation: 'Docs go here'
+            },
+            {
+              name: 'rebase',
+              libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_rebase.rs`, 'utf8'),
+              code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/rebase.rs`, 'utf8'),
+              explanation: 'Docs go here'
+            }
+          ]
+        }
+      }
+    ],
+    itemsTemplates: [
+      {
+        template: 'template1',
         items: [
           {
-            id: 1,
             name: 'Origins',
             children: [
-              { id: 2, name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/config.nix`, 'utf8') },
-              { id: 2, name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/default.nix`, 'utf8') },
+              { name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/config.nix`, 'utf8') },
+              { name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/default.nix`, 'utf8') },
               {
-                id: 5,
                 name: 'DNA',
                 children: [
-                  { id: 2, name: '.hcignore', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/.hcignore`, 'utf8') },
-                  { id: 2, name: 'app.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/app.json`, 'utf8') },
+                  { name: '.hcignore', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/.hcignore`, 'utf8') },
+                  { name: 'app.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/app.json`, 'utf8') },
                   {
-                    id: 6,
                     name: 'Test',
                     children: [
-                      { id: 8, name: 'index.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/index.js`, 'utf8') },
-                      { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/package.json`, 'utf8') },
+                      { name: 'index.js', file: 'js', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/index.js`, 'utf8') },
+                      { name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/package.json`, 'utf8') },
                       {
-                        id: 4445,
                         name: 'Entry Types',
-                        children: [
-                          {
-                            id: 7,
-                            name: 'Origin',
-                            children: [
-                              { id: 9, name: 'index.js', file: 'js', code: '' }
-                            ]
-                          }
-                        ]
+                        children: []
                       }
                     ]
                   },
                   {
-                    id: 10,
                     name: 'Zomes',
                     children: [
                       {
-                        id: 11,
                         name: 'Origins',
                         index: 0,
                         children: [
-                          { id: 12, name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/zome.json`, 'utf8').replace(new RegExp('ZomePlaceHolder', 'g'), 'origins') },
+                          { name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/zome.json`, 'utf8') },
                           {
-                            id: 11,
                             name: 'code',
                             children: [
-                              { id: 12, name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/.hcbuild`, 'utf8') },
-                              { id: 12, name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/Cargo.toml`, 'utf8') },
+                              { name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/.hcbuild`, 'utf8') },
+                              { name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/Cargo.toml`, 'utf8') },
                               {
-                                id: 11,
                                 name: 'src',
                                 children: [
-                                  { id: 12, name: 'lib.rs', file: 'rs', code: '' },
-                                  {
-                                    id: 11,
-                                    name: 'origin',
-                                    children: [
-                                      { id: 12, name: 'handlers.rs', file: 'rs', code: '' },
-                                      { id: 13, name: 'mod.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8') },
-                                      { id: 14, name: 'entry_permissions.rs', file: 'rs', code: '' },
-                                      { id: 14, name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/link_permissions.rs`, 'utf8') },
-                                      { id: 14, name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/validation.rs`, 'utf8') }
-                                    ]
-                                  }
+                                  { name: 'lib.rs', file: 'rs', code: '' }
                                 ]
                               }
                             ]
@@ -125,161 +231,9 @@ export default {
                   }
                 ]
               },
-              { id: 2, name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/package.json`, 'utf8') },
-              { id: 4, name: 'Procfile', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/Procfile`, 'utf8') },
-              { id: 3, name: 'README.md', file: 'md', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/README.md`, 'utf8') }
-            ]
-          }
-        ],
-        anchorTypes: [
-          {
-            id: 'Qmlist_origins1',
-            type: 'list_origins',
-            text: '',
-            tag: ' ',
-            context: 'permanent',
-            links: [
-              {
-                entityId: 'QmOriginEntryTypeHash',
-                type: 'origin_link',
-                tag: ' ',
-                context: 'exclusive'
-              }
-            ],
-            anchors: [
-              {
-                id: 'Qmlist_Qmhashorigin1',
-                type: 'list_origins',
-                text: 'Qmhashorigin1Id',
-                links: [
-                  {
-                    entityId: 'QmOriginEntryTypeHash',
-                    type: 'origin_link',
-                    tag: ' ',
-                    context: 'exclusive'
-                  }
-                ]
-              },
-              {
-                id: 'Qmlist_Qmhashorigin2',
-                type: 'list_origins',
-                text: 'Qmhashorigin2Id',
-                links: [
-                  {
-                    entityId: 'QmOriginEntryTypeHash',
-                    type: 'origin_link',
-                    tag: ' ',
-                    context: 'exclusive'
-                  }
-                ]
-              },
-              {
-                id: 'Qmlist_Qmhashorigin3',
-                type: 'list_origins',
-                text: 'Qmhashorigin3Id',
-                links: [
-                  {
-                    entityId: 'QmOriginEntryTypeHash',
-                    type: 'origin_link',
-                    tag: ' ',
-                    context: 'exclusive'
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        entryTypes: [
-          {
-            id: 'QmOriginEntryTypeHash',
-            name: 'origin',
-            fields: [],
-            metaFields: [
-              {
-                id: 'Qm111',
-                fieldName: 'id',
-                fieldType: 'Address'
-              },
-              {
-                id: 'Qm126',
-                fieldName: 'created_at',
-                fieldType: 'Iso8601'
-              },
-              {
-                id: 'Qm126',
-                fieldName: 'created_by',
-                fieldType: 'Address'
-              },
-              {
-                id: 'Qm116',
-                fieldName: 'address',
-                fieldType: 'Address'
-              },
-              {
-                id: 'Qm126',
-                fieldName: 'updated_at',
-                fieldType: 'Iso8601'
-              },
-              {
-                id: 'Qm126',
-                fieldName: 'updated_by',
-                fieldType: 'Address'
-              }
-            ],
-            functions: [
-              {
-                name: 'declarations',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_entry_def.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/handlers.rs`, 'utf8'),
-                permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/entry_permissions.rs`, 'utf8')
-              },
-              {
-                name: 'create',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_create.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/create.rs`, 'utf8'),
-                explanation: '',
-                permission: 'anyone',
-                permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_create/anyone.rs`, 'utf8'),
-                permissionsExplanation: 'Docs go here'
-              },
-              {
-                name: 'read',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_read.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/read.rs`, 'utf8'),
-                explanation: 'Docs go here'
-              },
-              {
-                name: 'update',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_update.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/update.rs`, 'utf8'),
-                explanation: 'Docs go here',
-                permission: 'anyone',
-                permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_update/anyone.rs`, 'utf8'),
-                permissionsExplanation: 'Docs go here',
-                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/anyone-update-origin.js`, 'utf8')
-              },
-              {
-                name: 'delete',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_delete.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/delete.rs`, 'utf8'),
-                explanation: 'Docs go here',
-                permission: 'anyone',
-                permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
-                permissionsExplanation: 'Docs go here',
-                testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/anyone-delete-origin.js`, 'utf8')
-              },
-              {
-                name: 'list',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_list.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/list.rs`, 'utf8'),
-                explanation: 'Docs go here'
-              },
-              {
-                name: 'rebase',
-                libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/lib_rebase.rs`, 'utf8'),
-                code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/rebase.rs`, 'utf8'),
-                explanation: 'Docs go here'
-              }
+              { name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/package.json`, 'utf8') },
+              { name: 'Procfile', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/Procfile`, 'utf8') },
+              { name: 'README.md', file: 'md', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/README.md`, 'utf8') }
             ]
           }
         ]
@@ -311,21 +265,52 @@ export default {
     zomeByBaseId: (state) => (base) => {
       return state.zomes.find(z => z.base === base)
     },
-    zomeByBaseIdFromTemplate: (state) => (zome) => {
-      const zomeTemplate = state.zomeTemplates.find(t => t.name === zome.template)
-      const template = JSON.parse(JSON.stringify(zomeTemplate))
+    zomeByBaseIdFromTemplate: (state) => (project) => {
+      const zome = project.zomes[0]
+      const zomeTemplate = state.zomeTemplates.find(t => t.template === zome.template)
+      const zomeItems = state.itemsTemplates.find(t => t.template === zome.itemsTemplatesName)
+      const template = JSON.parse(JSON.stringify(zomeTemplate.zome))
+      const itemsTemplate = JSON.parse(JSON.stringify(zomeItems.items))
       template.name = zome.name
-      template.libCode = replacePlaceHolders(template.libCode, zome.template.toLowerCase(), zome.name.toLowerCase())
-      template.items[0].name = zome.name
-      template.entryTypes.forEach((e, index) => {
-        const entryType = zome.entryTypes[index]
-        template.testCode = replacePlaceHolders(template.testCode, zome.templateTypeName, entryType.name.toLowerCase())
-        setTypeNameAndFieldsInTemplateFiles(template.items[0], zome.templateTypeName, entryType)
-        e.id = entryType.id
-        e.name = entryType.name
-        e.fields = entryType.fields
-      })
+      template.items = itemsTemplate
+      template.items[0].name = project.name
       template.anchorTypes = zome.anchorTypes
+      template.libCode = replacePlaceHolders(template.libCode, zome.template.toLowerCase(), zome.name.toLowerCase())
+      const testItem = findItem(template.items, 'Entry Types')
+      const zomesItem = findItem(template.items, 'Zomes')
+      const zomesItemSrc = findItem(zomesItem.children, 'src')
+      zomesItem.children[0].name = zome.name
+      setZomeNameInTemplateFiles(template.items[0], zome.template, zome.name)
+      zome.entryTypes.forEach((entryType, index) => {
+        let entryTypeTemplate = state.entryTypeTemplates.find(t => t.template === entryType.template)
+        entryTypeTemplate = JSON.parse(JSON.stringify(entryTypeTemplate.entryType))
+        entryTypeTemplate.testCode = replacePlaceHolders(template.testCode, zome.templateTypeName, entryType.name.toLowerCase())
+        testItem.children.push(
+          {
+            name: entryType.name,
+            children: [
+              { name: 'index.js', file: 'js', code: '' }
+            ]
+          }
+        )
+        zomesItemSrc.children.push(
+          {
+            name: entryType.name,
+            children: [
+              { name: 'handlers.rs', file: 'rs', code: '' },
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8'), entryType) },
+              { name: 'entry_permissions.rs', file: 'rs', code: '' },
+              { name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/link_permissions.rs`, 'utf8') },
+              { name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/validation.rs`, 'utf8') }
+            ]
+          }
+        )
+        setTypeNameAndFieldsInTemplateFiles(template.items[0], zome.templateTypeName, entryType)
+        entryTypeTemplate.id = entryType.id
+        entryTypeTemplate.name = entryType.name
+        entryTypeTemplate.fields = entryType.fields
+        template.entryTypes.push(entryTypeTemplate)
+      })
       return template
     }
   }

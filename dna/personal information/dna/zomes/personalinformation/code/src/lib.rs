@@ -12,6 +12,10 @@ pub mod personafield;
 use crate::personafield::PersonafieldEntry;
 use crate::personafield::Personafield;
 
+pub mod profilefield;
+use crate::profilefield::ProfilefieldEntry;
+use crate::profilefield::Profilefield;
+
 #[zome]
 mod personalinformation {
 
@@ -63,6 +67,41 @@ mod personalinformation {
     #[zome_fn("hc_public")]
     fn rebase_personafield(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
         personafield::handlers::rebase(base_from, base_to, id, created_at)
+    }
+
+    #[entry_def]
+     fn profilefield_entry_def() -> ValidatingEntryType {
+        profilefield::definition()
+    }
+
+    #[zome_fn("hc_public")]
+    fn create_profilefield(base: String, profilefield_input: ProfilefieldEntry) -> ZomeApiResult<Profilefield> {
+        profilefield::handlers::create(base, profilefield_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn read_profilefield(id: Address, created_at: Iso8601) -> ZomeApiResult<Profilefield> {
+        profilefield::handlers::read(id, created_at)
+    }
+
+    #[zome_fn("hc_public")]
+    fn update_profilefield(id: Address, created_at: Iso8601, address: Address, profilefield_input: ProfilefieldEntry) -> ZomeApiResult<Profilefield> {
+        profilefield::handlers::update(id, created_at, address, profilefield_input)
+    }
+
+    #[zome_fn("hc_public")]
+    fn delete_profilefield(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {
+        profilefield::handlers::delete(base, id, created_at, address)
+    }
+
+    #[zome_fn("hc_public")]
+    fn list_profilefields(base: String) -> ZomeApiResult<Vec<Profilefield>> {
+        profilefield::handlers::list(base)
+    }
+
+    #[zome_fn("hc_public")]
+    fn rebase_profilefield(base_from: String, base_to: String, id: Address, created_at: Iso8601) -> ZomeApiResult<Address> {
+        profilefield::handlers::rebase(base_from, base_to, id, created_at)
     }
 
 }

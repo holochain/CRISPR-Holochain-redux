@@ -231,6 +231,11 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const philMusicAvatar = await phil.call("personafields", "personafields", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
   console.log('philMusicAvatar', philMusicAvatar)
 
+   // Bob's Personal persona
+   const bobMusicHandle = await bob.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "arthur"}})
+   console.log('bobPersonalHandle', bobPersonalHandle)
+   const bobPersonalAvatar = await bob.call("personafields", "personafields", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/arthur.brock.png')}})
+   console.log('bobPersonalAvatar', bobPersonalAvatar)
 })
 
 orchestrator.run()

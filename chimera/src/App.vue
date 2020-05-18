@@ -22,7 +22,6 @@ export default {
     ...mapActions('fieldNames', ['fetchFields'])
   },
   created () {
-    console.log('fetch fields')
     this.fetchFields()
   }
 }

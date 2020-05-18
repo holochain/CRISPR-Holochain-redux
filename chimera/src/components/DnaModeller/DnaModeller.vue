@@ -345,7 +345,7 @@ export default {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      const z = this.zomeByBaseIdFromTemplate(this.project.zomes[0])
+      const z = this.zomeByBaseIdFromTemplate(this.project)
       z.template = this.project.zomes[0].template
       z.templateTypeName = this.project.zomes[0].templateTypeName
       return z

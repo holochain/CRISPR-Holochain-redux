@@ -91,11 +91,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'PersonalInformation',
             entryTypes: [
               {
                 id: 'QmPersonaFieldEntryTypeHash',
                 name: 'personafield',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -114,8 +116,9 @@ export default {
                 ]
               },
               {
-                id: 'QmPersonaFieldEntryTypeHash',
+                id: 'QmProfileFieldEntryTypeHash',
                 name: 'profilefield',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -126,7 +129,7 @@ export default {
                   },
                   {
                     id: 'QM2345667778871',
-                    fieldName: 'address',
+                    fieldName: 'persona_field_address',
                     fieldType: 'String',
                     fieldDescription: 'The address of the persona field entry for the profile field.',
                     required: true
@@ -151,7 +154,7 @@ export default {
                 links: [],
                 anchors: [
                   {
-                    id: 'Qmlist_Qmhashnote1',
+                    id: 'Qmlist_Qmhashpersona1',
                     type: 'Personas',
                     text: 'Personal',
                     links: [
@@ -164,12 +167,48 @@ export default {
                     ]
                   },
                   {
-                    id: 'Qmlist_Qmhashnote1',
+                    id: 'Qmlist_Qmhashpersona2',
                     type: 'Personas',
                     text: 'Music',
                     links: [
                       {
                         entityId: 'QmPersonaFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                id: 'Qmlist_profiles1',
+                type: 'Profiles',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [],
+                anchors: [
+                  {
+                    id: 'Qmlist_Qmhashprofile1',
+                    type: 'Profiles',
+                    text: 'CRISPR',
+                    links: [
+                      {
+                        entityId: 'QmProfileFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qmlist_Qmhashprofile2',
+                    type: 'Profiles',
+                    text: 'Holo Punk Records',
+                    links: [
+                      {
+                        entityId: 'QmProfileFieldEntryTypeHash',
                         type: 'field_link',
                         tag: ' ',
                         context: 'exclusive'
