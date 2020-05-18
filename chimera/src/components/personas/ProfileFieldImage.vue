@@ -8,28 +8,27 @@
         chips
         @change="change"
         color="blue-grey lighten-2"
-        :label="profileFieldValue.fieldName + this.selectedPersona"
+        :label="profileFieldValue.name + this.selectedPersona"
         :hint="profileFieldValue.description"
         persistent-hint
-        item-text="fieldName"
-        item-value="anchor"
+        item-text="name"
+        item-value="id"
         return-object>
         <template v-slot:selection="data">
           <v-list-item-avatar left>
-            <img :src="data.item.fieldValue">
+            <img :src="data.item.value">
           </v-list-item-avatar>
         </template>
         <template v-slot:item="data">
-          <template v-if="data.item.anchor !== ''">
+          <template v-if="data.item.value !== ''">
             <v-list-item-avatar>
-              <img :src="data.item.fieldValue">
+              <img :src="data.item.value">
             </v-list-item-avatar>
             <v-list-item-content>
             </v-list-item-content>
             <v-spacer></v-spacer>
             <v-list-item-action>
-              <v-list-item-title v-html="data.item.fieldName" justify="end"></v-list-item-title>
-              <v-list-item-subtitle v-html="'Persona - ' +data.item.personaTitle" justify="end"></v-list-item-subtitle>
+              <v-list-item-subtitle v-html="`${data.item.title} - ${data.item.name}`" justify="end"></v-list-item-subtitle>
             </v-list-item-action>
           </template>
           <template v-else>
@@ -40,8 +39,8 @@
             </v-list-item-content>
             <v-spacer></v-spacer>
             <v-list-item-action>
-              <v-list-item-title v-html="'Upload a new ' + addThumbnailItem.fieldName" justify="end"></v-list-item-title>
-              <v-list-item-subtitle v-html="'Persona - ' + data.item.personaTitle" justify="end"></v-list-item-subtitle>
+              <v-list-item-title v-html="'Upload a new ' + addThumbnailItem.name" justify="end"></v-list-item-title>
+              <v-list-item-subtitle v-html="`${data.item.title} - ${data.item.name}`" justify="end"></v-list-item-subtitle>
             </v-list-item-action>
           </template>
         </template>
@@ -49,9 +48,9 @@
     </v-col>
     <v-dialog v-model="addThumbnailDialog" persistent max-width="390">
       <v-card>
-       <v-card-title class="headline">Add a new {{addThumbnailItem.fieldName}}</v-card-title>
+       <v-card-title class="headline">Add a new {{addThumbnailItem.name}}</v-card-title>
        <v-list-item class="d-flex justify-center">
-         <v-image-input v-model="addThumbnailItem.fieldValue" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="100" :image-width="100"/>
+         <v-image-input v-model="addThumbnailItem.value" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="100" :image-width="100"/>
        </v-list-item>
        <v-card-actions>
          <v-spacer></v-spacer>
@@ -76,45 +75,42 @@ export default {
       profileData: null,
       search: null,
       addThumbnailDialog: false,
-      addThumbnailItem: { anchor: '', personaTitle: this.profileName, fieldName: this.profileFieldValue.fieldName, fieldValue: '' },
+      addThumbnailItem: { title: this.profileName, name: this.profileFieldValue.name, value: '' },
       mapping: this.profileFieldValue.mapping
     }
   },
-  mounted () {
-    const personaThumbnails = this.personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
+  created () {
+    let personaThumbnails = this.personas.filter((persona) => persona.fields.some((field) => field.ui === this.fieldType))
       .map(persona => {
-        const personaThumbnail = { ...persona }
-        const thumbNailFields = []
-        personaThumbnail.fields.filter((field) => field.fieldType === this.fieldType).forEach(function (field) {
-          thumbNailFields.push({ anchor: field.anchor, personaTitle: personaThumbnail.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+        persona.fields.map(field => {
+          field.title = persona.title
         })
-        return thumbNailFields
+        return persona.fields
       })
+    personaThumbnails = [].concat.apply([], personaThumbnails).filter(f => f.ui === this.fieldType)
     this.fieldTypeList = [].concat.apply([], personaThumbnails)
     this.fieldTypeList.push(this.addThumbnailItem)
     if (this.mapping !== undefined) {
-      const anchor = this.mapping.tag
-      const id = this.mapping.persona
-      const mappedPersona = this.personas.filter((persona) => persona.id === id)
+      const title = this.mapping.persona
+      const fieldName = this.mapping.name
+      const mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
-          const mappedPersonaCopy = { ...persona }
-          const mappedFields = []
-          mappedPersonaCopy.fields.filter((field) => field.anchor === anchor).forEach(function (field) {
-            mappedFields.push({ anchor: field.anchor, personaTitle: persona.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+          persona.fields.map(field => {
+            field.title = persona.title
           })
-          return mappedFields
+          return persona.fields
         })
-      const foundPersona = [].concat.apply([], mappedPersona)[0]
+      const foundPersona = [].concat.apply([], mappedPersona).find(f => f.name === fieldName)
       if (foundPersona) {
-        this.profileData = [].concat.apply([], mappedPersona)[0]
-        this.selectedPersona = ' (' + this.profileData.personaTitle + '-' + this.profileData.fieldName + ')'
+        this.profileData = foundPersona
+        this.selectedPersona = ' (' + this.profileData.title + '-' + this.profileData.name + ')'
       }
     }
   },
   methods: {
     change (field) {
-      this.selectedPersona = ' (' + field.personaTitle + '-' + field.fieldName + ')'
-      if (field.anchor === '') {
+      this.selectedPersona = ' (' + field.title + '-' + field.name + ')'
+      if (field.value === '') {
         this.addThumbnailDialog = true
       }
       const that = this

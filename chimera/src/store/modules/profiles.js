@@ -15,6 +15,14 @@ export default {
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
             mapping: { persona: 'Personal', name: 'Handle' }
+          },
+          {
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'Personal', name: 'Avatar' }
           }
         ]
       },
@@ -26,10 +34,10 @@ export default {
           {
             id: 'nickname',
             name: 'Nick Name',
-            ui: 'singleLineText',
+            ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'nickname' }
+            mapping: { persona: 'Music', name: 'Handle' }
           },
           {
             id: 'avatar',
@@ -37,7 +45,7 @@ export default {
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVmusic', tag: 'avatar' }
+            mapping: { persona: 'Music', name: 'Avatar' }
           }
         ]
       },
@@ -49,10 +57,10 @@ export default {
           {
             id: 'nickname',
             name: 'Nick Name',
-            ui: 'singleLineText',
+            ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
+            mapping: { persona: 'Personal', name: 'Handle' }
           },
           {
             id: 'avatar',
@@ -60,7 +68,7 @@ export default {
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
+            mapping: { persona: 'Personal', name: 'Avatar' }
           }
         ]
       },
@@ -72,10 +80,10 @@ export default {
           {
             id: 'nickname',
             name: 'Nick Name',
-            ui: 'singleLineText',
+            ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'nickname' }
+            mapping: { persona: 'Personal', name: 'Handle' }
           },
           {
             id: 'avatar',
@@ -83,7 +91,7 @@ export default {
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'QmiVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVphilt3r', tag: 'avatar' }
+            mapping: { persona: 'Personal', name: 'Avatar' }
           }
         ]
       }

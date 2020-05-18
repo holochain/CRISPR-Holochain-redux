@@ -22,7 +22,7 @@
         </template>
         <template v-slot:item="data">
           <v-list-item-title>{{data.item.value}}</v-list-item-title>
-          <v-list-item-subtitle v-html="`${data.item.personaTitle} - ${data.item.name}`"></v-list-item-subtitle>
+          <v-list-item-subtitle v-html="`${data.item.title} - ${data.item.name}`"></v-list-item-subtitle>
         </template>
       </v-combobox>
     </v-col>
@@ -45,7 +45,6 @@ export default {
     }
   },
   created () {
-    console.log(this.personas, this.fieldType)
     let personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.ui === this.fieldType))
       .map(persona => {
         persona.fields.map(field => {
@@ -55,7 +54,7 @@ export default {
       })
     personaTexts = [].concat.apply([], personaTexts).filter(f => f.ui === this.fieldType)
     this.fieldTypeList = [].concat.apply([], personaTexts)
-    this.fieldTypeList.unshift({ header: 'Select an option or create one' })
+    this.fieldTypeList.unshift({ header: 'Select an option or enter a new one' })
 
     if (this.mapping !== undefined) {
       const title = this.mapping.persona
@@ -70,7 +69,6 @@ export default {
       const foundPersona = [].concat.apply([], mappedPersona).find(f => f.name === fieldName)
       if (foundPersona) {
         this.profileData = foundPersona
-        console.log(this.profileData)
         this.selectedPersona = ' (' + this.profileData.title + '-' + this.profileData.name + ')'
       }
     }
@@ -82,12 +80,10 @@ export default {
       }
     },
     onChange (field) {
-      console.log(this.profileFieldValue)
       if (typeof field === 'string') {
         field = { title: this.profileName, name: this.profileFieldValue.name, value: field }
         this.fieldTypeList.push(field)
       }
-      console.log(field)
       this.selectedPersona = ' (' + field.title + '-' + field.name + ')'
       this.profileData = field
       this.$emit('profile-field-changed', this.profileFieldValue, field)
