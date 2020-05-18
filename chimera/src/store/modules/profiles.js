@@ -13,7 +13,8 @@ export default {
             name: 'Nick Name',
             ui: 'text-field',
             linkContract: 'persist',
-            description: 'Your nick name or handle that will show on Notes and projects you edit.'
+            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            mapping: { persona: 'Personal', name: 'Handle' }
           }
         ]
       },

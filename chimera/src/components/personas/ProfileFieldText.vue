@@ -22,7 +22,7 @@
         </template>
         <template v-slot:item="data">
           <v-list-item-title>{{data.item.value}}</v-list-item-title>
-          <v-list-item-subtitle v-html="'Persona - ' + data.item.personaTitle"></v-list-item-subtitle>
+          <v-list-item-subtitle v-html="`${data.item.personaTitle} - ${data.item.name}`"></v-list-item-subtitle>
         </template>
       </v-combobox>
     </v-col>
@@ -49,7 +49,7 @@ export default {
     let personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.ui === this.fieldType))
       .map(persona => {
         persona.fields.map(field => {
-          field.personaTitle = persona.title
+          field.title = persona.title
         })
         return persona.fields
       })
@@ -58,21 +58,20 @@ export default {
     this.fieldTypeList.unshift({ header: 'Select an option or create one' })
 
     if (this.mapping !== undefined) {
-      const mappedField = this.mapping.field
       const title = this.mapping.persona
+      const fieldName = this.mapping.name
       const mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
-          const mappedPersonaCopy = { ...persona }
-          const mappedFields = []
-          mappedPersonaCopy.fields.filter((field) => field.name === mappedField).forEach(function (field) {
-            mappedFields.push({ id: field.id, personaTitle: persona.title, fieldName: field.name, fieldValue: field.value })
+          persona.fields.map(field => {
+            field.title = persona.title
           })
-          return mappedFields
+          return persona.fields
         })
-      const foundPersona = [].concat.apply([], mappedPersona)[0]
+      const foundPersona = [].concat.apply([], mappedPersona).find(f => f.name === fieldName)
       if (foundPersona) {
-        this.profileData = [].concat.apply([], mappedPersona)[0]
-        this.selectedPersona = ' (' + this.profileData.personaTitle + '-' + this.profileData.fieldName + ')'
+        this.profileData = foundPersona
+        console.log(this.profileData)
+        this.selectedPersona = ' (' + this.profileData.title + '-' + this.profileData.name + ')'
       }
     }
   },
@@ -83,11 +82,13 @@ export default {
       }
     },
     onChange (field) {
+      console.log(this.profileFieldValue)
       if (typeof field === 'string') {
-        field = { anchor: '', personaTitle: this.profileName, fieldName: this.profileFieldValue.fieldName, fieldValue: field }
+        field = { title: this.profileName, name: this.profileFieldValue.name, value: field }
         this.fieldTypeList.push(field)
       }
-      this.selectedPersona = ' (' + field.personaTitle + '-' + field.fieldName + ')'
+      console.log(field)
+      this.selectedPersona = ' (' + field.title + '-' + field.name + ')'
       this.profileData = field
       this.$emit('profile-field-changed', this.profileFieldValue, field)
       this.$refs.combobox.blur()
