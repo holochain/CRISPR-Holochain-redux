@@ -74,6 +74,8 @@ export default {
           id: 'QmZomeOrigin',
           name: 'Origins',
           libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/lib.rs`, 'utf8'),
+          libZome: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/lib_zome.rs`, 'utf8'),
+          libDeclarations: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/lib_declarations.rs`, 'utf8'),
           testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/index.js`, 'utf8'),
           items: [],
           anchorTypes: [],
@@ -305,12 +307,14 @@ export default {
             ]
           }
         )
+        template.libCode += replacePlaceHolders(template.libDeclarations, entryTypeTemplate.name, entryType.name)
         setTypeNameAndFieldsInTemplateFiles(template.items[0], zome.templateTypeName, entryType)
         entryTypeTemplate.id = entryType.id
         entryTypeTemplate.name = entryType.name
         entryTypeTemplate.fields = entryType.fields
         template.entryTypes.push(entryTypeTemplate)
       })
+      template.libCode += template.libZome
       return template
     }
   }

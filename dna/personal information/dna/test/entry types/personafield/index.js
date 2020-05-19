@@ -1,18 +1,6 @@
 const { v4: uuidv4 } = require('uuid')
 const createParams = {"base": "testbase", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": "String for testing","value": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
-
-  scenario.only("list anchor texts", async (s, t) => {
-    const {alice} = await s.players({alice: conductorConfig}, true)
-
-    const arthurHolochainHandle = await alice.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": "handleId.Ok.id", "value": "arthur.brock"}})
-    console.log('arthurHolochainHandle', arthurHolochainHandle)
-    await s.consistency()
-
-    const anchors_result = await alice.call("personalinformation", "personalinformation", "list_anchor_type_texts", { "anchor_type": "list_personafields" })
-    console.log('anchors_result', anchors_result)
-  })
-
   scenario("create_personafield", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
     const create_personafield_result = await alice.call("personalinformation", "personalinformation", "create_personafield", createParams)

@@ -18,7 +18,7 @@ use crate::profilefield::ProfilefieldEntry;
 use crate::profilefield::Profilefield;
 
 #[zome]
-mod personalinformation {
+mod personafields {
 
     #[init]
     fn init() {
@@ -36,16 +36,24 @@ mod personalinformation {
     }
 
     #[zome_fn("hc_public")]
-    fn list_anchor_types() -> ZomeApiResult<Vec<String>> {
-        holochain_anchors::list_anchor_types()
-    }    
-    
-    #[zome_fn("hc_public")]
-    fn list_anchor_type_texts(anchor_type: String) -> ZomeApiResult<Vec<String>> {
-        holochain_anchors::list_anchor_type_texts(anchor_type)
+    fn list_anchor_type_addresses() -> ZomeApiResult<Vec<Address>> {
+        holochain_anchors::list_anchor_type_addresses()
     }
 
-    #[entry_def]
+    #[zome_fn("hc_public")]
+    fn list_anchor_type_tags() -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_anchor_type_tags()
+    }    
+  
+    #[zome_fn("hc_public")]
+    fn list_anchor_addresses(anchor_type: String) -> ZomeApiResult<Vec<Address>> {
+        holochain_anchors::list_anchor_addresses(anchor_type)
+    }
+
+    #[zome_fn("hc_public")]
+    fn list_anchor_tags(anchor_type: String) -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_anchor_tags(anchor_type)
+    }    #[entry_def]
      fn personafield_entry_def() -> ValidatingEntryType {
         personafield::definition()
     }

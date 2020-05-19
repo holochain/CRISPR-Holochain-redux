@@ -4,11 +4,36 @@ export default {
   state: {
     profiles: [
       {
+        id: 'QmhashProfileChimera',
+        name: 'Chimera',
+        dna: 'QmHashyChimera',
+        fields: [
+          {
+            fieldsFieldId: '',
+            id: '35635645u46746uirykfgjkmryuo',
+            name: 'Handle',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            mapping: { persona: 'Personal', name: 'Handle' }
+          },
+          {
+            id: 'fhdtyurturt67uety467ie5746ir6ukyu',
+            name: 'Avatar',
+            ui: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'Personal', name: 'Avatar' }
+          }
+        ]
+      },
+      {
         id: 'QmhashProfileCRISPR',
         name: 'CRISPR',
         dna: 'QmHashyCRISPR',
         fields: [
           {
+            fieldsFieldId: '',
             id: 'nickname',
             name: 'Nick Name',
             ui: 'text-field',
@@ -50,16 +75,16 @@ export default {
         ]
       },
       {
-        id: 'QmhashProfileNotes',
-        name: 'Notes',
+        id: 'QmhashProfileKanban',
+        name: 'Kanban',
         dna: 'QmHashykanban',
         fields: [
           {
             id: 'nickname',
-            name: 'Nick Name',
+            name: 'handle',
             ui: 'text-field',
             linkContract: 'persist',
-            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            description: 'Your nick name or handle that will show on Kanban and projects you edit.',
             mapping: { persona: 'Personal', name: 'Handle' }
           },
           {

@@ -19,15 +19,16 @@
 
 <script>
 // Utilities
-import {
-  mapActions
-} from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'FriendsLoggedIn',
 
   methods: {
     ...mapActions('auth', ['logout'])
+  },
+  computed: {
+    ...mapGetters('personalInformation', ['profileByDna'])
   }
 }
 </script>

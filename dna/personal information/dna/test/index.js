@@ -34,6 +34,5 @@ const dna = Config.dna(dnaPath, 'personalinformation-test')
 const conductorConfig = Config.gen({personalinformation: dna})
 
 require('./entry types/personafield')(orchestrator.registerScenario, conductorConfig)
-require('./entry types/profilefield')(orchestrator.registerScenario, conductorConfig)
 
 orchestrator.run()

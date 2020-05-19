@@ -12,7 +12,7 @@ hdk = { git = "https://github.com/holochain/holochain-rust" , branch = "develop"
 hdk_proc_macros = { git = "https://github.com/holochain/holochain-rust" , branch = "develop" }
 holochain_wasm_utils = { git = "https://github.com/holochain/holochain-rust" , branch = "develop" }
 holochain_json_derive = "=0.0.23"
-holochain_anchors = { path = "/Users/philipbeadle/holochain/holochain-anchors" }
+holochain_anchors = { git = "https://github.com/holochain/holochain-anchors" , branch = "master" }
 
 [lib]
 path = "src/lib.rs"
