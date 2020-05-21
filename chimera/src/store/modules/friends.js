@@ -91,7 +91,7 @@ export default {
             online: true,
             info: {
               id: 10,
-              avatar: 'avatars/alex.jpg',
+              avatar: 'avatars/lucy.jpg',
               name: ''
             },
             notifications: 0,

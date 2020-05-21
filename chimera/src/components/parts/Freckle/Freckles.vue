@@ -16,9 +16,6 @@
       Click to write a new freckle.
     </v-alert>
     <v-row no-gutters>
-      <v-col cols="12">
-        <freckle key="new" :freckle="newFreckle" placeholder="What's your freckle?"/>
-      </v-col>
       <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12">
         <freckle :key="freckle.id" :freckle="freckle"/>
       </v-col>
@@ -35,15 +32,11 @@ export default {
   },
   data () {
     return {
-      help: false,
-      newFreckle: {
-        id: 'new',
-        content: ''
-      }
+      help: false
     }
   },
   methods: {
-    ...mapActions('freckles', ['fetchFreckles', 'fetchAgents'])
+    ...mapActions('freckles', ['fetchFreckles'])
   },
   computed: {
     ...mapGetters('freckles', ['listFreckles']),
@@ -53,7 +46,6 @@ export default {
   },
   created () {
     this.fetchFreckles('')
-    this.fetchAgents()
   }
 }
 </script>

@@ -16,6 +16,7 @@ process.on('unhandledRejection', error => {
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
+const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
 const personalInformationDnaPath = path.join(__dirname, "../personal information/dna/dist/dna.dna.json")
 
@@ -78,11 +79,31 @@ const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
 const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test')
 const philsPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+const philsFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
+const lucysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
+
+
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
-const lucysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna}, {
+const philsConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
+  network: {
+    type: 'sim2h',
+    sim2h_url: 'ws://localhost:9000'
+  },
+  logger: logger
+})
+
+const lucysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, freckles: philsFrecklesDna}, {
+  network: {
+    type: 'sim2h',
+    sim2h_url: 'ws://localhost:9000'
+  },
+  logger: logger
+})
+
+const rudysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -106,16 +127,9 @@ const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, ta
   logger: logger
 })
 
-const lucysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
 
 orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
-  const {phil, arthur, alice, lucy} = await s.players({phil: philsConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, lucy: lucysConductorConfig}, true)
+  const {phil, lucy, rudy, arthur, alice} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig}, true)
 
   const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()
@@ -297,6 +311,33 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('philMusicHandle', philMusicHandle)
   const philMusicAvatar = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
   console.log('philMusicAvatar', philMusicAvatar)
+
+  // Phil's freckles
+  const philFreckle1 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})
+  console.log('philFreckle1', philFreckle1)
+
+  // Lucy's Personal persona
+  const lucyPersonalFullName = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Lucy Beadle"}})
+  console.log('lucyPersonalFullName', lucyPersonalFullName)
+  const lucyPersonalHandle = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "lucy.beadle"}})
+  console.log('lucyPersonalHandle', lucyPersonalHandle)
+  const lucyPersonalAvatar = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/lucy.jpg')}})
+  console.log('lucyPersonalAvatar', lucyPersonalAvatar)
+
+  const lucyPhilFreckle1 = await lucy.call("freckles", "freckles", "list_freckles",  {"base": ""})
+  console.log('lucyPhilFreckle1', lucyPhilFreckle1)
+
+  // Rudy's Personal persona
+  const rudyPersonalFullName = await rudy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Rudy"}})
+  console.log('rudyPersonalFullName', rudyPersonalFullName)
+  const rudyPersonalHandle = await rudy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "rudy.beadle"}})
+  console.log('rudyPersonalHandle', rudyPersonalHandle)
+  const rudyPersonalAvatar = await rudy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/rudy.jpeg')}})
+  console.log('rudyPersonalAvatar', rudyPersonalAvatar)
+
+  const rudyPhilFreckle1 = await rudy.call("freckles", "freckles", "list_freckles",  {"base": ""})
+  console.log('rudyPhilFreckle1', rudyPhilFreckle1)
+
 
    // Arthur's Personal persona
    const arthurPersonalFullName = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Arthur Brock"}})
