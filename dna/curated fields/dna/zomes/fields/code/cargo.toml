@@ -1,0 +1,19 @@
+[package]
+name = "fields"
+version = "0.1.0"
+authors = ["Philip Beadle"]
+edition = "2018"
+
+[dependencies]
+serde = "=1.0.104"
+serde_json = { version = "=1.0.47", features = ["preserve_order"] }
+serde_derive = "=1.0.104"
+hdk = { git = "https://github.com/holochain/holochain-rust" , branch = "develop" }
+hdk_proc_macros = { git = "https://github.com/holochain/holochain-rust" , branch = "develop" }
+holochain_wasm_utils = { git = "https://github.com/holochain/holochain-rust" , branch = "develop" }
+holochain_json_derive = "=0.0.23"
+holochain_anchors = { git = "https://github.com/holochain/holochain-anchors" , branch = "master" }
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]

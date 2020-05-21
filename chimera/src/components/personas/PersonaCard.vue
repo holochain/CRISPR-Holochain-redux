@@ -7,7 +7,7 @@
       <v-text-field v-model="persona.title" :disabled="!isEditing" :hint="'Enter your Persona Title'" persistent-hint v-if="isEditing"></v-text-field>
       <v-list-item-title class="headline" v-if="!isEditing">Persona - {{ persona.title }}</v-list-item-title>
       <v-spacer></v-spacer>
-      <v-list-item-avatar class="ml-n5 mr-1">
+      <!-- <v-list-item-avatar class="ml-n5 mr-1">
        <v-slide-x-reverse-transition mode="out-in">
          <v-icon
            large
@@ -17,7 +17,7 @@
            v-text="isEditing ? 'mdi-check-outline' : 'mdi-circle-edit-outline'">
          </v-icon>
        </v-slide-x-reverse-transition>
-     </v-list-item-avatar>
+     </v-list-item-avatar> -->
      <v-list-item-action v-if="isEditing">
        <v-dialog v-model="dialog" persistent max-width="290">
           <template v-slot:activator="{ on }">
@@ -45,7 +45,7 @@
      </v-list-item-action>
    </v-list-item>
     <v-container class="fill-height ma-0 pl-5" fluid>
-      <v-col v-for="(field) in personaFields" :key="field.fieldName" cols="12">
+      <v-col v-for="(field) in personaFields" :key="field.fieldId" cols="12">
         <persona-field :personaFieldValue="field" @save-persona-field="saveField" @delete-persona-field="deleteField"/>
       </v-col>
     </v-container>
@@ -78,9 +78,6 @@ export default {
       if (field.fieldName === 'Avatar') {
         this.avatarData = fieldValue
       }
-      // fields for Holochain entry
-      // console.log(this.persona)
-      // console.log(field)
       console.log(fieldValue)
     },
     deleteField (field) {

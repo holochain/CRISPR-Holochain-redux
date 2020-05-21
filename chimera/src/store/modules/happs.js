@@ -11,7 +11,7 @@ export default {
         description: 'From Japanese, kanban is literally translated as billboard or signboard. Add the Kanban part and you can Kanban any other part you need. The image above shows the Notes List part being used in the Kanban board.',
         price: 6.99,
         compareAt: 6.99,
-        publisher: 'Holochain.org',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1545864353031
       },
       {
@@ -22,7 +22,7 @@ export default {
         description: 'Holochain CRISPR brings you all the power of building your own Holochain Apps without writing any code. You can assemble your own apps from pre-built modules as well as get right into the technical side and build new DNA\'s with the DNA Modeller. Once you are confident customising your own Holochain experience you can even make a income building apps for others............. CRISPR runs inside Chimera and comes with Holochain Version Control System (HVCS) and a kanban board so you know exactly what needs doing and who is doing it. Each project has its own DHT and you control who is on your team and what team members can do.',
         price: 59.99,
         compareAt: 54.34,
-        publisher: 'Holochain.org',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1545864353030
       },
       // {
@@ -42,7 +42,17 @@ export default {
         launch: '/holopunk-records/library',
         price: 19.99,
         compareAt: 27.99,
-        publisher: 'Holopunk Records',
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1585864353040
+      },
+      {
+        id: 'QmHashyFreckles',
+        name: 'Freckles',
+        src: 'freckles',
+        launch: '/freckles',
+        price: 19.99,
+        compareAt: 27.99,
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1585864353040
       }
     ]

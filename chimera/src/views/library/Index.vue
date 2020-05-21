@@ -32,7 +32,7 @@
       <v-card flat>
       <v-img height='600' :src="require('@/assets/icons/chimera-overlay.png')" @click="turnSplashOff" class="white--text align-end justify-center">
       </v-img>
-      <v-img width="640" :src="require('@/assets/icons/powered-by-holochain.png')" />
+      <v-img width="650" :src="require('@/assets/icons/powered-by-holochain.png')" />
       </v-card>
     </v-overlay>
   </section>

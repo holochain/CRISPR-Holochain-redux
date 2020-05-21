@@ -11,18 +11,18 @@
         @change="onChange"
         @blur="onBlur"
         color="blue-grey lighten-2"
-        :label="profileFieldValue.fieldName + this.selectedPersona"
+        :label="profileFieldValue.name + this.selectedPersona"
         :hint="profileFieldValue.description"
         persistent-hint
-        item-text="fieldName"
-        item-value="anchor"
+        item-text="name"
+        item-value="id"
         return-object>
         <template v-slot:selection="data">
-          <v-list-item-content>{{data.item.fieldValue}}</v-list-item-content>
+          <v-list-item-content>{{data.item.value}}</v-list-item-content>
         </template>
         <template v-slot:item="data">
-          <v-list-item-title>{{data.item.fieldValue}}</v-list-item-title>
-          <v-list-item-subtitle v-html="'Persona - ' + data.item.personaTitle"></v-list-item-subtitle>
+          <v-list-item-title>{{data.item.value}}</v-list-item-title>
+          <v-list-item-subtitle v-html="`${data.item.title} - ${data.item.name}`"></v-list-item-subtitle>
         </template>
       </v-combobox>
     </v-col>
@@ -34,6 +34,7 @@ export default {
   name: 'ProfileFieldText',
   components: {
   },
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue'],
   data () {
     return {
       fieldTypeList: [],
@@ -43,36 +44,32 @@ export default {
       mapping: this.profileFieldValue.mapping
     }
   },
-  mounted () {
-    const personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.fieldType === this.fieldType))
+  created () {
+    let personaTexts = this.personas.filter((persona) => persona.fields.some((field) => field.ui === this.fieldType))
       .map(persona => {
-        const personaText = { ...persona }
-        const textFields = []
-        personaText.fields.filter((field) => field.fieldType === this.fieldType).forEach(function (field) {
-          textFields.push({ anchor: field.anchor, personaTitle: personaText.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+        persona.fields.map(field => {
+          field.title = persona.title
         })
-        return textFields
+        return persona.fields
       })
+    personaTexts = [].concat.apply([], personaTexts).filter(f => f.ui === this.fieldType)
     this.fieldTypeList = [].concat.apply([], personaTexts)
-    this.fieldTypeList.unshift({ header: 'Select an option or create one' })
+    this.fieldTypeList.unshift({ header: 'Select an option or enter a new one' })
 
     if (this.mapping !== undefined) {
-      const anchor = this.mapping.tag
-      const id = this.mapping.persona
-      const mappedPersona = this.personas.filter((persona) => persona.id === id)
+      const title = this.mapping.persona
+      const fieldName = this.mapping.name
+      const mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
-          const mappedPersonaCopy = { ...persona }
-          const mappedFields = []
-          mappedPersonaCopy.fields.filter((field) => field.anchor === anchor).forEach(function (field) {
-            mappedFields.push({ anchor: field.anchor, personaTitle: persona.title, fieldName: field.fieldName, fieldValue: field.fieldValue })
+          persona.fields.map(field => {
+            field.title = persona.title
           })
-          return mappedFields
+          return persona.fields
         })
-
-      const foundPersona = [].concat.apply([], mappedPersona)[0]
+      const foundPersona = [].concat.apply([], mappedPersona).find(f => f.name === fieldName)
       if (foundPersona) {
-        this.profileData = [].concat.apply([], mappedPersona)[0]
-        this.selectedPersona = ' (' + this.profileData.personaTitle + '-' + this.profileData.fieldName + ')'
+        this.profileData = foundPersona
+        this.selectedPersona = ' (' + this.profileData.title + '-' + this.profileData.name + ')'
       }
     }
   },
@@ -84,10 +81,10 @@ export default {
     },
     onChange (field) {
       if (typeof field === 'string') {
-        field = { anchor: '', personaTitle: this.profileName, fieldName: this.profileFieldValue.fieldName, fieldValue: field }
+        field = { title: this.profileName, name: this.profileFieldValue.name, value: field }
         this.fieldTypeList.push(field)
       }
-      this.selectedPersona = ' (' + field.personaTitle + '-' + field.fieldName + ')'
+      this.selectedPersona = ' (' + field.title + '-' + field.name + ')'
       this.profileData = field
       this.$emit('profile-field-changed', this.profileFieldValue, field)
       this.$refs.combobox.blur()
@@ -98,18 +95,14 @@ export default {
     },
     filter (item, queryText, itemText) {
       if (item.header) return false
-
       const hasValue = val => val != null ? val : ''
-
-      const text = hasValue(item.fieldValue)
+      const text = hasValue(item.value)
       const query = hasValue(queryText)
-
       return text.toString()
         .toLowerCase()
         .indexOf(query.toString().toLowerCase()) > -1
     }
-  },
-  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue']
+  }
 }
 </script>
 

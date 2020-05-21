@@ -9,7 +9,7 @@ export default {
         description: 'The Notes part has a title and content field for you to record simple notes. You can add edit and delete notes and if an agent tries to edit or delete a note they do not have permission to a validation error will show.',
         price: 1.99,
         compareAt: 1.99,
-        publisher: 'Holochain.org',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1585864353040
       },
       {
@@ -19,7 +19,7 @@ export default {
         description: 'Task lists are super handy. Manage your tasks in a list or combine with other parts such as Parts and Kanban to get the kanban board in the image above.',
         price: 9.99,
         compareAt: 12.99,
-        publisher: 'Holochain.org',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1588546955113
       },
       {
@@ -29,7 +29,7 @@ export default {
         description: 'Add a ratings part to any other part.',
         price: 1.99,
         compareAt: 8.99,
-        publisher: 'Holochain.org',
+        publisher: 'Eat Sleep Code Repeat',
         updated: 1588890779424
       }
     ],

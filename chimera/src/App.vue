@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   components: {
     // CoreAppBar: () => import('@/components/core/AppBar'),
@@ -16,6 +17,14 @@ export default {
     CoreFriends: () => import('@/components/core/Friends'),
     CoreSnackbar: () => import('@/components/core/Snackbar'),
     CoreView: () => import('@/components/core/View')
+  },
+  methods: {
+    ...mapActions('fieldNames', ['fetchFields']),
+    ...mapActions('personas', ['fetchPersonas'])
+  },
+  created () {
+    this.fetchFields()
+    this.fetchPersonas()
   }
 }
 </script>

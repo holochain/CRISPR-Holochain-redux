@@ -1,54 +1,80 @@
 bridges = []
-persistence_dir = '/tmp/tmp.z6wMAi97wa/tryorama/8zTNld'
+persistence_dir = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
-id = 'columns'
+id = 'kanban'
 keystore_file = '[UNUSED]'
-name = 'lucy::columns::449918f0-8b1f-422b-857c-808c1ef2b3a9'
-public_address = 'HcSCjFC5mkHIm7s49tCq7Om37dZTkzj6faGCfmh39tcdn8qhxwO9riO4JIkzm9z'
+name = 'lucy::kanban::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+public_address = 'HcSciKWe4gPMtmjxu6rOOPyVPVii4czwyFcVX7ym77g38YpxoWt3kcy4R3b775i'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'lucy::notes::449918f0-8b1f-422b-857c-808c1ef2b3a9'
-public_address = 'HcScjDJ3EsSZzhaj5fYKmQgi9BaqrrsugSoKK9Y5Yprqw7j7Iu8i6zKVfTx5qoz'
+name = 'lucy::notes::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+public_address = 'HcScICYZkIQz4wcb7dSr5Rk5ET6s7G9k7dkUn6QD39a4h3ioiIOyhXTkrbepwei'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'lucy::tasks::449918f0-8b1f-422b-857c-808c1ef2b3a9'
-public_address = 'HcSCjMBcKqIpedcmcccQSQ8kYDoq4gmnbm8GQrkpSkuz9cnpqwPNY9oWuc4mprr'
+name = 'lucy::tasks::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+public_address = 'HcSCiKn4vvpMwcwbb6Y8YmikuRVc4e65fwX4x4bqqk88excpZUYq3778cs5DV9z'
+test_agent = true
+
+[[agents]]
+id = 'fields'
+keystore_file = '[UNUSED]'
+name = 'lucy::fields::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+public_address = 'HcSCibJd4JRrpuhizik88ZJ83rETgPw4gbocjE4pTw75c9ka8mkiEz3PY7Ay6ti'
+test_agent = true
+
+[[agents]]
+id = 'personalinformation'
+keystore_file = '[UNUSED]'
+name = 'lucy::personalinformation::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+public_address = 'HcSci34874uus7m334AJowIkrYzaoafupdVtPFzN6364F758RVDrizjN5fqv33z'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmPicjELUMp91S8thgcqR6hUKQKRVjniDDxvc9JWeYbhFC'
-id = 'columns-test'
-uuid = '449918f0-8b1f-422b-857c-808c1ef2b3a9'
+hash = 'QmSWhycwpjNGQ7Td9YE8j9vb3U4RjS9kLrYkBFAPfdwCTc'
+id = 'kanban-test'
+uuid = '71b44c5c-eb5e-4caa-a1d3-b946915b4478'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmX21oRkkqa6uEJeGVqZUiy11ZH5KzpTqbvh5LzX3c94SX'
+hash = 'QmXSrKTZWofHt8PJ4AbFj2nAEo6Jq2Lx2rLMfN7NK6zfhY'
 id = 'notes-test'
-uuid = '449918f0-8b1f-422b-857c-808c1ef2b3a9'
+uuid = '71b44c5c-eb5e-4caa-a1d3-b946915b4478'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmSz3ZsMkNUiBTPMb7HygwcfJ29c8f5Y3qR2GbPjMkjoF6'
+hash = 'QmQix9TjPamRF24oBb8vFVDQbvXNDEXQYyCf2KS8ZEccHb'
 id = 'tasks-test'
-uuid = '449918f0-8b1f-422b-857c-808c1ef2b3a9'
+uuid = '71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/fields/dna/dist/dna.dna.json'
+hash = 'QmWusEeBddJH8XNQxpu4ZnXuK3PxkEmrDo7oy9RnvgT8tR'
+id = 'fields-test'
+uuid = '71b44c5c-eb5e-4caa-a1d3-b946915b4478'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/personal information/dna/dist/dna.dna.json'
+hash = 'QmcCyct52KecST5KUuVX4S8Z7q3mzNPBGKLjKeedYMdJUA'
+id = 'personalinformation-test::273eff52-eeba-4857-befb-320af655204d'
+uuid = '273eff52-eeba-4857-befb-320af655204d::71b44c5c-eb5e-4caa-a1d3-b946915b4478'
 
 [[instances]]
-agent = 'columns'
-dna = 'columns-test'
-id = 'columns'
+agent = 'kanban'
+dna = 'kanban-test'
+id = 'kanban'
 
 [instances.storage]
-path = '/tmp/tmp.z6wMAi97wa/tryorama/8zTNld/columns'
+path = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH/kanban'
 type = 'lmdb'
 
 [[instances]]
@@ -57,7 +83,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.z6wMAi97wa/tryorama/8zTNld/notes'
+path = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -66,7 +92,25 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.z6wMAi97wa/tryorama/8zTNld/tasks'
+path = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH/tasks'
+type = 'lmdb'
+
+[[instances]]
+agent = 'fields'
+dna = 'fields-test'
+id = 'fields'
+
+[instances.storage]
+path = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH/fields'
+type = 'lmdb'
+
+[[instances]]
+agent = 'personalinformation'
+dna = 'personalinformation-test::273eff52-eeba-4857-befb-320af655204d'
+id = 'personalinformation'
+
+[instances.storage]
+path = '/tmp/tmp.OWNPLglEr7/tryorama/6L6OcH/personalinformation'
 type = 'lmdb'
 
 [[interfaces]]
@@ -75,7 +119,7 @@ choose_free_port = false
 id = 'tryorama-interface'
 
 [[interfaces.instances]]
-id = 'columns'
+id = 'kanban'
 
 [[interfaces.instances]]
 id = 'notes'
@@ -83,48 +127,46 @@ id = 'notes'
 [[interfaces.instances]]
 id = 'tasks'
 
+[[interfaces.instances]]
+id = 'fields'
+
+[[interfaces.instances]]
+id = 'personalinformation'
+
 [interfaces.driver]
 port = 33003
 type = 'websocket'
 
 [logger]
-state_dump = false
+state_dump = true
 type = 'debug'
 [[logger.rules.rules]]
 exclude = true
-pattern = '^parity'
+pattern = '.*parity.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^mio'
+pattern = '.*mio.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^tokio'
+pattern = '.*tokio.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^hyper'
+pattern = '.*hyper.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^rusoto_core'
+pattern = '.*rusoto_core.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^want'
+pattern = '.*want.*'
 
 [[logger.rules.rules]]
 exclude = true
-pattern = '^rpc'
-
-[[logger.rules.rules]]
-exclude = false
-pattern = '^holochain'
-
-[[logger.rules.rules]]
-exclude = false
-pattern = '^lib3h'
+pattern = '.*rpc.*'
 
 [network]
 sim2h_url = 'ws://localhost:9000'

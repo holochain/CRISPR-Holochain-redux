@@ -33,6 +33,7 @@ import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/rust/rust.js'
 import 'codemirror/theme/base16-dark.css'
+import * as camelCase from 'camelcase'
 
 function replacePlaceHolders (content, placeHolder, replacement) {
   const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
@@ -46,15 +47,16 @@ function replaceTest (testTemplate, entryType) {
   const testFields = []
   const testUpdateFields = []
   entryType.fields.forEach(field => {
+    const fName = camelCase(field.fieldName)
     if (field.fieldType === 'String') {
-      testFields.push(`"${field.fieldName}": "String for testing"`)
-      testUpdateFields.push(`"${field.fieldName}": "Update string for testing"`)
+      testFields.push(`"${fName}": "String for testing"`)
+      testUpdateFields.push(`"${fName}": "Update string for testing"`)
     } else if (field.fieldType === 'bool') {
-      testFields.push(`"${field.fieldName}": false`)
-      testUpdateFields.push(`"${field.fieldName}": true`)
+      testFields.push(`"${fName}": false`)
+      testUpdateFields.push(`"${fName}": true`)
     } else {
-      testFields.push(`"${field.fieldName}": 0`)
-      testUpdateFields.push(`"${field.fieldName}": 1`)
+      testFields.push(`"${fName}": 0`)
+      testUpdateFields.push(`"${fName}": 1`)
     }
   })
   return testTemplate.replace(new RegExp('_ReplaceFields', 'g'), testFields.join()).replace(new RegExp('_updateFields', 'g'), testUpdateFields.join())
@@ -132,18 +134,17 @@ export default {
       const dnaModel = new Diagram.Model()
       const nodes = []
       const col0Offset = 20
-      const col1Offset = 390
-      const col2Offset = 760
-      const col3Offset = 1140
+      const col1Offset = 420
+      const col2Offset = 820
+      const col3Offset = 1240
       const yOffset = 130
-      const cardWidth = 270
+      const cardWidth = 300
       let anchorsYIndex = 0
       let anchorsOffset = 0
       let entryTypesOffset = 0
       let anchorIndex = 0
       let entryTypeIndex = 0
       let libCode = this.zome.libCode
-      let testCode = this.zome.testCode
       let hasAnchors = false
       const that = this
       const rootAnchorPort = dnaModel.addRootAnchor(col0Offset, yOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
@@ -158,7 +159,8 @@ export default {
         entryTypeOffset = col3Offset
       }
       this.zome.entryTypes.forEach(entryType => {
-        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+        let testCode = this.zome.testCode
+        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth + 100, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
         let handlersCode = ''
         let permissionsCode = ''
         entryType.functions.forEach(f => {
@@ -178,6 +180,7 @@ export default {
         testCode += '}'
         handlersCode = replacePlaceHolders(handlersCode, 'origin', entryType.name.toLowerCase())
         permissionsCode = replacePlaceHolders(permissionsCode, 'origin', entryType.name.toLowerCase())
+        testCode = replacePlaceHolders(testCode, 'originszome', this.zome.name.toLowerCase())
         testCode = replacePlaceHolders(testCode, 'origin', entryType.name.toLowerCase())
         testCode = replaceTest(testCode, entryType)
         libCode = replacePlaceHolders(libCode, 'origin', entryType.name.toLowerCase())

@@ -16,10 +16,19 @@ export default {
     },
     personas: (state, getters, rootState, rootGetters) => {
       const personas = []
+      const fields = rootGetters['fieldNames/fields']
       for (const persona of rootGetters['personas/allPersonas']) {
+        persona.fields.forEach(pf => {
+          const field = fields.find(f => f.id === pf.fieldsFieldId)
+          pf.ui = field.ui
+          pf.name = field.name
+        })
         personas.push(persona)
       }
       return personas
+    },
+    fields: (state, getters, rootState, rootGetters) => {
+      return rootGetters['fieldNames/fields']
     }
   }
 }

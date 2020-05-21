@@ -1,12 +1,13 @@
 <template>
   <div>
-    <v-navigation-drawer v-model="friendsDrawer" app class="black overflow-visible" right width="225" static style="overflow: visible">
+    <v-navigation-drawer v-model="friendsDrawer" app class="black overflow-visible" right width="200" static style="overflow: visible">
       <v-row class="mx-0 flex-column fill-height" justify="center">
         <v-col>
           <v-list class="py-0" color="transparent" two-line>
             <auth />
             <template>
-              <v-divider />
+              <v-divider class="mb-5" />
+              <span class="title ml-1">{{selectedGroup}}</span>
               <v-menu v-for="(friend, i) in friends" :key="i" :offset-x="$vuetify.breakpoint.mdAndUp" :offset-y="$vuetify.breakpoint.smAndDown" :left="$vuetify.breakpoint.mdAndUp" :min-width="$vuetify.breakpoint.smAndDown ? '100%' : undefined" attach :max-width="$vuetify.breakpoint.mdAndUp ? 200 : undefined" style="max-height: 0; max-width: 0;">
                 <template v-slot:activator="{ attrs, on }">
                   <v-list-item link v-bind="attrs" class="mx-n3" v-on="on">
@@ -101,13 +102,7 @@
 </template>
 
 <script>
-// Utilities
-import {
-  mapGetters,
-  mapMutations,
-  mapState
-} from 'vuex'
-
+import { mapGetters, mapMutations, mapState } from 'vuex'
 export default {
   name: 'CoreFriends',
   components: {
@@ -120,9 +115,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('friends', ['online']),
+    ...mapGetters('friends', ['online', 'friends']),
     ...mapState('auth', ['loggedIn']),
-    ...mapState('friends', ['drawer', 'friends']),
+    ...mapState('friends', ['drawer', 'selectedGroup']),
     friendsDrawer: {
       get () {
         return this.drawer

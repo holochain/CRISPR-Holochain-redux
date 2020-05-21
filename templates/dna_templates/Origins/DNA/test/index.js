@@ -30,8 +30,8 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const dna = Config.dna(dnaPath, 'origins-test')
-const conductorConfig = Config.gen({origins: dna})
+const dna = Config.dna(dnaPath, 'originszome-test')
+const conductorConfig = Config.gen({originszome: dna})
 
 require('./entry types/origin')(orchestrator.registerScenario, conductorConfig)
 

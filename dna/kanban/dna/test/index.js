@@ -30,8 +30,8 @@ const orchestrator = new Orchestrator({
   )
 })
 
-const dna = Config.dna(dnaPath, 'columns-test')
-const conductorConfig = Config.gen({columns: dna})
+const dna = Config.dna(dnaPath, 'kanban-test')
+const conductorConfig = Config.gen({kanban: dna})
 
 require('./entry types/column')(orchestrator.registerScenario, conductorConfig)
 

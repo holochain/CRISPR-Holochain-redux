@@ -21,8 +21,9 @@
     </v-alert>
     <v-card-title v-if="!isEditing">{{instanceNote.title}}</v-card-title>
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
-    <v-card-text v-if="!isEditing">{{instanceNote.content}}</v-card-text>
-    <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" />
+    <v-card-text v-if="!isEditing" v-html="instanceNote.content" />
+    <!-- <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" /> -->
+    <tiptap-vuetify v-if="isEditing" v-model="instanceNote.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="note.id" :key="part.title" />
     </v-col>
@@ -31,10 +32,12 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
   name: 'Note',
   components: {
-    PartManager: () => import('@/components/chimera/PartManager')
+    PartManager: () => import('@/components/chimera/PartManager'),
+    TiptapVuetify
   },
   props: ['base', 'note', 'partBase'],
   data () {
@@ -43,7 +46,28 @@ export default {
       clean: {},
       isEditing: this.note.id === 'new',
       parts: [],
-      help: false
+      help: false,
+      extensions: [
+        History,
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        ListItem,
+        BulletList,
+        OrderedList,
+        [Heading, {
+          options: {
+            levels: [1, 2, 3]
+          }
+        }],
+        Bold,
+        Code,
+        HorizontalRule,
+        Paragraph,
+        HardBreak
+      ]
     }
   },
   methods: {

@@ -15,6 +15,7 @@ import library from '@/store/modules/library'
 import portfolio from '@/store/modules/portfolio'
 import projects from '@/store/modules/projects'
 import personalInformation from '@/store/modules/personalInformation'
+import fieldNames from '@/store/modules/fieldNames'
 import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
@@ -46,6 +47,7 @@ const store = new Vuex.Store({
     portfolio,
     projects,
     personalInformation,
+    fieldNames,
     profiles,
     personas,
     snackbar,

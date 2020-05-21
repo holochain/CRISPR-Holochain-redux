@@ -30,7 +30,7 @@ function createWindow () {
   //     break
   //   case '3':
   //     y = 500
-  //     break    
+  //     break
   //   case '4':
   //     y = 500
   //     x = 840

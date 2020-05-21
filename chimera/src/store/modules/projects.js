@@ -24,22 +24,24 @@ export default {
         zomes: []
       },
       {
-        id: 'QmHashyPersonasProfiles',
+        id: 'QmHashyCuratedFields',
         name: 'Curated Fields',
         type: 'application',
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
-        description: 'Keep control of your personal information, know which apps are using it and update your info in one location.',
+        description: 'A managed list of fields that make it simple to map profile fields to personas.',
         zomes: [
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Fields',
             entryTypes: [
               {
                 id: 'QmFieldEntryTypeHash',
                 name: 'field',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -80,6 +82,199 @@ export default {
         ]
       },
       {
+        id: 'QmHashyPersonasProfiles',
+        name: 'Personal Information',
+        type: 'application',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Keep control of your personal information, know which apps are using it and update your info in one location.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'PersonalInformation',
+            entryTypes: [
+              {
+                id: 'QmPersonaFieldEntryTypeHash',
+                name: 'personafield',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'fields_field_id',
+                    fieldType: 'String',
+                    fieldDescription: 'id of the field from the curated and custom fields list',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'value',
+                    fieldType: 'String',
+                    fieldDescription: 'The value of the persona field',
+                    required: true
+                  }
+                ]
+              },
+              {
+                id: 'QmProfileFieldEntryTypeHash',
+                name: 'profilefield',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'Qm1333',
+                    fieldName: 'fields_field_id',
+                    fieldType: 'String',
+                    fieldDescription: 'id of the field from the curated and custom fields list',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'persona_field_address',
+                    fieldType: 'String',
+                    fieldDescription: 'The address of the persona field entry for the profile field.',
+                    required: true
+                  },
+                  {
+                    id: 'QM2345667778871',
+                    fieldName: 'contract',
+                    fieldType: 'String',
+                    fieldDescription: 'The agreement for how the information is stored.',
+                    required: true
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_personas1',
+                type: 'Personas',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [],
+                anchors: [
+                  {
+                    id: 'Qmlist_Qmhashpersona1',
+                    type: 'Personas',
+                    text: 'Personal',
+                    links: [
+                      {
+                        entityId: 'QmPersonaFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qmlist_Qmhashpersona2',
+                    type: 'Personas',
+                    text: 'Music',
+                    links: [
+                      {
+                        entityId: 'QmPersonaFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                id: 'Qmlist_profiles1',
+                type: 'Profiles',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [],
+                anchors: [
+                  {
+                    id: 'Qmlist_Qmhashprofile1',
+                    type: 'Profiles',
+                    text: 'CRISPR',
+                    links: [
+                      {
+                        entityId: 'QmProfileFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  },
+                  {
+                    id: 'Qmlist_Qmhashprofile2',
+                    type: 'Profiles',
+                    text: 'Holo Punk Records',
+                    links: [
+                      {
+                        entityId: 'QmProfileFieldEntryTypeHash',
+                        type: 'field_link',
+                        tag: ' ',
+                        context: 'exclusive'
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'Qmmorebighashes333',
+        name: 'Freckles',
+        type: 'application',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Freckles have a title, content and order. Set the permissions at build time to control who can update and delete freckles.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Freckles',
+            entryTypes: [
+              {
+                id: 'QmFreckleEntryTypeHash',
+                name: 'freckle',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'content',
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the freckle',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_freckles1',
+                type: 'list_freckles',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmFreckleEntryTypeHash',
+                    type: 'freckle_link',
+                    tag: ' ',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ]
+          }
+        ]
+      },
+      {
         id: 'Qmmorebighashes333',
         name: 'Notes',
         type: 'part',
@@ -91,11 +286,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Notes',
             entryTypes: [
               {
                 id: 'QmNoteEntryTypeHash',
                 name: 'note',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -194,11 +391,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Tasks',
             entryTypes: [
               {
                 id: 'QmTaskEntryTypeHash',
                 name: 'task',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -290,11 +489,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Kanban',
             entryTypes: [
               {
                 id: 'QmColumnEntryTypeHash',
                 name: 'column',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'Qm1333',
@@ -386,11 +587,13 @@ export default {
           {
             template: 'Origins',
             templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
             name: 'Ratings',
             entryTypes: [
               {
                 id: 'QmRatingEntryTypeHash',
                 name: 'rating',
+                template: 'list_anchor_types_1',
                 fields: [
                   {
                     id: 'QM2345667778871',

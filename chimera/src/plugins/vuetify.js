@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuetify, { VLayout, VFlex, VList } from 'vuetify/lib'
 import '@mdi/font/css/materialdesignicons.css'
+import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
+import 'tiptap-vuetify/dist/main.css'
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify, {
   components: {
@@ -8,6 +11,12 @@ Vue.use(Vuetify, {
     VLayout,
     VList
   }
+})
+
+const vuetify = new Vuetify()
+Vue.use(TiptapVuetifyPlugin, {
+  vuetify,
+  iconsGroup: 'mdi'
 })
 
 export default new Vuetify({

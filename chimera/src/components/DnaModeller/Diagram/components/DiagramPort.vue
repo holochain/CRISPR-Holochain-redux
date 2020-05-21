@@ -12,11 +12,11 @@
     </svg>
     <svg :y="y + 30" v-if="type === 'field'">
       <text x="12" y="20" font-size="10pt" fill="#000000">{{name.split('|')[0]}}</text>
-      <text :x="nodeWidth / 3 + 10" y="20" font-size="10pt" fill="#000000">{{name.split('|')[1]}}</text>
+      <text :x="3 * nodeWidth / 8 + 10" y="20" font-size="10pt" fill="#000000">{{name.split('|')[1]}}</text>
     </svg>
     <svg :y="y + 30" v-if="type === 'metaField'">
       <text x="12" y="20" font-size="10pt" fill="#000000">{{name.split('|')[0]}}</text>
-      <text :x="nodeWidth / 3 + 10" y="20" font-size="10pt" fill="#000000">{{name.split('|')[1]}}</text>
+      <text :x="3* nodeWidth / 8 + 10" y="20" font-size="10pt" fill="#000000">{{name.split('|')[1]}}</text>
       <text :x="nodeWidth - 30" y="20" font-size="10pt" fill="#000000">meta</text>
     </svg>
     <svg :y="y + 31" v-if="type === 'fn'">

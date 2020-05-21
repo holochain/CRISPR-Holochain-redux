@@ -26,6 +26,10 @@
       Click the Zome name in the tree to see the model for the Zome.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click on any file name in the tree to see the code.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the key icon on an entry type to change the permissions.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the list icon on an entry type to manage the fields.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="3">
@@ -345,7 +349,7 @@ export default {
       return this.projectById(this.$route.params.id)
     },
     zome () {
-      const z = this.zomeByBaseIdFromTemplate(this.project.zomes[0])
+      const z = this.zomeByBaseIdFromTemplate(this.project)
       z.template = this.project.zomes[0].template
       z.templateTypeName = this.project.zomes[0].templateTypeName
       return z
@@ -354,7 +358,7 @@ export default {
       return this.zome.items
     },
     open () {
-      return [this.project.name, 'DNA', 'Test', 'Zomes', 'UI']
+      return [this.items[0].name, 'DNA', 'Test', 'Zomes', 'UI']
     }
   }
 }
