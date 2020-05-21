@@ -50,7 +50,6 @@ export default {
   components: {
     TaskManager: () => import('../Tasks/Tasks'),
     Note: () => import('./Note')
-    // NoteProseMirror: () => import('./NoteProseMirror')
   },
   props: ['base', 'title'],
   data () {

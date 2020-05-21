@@ -1,6 +1,32 @@
 const { v4: uuidv4 } = require('uuid')
 const createParams = {"base": "testbase", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": "String for testing","value": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
+
+  scenario.only("list_agents", async (s, t) => {
+    const {alice, bob, phil, lucy} = await s.players({phil: conductorConfig, bob: conductorConfig, alice: conductorConfig, lucy: conductorConfig}, true)
+    
+    const create_alice = await alice.call("personalinformation", "personalinformation", "create_personafield", createParams)
+    await s.consistency()
+    console.log('create_alice', create_alice)
+
+    const create_phil = await phil.call("personalinformation", "personalinformation", "create_personafield", createParams)
+    await s.consistency()
+    console.log('create_phil', create_phil)
+
+    const create_bob = await bob.call("personalinformation", "personalinformation", "create_personafield", createParams)
+    await s.consistency()
+    console.log('create_bob', create_bob)
+
+    const create_lucy = await lucy.call("personalinformation", "personalinformation", "create_personafield", createParams)
+    await s.consistency()
+    console.log('create_lucy', create_lucy)
+
+    const lucy_list_agents = await lucy.call("personalinformation", "personalinformation", "list_agents", {})
+    await s.consistency()
+    console.log('lucy_list_agents', lucy_list_agents)
+    
+  })
+
   scenario("create_personafield", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
     const create_personafield_result = await alice.call("personalinformation", "personalinformation", "create_personafield", createParams)

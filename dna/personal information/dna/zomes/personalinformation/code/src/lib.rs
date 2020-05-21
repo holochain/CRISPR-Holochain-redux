@@ -53,7 +53,14 @@ mod personafields {
     #[zome_fn("hc_public")]
     fn list_anchor_tags(anchor_type: String) -> ZomeApiResult<Vec<String>> {
         holochain_anchors::list_anchor_tags(anchor_type)
-    }    #[entry_def]
+    }    
+    
+    #[zome_fn("hc_public")]
+    fn list_agents() -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_agents()
+    }  
+
+    #[entry_def]
      fn personafield_entry_def() -> ValidatingEntryType {
         personafield::definition()
     }

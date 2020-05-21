@@ -225,6 +225,57 @@ export default {
       },
       {
         id: 'Qmmorebighashes333',
+        name: 'Freckles',
+        type: 'application',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Freckles have a title, content and order. Set the permissions at build time to control who can update and delete freckles.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Freckles',
+            entryTypes: [
+              {
+                id: 'QmFreckleEntryTypeHash',
+                name: 'freckle',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'content',
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the freckle',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_freckles1',
+                type: 'list_freckles',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmFreckleEntryTypeHash',
+                    type: 'freckle_link',
+                    tag: ' ',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 'Qmmorebighashes333',
         name: 'Notes',
         type: 'part',
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',

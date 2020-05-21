@@ -93,6 +93,11 @@ const router = new Router({
       component: () => import('@/views/partNotes/PartNotesModule')
     },
     {
+      path: '/freckles',
+      name: 'Freckles',
+      component: () => import('@/views/freckles/Index')
+    },
+    {
       path: '/holopunk-records/library',
       name: 'Holopunk Records',
       component: () => import('@/components/parts/MusicLibrary/MusicManager')

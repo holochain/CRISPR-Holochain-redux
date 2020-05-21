@@ -36,3 +36,8 @@ mod origins {
     fn list_anchor_tags(anchor_type: String) -> ZomeApiResult<Vec<String>> {
         holochain_anchors::list_anchor_tags(anchor_type)
     }
+
+    #[zome_fn("hc_public")]
+    fn list_agents() -> ZomeApiResult<Vec<String>> {
+        holochain_anchors::list_agents()
+    }

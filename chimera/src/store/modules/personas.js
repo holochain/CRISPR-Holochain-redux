@@ -13,13 +13,12 @@ export default {
       } else {
         state.personas.push(payload)
       }
-      console.log(state)
     }
   },
   actions: {
     fetchPersonas: ({ state, commit, rootState }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('personalinformation', 'personalinformation', 'list_anchor_type_texts')({ anchor_type: 'list_personafields' }).then((result) => {
+        callZome('personalinformation', 'personalinformation', 'list_anchor_tags')({ anchor_type: 'list_personafields' }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
           if (res.Ok === undefined) {

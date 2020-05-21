@@ -26,6 +26,10 @@
       Click the Zome name in the tree to see the model for the Zome.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click on any file name in the tree to see the code.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the key icon on an entry type to change the permissions.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the list icon on an entry type to manage the fields.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="3">

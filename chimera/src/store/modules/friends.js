@@ -5,71 +5,108 @@ export default {
 
   state: {
     drawer: null,
-    friends: [
+    selectedGroup: 'Friends',
+    groups: [
       {
-        id: 1,
-        name: 'Arthur Brock',
-        online: true,
-        info: {
-          id: 10,
-          avatar: 'avatars/arthur.brock.png',
-          name: 'Holochain'
-        },
-        notifications: 1,
-        value: 60,
-        start: 250
+        name: 'Friends',
+        friends: [
+          {
+            id: 1,
+            name: 'Rudy',
+            online: true,
+            info: {
+              id: 10,
+              avatar: 'avatars/rudy.jpeg',
+              name: ''
+            },
+            notifications: 0,
+            value: 10,
+            start: 110
+          },
+          {
+            id: 2,
+            name: 'ErrolJ',
+            online: false,
+            info: {
+              id: 10,
+              avatar: 'avatars/errolj.jpeg',
+              name: '@pherrol'
+            },
+            notifications: 1,
+            value: 15,
+            start: 200
+          },
+          {
+            id: 1,
+            name: 'Alex',
+            online: true,
+            info: {
+              id: 10,
+              avatar: 'avatars/alex.jpg',
+              name: ''
+            },
+            notifications: 0,
+            value: 30,
+            start: 130
+          }
+        ]
       },
       {
-        id: 2,
-        name: 'Guillem Cordoba',
-        online: true,
-        info: {
-          id: 10,
-          avatar: 'avatars/guillem.png',
-          name: '_protocol'
-        },
-        notifications: 0,
-        value: 50,
-        start: 140
+        name: 'Producers',
+        friends: [
+          {
+            id: 4,
+            name: 'Mha Iri',
+            online: false,
+            info: {
+              id: 10,
+              avatar: 'avatars/mhairi.jpg',
+              name: ''
+            },
+            notifications: 0,
+            value: 0,
+            start: 0
+          },
+          {
+            id: 4,
+            name: 'Miers',
+            online: false,
+            info: {
+              id: 10,
+              avatar: 'avatars/mittens.jpg',
+              name: ''
+            },
+            notifications: 0,
+            value: 0,
+            start: 0
+          }
+        ]
       },
       {
-        id: 2,
-        name: 'Tom Gowan',
-        online: true,
-        info: {
-          id: 10,
-          avatar: 'avatars/tom.gowan.jpeg',
-          name: 'Holochain'
-        },
-        notifications: 0,
-        value: 45,
-        start: 20
+        name: 'Family',
+        friends: [
+          {
+            id: 1,
+            name: 'Lucy',
+            online: true,
+            info: {
+              id: 10,
+              avatar: 'avatars/alex.jpg',
+              name: ''
+            },
+            notifications: 0,
+            value: 30,
+            start: 130
+          }
+        ]
       },
       {
-        id: 2,
-        name: 'ErrolJ',
-        online: false,
-        info: {
-          id: 10,
-          avatar: 'avatars/errolj.jpeg',
-          name: '@pherrol'
-        },
-        notifications: 1,
-        value: 15,
-        start: 200
+        name: 'Esoteric Crew',
+        friends: []
       },
       {
-        id: 4,
-        name: 'David Meister',
-        online: false,
-        info: {
-          id: 10,
-          avatar: 'avatars/david.meister.jpeg',
-          name: 'Holochain'
-        },
-        notifications: 1,
-        value: 40,
-        start: 100
+        name: 'Psylandians',
+        friends: []
       }
     ]
   },
@@ -79,11 +116,27 @@ export default {
       const total = state.friends.length
       const online = state.friends.filter(friend => friend.online).length
       return `(${online}/${total})`
+    },
+    allGroups: state => {
+      return state.groups
+    },
+    friends: state => {
+      console.log(state.selectedGroup)
+      const group = state.groups.find(g => g.name === state.selectedGroup)
+      console.log(group.friends)
+      if (group) {
+        return group.friends
+      } else {
+        return []
+      }
     }
   },
-
   mutations: {
     setDrawer: set('drawer'),
-    toggleDrawer: toggle('drawer')
+    toggleDrawer: toggle('drawer'),
+    setGroup (state, group) {
+      state.selectedGroup = group
+      console.log(state.selectedGroup)
+    }
   }
 }
