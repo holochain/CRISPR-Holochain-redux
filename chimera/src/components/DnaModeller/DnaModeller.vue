@@ -8,6 +8,9 @@
         </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
+      <v-btn color="action" icon @click="profileSpecDialog = true">
+        <v-icon>mdi-account-details-outline</v-icon>
+      </v-btn>
       <v-btn color="action" icon :to="`/partNotes/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
@@ -113,7 +116,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="fieldsDialog" max-width="700px">
+    <v-dialog v-model="fieldsDialog" max-width="900px">
       <v-card flat>
         <entry-type-properties :entryType="entryType" @entry-type-name-updated="entryTypeNameUpdated" @entry-type-fields-updated="entryTypeFieldsUpdated" />
         <v-card-actions>
@@ -139,6 +142,21 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="permissionsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-dialog v-model="profileSpecDialog"  max-width="900px">
+      <v-card flat>
+        <v-row no-gutters align="start">
+          <v-col cols="12">
+            <profile-spec-builder :zome="this.zome" :profileSpec="this.profileSpec" @profile-spec-updated="profileSpecUpdated" />
+          </v-col>
+        </v-row>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="profileSpecDialog = false">
             Done
           </v-btn>
         </v-card-actions>
@@ -190,6 +208,7 @@ export default {
   components: {
     ZomeModeller: () => import('./ZomeModeller'),
     CodeWindow: () => import('./CodeWindow'),
+    ProfileSpecBuilder: () => import('./ProfileSpecBuilder'),
     EntryTypeProperties: () => import('./EntryTypeProperties'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
@@ -199,6 +218,9 @@ export default {
       zomeTab: null,
       help: false,
       entryType: {},
+      profileSpec: {
+        specFields: []
+      },
       refreshKey: 'clean',
       tree: [],
       files: {
@@ -220,6 +242,7 @@ export default {
       code: '',
       options: {},
       fieldsDialog: false,
+      profileSpecDialog: false,
       permissionsDialog: false,
       permissions: {}
     }
@@ -228,6 +251,9 @@ export default {
     showZomeModel (item) {
       this.showModel = true
       this.showCode = false
+    },
+    profileSpecUpdated (profileSpec) {
+      console.log(profileSpec)
     },
     editProperties (entryType) {
       this.entryType = entryType
