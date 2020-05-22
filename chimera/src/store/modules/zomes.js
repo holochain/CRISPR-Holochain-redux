@@ -11,10 +11,10 @@ function replacePlaceHolders (content, placeHolder, replacement) {
   return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
 }
 
-function replaceMod (modTemplate, entryType) {
+function replaceMod (modTemplate, fields) {
   const rustFields = []
   const constRustNewFields = []
-  entryType.fields.forEach(field => {
+  fields.forEach(field => {
     rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
     constRustNewFields.push(`\n\t\t\t${field.fieldName}: entry.${field.fieldName}`)
   })
@@ -248,10 +248,14 @@ export default {
         {
           id: 'QmOriginEntryTypeHash',
           name: 'origin',
+          libZomeCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/lib_zome_profile.rs`, 'utf8'),
+          modCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'),
+          handlersCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/handlers_profile.rs`, 'utf8'),
           fields: [
             {
               fields_field_id: 'QM234566777887',
               fieldName: 'avatar',
+              fieldType: 'String',
               reason: 'Shows on each Freckle you write',
               contract: 'Store',
               required: true
@@ -259,6 +263,7 @@ export default {
             {
               fields_field_id: 'QM234566777887',
               fieldName: 'handle',
+              fieldType: 'String',
               reason: 'Shows on each Freckle you write',
               contract: 'Store',
               required: true
@@ -358,7 +363,7 @@ export default {
             name: entryType.name,
             children: [
               { name: 'handlers.rs', file: 'rs', code: '' },
-              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8'), entryType) },
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8'), entryType.fields) },
               { name: 'entry_permissions.rs', file: 'rs', code: '' },
               { name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/link_permissions.rs`, 'utf8') },
               { name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/validation.rs`, 'utf8') }
@@ -372,12 +377,26 @@ export default {
         entryTypeTemplate.fields = entryType.fields
         template.entryTypes.push(entryTypeTemplate)
       })
+      let profileZomeCode = ''
       if (zome.profileSpec) {
         let profileSpecTemplate = state.profileSpecTemplates.find(t => t.template === zome.profileSpec.template)
         profileSpecTemplate = JSON.parse(JSON.stringify(profileSpecTemplate.profileSpec))
         template.profileSpec = profileSpecTemplate
+        template.libCode += replacePlaceHolders(template.libDeclarations, template.profileSpec.name, 'profile')
+        profileZomeCode = profileSpecTemplate.libZomeCode
+        console.log(profileSpecTemplate)
+        zomesItemSrc.children.push(
+          {
+            name: 'profile',
+            children: [
+              { name: 'handlers.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/handlers_profile.rs`, 'utf8') },
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'), profileSpecTemplate.fields) }
+            ]
+          }
+        )
       }
       template.libCode += template.libZome
+      template.libCode += profileZomeCode
       console.log(template)
       return template
     }

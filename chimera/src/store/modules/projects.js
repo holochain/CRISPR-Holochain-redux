@@ -264,7 +264,7 @@ export default {
                   {
                     entityId: 'QmFreckleEntryTypeHash',
                     type: 'freckle_link',
-                    tag: ' ',
+                    tag: 'created_at',
                     context: 'exclusive'
                   }
                 ],

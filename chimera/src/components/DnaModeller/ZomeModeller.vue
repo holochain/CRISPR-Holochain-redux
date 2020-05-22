@@ -258,7 +258,7 @@ export default {
         }
         const profileSpecAnchorNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + entryTypesOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
         const profileSpecAnchorOutPort = profileSpecAnchorNode.addOutPort('profile_link')
-        dnaModel.addLink(profileSpecAnchorOutPort, profileSpecInPort, 'Profile', '')
+        dnaModel.addLink(profileSpecAnchorOutPort, profileSpecInPort, 'Profile', 'Permanent')
       }
       libCode += '}'
       this.$emit('zome-model-updated', libCode)
