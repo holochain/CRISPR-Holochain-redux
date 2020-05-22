@@ -4,7 +4,7 @@ export default {
   namespaced: true,
 
   state: {
-    drawer: null,
+    drawer: false,
     selectedGroup: 'Friends',
     groups: [
       {

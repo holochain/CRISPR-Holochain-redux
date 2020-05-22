@@ -66,6 +66,18 @@ class DiagramNode {
     return newPort.id
   }
 
+  addProfileSpecField (name) {
+    const newPort = {
+      id: generateId(),
+      type: 'profileSpecField',
+      name
+    }
+
+    this.ports.push(newPort)
+
+    return newPort.id
+  }
+
   insertLinkField (name) {
     const newPort = {
       id: generateId(),

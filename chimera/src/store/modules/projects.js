@@ -270,7 +270,12 @@ export default {
                 ],
                 anchors: []
               }
-            ]
+            ],
+            profileSpec: {
+              id: 'QmFreckleProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
           }
         ]
       },

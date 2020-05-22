@@ -16,7 +16,7 @@
       Click to write a new freckle.
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12">
+      <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12" sm="6" md="3" class="red">
         <freckle :key="freckle.id" :freckle="freckle"/>
       </v-col>
     </v-row>

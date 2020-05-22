@@ -251,6 +251,15 @@ export default {
           anchorsOffset = anchorsYIndex * 185
         }
       })
+      if (this.zome.profileSpec) {
+        const profileSpecInPort = dnaModel.addProfileSpec(that.zome.name, this.zome.profileSpec, col2Offset, yOffset + entryTypesOffset, cardWidth + 100, this.$vuetify.theme.themes.dark.profile)
+        const anchorType = {
+          type: 'list_profiles'
+        }
+        const profileSpecAnchorNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + entryTypesOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
+        const profileSpecAnchorOutPort = profileSpecAnchorNode.addOutPort('profile_link')
+        dnaModel.addLink(profileSpecAnchorOutPort, profileSpecInPort, 'Profile', '')
+      }
       libCode += '}'
       this.$emit('zome-model-updated', libCode)
       return dnaModel

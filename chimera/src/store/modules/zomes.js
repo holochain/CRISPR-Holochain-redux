@@ -240,6 +240,64 @@ export default {
           }
         ]
       }
+    ],
+    profileSpecTemplates: [
+      {
+        template: 'identify',
+        profileSpec:
+        {
+          id: 'QmOriginEntryTypeHash',
+          name: 'origin',
+          fields: [
+            {
+              fields_field_id: 'QM234566777887',
+              fieldName: 'avatar',
+              reason: 'Shows on each Freckle you write',
+              contract: 'Store',
+              required: true
+            },
+            {
+              fields_field_id: 'QM234566777887',
+              fieldName: 'handle',
+              reason: 'Shows on each Freckle you write',
+              contract: 'Store',
+              required: true
+            }
+          ],
+          metaFields: [
+            {
+              id: 'Qm111',
+              fieldName: 'id',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'created_at',
+              fieldType: 'Iso8601'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'created_by',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm116',
+              fieldName: 'address',
+              fieldType: 'Address'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'updated_at',
+              fieldType: 'Iso8601'
+            },
+            {
+              id: 'Qm126',
+              fieldName: 'updated_by',
+              fieldType: 'Address'
+            }
+          ]
+        }
+      }
     ]
   },
   mutations: {
@@ -314,7 +372,13 @@ export default {
         entryTypeTemplate.fields = entryType.fields
         template.entryTypes.push(entryTypeTemplate)
       })
+      if (zome.profileSpec) {
+        let profileSpecTemplate = state.profileSpecTemplates.find(t => t.template === zome.profileSpec.template)
+        profileSpecTemplate = JSON.parse(JSON.stringify(profileSpecTemplate.profileSpec))
+        template.profileSpec = profileSpecTemplate
+      }
       template.libCode += template.libZome
+      console.log(template)
       return template
     }
   }

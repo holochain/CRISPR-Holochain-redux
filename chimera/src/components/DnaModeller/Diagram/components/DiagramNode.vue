@@ -28,11 +28,11 @@
     </rect>
     <rect v-if="type==='anchorType' || type==='anchor'" fill="#ffffff" x="7" :y="height - 29" rx="3" ry="3" :width="width-4" height="41" :fill-opacity="0.65" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - functionsHeight - 32" class="node-light-background">
+    <rect v-if="type==='entryType' || type==='profileSpec'" fill="#ffffff" x="7" :y="entryDefHeight + 39" rx="3" ry="3" :width="width-4" :height="height - entryDefHeight - metaFieldsHeight - functionsHeight - 32" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight-functionsHeight + 29" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
+    <rect v-if="type==='entryType' || type==='profileSpec'" fill="#ffffff" x="7" :y="height-baseTargetHeight-metaFieldsHeight-functionsHeight + 29" rx="3" ry="3" :width="width-4" :height="metaFieldsHeight" :fill-opacity="0.85" class="node-light-background">
     </rect>
-    <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 11" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
+    <rect v-if="type==='entryType' || type==='profileSpec'" fill="#ffffff" x="7" :y="height - functionsHeight + 11" rx="3" ry="3" :width="width-4" :height="baseTargetHeight" :fill-opacity="0.65" class="node-light-background">
     </rect>
     <rect v-if="type==='entryType'" fill="#ffffff" x="7" :y="height - functionsHeight + 33" rx="3" ry="3" :width="width-4" :height="functionsHeight-21" :fill-opacity="0.8" class="node-light-background">
     </rect>

@@ -22,6 +22,19 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      Click <v-icon>mdi-account-details-outline</v-icon> (Identify) to be able to identify other agents using this DNA. Doing this will:
+      <ul>
+        <li>add a profile with Avatar & Handle as minimum required fields</li>
+        <li>keep a list of all agents in the "Friends List" showing their Avatar & Handle
+          <v-btn color="secondary" fab x-small>
+            <v-icon>mdi-account-multiple</v-icon>
+          </v-btn>
+        </li>
+        <li>enable "Whispers"</li>
+        <li>enable Roles Based Permissions</li>
+        <li>add the Agent Permission Manager for runtime management of which Agents are in which role</li>
+      </ul>
+      <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-notebook-outline</v-icon> (Kanban) to go to the Kanban Board.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-application</v-icon> (UI) to go to the Part Editor.

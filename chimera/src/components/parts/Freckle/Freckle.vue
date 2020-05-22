@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="mx-auto" dark>
+  <v-card class="ma-5" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
