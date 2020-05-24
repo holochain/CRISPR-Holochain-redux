@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 export default {
   namespaced: true,
   state: {
-    featured: [],
+    profiles: [],
     baseFreckles: [
       {
         base: 'PartEditor',
@@ -127,15 +127,49 @@ export default {
         })
       })
     },
-    fetchAgents: ({ state, commit, rootState }) => {
+    agentAddress: ({ state, commit, rootState, dispatch }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'list_agents')({ }).then((result) => {
+        callZome('freckles', 'freckles', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            // commit('setFrecklesList', { base: base, freckles: res.Ok })
+            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
+            console.log(rootState.auth.agentAddress)
+          }
+        })
+      })
+    },
+    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
+      rootState.devHolochainConnection.then(({ callZome }) => {
+        callZome('freckles', 'freckles', 'list_profiles')({ base: '' }).then((result) => {
+          const res = JSON.parse(result)
+          console.log(res.Ok)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            const friends = res.Ok.map(p => {
+              return {
+                id: p.id,
+                agentAddress: p.agentId,
+                name: p.handle,
+                online: true,
+                info: {
+                  id: 10,
+                  avatar: p.avatar,
+                  name: ''
+                },
+                notifications: 0,
+                value: 0,
+                start: 0
+              }
+            })
+            console.log(rootState.auth.agentAddress)
+            // const friendList = friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
+            console.log(friends)
+            dispatch('friends/profiles', { profiles: friends }, { root: true })
+            console.log(rootState.friends.friends)
           }
         })
       })

@@ -4,6 +4,8 @@ export default {
   namespaced: true,
 
   state: {
+    agentAddress: '',
+    agentProfile: {},
     loggedIn: false,
     chimera: false,
     splash: true,
@@ -11,13 +13,12 @@ export default {
       folder: '/Users/philipbeadle/holochain/CRISPR'
     }
   },
-
   actions: {
-    login: async ({ commit }) => {
-      commit('setLoggedIn', true)
+    agentAddress: async ({ commit }, agentAddress) => {
+      commit('setAgentAddress', agentAddress)
     },
-    logout: async ({ commit }) => {
-      commit('setLoggedIn', false)
+    agentProfile: async ({ commit }, agentProfile) => {
+      commit('setAgentProfile', agentProfile)
     },
     turnChimeraOn: async ({ commit }) => {
       commit('setChimeraOn', true)
@@ -29,10 +30,21 @@ export default {
       commit('setSplashOff', false)
     }
   },
-
   mutations: {
     setLoggedIn: set('loggedIn'),
     setChimeraOn: set('chimera'),
-    setSplashOff: set('splash')
+    setSplashOff: set('splash'),
+    setAgentAddress (state, payload) {
+      state.agentAddress = payload.agentAddress
+    },
+    setAgentProfile (state, payload) {
+      console.log(payload)
+      state.agentProfile = payload.agentProfile
+    }
+  },
+  getters: {
+    agentProfile: (state, getters) => {
+      return state.agentProfile
+    }
   }
 }

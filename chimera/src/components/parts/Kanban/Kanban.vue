@@ -1,8 +1,8 @@
 <template>
   <v-card class="mx-auto" color="accent" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <v-icon>mdi-table</v-icon>
-      <span class="subtitle">{{title}} Project Kanban Board</span>
+      <v-icon>mdi-piano</v-icon>
+      <span class="subtitle">{{title}} Synch Board</span>
       <v-spacer></v-spacer>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
       <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>

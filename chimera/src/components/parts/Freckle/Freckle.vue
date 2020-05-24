@@ -19,10 +19,20 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
     </v-alert>
+    <v-list-item class="mb-1 ml-n3">
+      <v-progress-circular color="green" size="48" value="45" rotate="20">
+        <v-list-item-avatar class="ml-4">
+          <v-img :src="agentProfile.info.avatar" />
+        </v-list-item-avatar>
+      </v-progress-circular>
+      <v-list-item-content class="ml-4">
+        <v-list-item-title>{{agentProfile.name}}</v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
     <v-card-text v-if="!isEditing" v-html="instanceFreckle.content" />
     <tiptap-vuetify v-if="isEditing" v-model="instanceFreckle.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="freckle.id" :key="part.title" />
+      <component :is="part.title" :base="partBase" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
@@ -80,7 +90,8 @@ export default {
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('parts', ['partParts'])
+    ...mapGetters('parts', ['partParts']),
+    ...mapGetters('friends', ['agentProfile'])
   }
 }
 </script>

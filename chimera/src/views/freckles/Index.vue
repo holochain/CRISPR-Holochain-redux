@@ -16,11 +16,11 @@
       Click to write a new freckle.
     </v-alert>
     <v-row no-gutters>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="6" lg="4">
         <freckle key="new" :freckle="newFreckle" placeholder="What's your freckle?"/>
       </v-col>
-      <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12" md="6">
-        <freckle :key="freckle.id" :freckle="freckle"/>
+      <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12" md="6" lg="4">
+        <freckle :key="freckle.id" partBase="QmHashyFreckles" :freckle="freckle"/>
       </v-col>
     </v-row>
   </section>
@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('freckles', ['fetchFreckles', 'fetchAgents'])
+    ...mapActions('freckles', ['agentAddress', 'fetchProfiles', 'fetchFreckles'])
   },
   computed: {
     ...mapGetters('freckles', ['listFreckles']),
@@ -52,8 +52,9 @@ export default {
     }
   },
   created () {
+    this.fetchProfiles()
     this.fetchFreckles('')
-    this.fetchAgents()
+    this.agentAddress()
   }
 }
 </script>

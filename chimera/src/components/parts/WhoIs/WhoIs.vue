@@ -1,17 +1,22 @@
 <template>
-  <v-progress-circular :color="friend.online ? 'green' : 'red'" size="48" :value="friend.value" :rotate="friend.start">
-    <v-badge overlap :content="friend.notifications" :value="friend.notifications" color="green" offset-x="23" offset-y="23">
-        <v-list-item-avatar v-if="friend.info">
-          <v-img :src="require(`@/assets/${friend.info.avatar}`)" />
-        </v-list-item-avatar>
-    </v-badge>
-  </v-progress-circular>
+  <v-list-item class="mx-n3">
+    <v-progress-circular color="green" size="48" value="45" rotate="20">
+      <v-list-item-avatar class="ml-4">
+        <v-img :src="agentProfile.info.avatar" />
+      </v-list-item-avatar>
+    </v-progress-circular>
+    <v-list-item-content class="ml-4">
+      <v-list-item-title>{{agentProfile.name}}</v-list-item-title>
+    </v-list-item-content>
+  </v-list-item>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  data: () => ({
-    rating: 0
-  })
+  name: 'Whois',
+  computed: {
+    ...mapGetters('friends', ['agentProfile'])
+  }
 }
 </script>

@@ -31,12 +31,31 @@ export default {
         compareAt: 8.99,
         publisher: 'Eat Sleep Code Repeat',
         updated: 1588890779424
+      },
+      {
+        id: 'QmHashyWhoIs',
+        name: 'Whois',
+        src: 'whois',
+        description: 'Identify the Agent',
+        price: 1.99,
+        compareAt: 8.99,
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1588900779424
       }
     ],
     partParts: [
       {
         base: 'QmHashyKanban',
-        parts: []
+        parts: [
+          {
+            title: 'whois',
+            dna: ''
+          },
+          {
+            title: 'tasks',
+            dna: ''
+          }
+        ]
       }
     ],
     invites: [

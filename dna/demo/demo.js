@@ -111,7 +111,7 @@ const rudysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
   logger: logger
 })
 
-const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna}, {
+const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -119,7 +119,7 @@ const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, t
   logger: logger
 })
 
-const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna}, {
+const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -334,7 +334,6 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('rudyPersonalHandle', rudyPersonalHandle)
   const rudyPersonalAvatar = await rudy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/rudy.jpeg')}})
   console.log('rudyPersonalAvatar', rudyPersonalAvatar)
-
   const rudyPhilFreckle1 = await rudy.call("freckles", "freckles", "list_freckles",  {"base": ""})
   console.log('rudyPhilFreckle1', rudyPhilFreckle1)
 
@@ -346,6 +345,8 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
    console.log('arthurPersonalHandle', arthurPersonalHandle)
    const arthurPersonalAvatar = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/arthur.brock.png')}})
    console.log('arthurPersonalAvatar', arthurPersonalAvatar)
+   const artPhilFreckle1 = await rudy.call("freckles", "freckles", "list_freckles",  {"base": ""})
+   console.log('artPhilFreckle1', artPhilFreckle1)
 
    // Arthur's Holochain persona
    const arthurHolochainHandle = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "arthur.brock"}})
@@ -355,6 +356,18 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
    const arthurHolochainProfilePic = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/art.profile.jpeg')}})
    console.log('arthurHolochainProfilePic', arthurHolochainProfilePic)
 
+   const philProfile = await phil.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"avatar": base64_encode('./assets/philt3r.png'), "handle": "philip.beadle"}})
+   console.log('philProfile', philProfile)
+   const rudyProfile = await rudy.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"avatar": base64_encode('./assets/rudy.jpeg'), "handle": "Rudy"}})
+   console.log('rudyProfile', rudyProfile)
+   const lucyProfile = await lucy.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+   console.log('lucyProfile', lucyProfile)
+   const aliceProfile = await alice.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"avatar": base64_encode('./assets/mhairi.jpg'), "handle": "Mha Iri"}})
+   console.log('aliceProfile', aliceProfile)
+   const artProfile = await arthur.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
+   console.log('artProfile', artProfile)
+
+   await s.consistency()
 })
 
 orchestrator.run()
