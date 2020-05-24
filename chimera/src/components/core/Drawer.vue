@@ -59,6 +59,11 @@ export default {
           to: '/library/false'
         },
         {
+          icon: 'mdi-thought-bubble-outline',
+          text: 'Freckles',
+          to: '/projectKanban/Qmmorebigfrecklehashes333'
+        },
+        {
           icon: 'mdi-newspaper',
           text: 'News',
           to: '/news'

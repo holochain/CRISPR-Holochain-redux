@@ -224,7 +224,7 @@ export default {
         ]
       },
       {
-        id: 'Qmmorebighashes333',
+        id: 'Qmmorebigfrecklehashes333',
         name: 'Freckles',
         type: 'application',
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',

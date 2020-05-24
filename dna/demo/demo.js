@@ -284,6 +284,31 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   const columnTasksDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
   console.log('columnTasksDone', columnTasksDone)
 
+
+  const columnFrecklesDraft = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Draft", "order": 0}})
+  console.log('columnFrecklesDraft', columnFrecklesDraft)
+  const columnFrecklesDraftNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Software creation, collaboration & sharing at the edge.", "content":"Chimera will foster its own creation as the people’s networks of DHTs, software creation, collaboration & sharing at the edge. Anyone can build a simple Chimera part, and those parts make up the whole.", "order": 0}})
+  console.log('columnFrecklesDraftNote1', columnFrecklesDraftNote1)
+  const columnFrecklesDraftNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mhairi.rocks", "done":false}})
+  console.log('columnFrecklesDraftNote1Task1', columnFrecklesDraftNote1Task1)
+  const columnFrecklesDraftNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mittens.rocks", "done":false}})
+  console.log('columnFrecklesDraftNote1Task2', columnFrecklesDraftNote1Task2)
+  const columnFrecklesDraftNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://rayman.rocks", "done":false}})
+  console.log('columnFrecklesDraftNote1Task3', columnFrecklesDraftNote1Task3)
+  const columnFrecklesDraftNote1Task4 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://missjade.rocks", "done":false}})
+  console.log('columnFrecklesDraftNote1Task4', columnFrecklesDraftNote1Task4)
+
+  const columnFrecklesDraftNote2 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera", "content":"Chimera: In Greek mythology, the Chimera was a creature composed of body parts from many other creatures. In biomimicry, we talk of a Chimera approach as a combination of different biomimetic designs into one application.", "order": 1}})
+  console.log('columnFrecklesDraftNote2', columnFrecklesDraftNote2)
+
+  const columnFrecklesReview = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Review", "order": 1}})
+  console.log('columnFrecklesReview', columnFrecklesReview)  
+  const columnFrecklesReviewNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesReview.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera: Is this the name", "content":"I like it, been working with it for a few weeks now and it still holds up well. Might write something about that.", "order": 0}})
+  console.log('columnFrecklesReviewNote1', columnFrecklesReviewNote1)
+
+  const columnFrecklesPublish = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Ready to Publish", "order": 2}})
+  console.log('columnFrecklesPublish', columnFrecklesPublish)
+
   // managed fields list
   const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Full Name", "ui": "text-field"}})
   console.log('fullNameId', fullNameId)

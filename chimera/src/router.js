@@ -88,9 +88,9 @@ const router = new Router({
       component: () => import('@/views/personas/Index')
     },
     {
-      path: '/partNotes/:id',
-      name: 'Part Notes',
-      component: () => import('@/views/partNotes/PartNotesModule')
+      path: '/projectKanban/:id',
+      name: 'Project Kanban',
+      component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
       path: '/freckles',

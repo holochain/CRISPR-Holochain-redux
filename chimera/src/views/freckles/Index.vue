@@ -12,8 +12,7 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
-      <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click to write a new freckle.
+      Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12" md="6" lg="4">
