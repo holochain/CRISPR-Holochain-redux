@@ -17,7 +17,7 @@ const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
-const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
+const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna.dna.json")
 const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const logger = {
@@ -352,17 +352,19 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
 
 
   // managed fields list
-  const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Full Name", "ui": "text-field"}})
+  const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Full Name", "ui": "text-field"}})
   console.log('fullNameId', fullNameId)
-  const avatarId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Avatar","ui": "thumbnail"}})
+  const avatarId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Avatar","ui": "thumbnail"}})
   console.log('avatarId', avatarId)
-  const bioId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Bio","ui": "text-area"}})
+  const bioId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Bio","ui": "text-area"}})
   console.log('bioId', bioId)
-  const handleId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Handle","ui": "text-field"}})
+  const handleId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Handle","ui": "text-field"}})
   console.log('handleId', handleId)
-  const profilePicId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
+  const profilePicId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Profile Picture","ui": "image"}})
   console.log('profilePicId', profilePicId)
-  const urlProfileField =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Url","ui": "text-field"}})
+  const profileImages =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Profile Images","ui": "images"}})
+  console.log('profileImages', profileImages)
+  const urlProfileField =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Url","ui": "text-field"}})
   console.log('urlProfileField', urlProfileField)
   
   // Phil's Personal persona
@@ -382,6 +384,12 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('philMusicAvatar', philMusicAvatar)
   const philMusicUrl = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": urlProfileField.Ok.id, "value": "http://philt3r.rocks"}})
   console.log('philMusicUrl', philMusicUrl)
+  const philMusicBio = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": bioId.Ok.id, "value": "  @philt3r is not a metaphor for a side affect, but rather a side affect of a metamorphosis. For a decade, he has planted smiles and swivelled dials along that great stretch of party paradise that is the east-coast of Australia. @philt3r’s sets started out spanning more genres than a well thought out German street parade, but now it's techno, phat, dark, dystopic TECHNO! @philt3r can read a crowd better than airport security, and take them further up than their overpriced tickets. But that's what we like about @philt3r, his lack of tickets on himself. So get your 'TECHNO!' on with @philt3r at your next attempt to escape reality!"}})
+  console.log('philMusicBio', philMusicBio)
+  const philMusicProfilePic = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/philt3r-profile.jpg')}})
+  console.log('philMusicProfilePic', philMusicProfilePic)
+  const philMusicProfileImages = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profileImages.Ok.id, "value": [{ name:"", image: base64_encode('./assets/philt3r-profile.jpg') }, { name:"", image: base64_encode('./assets/philt3r-profile.jpg') }, { name:"", image: base64_encode('./assets/philt3r-profile.jpg') }]}})
+  console.log('philMusicProfileImages', philMusicProfileImages)
 
   // Phil's freckles
   const philFreckle1 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})

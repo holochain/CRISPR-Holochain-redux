@@ -33,7 +33,6 @@ const FIELD_ENTRY_NAME: &str = "field";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FieldEntry {
-    uuid: String,
 	name: String,
 	ui: String,
 }
@@ -43,9 +42,9 @@ pub struct FieldEntry {
 pub struct Field {
     id: Address,
     created_at: Iso8601,
+    created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	name: String,
 	ui: String,
 }
@@ -63,14 +62,34 @@ fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
     }
 }
 
+fn created_by(address: Address) -> ZomeApiResult<Address> {
+    let options = GetEntryOptions{status_request: StatusRequestKind::Initial, entry: false, headers: true, timeout: Timeout::new(10000)};
+    let entry_result = hdk::get_entry_result(&address, options)?;
+    match entry_result.result {
+        GetEntryResultType::Single(entry) => {
+            match entry.headers[0].provenances().get(0) {
+                Some(o) => {
+                    Ok(o.source().clone())
+                },
+                _ => {
+                    unreachable!()
+                }
+            }
+        },
+        _ => {
+            unreachable!()
+        }
+    }
+}
+
 impl Field {
     pub fn new(address: Address, entry: FieldEntry) -> ZomeApiResult<Field> {
         Ok(Field{
             id: address.clone(),
             created_at: timestamp(address.clone())?,
+            created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			ui: entry.ui,
         })
@@ -82,9 +101,9 @@ impl Field {
         Ok(Field{
             id: id.clone(),
             created_at: created_at.clone(),
+            created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			ui: entry.ui,
         })

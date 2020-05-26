@@ -18,7 +18,6 @@ export default {
       console.log(mapping)
       const persona = rootGetters['personas/allPersonas'].find(p => p.title === mapping.persona)
       const field = persona.fields.find(f => f.fieldsFieldId === mapping.fieldsFieldId)
-      console.log(mapping)
       return field.value
     },
     personas: (state, getters, rootState, rootGetters) => {
@@ -32,6 +31,7 @@ export default {
         })
         personas.push(persona)
       }
+      console.log(personas)
       return personas
     },
     fields: (state, getters, rootState, rootGetters) => {
