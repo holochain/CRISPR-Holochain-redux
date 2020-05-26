@@ -93,8 +93,6 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      console.log('id', this.freckle.createdBy)
-      console.log('id', this.friend(this.freckle.createdBy))
       return this.friend(this.freckle.createdBy)
     }
   }

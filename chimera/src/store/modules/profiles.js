@@ -9,21 +9,21 @@ export default {
         dna: 'QmHashyChimera',
         fields: [
           {
-            fieldsFieldId: '',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             id: '35635645u46746uirykfgjkmryuo',
             name: 'Handle',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'Personal', name: 'Handle' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'fhdtyurturt67uety467ie5746ir6ukyu',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Personal', name: 'Avatar' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           }
         ]
       },
@@ -33,21 +33,20 @@ export default {
         dna: 'QmHashyCRISPR',
         fields: [
           {
-            fieldsFieldId: '',
-            id: 'nickname',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             name: 'Nick Name',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'Personal', name: 'Handle' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'avatar',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Personal', name: 'Avatar' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           }
         ]
       },
@@ -57,28 +56,28 @@ export default {
         dna: 'QmHashyholopunk-records',
         fields: [
           {
-            id: 'nickname',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             name: 'Nick Name',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'Music', name: 'Handle' }
+            mapping: { persona: 'Music', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'avatar',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Music', name: 'Avatar' }
+            mapping: { persona: 'Music', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           },
           {
-            id: 'url',
+            fieldsFieldId: 'QmQUddVtQcmFHiS7dNAs5GbGEU6JVnWfL6EkZAR7o766AW',
             name: 'URL',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your browsable website, eg http://philt3r.rocks',
-            mapping: { persona: 'Music', name: 'Url' }
+            mapping: { persona: 'Music', fieldsFieldId: 'QmQUddVtQcmFHiS7dNAs5GbGEU6JVnWfL6EkZAR7o766AW' }
           }
         ]
       },
@@ -88,20 +87,20 @@ export default {
         dna: 'QmHashykanban',
         fields: [
           {
-            id: 'nickname',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             name: 'handle',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Kanban and projects you edit.',
-            mapping: { persona: 'Personal', name: 'Handle' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'avatar',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Personal', name: 'Avatar' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           }
         ]
       },
@@ -111,20 +110,20 @@ export default {
         dna: 'QmHashySiteBuilder',
         fields: [
           {
-            id: 'nickname',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             name: 'Nick Name',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'Personal', name: 'Handle' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'avatar',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Personal', name: 'Avatar' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           }
         ]
       },
@@ -134,20 +133,20 @@ export default {
         dna: 'QmHashyFreckles',
         fields: [
           {
-            id: 'nickname',
+            fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M',
             name: 'Nick Name',
             ui: 'text-field',
             linkContract: 'persist',
             description: 'Your nick name or handle that will show on Notes and projects you edit.',
-            mapping: { persona: 'Personal', name: 'Handle' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmRdJ8dF5hEZWJWBHveV7YkrcZauSPELWB24HQZebeSS5M' }
           },
           {
-            id: 'avatar',
+            fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
-            mapping: { persona: 'Personal', name: 'Avatar' }
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmT7wV7k13wLWPganJKktjYmmauxbEymEQsuMRNNKh5SnP' }
           }
         ]
       }

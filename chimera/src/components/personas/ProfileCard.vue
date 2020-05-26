@@ -10,7 +10,7 @@
       <v-btn color="action" icon @click="saveProfile">
         <v-icon>mdi-account</v-icon>
       </v-btn>
-      <v-btn color="action" icon v-if="profileFields.find(f => f.id === 'url')" to="/profile-site">
+      <v-btn color="action" icon v-if="profileFields.find(f => f.id === 'url')" :to="`/profile-site/${profile.id}`">
         <v-icon>mdi-web</v-icon>
       </v-btn>
     </v-card-actions>

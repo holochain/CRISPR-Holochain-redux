@@ -10,13 +10,6 @@ module.exports = (scenario, conductorConfig) => {
     t.deepEqual(create_column_result, read_column_result)
   })
 
-  scenario.only("list_profiles", async (s, t) => {
-    const {alice} = await s.players({alice: conductorConfig}, true)
-    const aliceKanbanProfile = await alice.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": "", "handle": "Alice"}})
-    console.log('aliceKanbanProfile', aliceKanbanProfile)
-
-  })
-  
   scenario("rebase_column", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
     const create_column_result = await alice.call("kanban", "kanban", "create_column", createParams)

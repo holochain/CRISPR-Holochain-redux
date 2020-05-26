@@ -24,7 +24,8 @@
     <v-card-text v-if="!isEditing" v-html="instanceNote.content" />
     <tiptap-vuetify v-if="isEditing" v-model="instanceNote.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="note.id" :key="part.title" />
+      {{note}}
+      <component :is="part.title" :base="note.id" :title="part.title" :agent="note.id" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>

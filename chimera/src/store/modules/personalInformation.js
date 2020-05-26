@@ -14,6 +14,13 @@ export default {
     profileByDna: (state, getters, rootState, rootGetters) => (dna) => {
       return rootGetters['profiles/profileByDna'](dna)
     },
+    personaFieldValue: (state, getters, rootState, rootGetters) => (mapping) => {
+      console.log(mapping)
+      const persona = rootGetters['personas/allPersonas'].find(p => p.title === mapping.persona)
+      const field = persona.fields.find(f => f.fieldsFieldId === mapping.fieldsFieldId)
+      console.log(mapping)
+      return field.value
+    },
     personas: (state, getters, rootState, rootGetters) => {
       const personas = []
       const fields = rootGetters['fieldNames/fields']

@@ -88,7 +88,7 @@ const router = new Router({
       component: () => import('@/views/personas/Index')
     },
     {
-      path: '/profile-site',
+      path: '/profile-site/:id',
       name: 'Profile',
       component: () => import('@/views/profileSite/Index')
     },
