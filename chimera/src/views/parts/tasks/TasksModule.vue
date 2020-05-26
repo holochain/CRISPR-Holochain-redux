@@ -67,7 +67,6 @@ export default {
   },
   methods: {
     onResizeCode () {
-      console.log(window.innerWidth, window.innerHeight)
       this.partCodemirror.setSize(window.innerWidth - 625, window.innerHeight - 125)
     }
   },

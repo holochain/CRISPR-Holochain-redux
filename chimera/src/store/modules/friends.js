@@ -4,113 +4,37 @@ export default {
   namespaced: true,
 
   state: {
-    drawer: null,
+    drawer: false,
+    friends: [],
     selectedGroup: 'Friends',
     groups: [
       {
-        name: 'Friends',
-        friends: [
-          {
-            id: 1,
-            name: 'Rudy',
-            online: true,
-            info: {
-              id: 10,
-              avatar: 'avatars/rudy.jpeg',
-              name: ''
-            },
-            notifications: 0,
-            value: 10,
-            start: 110
-          },
-          {
-            id: 2,
-            name: 'ErrolJ',
-            online: false,
-            info: {
-              id: 10,
-              avatar: 'avatars/errolj.jpeg',
-              name: '@pherrol'
-            },
-            notifications: 1,
-            value: 15,
-            start: 200
-          },
-          {
-            id: 1,
-            name: 'Alex',
-            online: true,
-            info: {
-              id: 10,
-              avatar: 'avatars/alex.jpg',
-              name: ''
-            },
-            notifications: 0,
-            value: 30,
-            start: 130
-          }
-        ]
+        instanceId: '',
+        name: 'Friends'
       },
       {
-        name: 'Producers',
-        friends: [
-          {
-            id: 4,
-            name: 'Mha Iri',
-            online: false,
-            info: {
-              id: 10,
-              avatar: 'avatars/mhairi.jpg',
-              name: ''
-            },
-            notifications: 0,
-            value: 0,
-            start: 0
-          },
-          {
-            id: 4,
-            name: 'Miers',
-            online: false,
-            info: {
-              id: 10,
-              avatar: 'avatars/mittens.jpg',
-              name: ''
-            },
-            notifications: 0,
-            value: 0,
-            start: 0
-          }
-        ]
+        instanceId: '',
+        name: 'Producers'
       },
       {
-        name: 'Family',
-        friends: [
-          {
-            id: 1,
-            name: 'Lucy',
-            online: true,
-            info: {
-              id: 10,
-              avatar: 'avatars/alex.jpg',
-              name: ''
-            },
-            notifications: 0,
-            value: 30,
-            start: 130
-          }
-        ]
+        instanceId: '',
+        name: 'Family'
       },
       {
-        name: 'Esoteric Crew',
-        friends: []
+        instanceId: '',
+        name: 'Esoteric Crew'
       },
       {
-        name: 'Psylandians',
-        friends: []
+        instanceId: '',
+        name: 'Psylandians'
       }
     ]
   },
-
+  actions: {
+    profiles: async ({ commit }, profiles) => {
+      commit('setProfiles', profiles)
+    }
+  },
   getters: {
     online: state => {
       const total = state.friends.length
@@ -120,15 +44,11 @@ export default {
     allGroups: state => {
       return state.groups
     },
-    friends: state => {
-      console.log(state.selectedGroup)
-      const group = state.groups.find(g => g.name === state.selectedGroup)
-      console.log(group.friends)
-      if (group) {
-        return group.friends
-      } else {
-        return []
-      }
+    friends: (state, getters, rootState) => {
+      return state.friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
+    },
+    agentProfile: (state, getters, rootState) => {
+      return state.friends.find(f => f.agentAddress === rootState.auth.agentAddress)
     }
   },
   mutations: {
@@ -137,6 +57,10 @@ export default {
     setGroup (state, group) {
       state.selectedGroup = group
       console.log(state.selectedGroup)
+    },
+    setProfiles (state, profiles) {
+      state.friends = profiles.profiles
+      console.log(state.friends)
     }
   }
 }

@@ -4,6 +4,7 @@
       <v-icon>mdi-table-column</v-icon>
       <span class="subtitle">{{column.title}}</span>
       <v-spacer></v-spacer>
+      <v-icon @click="fetchNotes(column.id)">mdi-refresh</v-icon>
       <v-icon @click="add">mdi-note-plus-outline</v-icon>
       <v-icon @click="deleteColumn({ base: base, column: column})">mdi-table-column-remove</v-icon>
       <v-icon @click="help=!help">mdi-help</v-icon>

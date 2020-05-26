@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      <span class="title">Chimera Holochain Applications</span>
+      <span class="title text-truncate">Applications</span>
       <v-spacer></v-spacer>
       <v-btn text to="/personas">
         <v-icon>mdi-account</v-icon>

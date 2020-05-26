@@ -119,6 +119,29 @@ export default {
             mapping: { persona: 'Personal', name: 'Avatar' }
           }
         ]
+      },
+      {
+        id: 'QmhashProfileFreckles',
+        name: 'Freckles',
+        dna: 'QmHashyFreckles',
+        fields: [
+          {
+            id: 'nickname',
+            name: 'Nick Name',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            mapping: { persona: 'Personal', name: 'Handle' }
+          },
+          {
+            id: 'avatar',
+            name: 'Avatar',
+            ui: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'Personal', name: 'Avatar' }
+          }
+        ]
       }
     ]
   },

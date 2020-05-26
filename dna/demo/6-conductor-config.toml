@@ -1,0 +1,205 @@
+bridges = []
+persistence_dir = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI'
+ui_bundles = []
+ui_interfaces = []
+
+[[agents]]
+id = 'kanban'
+keystore_file = '[UNUSED]'
+name = 'mark::kanban::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcScIrUcZBu5csu8juwKcod5Q5Oxd3r7iR6fA4HqDiQzkyr8z4jKnuxEctr4w6r'
+test_agent = true
+
+[[agents]]
+id = 'notes'
+keystore_file = '[UNUSED]'
+name = 'mark::notes::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcSCIBN6ghRpovsvo694TTo9MVwwv4fheDpqKzVnQrxpm7vpKrPT8C4vtbsegai'
+test_agent = true
+
+[[agents]]
+id = 'tasks'
+keystore_file = '[UNUSED]'
+name = 'mark::tasks::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcSCJcg8XEbXekiczuNxUtjbNq5i876sfOQMY7HQsEtwh6ozj9PrQcMmu6596ti'
+test_agent = true
+
+[[agents]]
+id = 'fields'
+keystore_file = '[UNUSED]'
+name = 'mark::fields::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcSCI3qBHM5YqwzbftIcJV3eGOIa3yfngU5dI3Fv977Rerpr45YkfqNfd98z6nr'
+test_agent = true
+
+[[agents]]
+id = 'personalinformation'
+keystore_file = '[UNUSED]'
+name = 'mark::personalinformation::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcScjXhomW4fcodusi39w5fyqR8SDrcdvYH83CO4T7WZ5B4hdBWBikpD88h4noi'
+test_agent = true
+
+[[agents]]
+id = 'freckles'
+keystore_file = '[UNUSED]'
+name = 'mark::freckles::21502273-7cde-45a7-ae26-c1d335993a21'
+public_address = 'HcScia5jqiM65nbie4Gk58qy68RVrCgxw5q4i9P8Hx37yAUcZ5W7bZ3ickynn4a'
+test_agent = true
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
+hash = 'QmcepKbsTX4PSPw9okiHXp3x3seMTVMZPdgXzWZMgJJAEt'
+id = 'kanban-test'
+uuid = '21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
+hash = 'QmSrFy7gAG9JKk4sAYNG5iva5kqhuYTdMVexDdfXr29u4a'
+id = 'notes-test'
+uuid = '21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
+hash = 'QmRHLxDTTnYmQjzwaskGM9vkcgVRBGQ7qmMXZUVx4nby9K'
+id = 'tasks-test'
+uuid = '21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/fields/dna/dist/dna.dna.json'
+hash = 'Qmc5xPesmzFhAuuPh7FVssiK8k8Y5NcqHgDQdofZBay5Ux'
+id = 'fields-test'
+uuid = '21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/personal information/dna/dist/dna.dna.json'
+hash = 'QmX3KCxVdgpaTBFpE6woCDj5pQKai4F5FJsg13M2uRN1iM'
+id = 'personalinformation-test::601185a6-318e-47c7-bbdb-1ad304cfb94a'
+uuid = '601185a6-318e-47c7-bbdb-1ad304cfb94a::21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/freckles/dna/dist/dna.dna.json'
+hash = 'QmYt6hRTdNy2yd6QvkCY6HfRCSV5CgJ6izH2g7498sK2a8'
+id = 'freckles-test::e1117c58-52ca-4564-9d55-07b0a876f643'
+uuid = 'e1117c58-52ca-4564-9d55-07b0a876f643::21502273-7cde-45a7-ae26-c1d335993a21'
+
+[[instances]]
+agent = 'kanban'
+dna = 'kanban-test'
+id = 'kanban'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/kanban'
+type = 'lmdb'
+
+[[instances]]
+agent = 'notes'
+dna = 'notes-test'
+id = 'notes'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/notes'
+type = 'lmdb'
+
+[[instances]]
+agent = 'tasks'
+dna = 'tasks-test'
+id = 'tasks'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/tasks'
+type = 'lmdb'
+
+[[instances]]
+agent = 'fields'
+dna = 'fields-test'
+id = 'fields'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/fields'
+type = 'lmdb'
+
+[[instances]]
+agent = 'personalinformation'
+dna = 'personalinformation-test::601185a6-318e-47c7-bbdb-1ad304cfb94a'
+id = 'personalinformation'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/personalinformation'
+type = 'lmdb'
+
+[[instances]]
+agent = 'freckles'
+dna = 'freckles-test::e1117c58-52ca-4564-9d55-07b0a876f643'
+id = 'freckles'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/BYMwmI/freckles'
+type = 'lmdb'
+
+[[interfaces]]
+admin = true
+choose_free_port = false
+id = 'tryorama-interface'
+
+[[interfaces.instances]]
+id = 'kanban'
+
+[[interfaces.instances]]
+id = 'notes'
+
+[[interfaces.instances]]
+id = 'tasks'
+
+[[interfaces.instances]]
+id = 'fields'
+
+[[interfaces.instances]]
+id = 'personalinformation'
+
+[[interfaces.instances]]
+id = 'freckles'
+
+[interfaces.driver]
+port = 33005
+type = 'websocket'
+
+[logger]
+state_dump = true
+type = 'debug'
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*parity.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*mio.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*tokio.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*hyper.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*rusoto_core.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*want.*'
+
+[[logger.rules.rules]]
+exclude = true
+pattern = '.*rpc.*'
+
+[network]
+sim2h_url = 'ws://localhost:9000'
+type = 'sim2h'
+
+[passphrase_service]
+type = 'cmd'
+
+[signals]
+consistency = true
+trace = false

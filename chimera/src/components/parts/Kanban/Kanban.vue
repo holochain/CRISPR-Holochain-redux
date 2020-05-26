@@ -1,9 +1,10 @@
 <template>
   <v-card class="mx-auto" color="accent" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <v-icon>mdi-table</v-icon>
-      <span class="subtitle">{{title}} Project Kanban Board</span>
+      <v-icon>mdi-piano</v-icon>
+      <span class="subtitle">{{title}} Board</span>
       <v-spacer></v-spacer>
+      <v-icon @click="fetchColumns(base)">mdi-refresh</v-icon>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
       <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
@@ -53,7 +54,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors']),
+    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
@@ -65,6 +66,8 @@ export default {
   },
   created () {
     this.fetchColumns(this.base)
+    this.fetchProfiles()
+    this.agentAddress()
   }
 }
 </script>

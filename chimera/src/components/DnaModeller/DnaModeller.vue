@@ -8,6 +8,9 @@
         </v-icon>
       </v-btn>
       <v-spacer></v-spacer>
+      <v-btn color="action" icon @click="profileSpecDialog = true">
+        <v-icon>mdi-account-details-outline</v-icon>
+      </v-btn>
       <v-btn color="action" icon :to="`/partNotes/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
@@ -19,6 +22,19 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      Click <v-icon>mdi-account-details-outline</v-icon> (Identify) to be able to identify other agents using this DNA. Doing this will:
+      <ul>
+        <li>add a profile with Avatar & Handle as minimum required fields</li>
+        <li>keep a list of all agents in the "Friends List" showing their Avatar & Handle
+          <v-btn color="secondary" fab x-small>
+            <v-icon>mdi-account-multiple</v-icon>
+          </v-btn>
+        </li>
+        <li>enable "Whispers"</li>
+        <li>enable Roles Based Permissions</li>
+        <li>add the Agent Permission Manager for runtime management of which Agents are in which role</li>
+      </ul>
+      <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-notebook-outline</v-icon> (Kanban) to go to the Kanban Board.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-application</v-icon> (UI) to go to the Part Editor.
@@ -113,7 +129,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-dialog v-model="fieldsDialog" max-width="700px">
+    <v-dialog v-model="fieldsDialog" max-width="900px">
       <v-card flat>
         <entry-type-properties :entryType="entryType" @entry-type-name-updated="entryTypeNameUpdated" @entry-type-fields-updated="entryTypeFieldsUpdated" />
         <v-card-actions>
@@ -139,6 +155,21 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="permissionsDialog = false">
+            Done
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     <v-dialog v-model="profileSpecDialog"  max-width="900px">
+      <v-card flat>
+        <v-row no-gutters align="start">
+          <v-col cols="12">
+            <profile-spec-builder :zome="this.zome" :profileSpec="this.profileSpec" @profile-spec-updated="profileSpecUpdated" />
+          </v-col>
+        </v-row>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="profileSpecDialog = false">
             Done
           </v-btn>
         </v-card-actions>
@@ -190,6 +221,7 @@ export default {
   components: {
     ZomeModeller: () => import('./ZomeModeller'),
     CodeWindow: () => import('./CodeWindow'),
+    ProfileSpecBuilder: () => import('./ProfileSpecBuilder'),
     EntryTypeProperties: () => import('./EntryTypeProperties'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
@@ -199,6 +231,9 @@ export default {
       zomeTab: null,
       help: false,
       entryType: {},
+      profileSpec: {
+        specFields: []
+      },
       refreshKey: 'clean',
       tree: [],
       files: {
@@ -220,6 +255,7 @@ export default {
       code: '',
       options: {},
       fieldsDialog: false,
+      profileSpecDialog: false,
       permissionsDialog: false,
       permissions: {}
     }
@@ -228,6 +264,9 @@ export default {
     showZomeModel (item) {
       this.showModel = true
       this.showCode = false
+    },
+    profileSpecUpdated (profileSpec) {
+      console.log(profileSpec)
     },
     editProperties (entryType) {
       this.entryType = entryType

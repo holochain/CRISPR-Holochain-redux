@@ -16,7 +16,7 @@
     </v-card-text>
     <v-divider />
     <v-card-actions>
-      <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+      <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/part/${project.id}`">

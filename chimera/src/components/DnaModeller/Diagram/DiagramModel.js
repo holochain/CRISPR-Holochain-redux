@@ -66,7 +66,7 @@ class DiagramModel {
     entryTypeNode.addField(`entry!|${entityName}`)
     entryTypeNode.addField('link!|from:holochain::anchor')
     entryTypeNode.addField(`link!|type:${entryType.name.toLowerCase()}_link`)
-    entryTypeNode.addField('unique|true')
+    entryTypeNode.addField('uuid|true')
     entryType.fields.forEach(field => {
       entryTypeNode.addField(`${field.fieldName}|${field.fieldType}`)
     })
@@ -75,6 +75,24 @@ class DiagramModel {
     })
     entryTypeNode.addInPort(`id:initial_${entryType.name.toLowerCase()}_entry_address`)
     return entryTypeNode
+  }
+
+  addProfileSpec (zomeName, profileSpec, colOffset, yOffset, cardWidth, color) {
+    const entityName = `${zomeName.toLowerCase().replace(' ', '_')}::profile`
+    const profileSpecNodeHeight = 125 + (profileSpec.fields.length + profileSpec.metaFields.length) * 20
+    const profileSpecNode = this.addNode(entityName, colOffset, yOffset, cardWidth, profileSpecNodeHeight, 'profileSpec', 0, color, 78)
+    profileSpecNode.deletable = true
+    profileSpecNode.addField(`entry!|${entityName}`)
+    profileSpecNode.addField('link!|from:holochain::anchor')
+    profileSpecNode.addField('link!|type:profile_link')
+    profileSpecNode.addField('uuid|false')
+    profileSpec.fields.forEach(field => {
+      profileSpecNode.addProfileSpecField(`${field.fieldName}|${field.reason}|${field.contract}`)
+    })
+    profileSpec.metaFields.forEach(metaField => {
+      profileSpecNode.addMetaField(`${metaField.fieldName}|${metaField.fieldType}`)
+    })
+    return profileSpecNode.addInPort('id:agent_id')
   }
 
   addAnchor (anchor, anchorTypeOutPort, colOffset, yOffset, cardWidth, anchorIndex, color) {

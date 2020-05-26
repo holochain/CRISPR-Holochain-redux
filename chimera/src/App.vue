@@ -20,11 +20,15 @@ export default {
   },
   methods: {
     ...mapActions('fieldNames', ['fetchFields']),
-    ...mapActions('personas', ['fetchPersonas'])
+    ...mapActions('personas', ['fetchPersonas']),
+    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
   },
   created () {
     this.fetchFields()
     this.fetchPersonas()
+    this.fetchProfiles()
+    this.agentAddress()
+    console.log('App created')
   }
 }
 </script>

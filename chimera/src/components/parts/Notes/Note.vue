@@ -22,7 +22,6 @@
     <v-card-title v-if="!isEditing">{{instanceNote.title}}</v-card-title>
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
     <v-card-text v-if="!isEditing" v-html="instanceNote.content" />
-    <!-- <v-textarea v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.content" label="Content" /> -->
     <tiptap-vuetify v-if="isEditing" v-model="instanceNote.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="note.id" :key="part.title" />

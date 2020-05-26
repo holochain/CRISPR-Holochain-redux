@@ -31,6 +31,7 @@ export default new Vuetify({
         portBase: '#ffb300',
         portTarget: '#ff6f00',
         entry: '#5e35b1',
+        profile: '#00838f',
         fillFunction: '#76ff03',
         wave: '#673ab7'
       }

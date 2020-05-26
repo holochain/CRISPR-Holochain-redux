@@ -20,6 +20,7 @@ import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
 import notes from '@/store/modules/notes'
+import freckles from '@/store/modules/freckles'
 import tasks from '@/store/modules/tasks'
 import zomes from '@/store/modules/zomes'
 import mediaLibrary from '@/store/modules/mediaLibrary'
@@ -52,6 +53,7 @@ const store = new Vuex.Store({
     personas,
     snackbar,
     notes,
+    freckles,
     tasks,
     kanban,
     zomes,

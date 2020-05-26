@@ -7,7 +7,7 @@
             <v-btn icon @click="$router.go(-1)">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-          <v-toolbar-title>{{project.name}} Project Kanban Board</v-toolbar-title>
+          <v-toolbar-title>{{project.name}}</v-toolbar-title>
           <v-spacer></v-spacer>
             <v-card-actions>
               <v-btn color="action" icon :to="`/part/${project.id}`">
@@ -39,7 +39,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'PartNotesModule',
+  name: 'ProjectKanbanModule',
   components: {
     Kanban: () => import('@/components/parts/Kanban/Kanban')
   },

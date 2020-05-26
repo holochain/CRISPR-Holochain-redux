@@ -59,6 +59,16 @@ export default {
           to: '/library/false'
         },
         {
+          icon: 'mdi-thought-bubble-outline',
+          text: 'Freckles',
+          to: '/projectKanban/Qmmorebigfrecklehashes333'
+        },
+        {
+          icon: 'mdi-image-multiple-outline',
+          text: 'Agents of Anarchy',
+          to: '/projectKanban/QmmorebigfAgentsOfAnarchyhash'
+        },
+        {
           icon: 'mdi-newspaper',
           text: 'News',
           to: '/news'

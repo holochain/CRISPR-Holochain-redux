@@ -31,12 +31,27 @@ export default {
         compareAt: 8.99,
         publisher: 'Eat Sleep Code Repeat',
         updated: 1588890779424
+      },
+      {
+        id: 'QmHashyWhoIs',
+        name: 'Whois',
+        src: 'whois',
+        description: 'Identify the Agent',
+        price: 1.99,
+        compareAt: 8.99,
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1588900779424
       }
     ],
     partParts: [
       {
         base: 'QmHashyKanban',
-        parts: []
+        parts: [
+          {
+            title: 'tasks',
+            dna: ''
+          }
+        ]
       }
     ],
     invites: [
@@ -44,6 +59,24 @@ export default {
         id: 'Qmhashyinvite1',
         base: 'QmHashyKanban',
         from: 'Art Brock', // Use AgentId and pick up name from Address book
+        part: {
+          title: 'tasks',
+          dna: ''
+        }
+      },
+      {
+        id: 'Qmhashyinvite3',
+        base: 'QmmorebigfAgentsOfAnarchyhash',
+        from: 'Mark Keenan', // Use AgentId and pick up name from Address book
+        part: {
+          title: 'tasks',
+          dna: ''
+        }
+      },
+      {
+        id: 'Qmhashyinvite4',
+        base: 'QmmorebigfAgentsOfAnarchyhash',
+        from: 'Oscar', // Use AgentId and pick up name from Address book
         part: {
           title: 'tasks',
           dna: ''
