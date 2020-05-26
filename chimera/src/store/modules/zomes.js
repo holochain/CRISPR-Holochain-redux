@@ -254,6 +254,14 @@ export default {
           fields: [
             {
               fields_field_id: 'QM234566777887',
+              fieldName: 'agent_id',
+              fieldType: 'String',
+              reason: 'To associate the right person',
+              contract: 'Store',
+              required: true
+            },
+            {
+              fields_field_id: 'QM234566777887',
               fieldName: 'avatar',
               fieldType: 'String',
               reason: 'Shows on each Freckle you write',

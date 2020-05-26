@@ -19,7 +19,6 @@ use hdk::{
     holochain_persistence_api::cas::content::{
         Address,
     },
-    api::AGENT_ADDRESS
 };
 
 pub mod handlers;
@@ -39,8 +38,7 @@ pub struct Profile {
     id: Address,
     created_at: Iso8601,
     address: Address,
-    updated_at: Iso8601,
-    agent_id: String,_commaReplaceFields
+    updated_at: Iso8601,_commaReplaceFields
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -62,8 +60,7 @@ impl Profile {
             id: address.clone(),
             created_at: timestamp(address.clone())?,
             address: address.clone(),
-            updated_at: timestamp(address.clone())?,
-            agent_id: AGENT_ADDRESS.to_string(),_commaReplaceFields
+            updated_at: timestamp(address.clone())?,_commaReplaceFields
         })
     }
 }
@@ -74,8 +71,7 @@ impl Profile {
             id: id.clone(),
             created_at: created_at.clone(),
             address: address.clone(),
-            updated_at: timestamp(address.clone())?,
-            agent_id: AGENT_ADDRESS.to_string(),_commaReplaceFields
+            updated_at: timestamp(address.clone())?,_commaReplaceFields
         })
     }
 }

@@ -12,6 +12,11 @@ mod origins {
         Ok(())
     }
 
+    #[zome_fn("hc_public")]
+    fn agent_address() -> ZomeApiResult<String> {
+        Ok(AGENT_ADDRESS.to_string())
+    }
+
     #[entry_def]
     fn anchor_def() -> ValidatingEntryType {
         holochain_anchors::anchor_definition()

@@ -28,6 +28,7 @@ export default {
     this.fetchPersonas()
     this.fetchProfiles()
     this.agentAddress()
+    console.log('App created')
   }
 }
 </script>

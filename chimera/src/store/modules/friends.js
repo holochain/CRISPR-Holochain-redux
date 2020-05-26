@@ -44,30 +44,11 @@ export default {
     allGroups: state => {
       return state.groups
     },
-    friends: (state, rootState) => {
-      console.log(state)
-      state.friends.forEach(friend => {
-        console.log(friend.agentAddress)
-      })
-      return state.friends
-      // const group = state.groups.find(g => g.name === state.selectedGroup)
-      // console.log(group.friends)
-      // if (group) {
-      //   return group.friends
-      // } else {
-      //   return []
-      // }
+    friends: (state, getters, rootState) => {
+      return state.friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
     },
-    agentProfile: (state, rootState) => {
-      console.log(state)
-      return state.friends[4]
-      // const group = state.groups.find(g => g.name === state.selectedGroup)
-      // console.log(group.friends)
-      // if (group) {
-      //   return group.friends
-      // } else {
-      //   return []
-      // }
+    agentProfile: (state, getters, rootState) => {
+      return state.friends.find(f => f.agentAddress === rootState.auth.agentAddress)
     }
   },
   mutations: {

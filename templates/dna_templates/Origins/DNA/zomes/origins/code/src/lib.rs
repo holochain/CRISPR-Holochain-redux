@@ -6,5 +6,6 @@ use hdk::{
     error::ZomeApiResult,
     holochain_core_types::time::Iso8601,
     holochain_persistence_api::cas::content::Address,
+    api::AGENT_ADDRESS,
 };
 use holochain_anchors;

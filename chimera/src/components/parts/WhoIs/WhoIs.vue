@@ -1,5 +1,5 @@
 <template>
-  <v-list-item class="mx-n3">
+  <v-list-item v-if="agentProfile" class="mx-n3">
     <v-progress-circular color="green" size="48" value="45" rotate="20">
       <v-list-item-avatar class="ml-4">
         <v-img :src="agentProfile.info.avatar" />

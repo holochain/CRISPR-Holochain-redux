@@ -48,10 +48,6 @@ export default {
         base: 'QmHashyKanban',
         parts: [
           {
-            title: 'whois',
-            dna: ''
-          },
-          {
             title: 'tasks',
             dna: ''
           }
@@ -63,6 +59,24 @@ export default {
         id: 'Qmhashyinvite1',
         base: 'QmHashyKanban',
         from: 'Art Brock', // Use AgentId and pick up name from Address book
+        part: {
+          title: 'tasks',
+          dna: ''
+        }
+      },
+      {
+        id: 'Qmhashyinvite3',
+        base: 'QmmorebigfAgentsOfAnarchyhash',
+        from: 'Mark Keenan', // Use AgentId and pick up name from Address book
+        part: {
+          title: 'tasks',
+          dna: ''
+        }
+      },
+      {
+        id: 'Qmhashyinvite4',
+        base: 'QmmorebigfAgentsOfAnarchyhash',
+        from: 'Oscar', // Use AgentId and pick up name from Address book
         part: {
           title: 'tasks',
           dna: ''

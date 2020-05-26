@@ -576,7 +576,12 @@ export default {
                   }
                 ]
               }
-            ]
+            ],
+            profileSpec: {
+              id: 'QmKanbanProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
           }
         ]
       },
@@ -670,6 +675,16 @@ export default {
             ]
           }
         ]
+      },
+      {
+        id: 'QmmorebigfAgentsOfAnarchyhash',
+        name: 'Agents Of Anarchy',
+        type: 'application',
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Agents of Anarchy is the idea that as we build social co-ordination hApps on Holochain, people will start to ghost existing extractive systems in favour of their own agency. No longer needing a "ruler" & becoming an Agent of Anarchy',
+        zomes: []
       }
     ]
   },

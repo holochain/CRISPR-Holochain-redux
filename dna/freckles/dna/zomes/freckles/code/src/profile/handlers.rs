@@ -10,6 +10,7 @@ use hdk::{
         AddressableContent,
     },
     prelude::*,
+    api::AGENT_ADDRESS,
 };
 use holochain_anchors::anchor;
 use crate::profile::{
@@ -24,7 +25,8 @@ fn profiles_anchor(anchor_text: String) -> ZomeApiResult<Address> {
     anchor(PROFILES_ANCHOR_TYPE.to_string(), anchor_text.to_string())
 }
 
-pub fn create(base: String, profile_entry: ProfileEntry) -> ZomeApiResult<Profile> {
+pub fn create(base: String, mut profile_entry: ProfileEntry) -> ZomeApiResult<Profile> {
+    profile_entry.agent_id = AGENT_ADDRESS.to_string();
     let entry = Entry::App(PROFILE_ENTRY_NAME.into(), profile_entry.clone().into());
     let entry_address = hdk::commit_entry(&entry)?;
     let profile = Profile::new(entry_address.clone(), profile_entry)?;

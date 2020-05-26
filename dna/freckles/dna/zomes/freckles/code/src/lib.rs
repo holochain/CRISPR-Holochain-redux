@@ -6,7 +6,7 @@ use hdk::{
     error::ZomeApiResult,
     holochain_core_types::time::Iso8601,
     holochain_persistence_api::cas::content::Address,
-    api::AGENT_ADDRESS
+    api::AGENT_ADDRESS,
 };
 use holochain_anchors;
 
@@ -29,7 +29,7 @@ mod freckles {
     #[validate_agent]
     pub fn validate_agent(validation_data: EntryValidationData<AgentId>) {
         Ok(())
-        }
+    }
 
     #[zome_fn("hc_public")]
     fn agent_address() -> ZomeApiResult<String> {
