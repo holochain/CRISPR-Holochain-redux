@@ -204,25 +204,25 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "futures"
-version = "0.3.2"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "futures-channel 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-executor 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-io 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-sink 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-task 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-util 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-executor 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-io 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-sink 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-task 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-util 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "futures-channel"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "futures-core 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-sink 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-sink 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -236,7 +236,7 @@ dependencies = [
 
 [[package]]
 name = "futures-core"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -246,12 +246,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "futures-executor"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "futures-core 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-task 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-util 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-task 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-util 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -267,7 +267,7 @@ dependencies = [
 
 [[package]]
 name = "futures-io"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -277,7 +277,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "futures-macro"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "proc-macro-hack 0.5.15 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -301,7 +301,7 @@ dependencies = [
 
 [[package]]
 name = "futures-sink"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -314,21 +314,25 @@ dependencies = [
 
 [[package]]
 name = "futures-task"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "once_cell 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "futures-util"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "futures-channel 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-core 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-io 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-macro 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-sink 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures-task 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-channel 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-core 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-io 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-macro 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-sink 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures-task 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "memchr 2.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "pin-project 0.4.17 (registry+https://github.com/rust-lang/crates.io-index)",
  "pin-utils 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro-hack 0.5.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "proc-macro-nested 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -377,16 +381,16 @@ dependencies = [
 
 [[package]]
 name = "hdk"
-version = "0.0.47-alpha1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.48-alpha1"
+source = "git+https://github.com/holochain/holochain-rust?branch=develop#8b32f032502e4fdc30d09e54ae31a05df9566c6d"
 dependencies = [
  "bitflags 1.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_core_types 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_core_types 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "holochain_json_api 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_persistence_api 0.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_wasm_utils 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_wasm_utils 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "pretty_assertions 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -397,10 +401,10 @@ dependencies = [
 
 [[package]]
 name = "hdk_proc_macros"
-version = "0.0.47-alpha1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.48-alpha1"
+source = "git+https://github.com/holochain/holochain-rust?branch=develop#8b32f032502e4fdc30d09e54ae31a05df9566c6d"
 dependencies = [
- "hdk 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hdk 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "proc-macro2 0.4.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "quote 0.6.11 (registry+https://github.com/rust-lang/crates.io-index)",
  "syn 0.15.31 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -417,9 +421,8 @@ dependencies = [
 [[package]]
 name = "holochain_anchors"
 version = "0.2.5"
-source = "git+https://github.com/holochain/holochain-anchors#4aa2fe1fe1b2ada376037a0e814ef165383fcd42"
 dependencies = [
- "hdk 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "hdk 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -428,19 +431,19 @@ dependencies = [
 
 [[package]]
 name = "holochain_core_types"
-version = "0.0.47-alpha1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.48-alpha1"
+source = "git+https://github.com/holochain/holochain-rust?branch=develop#8b32f032502e4fdc30d09e54ae31a05df9566c6d"
 dependencies = [
  "arrayref 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "backtrace 0.3.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "base64 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "crossbeam-channel 0.3.8 (registry+https://github.com/rust-lang/crates.io-index)",
- "futures 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "futures 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "hcid 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_json_api 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_locksmith 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_locksmith 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "holochain_logging 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_persistence_api 0.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -500,8 +503,8 @@ dependencies = [
 
 [[package]]
 name = "holochain_locksmith"
-version = "0.0.47-alpha1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.48-alpha1"
+source = "git+https://github.com/holochain/holochain-rust?branch=develop#8b32f032502e4fdc30d09e54ae31a05df9566c6d"
 dependencies = [
  "backtrace 0.3.27 (registry+https://github.com/rust-lang/crates.io-index)",
  "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -560,10 +563,10 @@ dependencies = [
 
 [[package]]
 name = "holochain_wasm_utils"
-version = "0.0.47-alpha1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.0.48-alpha1"
+source = "git+https://github.com/holochain/holochain-rust?branch=develop#8b32f032502e4fdc30d09e54ae31a05df9566c6d"
 dependencies = [
- "holochain_core_types 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_core_types 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "holochain_json_api 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_persistence_api 0.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -700,11 +703,11 @@ dependencies = [
 name = "notes"
 version = "0.1.0"
 dependencies = [
- "hdk 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
- "hdk_proc_macros 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors)",
+ "hdk 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "hdk_proc_macros 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
+ "holochain_anchors 0.2.5",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
- "holochain_wasm_utils 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "holochain_wasm_utils 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_derive 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.47 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -795,6 +798,11 @@ version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "once_cell"
+version = "1.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "output_vt100"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -838,6 +846,24 @@ dependencies = [
 name = "percent-encoding"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "pin-project"
+version = "0.4.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "pin-project-internal 0.4.17 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "pin-project-internal"
+version = "0.4.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "proc-macro2 1.0.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quote 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "syn 1.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "pin-utils"
@@ -1370,36 +1396,35 @@ dependencies = [
 "checksum env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b61fa891024a945da30a9581546e8cfaf5602c7b3f4c137a2805cf388f92075a"
 "checksum fake-simd 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "e88a8acf291dafb59c2d96e8f59828f3838bb1a70398823ade51a84de6a6deed"
 "checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
-"checksum futures 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "dda826c2f9351e68bc87b9037d91d818f24384993ecbb37f711e1f71a83182b5"
-"checksum futures-channel 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "f0c77d04ce8edd9cb903932b608268b3fffec4163dc053b3b402bf47eac1f1a8"
+"checksum futures 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "1e05b85ec287aac0dc34db7d4a569323df697f9c55b99b15d6b4ef8cde49f613"
+"checksum futures-channel 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "f366ad74c28cca6ba456d95e6422883cfb4b252a83bed929c83abfdbbf2967d5"
 "checksum futures-channel-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "21c71ed547606de08e9ae744bb3c6d80f5627527ef31ecf2a7210d0e67bc8fae"
-"checksum futures-core 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "f25592f769825e89b92358db00d26f965761e094951ac44d3663ef25b7ac464a"
+"checksum futures-core 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "59f5fff90fd5d971f936ad674802482ba441b6f09ba5e15fd8b39145582ca399"
 "checksum futures-core-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "4b141ccf9b7601ef987f36f1c0d9522f76df3bba1cf2e63bfacccc044c4558f5"
-"checksum futures-executor 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "f674f3e1bcb15b37284a90cedf55afdba482ab061c407a9c0ebbd0f3109741ba"
+"checksum futures-executor 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "10d6bb888be1153d3abeb9006b11b02cf5e9b209fda28693c31ae1e4e012e314"
 "checksum futures-executor-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "87ba260fe51080ba37f063ad5b0732c4ff1f737ea18dcb67833d282cdc2c6f14"
-"checksum futures-io 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "a638959aa96152c7a4cddf50fcb1e3fede0583b27157c26e67d6f99904090dc6"
+"checksum futures-io 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "de27142b013a8e869c14957e6d2edeef89e97c289e69d042ee3a49acd8b51789"
 "checksum futures-io-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "082e402605fcb8b1ae1e5ba7d7fdfd3e31ef510e2a8367dd92927bb41ae41b3a"
-"checksum futures-macro 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "9a5081aa3de1f7542a794a397cde100ed903b0630152d0973479018fd85423a7"
+"checksum futures-macro 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "d0b5a30a4328ab5473878237c447333c093297bded83a4983d10f4deea240d39"
 "checksum futures-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "bf25f91c8a9a1f64c451e91b43ba269ed359b9f52d35ed4b3ce3f9c842435867"
-"checksum futures-sink 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "3466821b4bc114d95b087b850a724c6f83115e929bc88f1fa98a3304a944c8a6"
+"checksum futures-sink 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "3f2032893cb734c7a05d85ce0cc8b8c4075278e93b24b66f9de99d6eb0fa8acc"
 "checksum futures-sink-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "4309a25a1069a1f3c10647b227b9afe6722b67a030d3f00a9cbdc171fc038de4"
-"checksum futures-task 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "7b0a34e53cf6cdcd0178aa573aed466b646eb3db769570841fda0c7ede375a27"
-"checksum futures-util 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)" = "22766cf25d64306bedf0384da004d05c9974ab104fcc4528f1236181c18004c5"
+"checksum futures-task 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "bdb66b5f09e22019b1ab0830f7785bcea8e7a42148683f99214f73f8ec21a626"
+"checksum futures-util 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "8764574ff08b701a084482c3c7031349104b07ac897393010494beaa18ce32c6"
 "checksum futures-util-preview 0.3.0-alpha.17 (registry+https://github.com/rust-lang/crates.io-index)" = "af8198c48b222f02326940ce2b3aa9e6e91a32886eeaad7ca3b8e4c70daa3f4e"
 "checksum generic-array 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ef25c5683767570c2bbd7deba372926a55eaae9982d7726ee2a1050239d45b9d"
 "checksum getrandom 0.1.14 (registry+https://github.com/rust-lang/crates.io-index)" = "7abc8dd8451921606d809ba32e95b6111925cd2906060d2dcc29c070220503eb"
 "checksum hcid 0.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "9e5ea27f6b17df2ded5dcfc492ecd0db719d00b144dbaaf2df1658a7e38cfd2e"
-"checksum hdk 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)" = "28c4a8857f18f1e0a0fdc99215d351c50c1f586bdc730b0891c73e932e7094df"
-"checksum hdk_proc_macros 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)" = "fe9e8ac454b1f4295e32ee983ca0ad955bc093dd5417cc19f32f608874a13577"
+"checksum hdk 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
+"checksum hdk_proc_macros 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum hermit-abi 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)" = "61565ff7aaace3525556587bd2dc31d4a07071957be715e63ce7b1eccf51a8f4"
-"checksum holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors)" = "<none>"
-"checksum holochain_core_types 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)" = "4ba6bc13a50d65f189e16c28849b2721952e29fc1c48e52b80c0c673c52f2979"
+"checksum holochain_core_types 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum holochain_json_api 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "723490ea3377bde2f4ac07ea63c7ccdf0bf20eb699a0ed580566fe927b735bba"
 "checksum holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "6d411807a76c2a2f45bee166d576e65eee2659be61a62f10008e94313be1b537"
-"checksum holochain_locksmith 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)" = "75fb93e123d26ea83940834548f82a6138c827b3a259b477547bc6b3a85a79c4"
+"checksum holochain_locksmith 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum holochain_logging 0.0.7 (registry+https://github.com/rust-lang/crates.io-index)" = "0d20335b00a8577591f5f6b86cf9898773b53af6d24c94bd4095f72d70f58b51"
 "checksum holochain_persistence_api 0.0.18 (registry+https://github.com/rust-lang/crates.io-index)" = "5f612df01f725e82f5c6c0a47f37d59e54f9167a2a654245f842c67fd73e7088"
-"checksum holochain_wasm_utils 0.0.47-alpha1 (registry+https://github.com/rust-lang/crates.io-index)" = "f9e84c9faea1eecd4fa56fd4837e7199a19a716286baa28eee4751cd3468a448"
+"checksum holochain_wasm_utils 0.0.48-alpha1 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum humantime 1.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "df004cfca50ef23c36850aaaa59ad52cc70d0e90243c3c7737a4dd32dc7a3c4f"
 "checksum idna 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "02e2673c30ee86b5b96a9cb52ad15718aa1f966f5ab9ad54a8b95d5ca33120a9"
 "checksum indexmap 1.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "076f042c5b7b98f31d205f1249267e12a6518c1481e9dae9764af19b707d2292"
@@ -1426,11 +1451,14 @@ dependencies = [
 "checksum num-traits 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = "c62be47e61d1842b9170f0fdeec8eba98e60e90e5446449a0545e5152acd7096"
 "checksum num_cpus 1.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = "05499f3756671c15885fee9034446956fff3f243d6077b91e5767df161f766b3"
 "checksum objekt 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "2069a3ae3dad97a4ae47754e8f47e5d2f1fd32ab7ad8a84bb31d051faa59cc3c"
+"checksum once_cell 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0b631f7e854af39a1739f401cf34a8a013dfe09eac4fa4dba91e9768bd28168d"
 "checksum output_vt100 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "53cdc5b785b7a58c5aad8216b3dfa114df64b0b06ae6e1501cef91df2fbdf8f9"
 "checksum parity-wasm 0.31.3 (registry+https://github.com/rust-lang/crates.io-index)" = "511379a8194230c2395d2f5fa627a5a7e108a9f976656ce723ae68fca4097bfc"
 "checksum parking_lot 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "f842b1982eb6c2fe34036a4fbfb06dd185a3f5c8edfaacdf7d1ea10b07de6252"
 "checksum parking_lot_core 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b876b1b9e7ac6e1a74a6da34d25c42e17e8862aa409cbbbdcfc8d86c6f3bc62b"
 "checksum percent-encoding 2.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "d4fd5641d01c8f18a23da7b6fe29298ff4b55afcccdf78973b24cf3175fee32e"
+"checksum pin-project 0.4.17 (registry+https://github.com/rust-lang/crates.io-index)" = "edc93aeee735e60ecb40cf740eb319ff23eab1c5748abfdb5c180e4ce49f7791"
+"checksum pin-project-internal 0.4.17 (registry+https://github.com/rust-lang/crates.io-index)" = "e58db2081ba5b4c93bd6be09c40fd36cb9193a8336c384f3b40012e531aa7e40"
 "checksum pin-utils 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 "checksum ppv-lite86 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "74490b50b9fbe561ac330df47c08f3f33073d2d00c150f719147d7c54522fa1b"
 "checksum pretty_assertions 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)" = "3f81e1644e1b54f5a68959a29aa86cde704219254669da328ecfdf6a1f09d427"

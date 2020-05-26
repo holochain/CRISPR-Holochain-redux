@@ -58,7 +58,7 @@ export default {
 
     if (this.mapping !== undefined) {
       const title = this.mapping.persona
-      const fieldName = this.mapping.name
+      const fieldsFieldId = this.mapping.fieldsFieldId
       const mappedPersona = this.personas.filter((persona) => persona.title === title)
         .map(persona => {
           persona.fields.map(field => {
@@ -66,7 +66,7 @@ export default {
           })
           return persona.fields
         })
-      const foundPersona = [].concat.apply([], mappedPersona).find(f => f.name === fieldName)
+      const foundPersona = [].concat.apply([], mappedPersona).find(f => f.fieldsFieldId === fieldsFieldId)
       if (foundPersona) {
         this.profileData = foundPersona
         this.selectedPersona = ' (' + this.profileData.title + '-' + this.profileData.name + ')'

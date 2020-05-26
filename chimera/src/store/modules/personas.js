@@ -42,6 +42,7 @@ export default {
   },
   getters: {
     allPersonas: state => {
+      console.log(state.personas)
       return state.personas
     },
     personaById: (state) => (personaId) => {
