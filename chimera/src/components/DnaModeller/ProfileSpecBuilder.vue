@@ -15,7 +15,7 @@
      </v-list-item-avatar>
      <v-list-item-content>
        <v-text-field v-model="profileSpecName" class="ml-2" :disabled="!isEditing" label="Profile Spec Name" :hint="'Enter Profile Spec Name'" persistent-hint v-if="isEditing"></v-text-field>
-       <v-list-item-title class="headline" v-if="!isEditing">Profile for - {{ zome.name }} zome</v-list-item-title>
+       <v-list-item-title class="headline" v-if="!isEditing">Profile fields for - {{ zome.name }} zome</v-list-item-title>
        <v-list-item-subtitle></v-list-item-subtitle>
      </v-list-item-content>
      <v-list-item-action v-if="isEditing">

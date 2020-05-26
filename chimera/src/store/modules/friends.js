@@ -47,6 +47,9 @@ export default {
     friends: (state, getters, rootState) => {
       return state.friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
     },
+    friend: state => (agentAddress) => {
+      return state.friends.find(f => f.agentAddress === agentAddress)
+    },
     agentProfile: (state, getters, rootState) => {
       return state.friends.find(f => f.agentAddress === rootState.auth.agentAddress)
     }

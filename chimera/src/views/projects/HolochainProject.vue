@@ -26,7 +26,7 @@
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
       <v-btn color="action" icon @click="publishDialog = true">
-        <v-icon>mdi-publish</v-icon>
+        <v-icon>mdi-web</v-icon>
       </v-btn>
       <v-btn color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>

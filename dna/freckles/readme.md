@@ -14,4 +14,9 @@ Holonix is a full Holochain development environment built with the [Nix package 
 $ nix-shell https://holochain.love
 ```
 
+## 2 - Start it up
 
+```
+yarn start
+```
+This will configure a new Holochain conductor with the demo data added and run the UI once the conductor has startd up.

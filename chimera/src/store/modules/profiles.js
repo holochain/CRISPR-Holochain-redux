@@ -71,6 +71,14 @@ export default {
             linkContract: 'persist',
             description: 'Your avatar will show in the friends list and on some things you edit.',
             mapping: { persona: 'Music', name: 'Avatar' }
+          },
+          {
+            id: 'url',
+            name: 'URL',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your browsable website, eg http://philt3r.rocks',
+            mapping: { persona: 'Music', name: 'Url' }
           }
         ]
       },

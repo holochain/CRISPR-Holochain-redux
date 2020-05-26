@@ -88,6 +88,11 @@ const router = new Router({
       component: () => import('@/views/personas/Index')
     },
     {
+      path: '/profile-site',
+      name: 'Profile',
+      component: () => import('@/views/profileSite/Index')
+    },
+    {
       path: '/projectKanban/:id',
       name: 'Project Kanban',
       component: () => import('@/views/projectKanban/ProjectKanbanModule')

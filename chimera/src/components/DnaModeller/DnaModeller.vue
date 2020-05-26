@@ -9,7 +9,7 @@
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn color="action" icon @click="profileSpecDialog = true">
-        <v-icon>mdi-account-details-outline</v-icon>
+        <v-icon>mdi-badge-account-outline</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/partNotes/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
@@ -22,7 +22,7 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
-      Click <v-icon>mdi-account-details-outline</v-icon> (Identify) to be able to identify other agents using this DNA. Doing this will:
+      Click <v-icon>mdi-badge-account-outline</v-icon> (Identify) to be able to identify other agents using this DNA. Doing this will:
       <ul>
         <li>add a profile with Avatar & Handle as minimum required fields</li>
         <li>keep a list of all agents in the "Friends List" showing their Avatar & Handle

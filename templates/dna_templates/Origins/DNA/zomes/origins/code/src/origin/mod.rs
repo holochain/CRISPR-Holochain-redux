@@ -41,6 +41,7 @@ pub struct OriginEntry {
 pub struct Origin {
     id: Address,
     created_at: Iso8601,
+    created_by: Address,
     address: Address,
     updated_at: Iso8601,
     uuid: String,_commaReplaceFields
@@ -59,11 +60,32 @@ fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
     }
 }
 
+fn created_by(address: Address) -> ZomeApiResult<Address> {
+    let options = GetEntryOptions{status_request: StatusRequestKind::Initial, entry: false, headers: true, timeout: Timeout::new(10000)};
+    let entry_result = hdk::get_entry_result(&address, options)?;
+    match entry_result.result {
+        GetEntryResultType::Single(entry) => {
+            match entry.headers[0].provenances().get(0) {
+                Some(o) => {
+                    Ok(o.source().clone())
+                },
+                _ => {
+                    unreachable!()
+                }
+            }
+        },
+        _ => {
+            unreachable!()
+        }
+    }
+}
+
 impl Origin {
     pub fn new(address: Address, entry: OriginEntry) -> ZomeApiResult<Origin> {
         Ok(Origin{
             id: address.clone(),
             created_at: timestamp(address.clone())?,
+            created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,_commaReplaceFields
@@ -76,6 +98,7 @@ impl Origin {
         Ok(Origin{
             id: id.clone(),
             created_at: created_at.clone(),
+            created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,_commaReplaceFields
