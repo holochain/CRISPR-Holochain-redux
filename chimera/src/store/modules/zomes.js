@@ -302,11 +302,6 @@ export default {
               id: 'Qm126',
               fieldName: 'updated_at',
               fieldType: 'Iso8601'
-            },
-            {
-              id: 'Qm126',
-              fieldName: 'updated_by',
-              fieldType: 'Address'
             }
           ]
         }

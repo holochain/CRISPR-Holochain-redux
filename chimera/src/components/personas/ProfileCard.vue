@@ -7,7 +7,12 @@
     <v-card-actions>
       <slot></slot>
       <v-spacer></v-spacer>
-      <v-btn color="action darken-1" text @click="saveProfile">Update Profile</v-btn>
+      <v-btn color="action" icon @click="saveProfile">
+        <v-icon>mdi-account</v-icon>
+      </v-btn>
+      <v-btn color="action" icon v-if="profileFields.find(f => f.id === 'url')" to="/profile-site">
+        <v-icon>mdi-web</v-icon>
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>

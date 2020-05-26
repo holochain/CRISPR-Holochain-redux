@@ -18,7 +18,7 @@ const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../fields/dna/dist/dna.dna.json")
-const personalInformationDnaPath = path.join(__dirname, "../personal information/dna/dist/dna.dna.json")
+const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const logger = {
   type: 'debug',
@@ -134,7 +134,7 @@ const marksConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
   logger: logger
 })
 
-orchestrator.registerScenario("Generate config and key for Alice & Bob", async (s, t) => {
+orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
   const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
   console.log("started_ok_demo")
   const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
@@ -362,7 +362,9 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('handleId', handleId)
   const profilePicId =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Profile Picture","ui": "image"}})
   console.log('profilePicId', profilePicId)
-
+  const urlProfileField =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"uuid":uuidv4(), "name": "Url","ui": "text-field"}})
+  console.log('urlProfileField', urlProfileField)
+  
   // Phil's Personal persona
   const philPersonalFullName = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Philip Beadle"}})
   console.log('philPersonalFullName', philPersonalFullName)
@@ -378,10 +380,14 @@ orchestrator.registerScenario("Generate config and key for Alice & Bob", async (
   console.log('philMusicHandle', philMusicHandle)
   const philMusicAvatar = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/philt3r.png')}})
   console.log('philMusicAvatar', philMusicAvatar)
+  const philMusicUrl = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": urlProfileField.Ok.id, "value": "http://philt3r.rocks"}})
+  console.log('philMusicUrl', philMusicUrl)
 
   // Phil's freckles
   const philFreckle1 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})
   console.log('philFreckle1', philFreckle1)
+  const philFreckle2 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>`}})
+  console.log('philFreckle2', philFreckle2)
 
   // Lucy's Personal persona
   const lucyPersonalFullName = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Lucy Beadle"}})
