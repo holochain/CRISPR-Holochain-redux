@@ -26,6 +26,7 @@ import zomes from '@/store/modules/zomes'
 import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
 import kanban from '@/store/modules/kanban'
+import events from '@/store/modules/events'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
@@ -57,6 +58,7 @@ const store = new Vuex.Store({
     tasks,
     kanban,
     zomes,
+    events,
     verify,
     mediaLibrary,
     tracks

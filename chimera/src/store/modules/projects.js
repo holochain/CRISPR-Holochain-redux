@@ -279,6 +279,62 @@ export default {
           }
         ]
       },
+      // {
+      //   id: 'Qmmorebigeventhashes333',
+      //   name: 'Events',
+      //   type: 'application',
+      //   folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+      //   contact: 'Philip Beadle',
+      //   mobile: '+61 999 999 999',
+      //   description: 'Synchronise your events with all of your networks.',
+      //   zomes: [
+      //     {
+      //       template: 'Origins',
+      //       templateTypeName: 'origin',
+      //       itemsTemplatesName: 'template1',
+      //       name: 'Events',
+      //       entryTypes: [
+      //         {
+      //           id: 'QmEventEntryTypeHash',
+      //           name: 'event',
+      //           template: 'list_anchor_types_1',
+      //           fields: [
+      //             {
+      //               id: 'QM234566777887',
+      //               fieldName: 'content',
+      //               fieldType: 'String',
+      //               fieldDescription: 'Main body of the event',
+      //               required: false
+      //             }
+      //           ]
+      //         }
+      //       ],
+      //       anchorTypes: [
+      //         {
+      //           id: 'Qmlist_events1',
+      //           type: 'list_events',
+      //           text: '',
+      //           tag: ' ',
+      //           context: 'permanent',
+      //           links: [
+      //             {
+      //               entityId: 'QmEventEntryTypeHash',
+      //               type: 'event_link',
+      //               tag: 'created_at',
+      //               context: 'exclusive'
+      //             }
+      //           ],
+      //           anchors: []
+      //         }
+      //       ],
+      //       profileSpec: {
+      //         id: 'QmEventProfileSpecHash',
+      //         template: 'identify',
+      //         fields: []
+      //       }
+      //     }
+      //   ]
+      // },
       {
         id: 'Qmmorebighashes333',
         name: 'Notes',
@@ -687,6 +743,17 @@ export default {
         zomes: []
       }
     ]
+  },
+  actions: {
+    addProject: ({ state, commit, rootState }, project) => {
+      console.log(project)
+      commit('addProject', project)
+    }
+  },
+  mutations: {
+    addProject (state, payload) {
+      state.projects.push(payload)
+    }
   },
   getters: {
     applicationProjects: state => {
