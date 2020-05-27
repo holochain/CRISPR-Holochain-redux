@@ -7,6 +7,9 @@
       <v-divider class="mx-3" inset vertical />
       <span class="title">CRISPR Application Projects</span>
       <v-spacer></v-spacer>
+      <v-btn color="action" icon @click="details=!details">
+        <v-icon>mdi-account-details-outline</v-icon>
+      </v-btn>
       <v-btn color="action" icon @click="help=!help">
         <v-icon>mdi-help</v-icon>
       </v-btn>
@@ -64,7 +67,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="(project) in applicationProjects" :key="project.name" cols="12" sm="6" md="2">
-        <holochain-project :project="project"/>
+        <holochain-project :project="project" :details="details"/>
       </v-col>
     </v-row>
     <v-toolbar flat>
@@ -73,7 +76,7 @@
     </v-toolbar>
     <v-row no-gutters>
       <v-col v-for="(project) in partProjects" :key="project.name" cols="12" sm="6" md="2">
-        <holochain-project :project="project"/>
+        <holochain-project :project="project" :details="details"/>
       </v-col>
     </v-row>
   </section>
@@ -88,7 +91,8 @@ export default {
   },
   data () {
     return {
-      help: false
+      help: false,
+      details: false
     }
   },
   computed: {
