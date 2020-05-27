@@ -34,6 +34,7 @@ export default {
   },
   created () {
     this.fetchPersonas()
+    console.log(this.personas[0].fields[0].value)
   }
 }
 </script>

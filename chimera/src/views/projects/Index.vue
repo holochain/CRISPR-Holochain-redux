@@ -63,7 +63,7 @@
       Click <v-icon>mdi-dna</v-icon> (Clone) to create a new DNA from an existing one.
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="(project) in applicationProjects" :key="project.name" cols="12" sm="6" md="3">
+      <v-col v-for="(project) in applicationProjects" :key="project.name" cols="12" sm="6" md="2">
         <holochain-project :project="project"/>
       </v-col>
     </v-row>
@@ -72,7 +72,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-row no-gutters>
-      <v-col v-for="(project) in partProjects" :key="project.name" cols="12" sm="6" md="3">
+      <v-col v-for="(project) in partProjects" :key="project.name" cols="12" sm="6" md="2">
         <holochain-project :project="project"/>
       </v-col>
     </v-row>

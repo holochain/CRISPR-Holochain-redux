@@ -19,7 +19,7 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
     </v-alert>
-    <v-list-item class="mb-1 ml-n3">
+    <v-list-item v-if="whois" class="mb-1 ml-n3">
       <v-progress-circular color="green" size="48" value="45" rotate="20">
         <v-list-item-avatar class="ml-4">
           <v-img :src="whois.info.avatar" />

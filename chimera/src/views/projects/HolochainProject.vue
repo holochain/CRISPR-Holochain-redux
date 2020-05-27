@@ -11,7 +11,7 @@
     </v-card-subtitle>
      <v-card-text>
       <div class="text--primary">
-        {{ project.description }}
+        {{ project.description.substring(0, 90) }}...
       </div>
     </v-card-text>
     <v-divider />

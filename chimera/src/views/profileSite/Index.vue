@@ -18,7 +18,7 @@
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
       <!-- <v-divider class="my-4 info" style="opacity: 0.22" /> -->
-      Click <v-icon>mdi-publish</v-icon> (Publish) your site.
+      Click <v-icon>mdi-application-export</v-icon> (Publish) your site.
     </v-alert>
     <v-row align="center">
       <v-col cols="12" md="6">
@@ -40,7 +40,7 @@
       </v-col>
       <v-col cols="12" md="6">
         <h1 class="display-2">Bio</h1>
-        <span class="body-1">{{getPersonaValue(whois.fields[4].mapping)}}</span>
+        <span class="body-1" v-text="getPersonaValue(whois.fields[4].mapping)"></span>
       </v-col>
     </v-row>
   </section>
@@ -53,12 +53,16 @@ export default {
   components: {},
   data () {
     return {
-      help: false
+      help: false,
+      serialiser: {
+        profilePic: '',
+        name: this.$route.params.id
+      }
     }
   },
   methods: {
     getPersonaValue (mapping) {
-      // console.log(mapping)
+      console.log(this.serialiser)
       // console.log(this.personaFieldValue(mapping))
       return this.personaFieldValue(mapping)
     }
@@ -67,8 +71,6 @@ export default {
     ...mapGetters('friends', ['agentProfile']),
     ...mapGetters('profiles', ['profileById']),
     whois () {
-      console.log(this.$route.params.id)
-      console.log(this.profileById(this.$route.params.id))
       return this.profileById(this.$route.params.id)
     },
     ...mapGetters('personalInformation', ['personas', 'personaFieldValue'])

@@ -11,6 +11,7 @@ https://ya-webdesign.com/imgdownload.html
 
 # Images
 https://commons.wikimedia.org/wiki/File:DNA_replication_en.svg
+https://www.google.com/search?q=dna&tbm=isch&ved=2ahUKEwjtqrrg9tLpAhX_1HMBHW8MDVAQ2-cCegQIABAA&oq=dna&gs_lcp=CgNpbWcQAzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzoCCABQ6L4BWP7AAWCWxQFoAHAAeACAAfACiAG5BpIBBzAuMS4xLjGYAQCgAQGqAQtnd3Mtd2l6LWltZw&sclient=img&ei=JsfNXu3_K_-pz7sP75i0gAU&bih=762&biw=1344#imgrc=KtBzYAGTuWrgSM
 
 # Names of things
 Eric Doriean for the CRISPR idea
