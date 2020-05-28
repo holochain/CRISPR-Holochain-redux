@@ -420,6 +420,14 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('lucyPersonalHandle', lucyPersonalHandle)
   const lucyPersonalAvatar = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/lucy.jpg')}})
   console.log('lucyPersonalAvatar', lucyPersonalAvatar)
+  const lucyPersonalUrl = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": urlProfileField.Ok.id, "value": "http://lucybeadle.blog"}})
+  console.log('lucyPersonalUrl', lucyPersonalUrl)
+  const lucyPersonalBio = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": bioId.Ok.id, "value": "A person I know."}})
+  console.log('lucyPersonalBio', lucyPersonalBio)
+  const lucyPersonalProfilePic = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/lucy.jpg')}})
+  console.log('lucyPersonalProfilePic', lucyPersonalProfilePic)
+  const lucyPersonalProfileImages = await lucy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profileImages.Ok.id, "value": [{ name:"", image: base64_encode('./assets/lucy.jpg') }, { name:"", image: base64_encode('./assets/lucy.jpg') }, { name:"", image: base64_encode('./assets/lucy.jpg') }]}})
+  console.log('lucyPersonalProfileImages', lucyPersonalProfileImages)
 
   const lucyPhilFreckle1 = await lucy.call("freckles", "freckles", "list_freckles",  {"base": ""})
   console.log('lucyPhilFreckle1', lucyPhilFreckle1)
@@ -466,9 +474,10 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
 
    const philKanbanProfile = await phil.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
    console.log('philKanbanProfile', philKanbanProfile)
-   const markProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark"}})
-   console.log('markProfile', markProfile)
-
+   const markKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark"}})
+   console.log('markKanbanProfile', markKanbanProfile)
+   const lucyKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+   console.log('lucyKanbanProfile', lucyKanbanProfile)
    await s.consistency()
 })
 

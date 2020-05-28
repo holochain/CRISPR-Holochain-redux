@@ -82,7 +82,7 @@ export default {
         ]
       },
       {
-        id: 'QmhashProfilephilt3rrocks',
+        id: 'QmYQpxzC7ydAghQ8tXT1Cv3q5fba7uLSGdSfF6HyNZgrLj',
         name: 'http://philt3r.rocks',
         dna: 'QmHashyholopunk-records',
         fields: [
@@ -133,6 +133,61 @@ export default {
             linkContract: 'persist',
             description: 'A set of pics to use on the website',
             mapping: { persona: 'Music', fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXZUVKBxh8' }
+          }
+        ]
+      },
+      {
+        id: 'QmhashProfilelucybeadle.',
+        name: 'http://lucybeadle.blog',
+        dna: '',
+        fields: [
+          {
+            fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu',
+            name: 'Nick Name',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your nick name or handle that will show on Notes and projects you edit.',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu' }
+          },
+          {
+            fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE',
+            name: 'Avatar',
+            ui: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'Personal', fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE' }
+          },
+          {
+            fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXZUVKBxh8',
+            name: 'Profile',
+            ui: 'image',
+            linkContract: 'persist',
+            description: 'Cool profile pic',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXZUVKBxh8' }
+          },
+          {
+            fieldsFieldId: 'QmbgMNs8vJ8g3zUQKJvWZkidLMcGnyoF6dHYn6qbxZD7r9',
+            name: 'URL',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your browsable website, eg http://philt3r.rocks',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmbgMNs8vJ8g3zUQKJvWZkidLMcGnyoF6dHYn6qbxZD7r9' }
+          },
+          {
+            fieldsFieldId: 'QmYzkq3t8aF87RgFtPYyVJ8NseTGk6XG3TDji4kztqMPYs',
+            name: 'Bio',
+            ui: 'text-area',
+            linkContract: 'persist',
+            description: 'Short bio',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmYzkq3t8aF87RgFtPYyVJ8NseTGk6XG3TDji4kztqMPYs' }
+          },
+          {
+            fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXer',
+            name: 'Images',
+            ui: 'image',
+            linkContract: 'persist',
+            description: 'A set of pics to use on the website',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXZUVKBxh8' }
           }
         ]
       },
