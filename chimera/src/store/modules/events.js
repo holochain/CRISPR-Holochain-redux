@@ -9,11 +9,13 @@ export default {
         events: [
           {
             id: 'PartEditor',
-            content: 'Content for Event 1'
+            description: 'Content for Event 1',
+            attending: ''
           },
           {
             id: 'PartEditor',
-            content: 'Content for Event 2'
+            description: 'Content for Event 2',
+            attending: ''
           }
         ]
       }
@@ -165,11 +167,7 @@ export default {
                 start: 0
               }
             })
-            console.log(rootState.auth.agentAddress)
-            // const friendList = friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
-            console.log(friends)
             dispatch('friends/profiles', { profiles: friends }, { root: true })
-            console.log(rootState.friends.friends)
           }
         })
       })

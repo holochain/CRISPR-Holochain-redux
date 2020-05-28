@@ -141,6 +141,14 @@ export default {
         })
       })
     },
+    sendMessage: ({ state, commit, rootState }, message) => {
+      rootState.devHolochainConnection.then(({ callZome }) => {
+        callZome('freckles', 'freckles', 'send_message')({ message: message }).then((result) => {
+          const res = JSON.parse(result)
+          console.log(res)
+        })
+      })
+    },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('freckles', 'freckles', 'list_profiles')({ base: '' }).then((result) => {

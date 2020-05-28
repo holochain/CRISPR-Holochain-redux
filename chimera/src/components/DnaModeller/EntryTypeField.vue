@@ -75,8 +75,6 @@ export default {
   watch: {
     isEditing (save) {
       if (!save) {
-        console.log('Saving ')
-        console.log(this.field, this.fieldName + this.fieldType)
         this.field.fieldName = snakeCase(this.fieldName)
         this.field.fieldType = this.fieldType
         this.field.fieldDescription = this.fieldDescription
@@ -85,7 +83,6 @@ export default {
       }
     },
     fieldName (newVal) {
-      console.log(snakeCase(newVal))
       this.fieldName = snakeCase(newVal)
     },
     fieldType (newVal) {

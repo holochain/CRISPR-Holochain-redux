@@ -1,6 +1,16 @@
 <template>
   <v-card class="ma-5" dark>
     <v-system-bar color="indigo darken-2" dark>
+      <v-list-item v-if="whois" class="mb-1 ml-n3">
+        <v-progress-circular color="green" size="34" value="45" rotate="20">
+          <v-list-item-avatar class="ml-4" size="24">
+            <v-img :src="whois.info.avatar" />
+          </v-list-item-avatar>
+        </v-progress-circular>
+        <v-list-item-content class="ml-4">
+          <v-list-item-title>{{whois.name}}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
       <v-icon v-if="isEditing" @click="saveFreckle({ base: '', freckle: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
@@ -19,16 +29,6 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
     </v-alert>
-    <v-list-item v-if="whois" class="mb-1 ml-n3">
-      <v-progress-circular color="green" size="48" value="45" rotate="20">
-        <v-list-item-avatar class="ml-4">
-          <v-img :src="whois.info.avatar" />
-        </v-list-item-avatar>
-      </v-progress-circular>
-      <v-list-item-content class="ml-4">
-        <v-list-item-title>{{whois.name}}</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
     <v-card-text v-if="!isEditing" v-html="instanceFreckle.content" />
     <tiptap-vuetify v-if="isEditing" v-model="instanceFreckle.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">

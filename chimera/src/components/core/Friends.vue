@@ -137,7 +137,7 @@ export default {
       //
     },
     whisperFriend (name) {
-      //
+      //  hdk::send(member_id, json!({"msg_type": msg_type, "id": &conversation_address}).to_string(), 10000.into())?;
     },
     inviteFriend () {
       //

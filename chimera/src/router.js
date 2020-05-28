@@ -14,9 +14,14 @@ const router = new Router({
       component: () => import('@/views/library/Index')
     },
     {
+      path: '/origins',
+      name: 'Origins',
+      component: () => import('@/views/origins/Index')
+    },
+    {
       path: '/news',
       name: 'News',
-      component: () => import('@/views/home/Index')
+      component: () => import('@/views/origins/Index')
     },
     {
       path: '/article/:id',

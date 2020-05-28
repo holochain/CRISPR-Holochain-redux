@@ -19,6 +19,7 @@ import fieldNames from '@/store/modules/fieldNames'
 import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
+import origins from '@/store/modules/origins'
 import notes from '@/store/modules/notes'
 import freckles from '@/store/modules/freckles'
 import tasks from '@/store/modules/tasks'
@@ -53,6 +54,7 @@ const store = new Vuex.Store({
     profiles,
     personas,
     snackbar,
+    origins,
     notes,
     freckles,
     tasks,

@@ -21,7 +21,7 @@ export default {
   methods: {
     ...mapActions('fieldNames', ['fetchFields']),
     ...mapActions('personas', ['fetchPersonas']),
-    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
+    ...mapActions('origins', ['agentAddress', 'fetchProfiles'])
   },
   created () {
     this.fetchFields()
