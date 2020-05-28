@@ -1,3 +1,8 @@
+const fs = require('fs')
+function base64Encode (file) {
+  var bitmap = fs.readFileSync(file)
+  return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
+}
 export default {
   namespaced: true,
 
@@ -7,6 +12,7 @@ export default {
         id: 'QmHashyChimera',
         name: 'Chimera',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Chimera/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -17,6 +23,7 @@ export default {
         id: 'QmHashyCRSIPR',
         name: 'CRISPR',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/CRISPR/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -24,9 +31,67 @@ export default {
         zomes: []
       },
       {
+        id: 'Qmmorebigoriginhashes333',
+        name: 'Origins',
+        type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Origins have a title, content and order.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Origins',
+            entryTypes: [
+              {
+                id: 'QmOriginEntryTypeHash',
+                name: 'origin',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'content',
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the origin',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_origins1',
+                type: 'list_origins',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmOriginEntryTypeHash',
+                    type: 'origin_link',
+                    tag: 'created_at',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ],
+            profileSpec: {
+              id: 'QmOriginProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
+          }
+        ]
+      },
+      {
         id: 'QmHashyCuratedFields',
         name: 'Curated Fields',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Curated Fields/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -85,6 +150,7 @@ export default {
         id: 'QmHashyPersonasProfiles',
         name: 'Personal Information',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Personal Information/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -227,6 +293,7 @@ export default {
         id: 'Qmmorebigfrecklehashes333',
         name: 'Freckles',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Freckles/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -280,9 +347,74 @@ export default {
         ]
       },
       {
+        id: 'Qmmorebigeventhashes333',
+        name: 'Events',
+        type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Events/preview.png'),
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Synchronise your events with all of your networks.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Events',
+            entryTypes: [
+              {
+                id: 'QmEventEntryTypeHash',
+                name: 'event',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'description',
+                    fieldType: 'String',
+                    fieldDescription: 'Description of the event',
+                    required: false
+                  },
+                  {
+                    id: 'QM234566777dd887',
+                    fieldName: 'attending',
+                    fieldType: 'String',
+                    fieldDescription: 'Array of agentids attending the event',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_events1',
+                type: 'list_events',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmEventEntryTypeHash',
+                    type: 'event_link',
+                    tag: 'created_at',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ],
+            profileSpec: {
+              id: 'QmEventProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
+          }
+        ]
+      },
+      {
         id: 'Qmmorebighashes333',
         name: 'Notes',
         type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Notes/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -388,6 +520,7 @@ export default {
         id: 'QmmorehashyTasks',
         name: 'Tasks',
         type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Tasks/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -486,6 +619,7 @@ export default {
         id: 'QmHashyKanban',
         name: 'Kanban',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Kanban/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -589,6 +723,7 @@ export default {
         id: 'Qmmoreratings',
         name: 'Ratings',
         type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Ratings/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -680,6 +815,7 @@ export default {
         id: 'QmmorebigfAgentsOfAnarchyhash',
         name: 'Agents Of Anarchy',
         type: 'application',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Agents Of Anarchy/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
@@ -687,6 +823,17 @@ export default {
         zomes: []
       }
     ]
+  },
+  actions: {
+    addProject: ({ state, commit, rootState }, project) => {
+      console.log(project)
+      commit('addProject', project)
+    }
+  },
+  mutations: {
+    addProject (state, payload) {
+      state.projects.push(payload)
+    }
   },
   getters: {
     applicationProjects: state => {

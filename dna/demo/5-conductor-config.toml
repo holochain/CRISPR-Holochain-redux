@@ -1,85 +1,107 @@
 bridges = []
-persistence_dir = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4'
+persistence_dir = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
+id = 'origins'
+keystore_file = '[UNUSED]'
+name = 'alice::origins::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcSCjh8dVf85em738bwBqW4Q9PBXgmi7kuvc8a5k5n88773geGUw6frjwypf86i'
+test_agent = true
+
+[[agents]]
 id = 'kanban'
 keystore_file = '[UNUSED]'
-name = 'alice::kanban::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCJjjOV6HGvn7x9moc3KUx7FRmbkmzm4uyhnbH7Faqgz6bd4ssI3VBs6Zgzma'
+name = 'alice::kanban::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcSCipV7O8ekzqtaueiZd4uNPwwdpb35xfSdOqG4Mfdk8vg8y8I8wnPWoIzikba'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'alice::notes::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCiM3cOJ9yvaxr8nPoyjnxMCyou7t7yQHn6wiO7a6dc8a7rTrsfSVmn75n4yz'
+name = 'alice::notes::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcSCJ47kRGRHFvxhofxN5fGVBc498ko47Y3tD58UYA4vg57gYhMysVQHxnsobiz'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'alice::tasks::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCjdJVNK7dkc5kaiXc6qR4hu64FNkhszwpoCetj4wqcp553FWDD79yPVNa7dr'
+name = 'alice::tasks::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcScIc43zjFdnbsp8eOK33946DG6tSWWmJhOE3OZ49YRt67p5d4dHfNxMN94uca'
 test_agent = true
 
 [[agents]]
 id = 'fields'
 keystore_file = '[UNUSED]'
-name = 'alice::fields::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCIfsSs6QFdksuf3Zt7jZyXyM67ufkuacST4BHycyb6f8dbgA6PH78rqhhd4r'
+name = 'alice::fields::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcSCj8OsT8Z4Z45YhoehRDGd3xigikgetx7TfgveaWhsfu5z7iPaFVMuUbe3jkr'
 test_agent = true
 
 [[agents]]
 id = 'personalinformation'
 keystore_file = '[UNUSED]'
-name = 'alice::personalinformation::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCj7sV5VX8biw8e9otgxPeyfongs5e8JHeovoOQ34tj45dVTb3MKEIb57ijsi'
+name = 'alice::personalinformation::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcSCihpmphZdcjgc7oyhD8U7ProEpfvw5G67FZ3F9EUsU9evr84AMpI7fFsi38a'
 test_agent = true
 
 [[agents]]
 id = 'freckles'
 keystore_file = '[UNUSED]'
-name = 'alice::freckles::7b626691-ab6c-4019-b71a-90ccc9150ef3'
-public_address = 'HcSCI6UHwMTmeive6t3saf7v3oBMeawrhgpiJi8BXWqmstimKCHAdfcK7h7k6xr'
+name = 'alice::freckles::a18e62c6-4277-412e-a730-b8a327cb4367'
+public_address = 'HcScISJt3JYsmmh4bo5Qq9D7ZgsDccqraxEYkVQZTefzh9dujz3i3KPG9NRardz'
 test_agent = true
 
 [[dnas]]
+file = '/Users/philipbeadle/holochain/CRISPR/dna/origins/dna/dist/dna.dna.json'
+hash = 'QmYMAuBtwh5tvEWoe3CyMygGZvGM9qN5Q5yUx29xv4FhRC'
+id = 'origins-test'
+uuid = 'a18e62c6-4277-412e-a730-b8a327cb4367'
+
+[[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmZ2TGpauVUoTTTPwmqNpwmCLcDavKr4utUxdJAmHXZfXE'
+hash = 'QmTEe5g9Na1cuMG5MefVBFAgWJ7E3t8ThM6GxXaR1jmbtA'
 id = 'kanban-test'
-uuid = '7b626691-ab6c-4019-b71a-90ccc9150ef3'
+uuid = 'a18e62c6-4277-412e-a730-b8a327cb4367'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmbL8eFNsa9UYtJY2iqRPWVfhHok46fdoYCAskt6gakegE'
+hash = 'QmdfNoBr3Ct9SSKcuEjbgqZVwDMyNXRy3BUGFBYcNd94kb'
 id = 'notes-test'
-uuid = '7b626691-ab6c-4019-b71a-90ccc9150ef3'
+uuid = 'a18e62c6-4277-412e-a730-b8a327cb4367'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmeqVu6wrMg1KapacXdZDLr5CC4WkjMKYUMXdjubuHeDUE'
+hash = 'QmVKCr5xhBrmdikE7aeBVCwC9ds38gbjRoSrDn2Aao96tD'
 id = 'tasks-test'
-uuid = '7b626691-ab6c-4019-b71a-90ccc9150ef3'
+uuid = 'a18e62c6-4277-412e-a730-b8a327cb4367'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/curatedfields/dna/dist/dna.dna.json'
-hash = 'Qmap2ypwmfw4DccYDrJDDZF8iGRbKNsMbcAV69NwRLQ5hG'
+hash = 'QmcGm2V8nrSdhT8iQusSg7w5hpPxeH2jR534ptP1FiTwsC'
 id = 'fields-test'
-uuid = '7b626691-ab6c-4019-b71a-90ccc9150ef3'
+uuid = 'a18e62c6-4277-412e-a730-b8a327cb4367'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/personalinformation/dna/dist/dna.dna.json'
-hash = 'QmaxjiUUEHNDSfGvRHkFBBe1q5kNAi53uVigE6BXLePegz'
-id = 'personalinformation-test::e754c4d8-cdea-49ab-a151-1a84d62d2980'
-uuid = 'e754c4d8-cdea-49ab-a151-1a84d62d2980::7b626691-ab6c-4019-b71a-90ccc9150ef3'
+hash = 'QmPN9VCpdatA9crNnGi84H5XxhaJbh6ziuLMjdmRQ7pBxY'
+id = 'personalinformation-test::a290d409-16ca-4243-9c1d-d7821b055f62'
+uuid = 'a290d409-16ca-4243-9c1d-d7821b055f62::a18e62c6-4277-412e-a730-b8a327cb4367'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/freckles/dna/dist/dna.dna.json'
-hash = 'QmSNFSC8iDvsCT8FUiFUFY97EZcTLaAnHmX6UsysFtzbdU'
-id = 'freckles-test::59280fe2-f7cb-43ec-9f20-e4d7cd883a8b'
-uuid = '59280fe2-f7cb-43ec-9f20-e4d7cd883a8b::7b626691-ab6c-4019-b71a-90ccc9150ef3'
+hash = 'QmcufKtfPJjH25ncN4wb2g7qWRNMpBkH9JU5mrRcrbAwQ5'
+id = 'freckles-test::c3114f14-45dc-4f92-b539-0c7ce6c40e63'
+uuid = 'c3114f14-45dc-4f92-b539-0c7ce6c40e63::a18e62c6-4277-412e-a730-b8a327cb4367'
+
+[[instances]]
+agent = 'origins'
+dna = 'origins-test'
+id = 'origins'
+
+[instances.storage]
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/origins'
+type = 'lmdb'
 
 [[instances]]
 agent = 'kanban'
@@ -87,7 +109,7 @@ dna = 'kanban-test'
 id = 'kanban'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/kanban'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/kanban'
 type = 'lmdb'
 
 [[instances]]
@@ -96,7 +118,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/notes'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -105,7 +127,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/tasks'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/tasks'
 type = 'lmdb'
 
 [[instances]]
@@ -114,31 +136,34 @@ dna = 'fields-test'
 id = 'fields'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/fields'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/fields'
 type = 'lmdb'
 
 [[instances]]
 agent = 'personalinformation'
-dna = 'personalinformation-test::e754c4d8-cdea-49ab-a151-1a84d62d2980'
+dna = 'personalinformation-test::a290d409-16ca-4243-9c1d-d7821b055f62'
 id = 'personalinformation'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/personalinformation'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/personalinformation'
 type = 'lmdb'
 
 [[instances]]
 agent = 'freckles'
-dna = 'freckles-test::59280fe2-f7cb-43ec-9f20-e4d7cd883a8b'
+dna = 'freckles-test::c3114f14-45dc-4f92-b539-0c7ce6c40e63'
 id = 'freckles'
 
 [instances.storage]
-path = '/tmp/tmp.MHR9Pez8g4/tryorama/06l7Q4/freckles'
+path = '/tmp/tmp.MHR9Pez8g4/tryorama/nYmj3c/freckles'
 type = 'lmdb'
 
 [[interfaces]]
 admin = true
 choose_free_port = false
 id = 'tryorama-interface'
+
+[[interfaces.instances]]
+id = 'origins'
 
 [[interfaces.instances]]
 id = 'kanban'

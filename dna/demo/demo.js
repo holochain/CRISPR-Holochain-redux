@@ -13,6 +13,7 @@ process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error);
 });
 
+const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
@@ -74,6 +75,7 @@ const orchestrator = new Orchestrator({
   )
 })
 
+const originsDna = Config.dna(originsDnaPath, 'origins-test')
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
@@ -86,7 +88,7 @@ const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'pers
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
+const philsConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -94,7 +96,7 @@ const philsConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
   logger: logger
 })
 
-const lucysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, freckles: philsFrecklesDna}, {
+const lucysConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -102,7 +104,7 @@ const lucysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
   logger: logger
 })
 
-const rudysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, freckles: philsFrecklesDna}, {
+const rudysConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -110,7 +112,7 @@ const rudysConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
   logger: logger
 })
 
-const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
+const arthursConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -118,7 +120,7 @@ const arthursConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, t
   logger: logger
 })
 
-const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, freckles: philsFrecklesDna}, {
+const alicesConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -126,7 +128,7 @@ const alicesConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, ta
   logger: logger
 })
 
-const marksConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {
+const marksConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -137,6 +139,20 @@ const marksConductorConfig = Config.gen({kanban: kanbanDna, notes: notesDna, tas
 orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
   const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
   console.log("started_ok_demo")
+  
+  const philOriginProfile = await phil.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philt3r.png'), "handle": "philip.beadle"}})
+  console.log('philOriginProfile', philOriginProfile)
+  const markOriginProfile = await mark.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "mark.keenan"}})
+  console.log('markOriginProfile', markOriginProfile)
+  const rudyOriginProfile = await rudy.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "Rudy"}})
+  console.log('rudyOriginProfile', rudyOriginProfile)
+  const lucyOriginProfile = await lucy.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+  console.log('lucyOriginProfile', lucyOriginProfile)
+  const aliceOriginProfile = await alice.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mhairi.jpg'), "handle": "Mha Iri"}})
+  console.log('aliceOriginProfile', aliceOriginProfile)
+  const artOriginProfile = await arthur.call("origins", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
+  console.log('artOriginProfile', artOriginProfile)
+  
   const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()
   const chimeraDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})

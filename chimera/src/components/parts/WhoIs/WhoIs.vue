@@ -6,7 +6,8 @@
       </v-list-item-avatar>
     </v-progress-circular>
     <v-list-item-content class="ml-4">
-      <v-list-item-title>{{whois.name}}</v-list-item-title>
+      who
+      <!-- <v-list-item-title>{{whois.name}}</v-list-item-title> -->
     </v-list-item-content>
   </v-list-item>
 </template>

@@ -125,6 +125,14 @@ export default {
             linkContract: 'persist',
             description: 'Short bio',
             mapping: { persona: 'Music', fieldsFieldId: 'QmYzkq3t8aF87RgFtPYyVJ8NseTGk6XG3TDji4kztqMPYs' }
+          },
+          {
+            fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXer',
+            name: 'Images',
+            ui: 'image',
+            linkContract: 'persist',
+            description: 'A set of pics to use on the website',
+            mapping: { persona: 'Music', fieldsFieldId: 'QmcmmatFAUJAZ36sunWXgozph8RcW8PcAuAKtXZUVKBxh8' }
           }
         ]
       },

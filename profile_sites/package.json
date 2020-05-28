@@ -1,0 +1,9 @@
+{
+  "name": "profile_sites",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "vue": "~/vue/node_modules/@vue/cli/bin/vue.js"
+  }
+}
