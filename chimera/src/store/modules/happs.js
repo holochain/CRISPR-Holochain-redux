@@ -54,6 +54,16 @@ export default {
         compareAt: 27.99,
         publisher: 'Eat Sleep Code Repeat',
         updated: 1585864353040
+      },
+      {
+        id: 'QmHashyOrigins',
+        name: 'Origins',
+        src: 'origins',
+        launch: '/origins',
+        price: 19.99,
+        compareAt: 27.99,
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1585864353040
       }
     ]
   },

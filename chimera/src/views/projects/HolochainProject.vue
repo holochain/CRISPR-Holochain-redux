@@ -30,6 +30,9 @@
       <v-btn color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
+      <v-btn color="alert" icon :to="`/store/happ/${project.id}`">
+        <v-icon>mdi-dna</v-icon>
+      </v-btn>
     </v-card-actions>
     <v-dialog v-model="cloningDialog" max-width="700px">
       <v-card flat>
