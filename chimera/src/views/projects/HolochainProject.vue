@@ -1,6 +1,11 @@
 <template>
   <v-card class="ma-5">
-    <v-img class="white--text align-end" width="300" :src="project.preview">
+    <router-link icon v-if="project.happId" :to="`/store/${project.type}/${project.happId}`">
+      <v-img class="white--text align-end" width="300" :src="project.preview">
+        <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
+      </v-img>
+    </router-link>
+    <v-img v-else class="white--text align-end" width="300" :src="project.preview">
       <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
     </v-img>
     <div v-if="details">

@@ -28,7 +28,7 @@
     winston "^3.2.1"
     winston-null "^2.0.0"
 
-"@holochain/hc-web-client@^0.5.0":
+"@holochain/hc-web-client@^0.5.0", "@holochain/hc-web-client@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@holochain/hc-web-client/-/hc-web-client-0.5.3.tgz#79e3b2f1c16b63db5e62a374e2b402778e86db3a"
   integrity sha512-zbg1bsHcFelB1HhFzc5PVTKfKJSJCi+e64tN86YbKyhYRP7fLlZzJ9nxt/MeSRYQTGV13qJ+fu8jAiRcu49doA==

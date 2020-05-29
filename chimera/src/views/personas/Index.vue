@@ -7,6 +7,10 @@
       <v-divider class="mx-3" inset vertical />
       <span class="title">Personas</span>
       <v-spacer></v-spacer>
+      <v-btn text to="/library/true">
+        <v-icon>mdi-account-multiple-outline</v-icon>
+        Profiles
+      </v-btn>
     </v-toolbar>
     <v-divider />
       <v-row>

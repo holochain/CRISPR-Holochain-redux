@@ -10,11 +10,8 @@
       <v-list-item-subtitle>{{profile.info.name}}</v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-action>
-      <v-btn icon to="/profile-site/QmhashProfilephilt3rrocks" >
+      <v-btn icon :to="`/profile-site/${profile.id}`" >
         <v-icon>mdi-web</v-icon>
-      </v-btn>
-      <v-btn icon to="/library/true" >
-        <v-icon>mdi-account-edit</v-icon>
       </v-btn>
     </v-list-item-action>
   </v-list-item>

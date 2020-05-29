@@ -1,7 +1,7 @@
 <template>
   <v-hover v-model="hover">
     <v-card class="v-card--game" elevation="6">
-      <router-link :to="`/store/happ/${value.id}`">
+      <router-link :to="`/store/application/${value.id}`">
         <v-img v-bind="$attrs" :height="height" :src="require(`@/assets/${value.bg}`)" style="border-radius: inherit;">
           <v-row :style="styles" align="center" class="fill-height ma-0 transition-swing" justify="center">
             <v-img :src="require(`@/assets/${value.logo}`)" contain max-width="180" style="z-index: -1;" />

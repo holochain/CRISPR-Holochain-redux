@@ -21,7 +21,7 @@ const router = new Router({
     {
       path: '/news',
       name: 'News',
-      component: () => import('@/views/origins/Index')
+      component: () => import('@/views/home/Index')
     },
     {
       path: '/article/:id',
@@ -58,12 +58,12 @@ const router = new Router({
     },
     {
       path: '/store/part/:id',
-      name: 'PartStorePage',
+      name: 'Part Store Page',
       component: () => import('@/views/store-page/Part')
     },
     {
-      path: '/store/happ/:id',
-      name: 'HappStorePage',
+      path: '/store/application/:id',
+      name: 'Application Store Page',
       component: () => import('@/views/store-page/Happ')
     },
     {

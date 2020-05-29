@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getPersonaValue (mapping) {
-      console.log(this.serialiser)
+      console.log(this.$route.params.id)
       // console.log(this.personaFieldValue(mapping))
       return this.personaFieldValue(mapping)
     }
@@ -71,6 +71,7 @@ export default {
     ...mapGetters('friends', ['agentProfile']),
     ...mapGetters('profiles', ['profileById']),
     whois () {
+      console.log(this.$route.params.id)
       return this.profileById(this.$route.params.id)
     },
     ...mapGetters('personalInformation', ['personas', 'personaFieldValue'])
