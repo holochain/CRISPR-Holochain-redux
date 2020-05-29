@@ -82,7 +82,7 @@ export default {
         ]
       },
       {
-        id: 'QmYQpxzC7ydAghQ8tXT1Cv3q5fba7uLSGdSfF6HyNZgrLj',
+        id: 'QmRuooALdFsjnfWLPxifJ9HxWgt3uULXSiY7RAfSqpHURD',
         name: 'http://philt3r.rocks',
         dna: 'QmHashyholopunk-records',
         fields: [
@@ -150,7 +150,7 @@ export default {
             mapping: { persona: 'Personal', fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu' }
           },
           {
-            fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE',
+            fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE∂',
             name: 'Avatar',
             ui: 'thumbnail',
             linkContract: 'persist',
@@ -195,6 +195,29 @@ export default {
         id: 'QmhashProfileKanban',
         name: 'Kanban',
         dna: 'QmHashykanban',
+        fields: [
+          {
+            fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu',
+            name: 'handle',
+            ui: 'text-field',
+            linkContract: 'persist',
+            description: 'Your nick name or handle that will show on Kanban and projects you edit.',
+            mapping: { persona: 'Personal', fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu' }
+          },
+          {
+            fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE',
+            name: 'Avatar',
+            ui: 'thumbnail',
+            linkContract: 'persist',
+            description: 'Your avatar will show in the friends list and on some things you edit.',
+            mapping: { persona: 'Personal', fieldsFieldId: 'Qmf7r52FmGdUJkTQXvbAaDKGDb2c7arpmCwoUsdJZtqJtE' }
+          }
+        ]
+      },
+      {
+        id: 'QmhashProfileKanban',
+        name: 'Origins',
+        dna: 'QmHashyOrigins',
         fields: [
           {
             fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu',

@@ -13,8 +13,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveOrigin({ base: 'originBase', origin: instanceOrigin}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteOrigin({ base: '', origin: instanceOrigin})">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing" @click="saveOrigin({ base: base, origin: instanceOrigin}); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteOrigin({ base: base, origin: instanceOrigin})">mdi-delete-outline</v-icon>
       <part-manager :base="instanceOrigin.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -29,8 +29,8 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Origin.
     </v-alert>
-    <v-card-text v-if="!isEditing" v-html="instanceOrigin.shortDescription" />
-    <tiptap-vuetify v-if="isEditing" v-model="instanceOrigin.shortDescription" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-text v-if="!isEditing" v-html="instanceOrigin.content" />
+    <tiptap-vuetify v-if="isEditing" v-model="instanceOrigin.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
     </v-col>
@@ -91,9 +91,10 @@ export default {
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapGetters('parts', ['partParts']),
-    ...mapGetters('friends', ['friend']),
+    ...mapGetters('friends', ['friend', 'agentProfile']),
     whois () {
-      return this.friend(this.origin.createdBy)
+      if (this.origin.createdBy) return this.friend(this.origin.createdBy)
+      return this.agentProfile
     }
   }
 }

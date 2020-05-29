@@ -22,31 +22,47 @@ const tryConnection = () => {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
         devHolochainConnection.then(({ callZome }) => {
-          console.log('started_demo_setup_phil')
+          console.log('started_demo_setup_fields')
 
-          // callZome('origins', 'origins', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philt3r.png'), handle: 'philip.beadle'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          // })
-          // callZome('kanban', 'kanban', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philt3r.png'), handle: 'philip.beadle'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('philKanbanProfile', res)
-          // })
-          // callZome('freckles', 'freckles', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philip.beadle.png'), handle: 'phil'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('philfrecklesProfile', res)
-          // })
-          callZome('notes', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'Phils Note 2', content: 'Get this from demo again', order: 1 } }).then((result) => {
+          // managed fields list
+          const fullNameFieldId = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Full Name', ui: 'text-field' } }).then((result) => {
+            console.log('fullNameId', result)
             const res = JSON.parse(result)
-            console.log('ok_demo_setup_phil', res)
-            callZome('tasks', 'tasks', 'create_task')({ base: res.Ok.id, task_input: { uuid: uuidv4(), title: 'Phils Task', "done":false } }).then((result) => {
-              const res = JSON.parse(result)
-              console.log('ok_demo_setup_phil_task', res)
-            })
+            console.log('fullNameId_res', res)
+            return res.Ok.id 
+          })
+          const avatarFieldId = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Avatar', ui: 'thumbnail' } }).then((result) => {
+            console.log('AvatarId', result)
+            const res = JSON.parse(result)
+            return res.Ok.id
+          })
+          const bioIdField = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Bio', ui: 'text-area' } }).then((result) => {
+            console.log('bioIdField', result)
+            const res = JSON.parse(result)
+            return res.Ok.id
+          })
+          const handleIdField = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Handle', ui: 'text-field' } }).then((result) => {
+            console.log('handleIdField', result)
+            const res = JSON.parse(result)
+            return res.Ok.id
+          })
+          const profilePictureIdField = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Profile Picture', ui: 'image' } }).then((result) => {
+            console.log('profilePictureIdField', result)
+            const res = JSON.parse(result)
+            return res.Ok.id
+          })
+          const urlField = callZome('fields', 'fields', 'create_field')({ base: '', field_input : { name: 'Url', ui: 'text-field' } }).then((result) => {
+            console.log('urlField', result)
+            const res = JSON.parse(result)
+            console.log('urlField.Ok.id', res.Ok.id)
+            return res.Ok.id
           })
 
-          callZome('freckles', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>Hows this for a freckle??</h1><p>Rad</p>` } }).then((result) => {
+          const list_fields = callZome('fields', 'fields', 'list_fields')({ base: '' }).then((result) => {
+            console.log('list_fields', result)
             const res = JSON.parse(result)
-            console.log('ok_demo_setup_phil_freckle', res)
+            console.log('list_fields.Ok', res.Ok)
+            return res.Ok
           })
         })
       }

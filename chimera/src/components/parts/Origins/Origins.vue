@@ -25,18 +25,6 @@
     </v-alert>
     <v-col cols="12" v-for="origin in origins" :key="origin.id">
       <origin :key="origin.id" :base="base" :origin="origin">
-        <v-menu open-on-hover bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-avatar left v-if="chimera">
-              <v-icon small v-on="on">mdi-dna</v-icon>
-            </v-avatar>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
       </origin>
     </v-col>
     <slot></slot>
@@ -47,25 +35,30 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Origins',
   components: {
+    PartManager: () => import('@/components/chimera/PartManager'),
     Origin: () => import('./Origin')
   },
   props: ['base', 'title'],
   data () {
-    return {}
+    return {
+      help: false
+    }
   },
   methods: {
     add () {
       this.origins.splice(0, 0, {
+        id: 'new',
         content: ''
       })
     },
-    ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors'])
+    ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors']),
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapState('origins', ['errors']),
     ...mapGetters('origins', ['listOrigins', 'listErrors']),
-    notes () {
+    origins () {
       return this.listOrigins(this.base)
     },
     errors () {

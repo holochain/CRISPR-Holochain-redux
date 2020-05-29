@@ -8,8 +8,12 @@
       <span class="title text-truncate">Applications</span>
       <v-spacer></v-spacer>
       <v-btn text to="/personas">
-        <v-icon>mdi-account</v-icon>
+        <v-icon>mdi-account-multiple</v-icon>
         Personas
+      </v-btn>
+      <v-btn text to="/library/true">
+        <v-icon>mdi-account-multiple-outline</v-icon>
+        Profiles
       </v-btn>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-toolbar>
@@ -22,9 +26,9 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click 🧬 Install to start the Installation process
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-account</v-icon> (Personas) to manage your personal information.
+      Click <v-icon>mdi-account-multiple</v-icon> (Personas) to manage your personal information.
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-account-edit</v-icon> (Profiles) next to your name to manage your personal information for each application.
+      Click <v-icon>mdi-account-multiple-outline</v-icon> (Profiles) to manage your personal information for each application.
     </v-alert>
     <v-divider />
     <applications :showProfile="showProfile"/>

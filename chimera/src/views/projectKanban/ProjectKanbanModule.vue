@@ -51,6 +51,7 @@ export default {
   computed: {
     ...mapGetters('portfolio', ['projectById']),
     project () {
+      console.log(this.$route.params.id)
       return this.projectById(this.$route.params.id)
     }
   }

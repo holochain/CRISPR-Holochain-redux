@@ -1,6 +1,11 @@
 <template>
   <v-card class="ma-5">
-    <v-img class="white--text align-end" width="300" :src="project.preview">
+    <router-link icon v-if="project.happId" :to="`/store/${project.type}/${project.happId}`">
+      <v-img class="white--text align-end" width="300" :src="project.preview">
+        <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
+      </v-img>
+    </router-link>
+    <v-img v-else class="white--text align-end" width="300" :src="project.preview">
       <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
     </v-img>
     <div v-if="details">
@@ -28,9 +33,6 @@
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
       <v-btn color="alert" icon @click="cloningDialog = true">
-        <v-icon>mdi-dna</v-icon>
-      </v-btn>
-      <v-btn color="alert" icon :to="`/store/happ/${project.id}`">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>

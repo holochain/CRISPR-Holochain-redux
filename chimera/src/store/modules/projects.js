@@ -21,6 +21,7 @@ export default {
       },
       {
         id: 'QmHashyCRSIPR',
+        happId: 'QmHashyCRISPR',
         name: 'CRISPR',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/CRISPR/preview.png'),
@@ -32,6 +33,7 @@ export default {
       },
       {
         id: 'Qmmorebigoriginhashes333',
+        happId: 'QmHashyOrigins',
         name: 'Origins',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
@@ -291,6 +293,7 @@ export default {
       },
       {
         id: 'Qmmorebigfrecklehashes333',
+        happId: 'QmHashyFreckles',
         name: 'Freckles',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Freckles/preview.png'),
@@ -346,70 +349,70 @@ export default {
           }
         ]
       },
-      {
-        id: 'Qmmorebigeventhashes333',
-        name: 'Events',
-        type: 'application',
-        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Events/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
-        contact: 'Philip Beadle',
-        mobile: '+61 999 999 999',
-        description: 'Synchronise your events with all of your networks.',
-        zomes: [
-          {
-            template: 'Origins',
-            templateTypeName: 'origin',
-            itemsTemplatesName: 'template1',
-            name: 'Events',
-            entryTypes: [
-              {
-                id: 'QmEventEntryTypeHash',
-                name: 'event',
-                template: 'list_anchor_types_1',
-                fields: [
-                  {
-                    id: 'QM234566777887',
-                    fieldName: 'description',
-                    fieldType: 'String',
-                    fieldDescription: 'Description of the event',
-                    required: false
-                  },
-                  {
-                    id: 'QM234566777dd887',
-                    fieldName: 'attending',
-                    fieldType: 'String',
-                    fieldDescription: 'Array of agentids attending the event',
-                    required: false
-                  }
-                ]
-              }
-            ],
-            anchorTypes: [
-              {
-                id: 'Qmlist_events1',
-                type: 'list_events',
-                text: '',
-                tag: ' ',
-                context: 'permanent',
-                links: [
-                  {
-                    entityId: 'QmEventEntryTypeHash',
-                    type: 'event_link',
-                    tag: 'created_at',
-                    context: 'exclusive'
-                  }
-                ],
-                anchors: []
-              }
-            ],
-            profileSpec: {
-              id: 'QmEventProfileSpecHash',
-              template: 'identify',
-              fields: []
-            }
-          }
-        ]
-      },
+      // {
+      //   id: 'Qmmorebigeventhashes333',
+      //   name: 'Events',
+      //   type: 'application',
+      //   preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Events/preview.png'),
+      //   folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+      //   contact: 'Philip Beadle',
+      //   mobile: '+61 999 999 999',
+      //   description: 'Synchronise your events with all of your networks.',
+      //   zomes: [
+      //     {
+      //       template: 'Origins',
+      //       templateTypeName: 'origin',
+      //       itemsTemplatesName: 'template1',
+      //       name: 'Events',
+      //       entryTypes: [
+      //         {
+      //           id: 'QmEventEntryTypeHash',
+      //           name: 'event',
+      //           template: 'list_anchor_types_1',
+      //           fields: [
+      //             {
+      //               id: 'QM234566777887',
+      //               fieldName: 'description',
+      //               fieldType: 'String',
+      //               fieldDescription: 'Description of the event',
+      //               required: false
+      //             },
+      //             {
+      //               id: 'QM234566777dd887',
+      //               fieldName: 'attending',
+      //               fieldType: 'String',
+      //               fieldDescription: 'Array of agentids attending the event',
+      //               required: false
+      //             }
+      //           ]
+      //         }
+      //       ],
+      //       anchorTypes: [
+      //         {
+      //           id: 'Qmlist_events1',
+      //           type: 'list_events',
+      //           text: '',
+      //           tag: ' ',
+      //           context: 'permanent',
+      //           links: [
+      //             {
+      //               entityId: 'QmEventEntryTypeHash',
+      //               type: 'event_link',
+      //               tag: 'created_at',
+      //               context: 'exclusive'
+      //             }
+      //           ],
+      //           anchors: []
+      //         }
+      //       ],
+      //       profileSpec: {
+      //         id: 'QmEventProfileSpecHash',
+      //         template: 'identify',
+      //         fields: []
+      //       }
+      //     }
+      //   ]
+      // },
       {
         id: 'Qmmorebighashes333',
         name: 'Notes',
@@ -617,6 +620,7 @@ export default {
       },
       {
         id: 'QmHashyKanban',
+        happId: 'QmHashykanban',
         name: 'Kanban',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Kanban/preview.png'),
@@ -721,6 +725,7 @@ export default {
       },
       {
         id: 'Qmmoreratings',
+        happId: 'QmHashyratings',
         name: 'Ratings',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Ratings/preview.png'),
