@@ -2,7 +2,7 @@
   <v-card class="ma-1" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
-      <v-list-item>
+      <v-list-item v-if="whois">
         <v-list-item-avatar size="24" class="pl-0 ml-0">
           <v-img :src="whois.info.avatar" />
         </v-list-item-avatar>
@@ -27,6 +27,8 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Website.
     </v-alert>
+    <v-card-text v-if="!isEditing" v-html="instanceWebsite.url" />
+    <v-text-field v-if="isEditing" v-model="instanceWebsite.url" />
     <v-card-text v-if="!isEditing" v-html="instanceWebsite.content" />
     <tiptap-vuetify v-if="isEditing" v-model="instanceWebsite.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">

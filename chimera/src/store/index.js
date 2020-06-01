@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { connect } from '@holochain/hc-web-client'
+import origins from '@/components/parts/Origins/OriginsStore'
+import notes from '@/components/parts/Notes/NotesStore'
+import freckles from '@/components/parts/Freckles/FrecklesStore'
+import tasks from '@/components/parts/Tasks/TasksStore'
 import websites from '@/components/parts/Websites/WebsitesStore'
 // NewImportModule
 import app from '@/store/modules/app'
@@ -19,15 +23,10 @@ import fieldNames from '@/store/modules/fieldNames'
 import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
-import origins from '@/components/parts/Origins/OriginsStore'
-import notes from '@/store/modules/notes'
-import freckles from '@/store/modules/freckles'
-import tasks from '@/store/modules/tasks'
 import zomes from '@/store/modules/zomes'
 import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
 import kanban from '@/store/modules/kanban'
-import events from '@/store/modules/events'
 import verify from '@/store/modules/verify'
 
 Vue.use(Vuex)
@@ -38,6 +37,10 @@ const store = new Vuex.Store({
     devHolochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
+    origins,
+    notes,
+    freckles,
+    tasks,
     websites,
     // NewModule
     app,
@@ -56,13 +59,8 @@ const store = new Vuex.Store({
     profiles,
     personas,
     snackbar,
-    origins,
-    notes,
-    freckles,
-    tasks,
     kanban,
     zomes,
-    events,
     verify,
     mediaLibrary,
     tracks

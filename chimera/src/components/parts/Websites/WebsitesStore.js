@@ -9,15 +9,23 @@ export default {
         websites: [
           {
             id: 'PartEditor1',
-            content: 'Content for Website 1'
+            content: 'Content for Website 1',
+            url: 'http://philt3r.rocks'
           },
           {
             id: 'PartEditor2',
-            content: 'Content for Website 2'
+            content: 'Content for Website 2',
+            url: 'http://mhairi.rocks'
           },
           {
             id: 'PartEditor3',
-            content: 'Content for Website 3'
+            content: 'Content for Website 3',
+            url: 'http://mittens.rocks'
+          },
+          {
+            id: 'PartEditor4',
+            content: 'Content for Website 4',
+            url: 'http://pherrol.rocks'
           }
         ]
       }

@@ -54,6 +54,9 @@
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
+          <v-btn color="action darken-1" text @click="cloningDialog = false">
+            Cancel
+          </v-btn>
           <v-btn color="action darken-1" text @click="addProject(clone); copyParts(); cloningDialog = false">
             Clone
           </v-btn>
