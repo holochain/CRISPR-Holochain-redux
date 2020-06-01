@@ -36,7 +36,6 @@ pub struct WebsiteEntry {
     uuid: String,
 	content: String,
 	url: String,
-	bio: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -50,7 +49,6 @@ pub struct Website {
     uuid: String,
 	content: String,
 	url: String,
-	bio: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -97,7 +95,6 @@ impl Website {
             uuid: entry.uuid,
 			content: entry.content,
 			url: entry.url,
-			bio: entry.bio,
         })
     }
 }
@@ -113,7 +110,6 @@ impl Website {
             uuid: entry.uuid,
 			content: entry.content,
 			url: entry.url,
-			bio: entry.bio,
         })
     }
 }

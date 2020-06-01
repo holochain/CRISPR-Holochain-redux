@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const createParams = {"base": "testbase", "website_input" : {"uuid":uuidv4(), "content": "String for testing","url": "String for testing","bio": "String for testing"}}
+const createParams = {"base": "testbase", "website_input" : {"uuid":uuidv4(), "content": "String for testing","url": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
   scenario("create_website", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
@@ -37,12 +37,12 @@ module.exports = (scenario, conductorConfig) => {
   scenario("anyone-update-website", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
     const create_website_result = await alice.call("websites", "websites", "create_website", createParams)
-    const update_website_result = await alice.call("websites", "websites", "update_website", {"id": create_website_result.Ok.id, "created_at": create_website_result.Ok.createdAt, "address": create_website_result.Ok.address, "website_input" : {"uuid": create_website_result.Ok.uuid, "content": "Update string for testing","url": "Update string for testing","bio": "Update string for testing"}})
+    const update_website_result = await alice.call("websites", "websites", "update_website", {"id": create_website_result.Ok.id, "created_at": create_website_result.Ok.createdAt, "address": create_website_result.Ok.address, "website_input" : {"uuid": create_website_result.Ok.uuid, "content": "Update string for testing","url": "Update string for testing"}})
     await s.consistency()
     const read_website_result = await alice.call("websites", "websites", "read_website", {"id": update_website_result.Ok.id, "created_at": update_website_result.Ok.createdAt})
     t.deepEqual(update_website_result, read_website_result)
 
-    const update_website_result_2 = await bob.call("websites", "websites", "update_website", {"id": update_website_result.Ok.id, "created_at": update_website_result.Ok.createdAt, "address": update_website_result.Ok.address, "website_input" : {"uuid": update_website_result.Ok.uuid, "content": "Update string for testing","url": "Update string for testing","bio": "Update string for testing"}})
+    const update_website_result_2 = await bob.call("websites", "websites", "update_website", {"id": update_website_result.Ok.id, "created_at": update_website_result.Ok.createdAt, "address": update_website_result.Ok.address, "website_input" : {"uuid": update_website_result.Ok.uuid, "content": "Update string for testing","url": "Update string for testing"}})
     await s.consistency()
     const read_website_result_2 = await alice.call("websites", "websites", "read_website", {"id": update_website_result_2.Ok.id, "created_at": update_website_result_2.Ok.createdAt})
     t.deepEqual(update_website_result_2, read_website_result_2)

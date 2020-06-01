@@ -26,14 +26,14 @@
             </v-tab-item>
             <v-tab-item key="2">
               <v-card v-resize="onResizeCodeStore">
-                <codemirror v-model="partCodeStore" :options="cmOptions" ref="cmPartCodeStore"></codemirror>
+                <codemirror v-model="partCodeStore" :options="cmOptionsJs" ref="cmPartCodeStore"></codemirror>
               </v-card>
             </v-tab-item>
           </v-tabs-items>
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="action darken-1" text @click="alert('Edit the UI directly is coming soon')">
+            <v-btn color="action darken-1" text @click="save">
               Save
             </v-btn>
           </v-card-actions>
@@ -77,7 +77,7 @@ import * as fs from 'fs'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/vue/vue.js'
-import 'codemirror/theme/base16-dark.css'
+import '../../components/vscode-dark.css'
 export default {
   name: 'PartEditor',
   components: {
@@ -88,12 +88,23 @@ export default {
       tab: 0,
       cmOptions: {
         tabSize: 4,
-        mode: 'javascript',
-        theme: 'base16-dark',
+        mode: 'vue',
+        theme: 'vscode-dark',
         readOnly: false,
         line: true
       },
-      help: false
+      cmOptionsJs: {
+        tabSize: 4,
+        mode: 'javascript',
+        theme: 'vscode-dark',
+        readOnly: false,
+        line: true
+      },
+      help: false,
+      partCodeItem: '',
+      partCodeItemFileName: '',
+      partCodeStore: '',
+      partCodeStoreFileName: ''
     }
   },
   methods: {
@@ -108,6 +119,20 @@ export default {
     },
     onResizeCodeStore () {
       this.partCodemirrorStore.setSize(null, window.innerHeight - 155)
+    },
+    save () {
+      if (this.partCodemirrorItem) {
+        fs.writeFileSync(this.partCodeItemFileName, this.partCodeItem, (err) => {
+          if (err) throw err
+          console.log('The file has been saved!')
+        })
+      }
+      if (this.partCodemirrorStore) {
+        fs.writeFileSync(this.partCodeStoreFileName, this.partCodeStore, (err) => {
+          if (err) throw err
+          console.log('The file has been saved!')
+        })
+      }
     }
   },
   computed: {
@@ -133,17 +158,19 @@ export default {
       })
       return components
     },
-    partCodeItem () {
-      console.log(this.files)
-      return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`, 'utf8')
-    },
     partCodeItems () {
       if (this.files[1]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`, 'utf8')
       return ''
-    },
-    partCodeStore () {
-      if (this.files[2]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`, 'utf8')
-      return ''
+    }
+  },
+  created () {
+    this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
+    this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    if (this.files[2]) {
+      this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
+      this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')
+    } else {
+      this.partCodeStore = ''
     }
   }
 }
