@@ -35,7 +35,7 @@ export default {
         id: 'Qmmorebigoriginhashes333',
         happId: 'QmHashyOrigins',
         name: 'Origins',
-        type: 'application',
+        type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
@@ -83,6 +83,63 @@ export default {
             ],
             profileSpec: {
               id: 'QmOriginProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
+          }
+        ]
+      },
+      {
+        id: 'Qmmorebigwebsitehashes333',
+        name: 'Websites',
+        type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Websites/preview.png'),
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Websites have a title, content and order.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Websites',
+            entryTypes: [
+              {
+                id: 'QmWebsiteEntryTypeHash',
+                name: 'website',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'content',
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the website',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_websites1',
+                type: 'list_websites',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmWebsiteEntryTypeHash',
+                    type: 'website_link',
+                    tag: 'created_at',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ],
+            profileSpec: {
+              id: 'QmWebsiteProfileSpecHash',
               template: 'identify',
               fields: []
             }
@@ -295,7 +352,7 @@ export default {
         id: 'Qmmorebigfrecklehashes333',
         happId: 'QmHashyFreckles',
         name: 'Freckles',
-        type: 'application',
+        type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Freckles/preview.png'),
         folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
@@ -815,18 +872,19 @@ export default {
             ]
           }
         ]
-      },
-      {
-        id: 'QmmorebigfAgentsOfAnarchyhash',
-        name: 'Agents Of Anarchy',
-        type: 'application',
-        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Agents Of Anarchy/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
-        contact: 'Philip Beadle',
-        mobile: '+61 999 999 999',
-        description: 'Agents of Anarchy is the idea that as we build social co-ordination hApps on Holochain, people will start to ghost existing extractive systems in favour of their own agency. No longer needing a "ruler" & becoming an Agent of Anarchy',
-        zomes: []
       }
+      // ,
+      // {
+      //   id: 'QmmorebigfAgentsOfAnarchyhash',
+      //   name: 'Agents Of Anarchy',
+      //   type: 'application',
+      //   preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Agents Of Anarchy/preview.png'),
+      //   folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+      //   contact: 'Philip Beadle',
+      //   mobile: '+61 999 999 999',
+      //   description: 'Agents of Anarchy is the idea that as we build social co-ordination hApps on Holochain, people will start to ghost existing extractive systems in favour of their own agency. No longer needing a "ruler" & becoming an Agent of Anarchy',
+      //   zomes: []
+      // }
     ]
   },
   actions: {

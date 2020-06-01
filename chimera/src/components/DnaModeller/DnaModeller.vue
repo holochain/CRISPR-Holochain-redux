@@ -116,7 +116,9 @@
                     </v-card>
                   </v-col>
                 </v-row>
-                <v-img width="640" :src="require('@/assets/icons/powered-by-holochain.png')" />
+                <div>
+                  <v-img width="450" :src="require('@/assets/icons/powered-by-holochain.png')" />
+                </div>
               </v-card-text>
             </v-card>
           </v-col>

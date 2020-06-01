@@ -51,7 +51,7 @@ export default {
         content: ''
       })
     },
-    ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors']),
+    ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
@@ -66,6 +66,8 @@ export default {
     }
   },
   created () {
+    this.agentAddress()
+    this.fetchProfiles()
     this.fetchOrigins(this.base)
   }
 }

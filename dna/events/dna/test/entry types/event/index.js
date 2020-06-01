@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const createParams = {"base": "testbase", "event_input" : {"uuid":uuidv4(), "title": "String for testing","shortDescription": "String for testing","flyer": "String for testing","recentSets": "String for testing","secondImage": "String for testing"}}
+const createParams = {"base": "testbase", "event_input" : {"uuid":uuidv4(), "content": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
   scenario("create_event", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
@@ -37,12 +37,12 @@ module.exports = (scenario, conductorConfig) => {
   scenario("anyone-update-event", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
     const create_event_result = await alice.call("events", "events", "create_event", createParams)
-    const update_event_result = await alice.call("events", "events", "update_event", {"id": create_event_result.Ok.id, "created_at": create_event_result.Ok.createdAt, "address": create_event_result.Ok.address, "event_input" : {"uuid": create_event_result.Ok.uuid, "title": "Update string for testing","shortDescription": "Update string for testing","flyer": "Update string for testing","recentSets": "Update string for testing","secondImage": "Update string for testing"}})
+    const update_event_result = await alice.call("events", "events", "update_event", {"id": create_event_result.Ok.id, "created_at": create_event_result.Ok.createdAt, "address": create_event_result.Ok.address, "event_input" : {"uuid": create_event_result.Ok.uuid, "content": "Update string for testing"}})
     await s.consistency()
     const read_event_result = await alice.call("events", "events", "read_event", {"id": update_event_result.Ok.id, "created_at": update_event_result.Ok.createdAt})
     t.deepEqual(update_event_result, read_event_result)
 
-    const update_event_result_2 = await bob.call("events", "events", "update_event", {"id": update_event_result.Ok.id, "created_at": update_event_result.Ok.createdAt, "address": update_event_result.Ok.address, "event_input" : {"uuid": update_event_result.Ok.uuid, "title": "Update string for testing","shortDescription": "Update string for testing","flyer": "Update string for testing","recentSets": "Update string for testing","secondImage": "Update string for testing"}})
+    const update_event_result_2 = await bob.call("events", "events", "update_event", {"id": update_event_result.Ok.id, "created_at": update_event_result.Ok.createdAt, "address": update_event_result.Ok.address, "event_input" : {"uuid": update_event_result.Ok.uuid, "content": "Update string for testing"}})
     await s.consistency()
     const read_event_result_2 = await alice.call("events", "events", "read_event", {"id": update_event_result_2.Ok.id, "created_at": update_event_result_2.Ok.createdAt})
     t.deepEqual(update_event_result_2, read_event_result_2)

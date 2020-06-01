@@ -2,7 +2,7 @@
   <section>
     <v-row no-gutters>
       <v-col cols="8">
-        <v-card height="88vh">
+        <v-card>
           <v-toolbar dark>
             <v-btn icon @click="$router.go(-1)">
               <v-icon>mdi-chevron-left</v-icon>
@@ -10,9 +10,26 @@
             <v-toolbar-title>{{project.name}} UI Code</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
-          <v-card v-resize="onResizeCode">
-            <codemirror v-model="partCode" :options="cmOptions" ref="cmPartCode"></codemirror>
-          </v-card>
+          <v-tabs v-model="tab" dark>
+            <v-tab v-for="(file, index) in files" :key="index">
+              {{file}}
+            </v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <v-tab-item key="0" v-resize="onResizeCodeItem">
+              <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+            </v-tab-item>
+            <v-tab-item key="1">
+              <v-card v-resize="onResizeCodeItems">
+                <codemirror v-model="partCodeItems" :options="cmOptions" ref="cmPartCodeItems"></codemirror>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item key="2">
+              <v-card v-resize="onResizeCodeStore">
+                <codemirror v-model="partCodeStore" :options="cmOptions" ref="cmPartCodeStore"></codemirror>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -45,14 +62,8 @@
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
           <v-row>
-            <v-col v-if="project.name === 'Tasks'" cols="12">
-              <tasks key="Demo Tasks" base="PartEditor"/>
-            </v-col>
-            <v-col v-if="project.name === 'Notes'" cols="12">
-              <notes key="Demo Notes" base="PartEditor" title="Demo"/>
-            </v-col>
-            <v-col v-if="project.name === 'Kanban'" cols="12">
-              <kanban key="Demo Kanban" base="PartEditor" title="Demo"/>
+            <v-col cols="12">
+              <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-col>
           </v-row>
         </v-card>
@@ -61,7 +72,7 @@
   </section>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import * as fs from 'fs'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -70,18 +81,16 @@ import 'codemirror/theme/base16-dark.css'
 export default {
   name: 'PartEditor',
   components: {
-    Notes: () => import('@/components/parts/Notes/Notes'),
-    Tasks: () => import('@/components/parts/Tasks/Tasks'),
-    Kanban: () => import('@/components/parts/Kanban/Kanban'),
     codemirror
   },
   data () {
     return {
+      tab: 0,
       cmOptions: {
         tabSize: 4,
         mode: 'javascript',
         theme: 'base16-dark',
-        readOnly: true,
+        readOnly: false,
         line: true
       },
       help: false
@@ -91,21 +100,50 @@ export default {
     alert (message) {
       alert(message)
     },
-    onResizeCode () {
-      this.partCodemirror.setSize(window.innerWidth - 625, window.innerHeight - 125)
+    onResizeCodeItem () {
+      this.partCodemirrorItem.setSize(null, window.innerHeight - 155)
+    },
+    onResizeCodeItems () {
+      this.partCodemirrorItems.setSize(null, window.innerHeight - 155)
+    },
+    onResizeCodeStore () {
+      this.partCodemirrorStore.setSize(null, window.innerHeight - 155)
     }
   },
   computed: {
+    ...mapState('auth', ['developer', 'agentAddress']),
     ...mapGetters('notes', ['listTasks']),
     ...mapGetters('portfolio', ['projectById']),
     project () {
       return this.projectById(this.$route.params.id)
     },
-    partCodemirror () {
-      return this.$refs.cmPartCode.codemirror
+    partCodemirrorItem () {
+      return this.$refs.cmPartCodeItem.codemirror
     },
-    partCode () {
-      return fs.readFileSync(`/Users/philipbeadle/holochain/CRISPR/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
+    partCodemirrorItems () {
+      return this.$refs.cmPartCodeItems.codemirror
+    },
+    partCodemirrorStore () {
+      return this.$refs.cmPartCodeStore.codemirror
+    },
+    files () {
+      const components = []
+      fs.readdirSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}`).forEach(file => {
+        components.push(file)
+      })
+      return components
+    },
+    partCodeItem () {
+      console.log(this.files)
+      return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`, 'utf8')
+    },
+    partCodeItems () {
+      if (this.files[1]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`, 'utf8')
+      return ''
+    },
+    partCodeStore () {
+      if (this.files[2]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`, 'utf8')
+      return ''
     }
   }
 }

@@ -1,14 +1,12 @@
 <template>
-  <v-card class="ma-5" dark>
+  <v-card class="ma-1" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
-        <v-list-item class="mb-1 ml-n3">
-        <v-progress-circular color="green" size="34" value="0" rotate="0">
-          <v-list-item-avatar class="ml-4" size="24">
-              <v-img :src="whois.info.avatar" />
-            </v-list-item-avatar>
-          </v-progress-circular>
-        <v-list-item-content class="ml-4">
+      <v-list-item>
+        <v-list-item-avatar size="24" class="pl-0 ml-0">
+          <v-img :src="whois.info.avatar" />
+        </v-list-item-avatar>
+        <v-list-item-content class="ml-0">
           <v-list-item-title>{{whois.name}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>

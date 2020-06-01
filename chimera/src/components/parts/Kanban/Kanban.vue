@@ -65,9 +65,9 @@ export default {
     }
   },
   created () {
-    this.fetchColumns(this.base)
-    this.fetchProfiles()
     this.agentAddress()
+    this.fetchProfiles()
+    this.fetchColumns(this.base)
   }
 }
 </script>

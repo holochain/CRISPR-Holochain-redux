@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const createParams = {"base": "testbase", "freckle_input" : {"uuid":uuidv4(), "content": "String for testing"}}
+const createParams = {"base": "testbase", "freckle_input" : {"uuid":uuidv4(), "content": "String for testing","location": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
   scenario("create_freckle", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
@@ -37,12 +37,12 @@ module.exports = (scenario, conductorConfig) => {
   scenario("anyone-update-freckle", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
     const create_freckle_result = await alice.call("freckles", "freckles", "create_freckle", createParams)
-    const update_freckle_result = await alice.call("freckles", "freckles", "update_freckle", {"id": create_freckle_result.Ok.id, "created_at": create_freckle_result.Ok.createdAt, "address": create_freckle_result.Ok.address, "freckle_input" : {"uuid": create_freckle_result.Ok.uuid, "content": "Update string for testing"}})
+    const update_freckle_result = await alice.call("freckles", "freckles", "update_freckle", {"id": create_freckle_result.Ok.id, "created_at": create_freckle_result.Ok.createdAt, "address": create_freckle_result.Ok.address, "freckle_input" : {"uuid": create_freckle_result.Ok.uuid, "content": "Update string for testing","location": "Update string for testing"}})
     await s.consistency()
     const read_freckle_result = await alice.call("freckles", "freckles", "read_freckle", {"id": update_freckle_result.Ok.id, "created_at": update_freckle_result.Ok.createdAt})
     t.deepEqual(update_freckle_result, read_freckle_result)
 
-    const update_freckle_result_2 = await bob.call("freckles", "freckles", "update_freckle", {"id": update_freckle_result.Ok.id, "created_at": update_freckle_result.Ok.createdAt, "address": update_freckle_result.Ok.address, "freckle_input" : {"uuid": update_freckle_result.Ok.uuid, "content": "Update string for testing"}})
+    const update_freckle_result_2 = await bob.call("freckles", "freckles", "update_freckle", {"id": update_freckle_result.Ok.id, "created_at": update_freckle_result.Ok.createdAt, "address": update_freckle_result.Ok.address, "freckle_input" : {"uuid": update_freckle_result.Ok.uuid, "content": "Update string for testing","location": "Update string for testing"}})
     await s.consistency()
     const read_freckle_result_2 = await alice.call("freckles", "freckles", "read_freckle", {"id": update_freckle_result_2.Ok.id, "created_at": update_freckle_result_2.Ok.createdAt})
     t.deepEqual(update_freckle_result_2, read_freckle_result_2)
