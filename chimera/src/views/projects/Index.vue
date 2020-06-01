@@ -8,7 +8,7 @@
       <span class="title">CRISPR Application Projects</span>
       <v-spacer></v-spacer>
       <v-btn color="action" icon @click="details=!details">
-        <v-icon>mdi-account-details-outline</v-icon>
+        <v-icon>mdi-details</v-icon>
       </v-btn>
       <v-btn color="action" icon @click="help=!help">
         <v-icon>mdi-help</v-icon>

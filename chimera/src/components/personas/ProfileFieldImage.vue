@@ -1,6 +1,12 @@
 <template>
   <v-card width="100%" flat class="ma-0 pa-0">
-    <v-col cols="12" class="ma-0 pa-0">
+    <v-col v-show="!edit" cols="12" class="ma-0 pa-0">
+      <v-img v-if="this.profileFieldValue.ui === 'image'" :src="profileData.value" />
+      <v-list-item-avatar v-if="this.profileFieldValue.ui === 'thumbnail'">
+        <img :src="profileData.value">
+      </v-list-item-avatar>
+    </v-col>
+    <v-col v-show="edit" cols="12" class="ma-0 pa-0">
       <v-combobox
         v-model="profileData"
         :items="fieldTypeList"
@@ -68,6 +74,7 @@ export default {
   components: {
     VImageInput
   },
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue', 'edit'],
   data () {
     return {
       fieldTypeList: [],
@@ -123,15 +130,10 @@ export default {
       this.profileData = null
     }
   },
-  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue'],
   watch: {
     selectedPersona (response) {
-      console.log(response)
+      // console.log(response)
     }
   }
 }
 </script>
-
-<style lang="sass">
-  //
-</style>

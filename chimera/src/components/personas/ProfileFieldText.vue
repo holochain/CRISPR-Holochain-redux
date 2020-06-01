@@ -1,6 +1,9 @@
 <template>
   <v-card width="100%" flat class="ma-0 pa-0">
-    <v-col cols="12" class="ma-0 pa-0">
+    <v-col v-show="!edit" cols="12" class="ma-0 pa-0">
+      {{profileData.value}}
+    </v-col>
+    <v-col v-show="edit" cols="12" class="ma-0 pa-0">
       <v-combobox
         ref="combobox"
         v-model="profileData"
@@ -34,7 +37,7 @@ export default {
   name: 'ProfileFieldText',
   components: {
   },
-  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue'],
+  props: ['personas', 'fieldType', 'profileName', 'profileFieldValue', 'edit'],
   data () {
     return {
       fieldTypeList: [],
@@ -105,7 +108,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-  //
-</style>
