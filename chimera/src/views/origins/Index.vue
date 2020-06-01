@@ -6,7 +6,7 @@
 export default {
   name: 'OriginsView',
   components: {
-    Origins: () => import('@/components/parts/Origins/Origins')
+    Origins: () => import('@/components/parts/Origins/Origins.vue')
   }
 }
 </script>

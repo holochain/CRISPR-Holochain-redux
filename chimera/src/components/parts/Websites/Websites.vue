@@ -23,21 +23,9 @@
         </v-col>
       </v-row>
     </v-alert>
-    <v-col cols="12" v-for="origin in origins" :key="origin.id">
-      <origin :key="origin.id" :base="base" :origin="origin">
-        <v-menu open-on-hover bottom offset-y>
-          <template v-slot:activator="{ on }">
-            <v-avatar left v-if="chimera">
-              <v-icon small v-on="on">mdi-dna</v-icon>
-            </v-avatar>
-          </template>
-          <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </origin>
+    <v-col cols="12" v-for="website in websites" :key="website.id">
+      <website :key="website.id" :base="base" :website="website">
+      </website>
     </v-col>
     <slot></slot>
   </v-card>
@@ -45,35 +33,42 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Origins',
+  name: 'Websites',
   components: {
-    Origin: () => import('./Origin')
+    PartManager: () => import('@/components/chimera/PartManager'),
+    Website: () => import('./Website')
   },
   props: ['base', 'title'],
   data () {
-    return {}
+    return {
+      help: false
+    }
   },
   methods: {
     add () {
-      this.origins.splice(0, 0, {
+      this.websites.splice(0, 0, {
+        id: 'new',
         content: ''
       })
     },
-    ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors'])
+    ...mapActions('websites', ['fetchWebsites', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('origins', ['errors']),
-    ...mapGetters('origins', ['listOrigins', 'listErrors']),
-    notes () {
-      return this.listOrigins(this.base)
+    ...mapState('websites', ['errors']),
+    ...mapGetters('websites', ['listWebsites', 'listErrors']),
+    websites () {
+      return this.listWebsites(this.base)
     },
     errors () {
       return this.listErrors(this.base)
     }
   },
   created () {
-    this.fetchOrigins(this.base)
+    this.agentAddress()
+    this.fetchProfiles()
+    this.fetchWebsites(this.base)
   }
 }
 </script>

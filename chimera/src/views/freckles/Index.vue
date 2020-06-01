@@ -30,7 +30,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Freckles',
   components: {
-    Freckle: () => import('@/components/parts/Freckle/Freckle')
+    Freckle: () => import('@/components/parts/Freckles/Freckle')
   },
   data () {
     return {

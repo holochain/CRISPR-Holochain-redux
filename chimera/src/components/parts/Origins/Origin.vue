@@ -1,5 +1,5 @@
 <template>
-  <v-card class="ma-5" dark>
+  <v-card class="ma-1" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
       <v-list-item>

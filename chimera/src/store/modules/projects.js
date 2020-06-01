@@ -90,6 +90,63 @@ export default {
         ]
       },
       {
+        id: 'Qmmorebigwebsitehashes333',
+        name: 'Websites',
+        type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Websites/preview.png'),
+        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Websites have a title, content and order.',
+        zomes: [
+          {
+            template: 'Origins',
+            templateTypeName: 'origin',
+            itemsTemplatesName: 'template1',
+            name: 'Websites',
+            entryTypes: [
+              {
+                id: 'QmWebsiteEntryTypeHash',
+                name: 'website',
+                template: 'list_anchor_types_1',
+                fields: [
+                  {
+                    id: 'QM234566777887',
+                    fieldName: 'content',
+                    fieldType: 'String',
+                    fieldDescription: 'Main body of the website',
+                    required: false
+                  }
+                ]
+              }
+            ],
+            anchorTypes: [
+              {
+                id: 'Qmlist_websites1',
+                type: 'list_websites',
+                text: '',
+                tag: ' ',
+                context: 'permanent',
+                links: [
+                  {
+                    entityId: 'QmWebsiteEntryTypeHash',
+                    type: 'website_link',
+                    tag: 'created_at',
+                    context: 'exclusive'
+                  }
+                ],
+                anchors: []
+              }
+            ],
+            profileSpec: {
+              id: 'QmWebsiteProfileSpecHash',
+              template: 'identify',
+              fields: []
+            }
+          }
+        ]
+      },
+      {
         id: 'QmHashyCuratedFields',
         name: 'Curated Fields',
         type: 'application',

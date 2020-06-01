@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { connect } from '@holochain/hc-web-client'
-
-// Modules
+import websites from '@/components/parts/Websites/WebsitesStore'
+// NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
 import downloads from '@/store/modules/downloads'
@@ -19,7 +19,7 @@ import fieldNames from '@/store/modules/fieldNames'
 import profiles from '@/store/modules/profiles'
 import personas from '@/store/modules/personas'
 import snackbar from '@/store/modules/snackbar'
-import origins from '@/store/modules/origins'
+import origins from '@/components/parts/Origins/OriginsStore'
 import notes from '@/store/modules/notes'
 import freckles from '@/store/modules/freckles'
 import tasks from '@/store/modules/tasks'
@@ -38,6 +38,8 @@ const store = new Vuex.Store({
     devHolochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
+    websites,
+    // NewModule
     app,
     auth,
     downloads,

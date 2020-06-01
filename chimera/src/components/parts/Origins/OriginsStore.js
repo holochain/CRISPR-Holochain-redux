@@ -14,6 +14,10 @@ export default {
           {
             id: 'PartEditor2',
             content: 'Content for Origin 2'
+          },
+          {
+            id: 'PartEditor3',
+            content: 'Content for Origin 3'
           }
         ]
       }
