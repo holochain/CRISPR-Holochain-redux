@@ -8,11 +8,11 @@ export default {
         base: 'PartEditor',
         freckles: [
           {
-            id: 'PartEditor',
+            id: 'PartEditor1',
             content: 'Content for Freckle 1'
           },
           {
-            id: 'PartEditor',
+            id: 'PartEditor2',
             content: 'Content for Freckle 2'
           }
         ]

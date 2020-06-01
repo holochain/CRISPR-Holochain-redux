@@ -34,11 +34,7 @@ const EVENT_ENTRY_NAME: &str = "event";
 #[serde(rename_all = "camelCase")]
 pub struct EventEntry {
     uuid: String,
-	title: String,
-	short_description: String,
-	flyer: String,
-	recent_sets: String,
-	second_image: String,
+	content: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -50,11 +46,7 @@ pub struct Event {
     address: Address,
     updated_at: Iso8601,
     uuid: String,
-	title: String,
-	short_description: String,
-	flyer: String,
-	recent_sets: String,
-	second_image: String,
+	content: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -99,11 +91,7 @@ impl Event {
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
-			title: entry.title,
-			short_description: entry.short_description,
-			flyer: entry.flyer,
-			recent_sets: entry.recent_sets,
-			second_image: entry.second_image,
+			content: entry.content,
         })
     }
 }
@@ -117,11 +105,7 @@ impl Event {
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
-			title: entry.title,
-			short_description: entry.short_description,
-			flyer: entry.flyer,
-			recent_sets: entry.recent_sets,
-			second_image: entry.second_image,
+			content: entry.content,
         })
     }
 }

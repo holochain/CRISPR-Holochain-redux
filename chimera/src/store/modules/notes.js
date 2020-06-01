@@ -8,13 +8,13 @@ export default {
         base: 'PartEditor',
         notes: [
           {
-            id: 'PartEditor',
+            id: 'PartEditor1',
             title: 'Demo Note 1',
             content: 'Content for Note 1',
             order: 1
           },
           {
-            id: 'PartEditor',
+            id: 'PartEditor2',
             title: 'Demo Note 2',
             content: 'Content for Note 2',
             order: 2

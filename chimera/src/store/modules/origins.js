@@ -3,7 +3,21 @@ export default {
   namespaced: true,
   state: {
     profiles: [],
-    baseOrigins: [],
+    baseOrigins: [
+      {
+        base: 'PartEditor',
+        origins: [
+          {
+            id: 'PartEditor1',
+            content: 'Content for Origin 1'
+          },
+          {
+            id: 'PartEditor2',
+            content: 'Content for Origin 2'
+          }
+        ]
+      }
+    ],
     errors: []
   },
   mutations: {

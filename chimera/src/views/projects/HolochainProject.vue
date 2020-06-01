@@ -26,13 +26,13 @@
       <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/part/${project.id}`">
+      <v-btn v-if="project.type === 'part'" color="action" icon :to="`/part/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/project/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-      <v-btn color="alert" icon @click="cloningDialog = true">
+      <v-btn v-if="project.type === 'part'" color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>

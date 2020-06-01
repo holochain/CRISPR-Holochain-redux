@@ -35,6 +35,7 @@ const FRECKLE_ENTRY_NAME: &str = "freckle";
 pub struct FreckleEntry {
     uuid: String,
 	content: String,
+	location: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -47,6 +48,7 @@ pub struct Freckle {
     updated_at: Iso8601,
     uuid: String,
 	content: String,
+	location: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -92,6 +94,7 @@ impl Freckle {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			content: entry.content,
+			location: entry.location,
         })
     }
 }
@@ -106,6 +109,7 @@ impl Freckle {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			content: entry.content,
+			location: entry.location,
         })
     }
 }

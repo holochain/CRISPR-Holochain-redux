@@ -10,9 +10,23 @@
             <v-toolbar-title>{{project.name}} UI Code</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
-          <v-card v-resize="onResizeCode">
-            <codemirror v-model="partCode" :options="cmOptions" ref="cmPartCode"></codemirror>
-          </v-card>
+          <v-tabs v-model="tab" dark>
+            <v-tab v-for="(file, index) in files" :key="index">
+              {{file}}
+            </v-tab>
+          </v-tabs>
+          <v-tabs-items v-model="tab">
+            <v-tab-item key="0">
+              <v-card v-resize="onResizeCode">
+                <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+              </v-card>
+            </v-tab-item>
+            <v-tab-item key="1">
+              <v-card v-resize="onResizeCode">
+                <codemirror v-model="partCodeItems" :options="cmOptions" ref="cmPartCodeItems"></codemirror>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
           <v-spacer></v-spacer>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -45,14 +59,8 @@
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
           <v-row>
-            <v-col v-if="project.name === 'Tasks'" cols="12">
-              <tasks key="Demo Tasks" base="PartEditor"/>
-            </v-col>
-            <v-col v-if="project.name === 'Notes'" cols="12">
-              <notes key="Demo Notes" base="PartEditor" title="Demo"/>
-            </v-col>
-            <v-col v-if="project.name === 'Kanban'" cols="12">
-              <kanban key="Demo Kanban" base="PartEditor" title="Demo"/>
+            <v-col cols="12">
+              <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-col>
           </v-row>
         </v-card>
@@ -61,7 +69,7 @@
   </section>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import * as fs from 'fs'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -70,13 +78,11 @@ import 'codemirror/theme/base16-dark.css'
 export default {
   name: 'PartEditor',
   components: {
-    Notes: () => import('@/components/parts/Notes/Notes'),
-    Tasks: () => import('@/components/parts/Tasks/Tasks'),
-    Kanban: () => import('@/components/parts/Kanban/Kanban'),
     codemirror
   },
   data () {
     return {
+      tab: 0,
       cmOptions: {
         tabSize: 4,
         mode: 'javascript',
@@ -92,20 +98,38 @@ export default {
       alert(message)
     },
     onResizeCode () {
-      this.partCodemirror.setSize(window.innerWidth - 625, window.innerHeight - 125)
+      this.partCodemirrorItem.setSize(window.innerWidth - 625, window.innerHeight - 125)
+      this.partCodemirrorItems.setSize(window.innerWidth - 625, window.innerHeight - 125)
     }
   },
   computed: {
+    ...mapState('auth', ['developer', 'agentAddress']),
     ...mapGetters('notes', ['listTasks']),
     ...mapGetters('portfolio', ['projectById']),
     project () {
       return this.projectById(this.$route.params.id)
     },
-    partCodemirror () {
-      return this.$refs.cmPartCode.codemirror
+    partCodemirrorItem () {
+      return this.$refs.cmPartCodeItem.codemirror
     },
-    partCode () {
-      return fs.readFileSync(`/Users/philipbeadle/holochain/CRISPR/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
+    partCodemirrorItems () {
+      return this.$refs.cmPartCodeItems.codemirror
+    },
+    files () {
+      const components = []
+      fs.readdirSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}`).forEach(file => {
+        console.log(file)
+        components.push(file)
+      })
+      return components
+    },
+    partCodeItem () {
+      console.log(this.files)
+      return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`, 'utf8')
+    },
+    partCodeItems () {
+      if (this.files[1]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`, 'utf8')
+      return ''
     }
   }
 }
