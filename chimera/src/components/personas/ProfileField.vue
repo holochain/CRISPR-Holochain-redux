@@ -2,8 +2,8 @@
   <v-tooltip bottom content-class="mt-n5">
   <template v-slot:activator="{ on }">
     <v-card width="100%" flat class="ma-0 pa-0" v-on="on">
-      <profile-field-image :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue" :fieldType="profileFieldValue.ui" v-if="showThumbnail || showImage"/>
-      <profile-field-text :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue" :fieldType="profileFieldValue.ui" @profile-field-changed="fieldChanged" v-if="showTextField || showTextArea"/>
+      <profile-field-image :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue" :fieldType="profileFieldValue.ui" :edit="edit" v-if="showThumbnail || showImage"/>
+      <profile-field-text :personas="personas" :profileName="profileName" :profileFieldValue="profileFieldValue" :fieldType="profileFieldValue.ui" :edit="edit" @profile-field-changed="fieldChanged" v-if="showTextField || showTextArea"/>
     </v-card>
   </template>
   <span>{{this.profileFieldValue.description}}</span>
@@ -20,7 +20,7 @@ export default {
     ProfileFieldImage,
     ProfileFieldText
   },
-  props: ['profileName', 'profileFieldValue'],
+  props: ['profileName', 'profileFieldValue', 'edit'],
   data () {
     return {
       showTextField: false,
