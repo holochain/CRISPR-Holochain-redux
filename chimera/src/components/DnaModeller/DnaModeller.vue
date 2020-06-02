@@ -380,7 +380,7 @@ export default {
       }
     },
     exportFiles () {
-      writeFiles(this.items[0], this.project.folder)
+      writeFiles(this.items[0], this.developer.folder)
     }
   },
   computed: {

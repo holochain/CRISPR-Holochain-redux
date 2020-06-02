@@ -103,6 +103,8 @@ export default {
       help: false,
       partCodeItem: '',
       partCodeItemFileName: '',
+      partCodeItems: '',
+      partCodeItemsFilename: '',
       partCodeStore: '',
       partCodeStoreFileName: ''
     }
@@ -123,6 +125,12 @@ export default {
     save () {
       if (this.partCodemirrorItem) {
         fs.writeFileSync(this.partCodeItemFileName, this.partCodeItem, (err) => {
+          if (err) throw err
+          console.log('The file has been saved!')
+        })
+      }
+      if (this.partCodemirrorItems) {
+        fs.writeFileSync(this.partCodeItemsFileName, this.partCodeItems, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
         })
@@ -157,15 +165,17 @@ export default {
         components.push(file)
       })
       return components
-    },
-    partCodeItems () {
-      if (this.files[1]) return fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`, 'utf8')
-      return ''
     }
   },
   created () {
     this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
     this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    if (this.files[1]) {
+      this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
+      this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')
+    } else {
+      this.partCodeItems = ''
+    }
     if (this.files[2]) {
       this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
       this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')

@@ -1,7 +1,7 @@
 <template>
   <v-card class="ma-5">
     <router-link icon v-if="project.happId" :to="`/store/${project.type}/${project.happId}`">
-      <v-img class="white--text align-end" width="300" :src="project.preview">
+      <v-img class="white--text align-end" :src="project.preview">
         <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
       </v-img>
     </router-link>
@@ -9,12 +9,6 @@
       <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
     </v-img>
     <div v-if="details">
-      <v-card-subtitle class="pb-0">
-        {{ project.contact }}
-      </v-card-subtitle>
-      <v-card-subtitle class="pb-0">
-        {{ project.mobile }}
-      </v-card-subtitle>
       <v-card-text>
         <div class="text--primary">
           {{ project.description.substring(0, 90) }}...
@@ -26,13 +20,13 @@
       <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn v-if="project.type === 'part'" color="action" icon :to="`/part/${project.id}`">
+      <v-btn color="action" icon :to="`/part/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/project/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-      <v-btn v-if="project.type === 'part'" color="alert" icon @click="cloningDialog = true">
+      <v-btn color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>
@@ -42,7 +36,7 @@
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
         </v-toolbar>
         <v-row no-gutters align="start" justify="center">
-          <v-col v-if="project.type === 'part'" cols="12">
+          <v-col cols="12">
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Project Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
             <v-text-field class="ml-2 white--text" v-if="clone.zome" v-model="clone.zome.name" label="Zome Name" :hint="`A plural such as ${project.name} or Notes`" />
@@ -56,7 +50,7 @@
           <v-btn color="action darken-1" text @click="cloningDialog = false">
             Cancel
           </v-btn>
-          <v-btn color="action darken-1" text @click="addProject(clone); copyParts(); cloningDialog = false">
+          <v-btn color="action darken-1" text @click="saveProject(clone); copyParts(); cloningDialog = false">
             Clone
           </v-btn>
         </v-card-actions>
@@ -111,6 +105,7 @@ export default {
       default: function () {
         const project = JSON.parse(JSON.stringify(this.project))
         project.id = 'new'
+        console.log(project)
         return project
       }
     },
@@ -119,7 +114,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('projects', ['addProject']),
+    ...mapActions('projects', ['saveProject']),
     copyParts () {
       let listPart = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
       const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`

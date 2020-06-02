@@ -10,6 +10,8 @@ https://www.cleanpng.com/png-action-item-inventory-ico-service-tasks-icon-pictu-
 https://ya-webdesign.com/imgdownload.html
 https://www.google.com/search?q=website+icon+creative+commons&tbm=isch&ved=2ahUKEwjy7bOQ9NfpAhWPPCsKHYr5BKUQ2-cCegQIABAA&oq=website+icon+creative+commons&gs_lcp=CgNpbWcQAzoGCAAQCBAeUJgsWK0zYK01aABwAHgAgAHeAYgBggeSAQUwLjQuMZgBAKABAaoBC2d3cy13aXotaW1n&sclient=img&ei=fGPQXvK_KI_5rAGK85OoCg&bih=762&biw=1344#imgrc=6V-shCufmMH3hM
 
+https://commons.wikimedia.org/wiki/File:Noun_Project_projects_icon_1327109_cc.svg
+
 # Images
 https://commons.wikimedia.org/wiki/File:DNA_replication_en.svg
 https://www.google.com/search?q=dna&tbm=isch&ved=2ahUKEwjtqrrg9tLpAhX_1HMBHW8MDVAQ2-cCegQIABAA&oq=dna&gs_lcp=CgNpbWcQAzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzIECAAQQzoCCABQ6L4BWP7AAWCWxQFoAHAAeACAAfACiAG5BpIBBzAuMS4xLjGYAQCgAQGqAQtnd3Mtd2l6LWltZw&sclient=img&ei=JsfNXu3_K_-pz7sP75i0gAU&bih=762&biw=1344#imgrc=KtBzYAGTuWrgSM
