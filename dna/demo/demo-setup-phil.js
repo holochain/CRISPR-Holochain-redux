@@ -9,7 +9,7 @@ const client = new net.Socket()
 
 function base64_encode(file) {
     var bitmap = fs.readFileSync(file);
-    return `data:image/png;base64, ${new Buffer(bitmap).toString('base64')}`
+    return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
 }
 
 let startedConductor = false
@@ -23,18 +23,6 @@ const tryConnection = () => {
         startedConductor = true
         devHolochainConnection.then(({ callZome }) => {
           console.log('started_demo_setup_phil')
-
-          // callZome('origins', 'origins', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philt3r.png'), handle: 'philip.beadle'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          // })
-          // callZome('kanban', 'kanban', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philt3r.png'), handle: 'philip.beadle'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('philKanbanProfile', res)
-          // })
-          // callZome('freckles', 'freckles', 'create_profile')({ base: '', profile_input : {agentId:'', avatar: base64_encode('./assets/philip.beadle.png'), handle: 'phil'}}).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('philfrecklesProfile', res)
-          // })
           callZome('notes', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'Phils Note 2', content: 'Get this from demo again', order: 1 } }).then((result) => {
             const res = JSON.parse(result)
             console.log('ok_demo_setup_phil', res)
@@ -43,7 +31,6 @@ const tryConnection = () => {
               console.log('ok_demo_setup_phil_task', res)
             })
           })
-
           callZome('freckles', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>Hows this for a freckle??</h1><p>Rad</p>` } }).then((result) => {
             const res = JSON.parse(result)
             console.log('ok_demo_setup_phil_freckle', res)

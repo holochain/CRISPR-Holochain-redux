@@ -13,7 +13,6 @@ export default {
         name: 'Chimera',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Chimera/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Agent centric personalised Holochain experience for using & configuring hApps includes perrsonal information management and P2P communication.',
@@ -25,7 +24,6 @@ export default {
         name: 'CRISPR',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/CRISPR/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Holochain DNA editing system that enables cloning of DNA patterns to create new DNAs. Agents can configure new DNA to store information and behave the way they want. Uses Holochain as a git like source control with branching, permission control and traceability of changes.',
@@ -37,7 +35,6 @@ export default {
         name: 'Origins',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Origins have a title, content and order.',
@@ -147,7 +144,6 @@ export default {
         name: 'Curated Fields',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Curated Fields/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'A managed list of fields that make it simple to map profile fields to personas.',
@@ -204,7 +200,6 @@ export default {
         name: 'Personal Information',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Personal Information/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Keep control of your personal information, know which apps are using it and update your info in one location.',
@@ -346,7 +341,6 @@ export default {
         name: 'Freckles',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Freckles/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Freckles have a title, content and order. Set the permissions at build time to control who can update and delete freckles.',
@@ -463,7 +457,6 @@ export default {
         name: 'Notes',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Notes/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Notes have a title, content and order. Set the permissions at build time to control who can update and delete notes.',
@@ -567,7 +560,6 @@ export default {
         name: 'Tasks',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Tasks/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'A clone of Notes DNA. Tasks have title, done and order.',
@@ -665,7 +657,6 @@ export default {
         name: 'Kanban',
         type: 'application',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Kanban/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'A kanban board that you can kanban any type of part using the slot.',
@@ -768,7 +759,6 @@ export default {
         name: 'Ratings',
         type: 'part',
         preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Ratings/preview.png'),
-        folder: '/Users/philipbeadle/holochain/CRISPR/dna',
         contact: 'Philip Beadle',
         mobile: '+61 999 999 999',
         description: 'Ratings store a number between 0 & x',
@@ -851,6 +841,101 @@ export default {
               ]
             }
           ]
+        }
+      },
+      {
+        id: 'QmProjectsHash',
+        name: 'Projects',
+        type: 'part',
+        preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Projects/preview.png'),
+        contact: 'Philip Beadle',
+        mobile: '+61 999 999 999',
+        description: 'Projects',
+        zome: {
+          template: 'Origins',
+          templateTypeName: 'origin',
+          itemsTemplatesName: 'template1',
+          name: 'Projects',
+          entryTypes: [
+            {
+              id: 'QmProjectEntryTypeHash',
+              name: 'project',
+              template: 'list_anchor_types_1',
+              fields: [
+                {
+                  id: 'Qm1333',
+                  fieldName: 'name',
+                  fieldType: 'String',
+                  fieldDescription: 'Title of the project',
+                  required: true
+                },
+                {
+                  id: 'QM234566777887',
+                  fieldName: 'description',
+                  fieldType: 'String',
+                  fieldDescription: 'What new characteristics are you giving your clone?',
+                  required: false
+                },
+                {
+                  id: 'QM234566777887',
+                  fieldName: 'preview',
+                  fieldType: 'String',
+                  fieldDescription: 'Image for the project',
+                  required: false
+                },
+                {
+                  id: 'QM2345667778871',
+                  fieldName: 'order',
+                  fieldType: 'u32',
+                  fieldDescription: '',
+                  required: false
+                }
+              ]
+            }
+          ],
+          anchorTypes: [
+            {
+              id: 'Qmlist_projects1',
+              type: 'list_projects',
+              text: '',
+              tag: ' ',
+              context: 'permanent',
+              links: [],
+              anchors: [
+                {
+                  id: 'Qmlist_Qmhashproject1',
+                  type: 'list_projects',
+                  text: 'Parts',
+                  links: [
+                    {
+                      entityId: 'QmProjectEntryTypeHash',
+                      type: 'project_link',
+                      tag: ' ',
+                      context: 'exclusive'
+                    }
+                  ]
+                },
+                {
+                  id: 'Qmlist_Qmhashproject2',
+                  type: 'list_projects',
+                  text: 'Applications',
+                  links: [
+                    {
+                      entityId: 'QmProjectEntryTypeHash',
+                      type: 'project_link',
+                      tag: ' ',
+                      context: 'exclusive'
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          profileSpec: {
+            id: 'QmKanbanProfileSpecHash',
+            template: 'identify',
+            fields: []
+          }
         }
       }
       // ,

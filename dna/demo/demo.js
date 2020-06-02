@@ -22,7 +22,7 @@ const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna
 const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const logger = {
-  type: 'debug',
+  type: 'error',
   rules: {
     rules: [
       {
@@ -57,23 +57,7 @@ const logger = {
   },
   state_dump: true
 }
-const orchestrator = new Orchestrator({
-  middleware: combine(
-    // use the tape harness to run the tests, injects the tape API into each scenario
-    // as the second argument
-    tapeExecutor(require('tape')),
-
-    // specify that all "players" in the test are on the local machine, rather than
-    // on remote machines
-    localOnly,
-
-    // squash all instances from all conductors down into a single conductor,
-    // for in-memory testing purposes.
-    // Remove this middleware for other "real" network types which can actually
-    // send messages across conductors
-    // singleConductor,
-  )
-})
+const orchestrator = new Orchestrator({middleware: combine(tapeExecutor(require('tape')), localOnly,)})
 
 const originsDna = Config.dna(originsDnaPath, 'origins-test')
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
@@ -252,6 +236,9 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('markKanbanProfile', markKanbanProfile)
   const lucyKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
   console.log('lucyKanbanProfile', lucyKanbanProfile)
+
+
+
 
   const originDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()
@@ -525,7 +512,7 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   const philFreckle2 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>`}})
   console.log('philFreckle2', philFreckle2)
 
-   await s.consistency()
+  await s.consistency()
 })
 
 orchestrator.run()
