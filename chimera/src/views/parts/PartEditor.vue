@@ -62,7 +62,7 @@
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
           <v-row>
-            <v-col cols="12">
+            <v-col>
               <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-col>
           </v-row>
@@ -91,13 +91,14 @@ export default {
         mode: 'vue',
         theme: 'vscode-dark',
         readOnly: false,
-        line: true
+        lineNumbers: true
       },
       cmOptionsJs: {
         tabSize: 4,
         mode: 'javascript',
         theme: 'vscode-dark',
         readOnly: false,
+        lineNumbers: true,
         line: true
       },
       help: false,
@@ -151,13 +152,25 @@ export default {
       return this.projectById(this.$route.params.id)
     },
     partCodemirrorItem () {
-      return this.$refs.cmPartCodeItem.codemirror
+      if (this.$refs.cmPartCodeItem) {
+        return this.$refs.cmPartCodeItem.codemirror
+      } else {
+        return undefined
+      }
     },
     partCodemirrorItems () {
-      return this.$refs.cmPartCodeItems.codemirror
+      if (this.$refs.cmPartCodeItems) {
+        return this.$refs.cmPartCodeItems.codemirror
+      } else {
+        return undefined
+      }
     },
     partCodemirrorStore () {
-      return this.$refs.cmPartCodeStore.codemirror
+      if (this.$refs.cmPartCodeStore) {
+        return this.$refs.cmPartCodeStore.codemirror
+      } else {
+        return undefined
+      }
     },
     files () {
       const components = []

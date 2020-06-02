@@ -27,7 +27,7 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects base="Parts" title="Part Projects"/>
+        <projects base="Parts" title="Part Projects" :cloneable="true" />
       </v-col>
     </v-row>
   </section>

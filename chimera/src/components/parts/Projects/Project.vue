@@ -1,7 +1,7 @@
 <template>
-  <v-card class="ma-5">
+  <v-card class="ma-5" dark min-width="200" max-width="500" elevation="5">
     <router-link icon v-if="project.happId" :to="`/store/${project.type}/${project.happId}`">
-      <v-img class="white--text align-end" :src="project.preview">
+      <v-img class="white--text align-end" min-width="200" max-width="500" contain :src="project.preview">
         <v-card-title class="text-no-wrap">{{ project.name }}</v-card-title>
       </v-img>
     </router-link>
@@ -20,17 +20,17 @@
       <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/part/${project.id}`">
+      <v-btn v-if="cloneable" color="action" icon :to="`/part/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/project/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-      <v-btn color="alert" icon @click="cloningDialog = true">
+      <v-btn v-if="cloneable" color="alert" icon @click="cloningDialog = true">
         <v-icon>mdi-dna</v-icon>
       </v-btn>
     </v-card-actions>
-    <v-dialog v-model="cloningDialog" max-width="700px">
+    <v-dialog v-if="cloneable" v-model="cloningDialog" max-width="700px">
       <v-card flat>
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
@@ -105,12 +105,15 @@ export default {
       default: function () {
         const project = JSON.parse(JSON.stringify(this.project))
         project.id = 'new'
-        console.log(project)
         return project
       }
     },
     details: {
       type: Boolean
+    },
+    cloneable: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -119,9 +122,7 @@ export default {
       let listPart = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
       const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`
       ensureDirectoryExistence(listPartCloneFileName)
-      console.log(listPart)
       listPart = replacePlaceHolders(listPart, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
-      console.log(listPart, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
       fs.writeFileSync(listPartCloneFileName, listPart, (err) => {
         if (err) throw err
         console.log('The file has been saved!')

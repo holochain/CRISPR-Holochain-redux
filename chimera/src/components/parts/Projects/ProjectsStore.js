@@ -13,7 +13,7 @@ export default {
         base: 'PartEditor',
         projects: [
           {
-            id: 'Qmmorebigoriginhashes333',
+            id: 'PartEditor1',
             happId: 'QmHashyOrigins',
             name: 'Origins',
             preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
@@ -65,7 +65,7 @@ export default {
             }
           },
           {
-            id: 'QmProjectsHash',
+            id: 'PartEditor2',
             name: 'Projects',
             preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Projects/preview.png'),
             description: 'Projects',
@@ -159,7 +159,7 @@ export default {
         ]
       },
       {
-        base: 'Applications',
+        base: 'Applications_',
         projects: [
           {
             id: 'QmHashyChimera',
@@ -418,7 +418,7 @@ export default {
         ]
       },
       {
-        base: 'Parts',
+        base: 'Parts_',
         projects: [
           {
             id: 'Qmmorebigoriginhashes333',
@@ -936,7 +936,7 @@ export default {
                       required: true
                     },
                     {
-                      id: 'QM234566777887',
+                      id: 'QM234566777887q',
                       fieldName: 'description',
                       fieldType: 'String',
                       fieldDescription: 'What new characteristics are you giving your clone?',
@@ -947,6 +947,13 @@ export default {
                       fieldName: 'preview',
                       fieldType: 'String',
                       fieldDescription: 'Image for the project',
+                      required: false
+                    },
+                    {
+                      id: 'QM23456677w',
+                      fieldName: 'zome',
+                      fieldType: 'String',
+                      fieldDescription: 'Zome definition',
                       required: false
                     },
                     {
@@ -1049,6 +1056,10 @@ export default {
     },
     setProjectsList (state, payload) {
       const base = state.baseProjects.find(b => b.base === payload.base)
+      payload.projects.forEach(p => {
+        p.zome = Object.assign({}, JSON.parse(p.zome))
+        p.preview = base64Encode(p.preview)
+      })
       if (base !== undefined) {
         base.projects = payload.projects
       } else {
@@ -1127,11 +1138,12 @@ export default {
       })
     },
     fetchProjects: ({ state, commit, rootState }, base) => {
+      // alert(JSON.stringify(state.baseProjects[0].projects[0].zome))
       if (base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'list_projects')({ base: base }).then((result) => {
           const res = JSON.parse(result)
-          // console.log(res)
+          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {

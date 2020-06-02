@@ -73,8 +73,8 @@
       </v-row>
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" md="3">
-        <project :key="project.id" :base="base" :project="project" :details="details">
+      <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" lg="2">
+        <project :key="project.id" :base="base" :project="project" :details="details" :cloneable="cloneable">
         </project>
       </v-col>
     </v-row>
@@ -94,7 +94,7 @@ export default {
       details: false
     }
   },
-  props: ['base', 'title'],
+  props: ['base', 'title', 'cloneable'],
   methods: {
     add () {
       this.projects.splice(0, 0, {
