@@ -16,8 +16,10 @@
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab">
-            <v-tab-item key="0" v-resize="onResizeCodeItem">
-              <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+            <v-tab-item key="0">
+              <v-card v-resize="onResizeCodeItem">
+                <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+              </v-card>
             </v-tab-item>
             <v-tab-item key="1">
               <v-card v-resize="onResizeCodeItems">
@@ -152,25 +154,13 @@ export default {
       return this.projectById(this.$route.params.id)
     },
     partCodemirrorItem () {
-      if (this.$refs.cmPartCodeItem) {
-        return this.$refs.cmPartCodeItem.codemirror
-      } else {
-        return undefined
-      }
+      return this.$refs.cmPartCodeItem.codemirror
     },
     partCodemirrorItems () {
-      if (this.$refs.cmPartCodeItems) {
-        return this.$refs.cmPartCodeItems.codemirror
-      } else {
-        return undefined
-      }
+      return this.$refs.cmPartCodeItems.codemirror
     },
     partCodemirrorStore () {
-      if (this.$refs.cmPartCodeStore) {
-        return this.$refs.cmPartCodeStore.codemirror
-      } else {
-        return undefined
-      }
+      return this.$refs.cmPartCodeStore.codemirror
     },
     files () {
       const components = []

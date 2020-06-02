@@ -50,7 +50,7 @@
           <v-btn color="action darken-1" text @click="cloningDialog = false">
             Cancel
           </v-btn>
-          <v-btn color="action darken-1" text @click="saveProject(clone); copyParts(); cloningDialog = false">
+          <v-btn color="action darken-1" text @click="saveProject({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
             Clone
           </v-btn>
         </v-card-actions>
@@ -148,7 +148,7 @@ export default {
       })
       const storeFile = `${this.developer.folder}/chimera/src/store/index.js`
       let vuexStore = fs.readFileSync(storeFile, 'utf8')
-      const importStore = `import ${this.clone.name} from '@/components/parts/${this.clone.name}/${this.clone.name}Store'\n`
+      const importStore = `import ${this.clone.name.toLowerCase()} from '@/components/parts/${this.clone.name}/${this.clone.name}Store'\n`
       const moduleStore = `${this.clone.name.toLowerCase()},\n    `
       const part1 = vuexStore.slice(0, vuexStore.indexOf('// NewImportModule'))
       const part2 = vuexStore.slice(vuexStore.indexOf('// NewImportModule'), vuexStore.indexOf('// NewModule'))

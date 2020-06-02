@@ -900,16 +900,16 @@ const tryConnection = () => {
             })
           })
 
-          // baseProjects[1].projects.forEach((p, index) => {
-          //   callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : {uuid:uuidv4(), name: p.name, description: p.description, preview: p.preview, zome: JSON.stringify(p.zome), order: index }})
-          //   .then((result) => {
-          //     const res = JSON.parse(result)
-          //     console.log('ok_demo_setup_phil_parts', res)
-          //   })
-          //   .catch(err =>{
-          //     console.log(err)
-          //   })
-          // })
+          baseProjects[1].projects.forEach((p, index) => {
+            callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : {uuid:uuidv4(), name: p.name, description: p.description, preview: p.preview, zome: JSON.stringify(p.zome), order: index }})
+            .then((result) => {
+              const res = JSON.parse(result)
+              console.log('ok_demo_setup_phil_parts', res)
+            })
+            .catch(err =>{
+              console.log(err)
+            })
+          })
         })
       }
     }
