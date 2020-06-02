@@ -35,7 +35,6 @@ const WEBSITE_ENTRY_NAME: &str = "website";
 pub struct WebsiteEntry {
     uuid: String,
 	content: String,
-	url: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -48,7 +47,6 @@ pub struct Website {
     updated_at: Iso8601,
     uuid: String,
 	content: String,
-	url: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -94,7 +92,6 @@ impl Website {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			content: entry.content,
-			url: entry.url,
         })
     }
 }
@@ -109,7 +106,6 @@ impl Website {
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
 			content: entry.content,
-			url: entry.url,
         })
     }
 }

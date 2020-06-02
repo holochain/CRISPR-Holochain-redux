@@ -329,7 +329,7 @@ export default {
       return state.zomes.find(z => z.base === base)
     },
     zomeByBaseIdFromTemplate: (state) => (project) => {
-      const zome = project.zomes[0]
+      const zome = project.zome
       const zomeTemplate = state.zomeTemplates.find(t => t.template === zome.template)
       const zomeItems = state.itemsTemplates.find(t => t.template === zome.itemsTemplatesName)
       const template = JSON.parse(JSON.stringify(zomeTemplate.zome))

@@ -391,8 +391,8 @@ export default {
     },
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
-      z.template = this.project.zomes[0].template
-      z.templateTypeName = this.project.zomes[0].templateTypeName
+      z.template = this.project.zome.template
+      z.templateTypeName = this.project.zome.templateTypeName
       return z
     },
     items () {
