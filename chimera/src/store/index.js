@@ -5,7 +5,6 @@ import origins from '@/components/parts/Origins/OriginsStore'
 import notes from '@/components/parts/Notes/NotesStore'
 import freckles from '@/components/parts/Freckles/FrecklesStore'
 import tasks from '@/components/parts/Tasks/TasksStore'
-import websites from '@/components/parts/Websites/WebsitesStore'
 // NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
@@ -41,7 +40,6 @@ const store = new Vuex.Store({
     notes,
     freckles,
     tasks,
-    websites,
     // NewModule
     app,
     auth,

@@ -8,12 +8,12 @@ export default {
         base: 'PartEditor',
         columns: [
           {
-            id: 'PartEditor',
+            id: 'PartEditor1',
             title: 'Dos   ',
             order: 1
           },
           {
-            id: 'PartEditor',
+            id: 'PartEditor2',
             title: 'Done',
             order: 3
           }

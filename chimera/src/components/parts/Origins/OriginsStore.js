@@ -130,7 +130,6 @@ export default {
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -144,7 +143,6 @@ export default {
       rootState.devHolochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res.Ok)
           if (res.Ok === undefined) {
             console.log(res)
           } else {

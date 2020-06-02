@@ -18,7 +18,7 @@
             </v-img>
         </v-col>
         <v-col cols="12" md="6">
-            <h1 class="display-2">Bio</h1>
+            <h1 class="display-2">Who Is @philt3r</h1>
             <span class="body-1">@philt3r is not a metaphor for a side affect, but rather a side affect of a metamorphosis. For a decade, he has planted smiles and swivelled dials along that great stretch of party paradise that is the east-coast of Australia. @philt3r’s sets started out spanning more genres than a well thought out German street parade, but now it's techno, phat, dark, dystopic TECHNO! @philt3r can read a crowd better than airport security, and take them further up than their overpriced tickets. But that's what we like about @philt3r, his lack of tickets on himself. So get your 'TECHNO!' on with @philt3r at your next attempt to escape reality!</span>
         </v-col>
     </v-row>

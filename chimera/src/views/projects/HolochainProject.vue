@@ -41,13 +41,12 @@
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
         </v-toolbar>
-        <v-card-subtitle>(This feature is incomplete at this time)</v-card-subtitle>
         <v-row no-gutters align="start" justify="center">
-          <v-col cols="12">
+          <v-col v-if="project.type === 'part'" cols="12">
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
-            <v-text-field class="ml-2 white--text" v-if="clone.zomes[0]" v-model="clone.zomes[0].name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
-            <v-text-field class="ml-2 white--text" v-if="clone.zomes[0]" v-model="clone.zomes[0].entryTypes[0].name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
+            <v-text-field class="ml-2 white--text" v-if="clone.zome" v-model="clone.zome.name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
+            <v-text-field class="ml-2 white--text" v-if="clone.zome" v-model="clone.zome.entryTypes[0].name" label="Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-image-input v-model="clone.preview" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="200" :image-width="200"/>
           </v-col>
         </v-row>
@@ -126,19 +125,19 @@ export default {
       const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`
       ensureDirectoryExistence(listPartCloneFileName)
       console.log(listPart)
-      listPart = replacePlaceHolders(listPart, this.project.zomes[0].entryTypes[0].name, this.clone.zomes[0].entryTypes[0].name)
-      console.log(listPart, this.project.zomes[0].entryTypes[0].name, this.clone.zomes[0].entryTypes[0].name)
+      listPart = replacePlaceHolders(listPart, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
+      console.log(listPart, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
       fs.writeFileSync(listPartCloneFileName, listPart, (err) => {
         if (err) throw err
         console.log('The file has been saved!')
       })
-      let part = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.zomes[0].entryTypes[0].name}.vue`, 'utf8')
-      let partCloneFileName = this.clone.zomes[0].entryTypes[0].name
+      let part = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.zome.entryTypes[0].name}.vue`, 'utf8')
+      let partCloneFileName = this.clone.zome.entryTypes[0].name
       partCloneFileName = partCloneFileName.charAt(0).toUpperCase() + partCloneFileName.substring(1)
       partCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${partCloneFileName}.vue`
       console.log(partCloneFileName)
       ensureDirectoryExistence(partCloneFileName)
-      part = replacePlaceHolders(part, this.project.zomes[0].entryTypes[0].name, this.clone.zomes[0].entryTypes[0].name)
+      part = replacePlaceHolders(part, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
       fs.writeFileSync(partCloneFileName, part, (err) => {
         if (err) throw err
         console.log('The file has been saved!')
@@ -146,15 +145,15 @@ export default {
       let store = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}Store.js`, 'utf8')
       const storeFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}Store.js`
       ensureDirectoryExistence(storeFileName)
-      store = replacePlaceHolders(store, this.project.zomes[0].entryTypes[0].name, this.clone.zomes[0].entryTypes[0].name)
+      store = replacePlaceHolders(store, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
       fs.writeFileSync(storeFileName, store, (err) => {
         if (err) throw err
         console.log('The file has been saved!')
       })
       const storeFile = `${this.developer.folder}/chimera/src/store/index.js`
       let vuexStore = fs.readFileSync(storeFile, 'utf8')
-      const importStore = `import ${this.clone.zomes[0].entryTypes[0].name}s from '@/components/parts/${this.clone.name}/${this.clone.name}Store'\n`
-      const moduleStore = `${this.clone.zomes[0].entryTypes[0].name}s,\n    `
+      const importStore = `import ${this.clone.zome.entryTypes[0].name}s from '@/components/parts/${this.clone.name}/${this.clone.name}Store'\n`
+      const moduleStore = `${this.clone.zome.entryTypes[0].name}s,\n    `
       const part1 = vuexStore.slice(0, vuexStore.indexOf('// NewImportModule'))
       const part2 = vuexStore.slice(vuexStore.indexOf('// NewImportModule'), vuexStore.indexOf('// NewModule'))
       const part3 = vuexStore.slice(vuexStore.indexOf('// NewModule'), vuexStore.length)
