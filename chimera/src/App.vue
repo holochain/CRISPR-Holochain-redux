@@ -21,6 +21,7 @@ export default {
   methods: {
     ...mapActions('fieldNames', ['fetchFields']),
     ...mapActions('personas', ['fetchPersonas']),
+    ...mapActions('projects', ['fetchProjects']),
     ...mapActions('origins', ['agentAddress', 'fetchProfiles'])
   },
   created () {

@@ -3,21 +3,24 @@ export default {
   namespaced: true,
   state: {
     profiles: [],
-    baseOrigins: [
+    baseWebsites: [
       {
         base: 'PartEditor',
-        origins: [
+        websites: [
           {
             id: 'PartEditor1',
-            content: 'Content for Origin 10'
+            content: 'Content for Website 1',
+            url: 'http://philt3r.rocks'
           },
           {
             id: 'PartEditor2',
-            content: 'Content for Origin 2'
+            content: 'Content for Website 2',
+            url: 'http://mhairi.rocks'
           },
           {
             id: 'PartEditor3',
-            content: 'Content for Origin 3'
+            content: 'Content for Website 3',
+            url: 'http://mittens.rocks'
           }
         ]
       }
@@ -25,34 +28,34 @@ export default {
     errors: []
   },
   mutations: {
-    createOrigin (state, payload) {
-      const base = state.baseOrigins.find(b => b.base === payload.base)
+    createWebsite (state, payload) {
+      const base = state.baseWebsites.find(b => b.base === payload.base)
       if (base) {
-        base.origins = base.origins.filter(n => n.id !== 'new')
-        base.origins.splice(0, 0, payload.data)
+        base.websites = base.websites.filter(n => n.id !== 'new')
+        base.websites.splice(0, 0, payload.data)
       } else {
-        state.baseOrigins.push((payload))
+        state.baseWebsites.push((payload))
       }
     },
-    updateOrigin (state, payload) {
-      const base = state.baseOrigins.find(e => e.base === payload.base)
+    updateWebsite (state, payload) {
+      const base = state.baseWebsites.find(e => e.base === payload.base)
       if (!base) {
-        state.baseOrigins.push(payload)
+        state.baseWebsites.push(payload)
       } else {
-        const updatedOrigins = base.origins.map(origin => {
-          if (origin.id === payload.data.id) {
-            return Object.assign({}, origin, payload.data)
+        const updatedWebsites = base.websites.map(website => {
+          if (website.id === payload.data.id) {
+            return Object.assign({}, website, payload.data)
           }
-          return origin
+          return website
         })
-        state.baseOrigins.find(e => e.base === payload.base).origins = updatedOrigins
+        state.baseWebsites.find(e => e.base === payload.base).websites = updatedWebsites
       }
     },
-    deleteOrigin (state, payload) {
+    deleteWebsite (state, payload) {
       console.log(state, payload)
-      const base = state.baseOrigins.find(b => b.base === payload.base)
+      const base = state.baseWebsites.find(b => b.base === payload.base)
       if (base) {
-        state.baseOrigins.find(e => e.base === payload.base).origins = base.origins.filter(e => e.id !== payload.data)
+        state.baseWebsites.find(e => e.base === payload.base).websites = base.websites.filter(e => e.id !== payload.data)
       }
     },
     error (state, payload) {
@@ -61,12 +64,12 @@ export default {
     resetErrors (state, payload) {
       state.errors = state.errors.filter(e => e.base !== payload)
     },
-    setOriginsList (state, payload) {
-      const base = state.baseOrigins.find(b => b.base === payload.base)
+    setWebsitesList (state, payload) {
+      const base = state.baseWebsites.find(b => b.base === payload.base)
       if (base !== undefined) {
-        base.origins = payload.origins
+        base.websites = payload.websites
       } else {
-        state.baseOrigins.push(payload)
+        state.baseWebsites.push(payload)
       }
     }
   },
@@ -78,10 +81,10 @@ export default {
         return 0
       }).slice(0, 3)
     },
-    listOrigins: state => (base) => {
-      const baseOrigin = state.baseOrigins.find(n => n.base === base)
-      if (baseOrigin) {
-        return baseOrigin.origins
+    listWebsites: state => (base) => {
+      const baseWebsite = state.baseWebsites.find(n => n.base === base)
+      if (baseWebsite) {
+        return baseWebsite.websites
       } else {
         return []
       }
@@ -100,16 +103,16 @@ export default {
       commit('resetErrors', base)
     },
     // order: ({ state, commit, rootState }, payload) => {
-    //   commit('setOriginsList', { base: payload.base, origins: payload.origins })
-    //   payload.origins.forEach(origin => {
+    //   commit('setWebsitesList', { base: payload.base, websites: payload.websites })
+    //   payload.websites.forEach(website => {
     //     rootState.devHolochainConnection.then(({ callZome }) => {
-    //       callZome('origins', 'origins', 'update_origin')({ id: origin.id, created_at: origin.createdAt, address: origin.address, origin_input: { uuid: origin.uuid, content: origin.content } }).then((result) => {
+    //       callZome('websites', 'websites', 'update_website')({ id: website.id, created_at: website.createdAt, address: website.address, website_input: { uuid: website.uuid, content: website.content } }).then((result) => {
     //         const res = JSON.parse(result)
     //         // console.log(res)
     //         if (res.Ok === undefined) {
     //           commit('error', { base: payload.base, error: res.Err.Internal })
     //         } else {
-    //           commit('updateOrigin', { base: payload.base, data: res.Ok })
+    //           commit('updateWebsite', { base: payload.base, data: res.Ok })
     //         }
     //       })
     //     })
@@ -117,7 +120,7 @@ export default {
     // },
     // rebase: ({ state, commit, rootState }, payload) => {
     //   rootState.devHolochainConnection.then(({ callZome }) => {
-    //     callZome('origins', 'origins', 'rebase_origin')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
+    //     callZome('websites', 'websites', 'rebase_website')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
     //       const res = JSON.parse(result)
     //       console.log(res)
     //       if (res.Ok === undefined) {
@@ -128,7 +131,7 @@ export default {
     // },
     agentAddress: ({ state, commit, rootState, dispatch }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'agent_address')({ }).then((result) => {
+        callZome('websites', 'websites', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             console.log(res)
@@ -141,7 +144,7 @@ export default {
     },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'list_profiles')({ base: '' }).then((result) => {
+        callZome('websites', 'websites', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             console.log(res)
@@ -167,57 +170,57 @@ export default {
         })
       })
     },
-    fetchOrigins: ({ state, commit, rootState }, base) => {
+    fetchWebsites: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'list_origins')({ base: base }).then((result) => {
+        callZome('websites', 'websites', 'list_websites')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setOriginsList', { base: base, origins: res.Ok })
+            commit('setWebsitesList', { base: base, websites: res.Ok })
           }
         })
       })
     },
-    saveOrigin: ({ state, commit, rootState }, payload) => {
+    saveWebsite: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      if (payload.origin.id === 'new' || payload.origin.id === undefined) {
+      if (payload.website.id === 'new' || payload.website.id === undefined) {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('origins', 'origins', 'create_origin')({ base: payload.base, origin_input: { uuid: uuidv4(), content: payload.origin.content } }).then((result) => {
+          callZome('websites', 'websites', 'create_website')({ base: payload.base, website_input: { uuid: uuidv4(), content: payload.website.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('createOrigin', { base: payload.base, data: res.Ok })
+              commit('createWebsite', { base: payload.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.devHolochainConnection.then(({ callZome }) => {
-          callZome('origins', 'origins', 'update_origin')({ id: payload.origin.id, created_at: payload.origin.createdAt, address: payload.origin.address, origin_input: { uuid: payload.origin.uuid, content: payload.origin.content } }).then((result) => {
+          callZome('websites', 'websites', 'update_website')({ id: payload.website.id, created_at: payload.website.createdAt, address: payload.website.address, website_input: { uuid: payload.website.uuid, content: payload.website.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
-              commit('updateOrigin', { base: payload.base, data: res.Ok })
+              commit('updateWebsite', { base: payload.base, data: res.Ok })
             }
           })
         })
       }
     },
-    deleteOrigin: ({ state, commit, rootState }, payload) => {
+    deleteWebsite: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       rootState.devHolochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'delete_origin')({ base: payload.base, id: payload.origin.id, created_at: payload.origin.createdAt, address: payload.origin.address }).then((result) => {
+        callZome('websites', 'websites', 'delete_website')({ base: payload.base, id: payload.website.id, created_at: payload.website.createdAt, address: payload.website.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             commit('error', { base: payload.base, error: res.Err.Internal })
           } else {
-            commit('deleteOrigin', { base: payload.base, data: payload.origin.id })
+            commit('deleteWebsite', { base: payload.base, data: payload.website.id })
           }
         })
       })

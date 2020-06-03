@@ -6,6 +6,7 @@ import notes from '@/components/parts/Notes/NotesStore'
 import freckles from '@/components/parts/Freckles/FrecklesStore'
 import tasks from '@/components/parts/Tasks/TasksStore'
 import projects from '@/components/parts/Projects/ProjectsStore'
+import websites from '@/components/parts/Websites/WebsitesStore'
 // NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
@@ -17,7 +18,6 @@ import home from '@/store/modules/home'
 import install from '@/store/modules/install'
 import library from '@/store/modules/library'
 import portfolio from '@/store/modules/portfolio'
-// import projects from '@/store/modules/projects'
 import personalInformation from '@/store/modules/personalInformation'
 import fieldNames from '@/store/modules/fieldNames'
 import profiles from '@/store/modules/profiles'
@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     notes,
     freckles,
     tasks,
+    websites,
     // NewModule
     app,
     auth,

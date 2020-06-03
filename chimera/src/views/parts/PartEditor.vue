@@ -16,8 +16,10 @@
             </v-tab>
           </v-tabs>
           <v-tabs-items v-model="tab">
-            <v-tab-item key="0" v-resize="onResizeCodeItem">
-              <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+            <v-tab-item key="0">
+              <v-card v-resize="onResizeCodeItem">
+                <codemirror v-model="partCodeItem" :options="cmOptions" ref="cmPartCodeItem"></codemirror>
+              </v-card>
             </v-tab-item>
             <v-tab-item key="1">
               <v-card v-resize="onResizeCodeItems">
@@ -62,7 +64,7 @@
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
           <v-row>
-            <v-col cols="12">
+            <v-col>
               <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-col>
           </v-row>
@@ -91,13 +93,14 @@ export default {
         mode: 'vue',
         theme: 'vscode-dark',
         readOnly: false,
-        line: true
+        lineNumbers: true
       },
       cmOptionsJs: {
         tabSize: 4,
         mode: 'javascript',
         theme: 'vscode-dark',
         readOnly: false,
+        lineNumbers: true,
         line: true
       },
       help: false,
@@ -114,28 +117,28 @@ export default {
       alert(message)
     },
     onResizeCodeItem () {
-      this.partCodemirrorItem.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeItem.codemirror.setSize(null, window.innerHeight - 155)
     },
     onResizeCodeItems () {
-      this.partCodemirrorItems.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeItems.codemirror.setSize(null, window.innerHeight - 155)
     },
     onResizeCodeStore () {
-      this.partCodemirrorStore.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeStore.codemirror.setSize(null, window.innerHeight - 155)
     },
     save () {
-      if (this.partCodemirrorItem) {
+      if (this.$refs.cmPartCodeItem) {
         fs.writeFileSync(this.partCodeItemFileName, this.partCodeItem, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
         })
       }
-      if (this.partCodemirrorItems) {
+      if (this.$refs.cmPartCodeItems) {
         fs.writeFileSync(this.partCodeItemsFileName, this.partCodeItems, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
         })
       }
-      if (this.partCodemirrorStore) {
+      if (this.$refs.cmPartCodeStore) {
         fs.writeFileSync(this.partCodeStoreFileName, this.partCodeStore, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
@@ -149,15 +152,6 @@ export default {
     ...mapGetters('portfolio', ['projectById']),
     project () {
       return this.projectById(this.$route.params.id)
-    },
-    partCodemirrorItem () {
-      return this.$refs.cmPartCodeItem.codemirror
-    },
-    partCodemirrorItems () {
-      return this.$refs.cmPartCodeItems.codemirror
-    },
-    partCodemirrorStore () {
-      return this.$refs.cmPartCodeStore.codemirror
     },
     files () {
       const components = []

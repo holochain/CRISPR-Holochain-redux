@@ -14,6 +14,7 @@ process.on('unhandledRejection', error => {
 });
 
 const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
+const projectsDnaPath = path.join(__dirname, "../projects/dna/dist/dna.dna.json")
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
@@ -59,6 +60,7 @@ const logger = {
 }
 const orchestrator = new Orchestrator({middleware: combine(tapeExecutor(require('tape')), localOnly,)})
 
+const projectsDna = Config.dna(projectsDnaPath, 'projects-test')
 const originsDna = Config.dna(originsDnaPath, 'origins-test')
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
@@ -72,7 +74,7 @@ const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'pers
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
+const philsConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
