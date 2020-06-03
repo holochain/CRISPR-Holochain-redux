@@ -15,7 +15,7 @@ export default {
           {
             id: 'PartEditor1',
             happId: 'QmHashyOrigins',
-            name: 'Origins',
+            name: 'Original',
             preview: base64Encode('/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.jpg'),
             description: 'Origins have a title, content and order.',
             zome: {
@@ -215,13 +215,6 @@ export default {
     }
   },
   getters: {
-    featured: (state, getters) => {
-      return getters.parsedGames.sort((a, b) => {
-        if (a.updated < b.updated) return -1
-        if (a.updated > b.updated) return 1
-        return 0
-      }).slice(0, 3)
-    },
     listProjects: state => (base) => {
       const baseProject = state.baseProjects.find(n => n.base === base)
       if (baseProject) {
@@ -242,15 +235,23 @@ export default {
         return []
       }
     },
-    projectById: (state) => (projectId) => {
+    projectById: (state, getters, rootState) => (projectId) => {
       const base = state.baseProjects.find((base) => {
         return base.projects.some((project) => {
           return project.id === projectId
         })
       })
-      const project = base.projects.find(project => project.id === projectId)
-      console.log(project)
-      return project
+      if (base) {
+        const project = base.projects.find(project => project.id === projectId)
+        fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(project), (err) => {
+          if (err) throw err
+          console.log('The project has been serialised!')
+        })
+        return project
+      } else {
+        const project = fs.readFileSync(`${rootState.auth.developer.folder}/project.json`, 'utf8')
+        return JSON.parse(project)
+      }
     }
   },
   actions: {

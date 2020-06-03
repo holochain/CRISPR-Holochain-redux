@@ -117,28 +117,28 @@ export default {
       alert(message)
     },
     onResizeCodeItem () {
-      this.partCodemirrorItem.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeItem.codemirror.setSize(null, window.innerHeight - 155)
     },
     onResizeCodeItems () {
-      this.partCodemirrorItems.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeItems.codemirror.setSize(null, window.innerHeight - 155)
     },
     onResizeCodeStore () {
-      this.partCodemirrorStore.setSize(null, window.innerHeight - 155)
+      this.$refs.cmPartCodeStore.codemirror.setSize(null, window.innerHeight - 155)
     },
     save () {
-      if (this.partCodemirrorItem) {
+      if (this.$refs.cmPartCodeItem) {
         fs.writeFileSync(this.partCodeItemFileName, this.partCodeItem, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
         })
       }
-      if (this.partCodemirrorItems) {
+      if (this.$refs.cmPartCodeItems) {
         fs.writeFileSync(this.partCodeItemsFileName, this.partCodeItems, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
         })
       }
-      if (this.partCodemirrorStore) {
+      if (this.$refs.cmPartCodeStore) {
         fs.writeFileSync(this.partCodeStoreFileName, this.partCodeStore, (err) => {
           if (err) throw err
           console.log('The file has been saved!')
@@ -152,15 +152,6 @@ export default {
     ...mapGetters('portfolio', ['projectById']),
     project () {
       return this.projectById(this.$route.params.id)
-    },
-    partCodemirrorItem () {
-      return this.$refs.cmPartCodeItem.codemirror
-    },
-    partCodemirrorItems () {
-      return this.$refs.cmPartCodeItems.codemirror
-    },
-    partCodemirrorStore () {
-      return this.$refs.cmPartCodeStore.codemirror
     },
     files () {
       const components = []

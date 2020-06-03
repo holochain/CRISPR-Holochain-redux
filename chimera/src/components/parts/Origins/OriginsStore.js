@@ -9,7 +9,7 @@ export default {
         origins: [
           {
             id: 'PartEditor1',
-            content: 'Content for Origin 1'
+            content: 'Content for Origin 10'
           },
           {
             id: 'PartEditor2',

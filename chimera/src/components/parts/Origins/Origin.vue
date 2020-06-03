@@ -21,7 +21,7 @@
         Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to this Origin.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
-      Click <v-icon>mdi-note-text-outline</v-icon> to edit a Origin.
+      Clicks <v-icon>mdi-note-text-outline</v-icon> to edit a Origin.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-content-save</v-icon> to save a Origin.
       <v-divider class="my-4 info" style="opacity: 0.22" />
