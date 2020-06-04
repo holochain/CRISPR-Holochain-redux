@@ -18,15 +18,16 @@
       <v-col cols="12" md="6" lg="4">
         <freckle key="new" :freckle="newFreckle" placeholder="What's your freckle?"/>
       </v-col>
-      <v-col v-for="(freckle) in freckles" :key="freckle.id" cols="12" md="6" lg="4">
-        <freckle :key="freckle.id" partBase="QmHashyFreckles" :freckle="freckle"/>
+      <v-col cols="12" md="6" lg="4">
+        <!-- v-for instance in instances -->
+        <tasks :instance="instance" base="a note id" title="name of the instance"/>
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'Freckles',
   components: {
@@ -42,17 +43,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('freckles', ['agentAddress', 'fetchProfiles', 'fetchFreckles'])
-  },
-  computed: {
-    ...mapGetters('freckles', ['listFreckles']),
-    freckles () {
-      return this.listFreckles('')
-    }
+    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
   },
   created () {
     this.fetchProfiles()
-    this.fetchFreckles('')
     this.agentAddress()
   }
 }

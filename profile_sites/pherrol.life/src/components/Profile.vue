@@ -1,45 +1,72 @@
 <template>
     <v-row align="center">
         <v-col cols="12" md="6">
-          <v-img :src="require('../assets/pherrol.jpg')">
-              <v-container fill-height>
-              <v-row align="center" class="white--text mx-auto" justify="center">
-                  <v-col class="white--text text-center" cols="12">
-                  <span class="font-weight-light" :class="[$vuetify.breakpoint.smAndDown ? 'display-3' : 'display-4']">
-                      @pherrol
-                  </span>
-                  <br>
-                  <span :class="[$vuetify.breakpoint.smAndDown ? 'display-1': 'display-2']" class="font-weight-black">
-                      Techno
-                  </span>
-                  </v-col>
-              </v-row>
-              </v-container>
+          <v-img :src="require('../assets/pherrol4.jpg')">
           </v-img>
       </v-col>
       <v-col cols="12" md="6" class="pa-5">
-          <h1 class="display-2">Bio</h1>
-          <span class="body-1">The Techno Alliance of @philt3r and Errol J, two stalwarts of the Aussie bush party scene, brings you @pherrol! They strip it back and slow it down for the phattest and toughest Techno that tears up the dance floor and rumbles the biggest sound systems. The back to back style of @philt3r and Errol J produces a set with shovel loads of excitement and variety that is guaranteed to work the crowd into a stomping frenzy!</span>
+        <h1 :class="[$vuetify.breakpoint.smAndDown ? 'display-1': 'display-2']" class="font-weight-black">Bio 🇦🇺 🍺 🎧</h1>
+        <span :class="[$vuetify.breakpoint.smAndDown ? 'body-1': 'title']">The Techno Alliance of @philt3r and Errol J, two stalwarts of the Aussie bush party scene, brings you @pherrol! They strip it back and slow it down for the phattest and toughest Techno that tears up the dance floor and rumbles the biggest sound systems. The back to back style of @philt3r and Errol J produces a set with shovel loads of excitement and variety that is guaranteed to work the crowd into a stomping frenzy!</span>
+        <br /><br />
+        <span :class="[$vuetify.breakpoint.smAndDown ? 'body-1': 'title']">Contact: Text ErrolJ on 0419 403 753</span>
       </v-col>
-      <v-col cols="12">
-          <h1 class="display-2">Videos</h1>
-      </v-col>
-      <v-col cols="12">
+      <v-col cols="12" md="6">
+        <v-col cols="12">
           <h2 class="title">Promo</h2>
           <div class="youtube-container">
-            <iframe src="https://www.youtube.com/embed/cEx1uGpkbYU" frameborder="0" allowfullscreen class="video"></iframe>
+            <iframe src="https://www.youtube.com/embed/4-HtPL4JvGY" frameborder="0" allowfullscreen class="video"></iframe>
           </div>
+        </v-col>
+        <v-col cols="12">
+          <h2 class="title" v-if="$vuetify.breakpoint.smAndDown">Esoteric 2020 - Bush Techno</h2>
+          <h2 class="title" v-else>Full Set Esoteric 2020 - Bush Techno</h2>
+          <div class="youtube-container">
+            <iframe src="https://www.youtube.com/embed/ZGJTS1Zb_Yk" frameborder="0" allowfullscreen class="video"></iframe>
+          </div>
+        </v-col>
       </v-col>
-      <v-col cols="12">
-        <h2 class="title">Full Set Esoteric 2020 - Bush Techno</h2>
-        <div class="youtube-container">
-          <iframe src="https://www.youtube.com/embed/ZGJTS1Zb_Yk" frameborder="0" allowfullscreen class="video"></iframe>
-        </div>
+      <v-col cols="12" md="6" v-if="!$vuetify.breakpoint.smAndDown">
+          <v-img :src="require('../assets/pherrol.jpg')">
+          </v-img>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-col cols="12">
+            <h2 class="title">Playing Next at</h2>
+            <v-img :src="require('../assets/images/psyland-2020.jpg')">
+            </v-img>
+        </v-col>
+        <v-col cols="12">
+            <v-img :src="require('../assets/images/endofnow.png')">
+            </v-img>
+        </v-col>
+      </v-col>
+      <v-col cols="12" md="6">
+        <h2 class="title">Set Recordings</h2>
+        <v-row no-gutters class="mx-auto">
+          <v-col cols="12">
+            <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fpherrol%2Fpherrol-esoteric-festival-2020-bush-techno-stage-sunday-130pm%2F" frameborder="0" ></iframe>
+          </v-col>
+          <v-col cols="12">
+            <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fphilt3r%2Fpherrol-debut-beats-in-the-valley-2018-part-1%2F" frameborder="0" ></iframe>
+          </v-col>
+          <v-col cols="12">
+            <iframe width="100%" height="400" src="https://www.mixcloud.com/widget/iframe/?feed=%2Fphilt3r%2Fpherrol-debut-beats-in-the-valley-2018-part-2%2F" frameborder="0" ></iframe>
+          </v-col>
+        </v-row>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-img :src="require('@/assets/images/esoteric-festival-2020-bush-techno-pherrol.jpg')">
+        </v-img>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-img :src="require('@/assets/pherrol6.jpg')">
+        </v-img>
       </v-col>
   </v-row>
 </template>
 
 <script>
+// v-if="$vuetify.breakpoint.smAndDown"
 import { mapGetters } from 'vuex'
 import * as fs from 'fs'
 function base64Encode (file) {

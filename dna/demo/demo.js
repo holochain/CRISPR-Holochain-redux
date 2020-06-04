@@ -98,7 +98,7 @@ const rudysConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna,
   logger: logger
 })
 
-const arthursConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
+const arthursConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -114,7 +114,7 @@ const alicesConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna
   logger: logger
 })
 
-const marksConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {
+const marksConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {
   network: {
     type: 'sim2h',
     sim2h_url: 'ws://localhost:9000'
@@ -229,18 +229,20 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('lucyFrecklesProfile', lucyFrecklesProfile)
   const aliceFrecklesProfile = await alice.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mhairi.jpg'), "handle": "Mha Iri"}})
   console.log('aliceFrecklesProfile', aliceFrecklesProfile)
-  const artFrecklesProfile = await arthur.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
-  console.log('artFrecklesProfile', artFrecklesProfile)
 
   const philKanbanProfile = await phil.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
   console.log('philKanbanProfile', philKanbanProfile)
   const markKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark"}})
   console.log('markKanbanProfile', markKanbanProfile)
-  const lucyKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+  const lucyKanbanProfile = await lucy.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
   console.log('lucyKanbanProfile', lucyKanbanProfile)
 
-
-
+  const philProjectsProfile = await phil.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "philip.beadle"}})
+  console.log('philProjectsProfile', philProjectsProfile)
+  const artProjectsProfile = await arthur.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
+  console.log('artProjectsProfile', artProjectsProfile)
+  const markProjectsProfile = await mark.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark Keenan"}})
+  console.log('markProjectsProfile', markProjectsProfile)
 
   const originDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
   await s.consistency()

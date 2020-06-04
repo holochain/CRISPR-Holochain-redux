@@ -31,7 +31,7 @@ export default {
   components: {
     Freckle: () => import('./Freckle')
   },
-  props: ['base', 'title'],
+  props: ['instance', 'base', 'title'],
   methods: {
     add () {
       this.freckles.splice(0, 0, {

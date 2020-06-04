@@ -151,6 +151,7 @@ export default {
     ...mapGetters('notes', ['listTasks']),
     ...mapGetters('portfolio', ['projectById']),
     project () {
+      console.log('project')
       return this.projectById(this.$route.params.id)
     },
     files () {
@@ -162,8 +163,12 @@ export default {
     }
   },
   created () {
-    this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
-    this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    if (this.files[1]) {
+      this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
+      this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    } else {
+      this.partCodeItem = ''
+    }
     if (this.files[1]) {
       this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
       this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')

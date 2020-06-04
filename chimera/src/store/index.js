@@ -7,6 +7,7 @@ import freckles from '@/components/parts/Freckles/FrecklesStore'
 import tasks from '@/components/parts/Tasks/TasksStore'
 import projects from '@/components/parts/Projects/ProjectsStore'
 import websites from '@/components/parts/Websites/WebsitesStore'
+import tags from '@/components/parts/Tags/TagsStore'
 // NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
@@ -33,8 +34,7 @@ Vue.use(Vuex)
 console.log(process.env.VUE_APP_HOLOCHAIN_URL)
 const store = new Vuex.Store({
   state: {
-    // holochainConnection: connect({ url: 'ws://localhost:4435' }),
-    devHolochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
+    holochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
     origins,
@@ -42,6 +42,7 @@ const store = new Vuex.Store({
     freckles,
     tasks,
     websites,
+    tags,
     // NewModule
     app,
     auth,

@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid')
 const path = require('path')
 const fs = require('fs')
 const { connect } = require('@holochain/hc-web-client')
-const devHolochainConnection = connect({ url: 'ws://localhost:33000' })
+const holochainConnection = connect({ url: 'ws://localhost:33000' })
 const net = require('net')
 const port = 33000;
 const client = new net.Socket()
@@ -21,7 +21,7 @@ const tryConnection = () => {
       if (!startedConductor) {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
-        devHolochainConnection.then(({ callZome }) => {
+        holochainConnection.then(({ callZome }) => {
           console.log('started_demo_setup_fields')
 
           // managed fields list

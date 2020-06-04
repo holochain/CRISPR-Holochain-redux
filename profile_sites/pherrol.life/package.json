@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build && cd dist && find . -type f -exec curl --user pherroll:gP%qrDWJv[KMz1Y=A@Qy --ftp-create-dirs -T {} ftp://122.201.124.64/public_html/pherrol.life/{} -v \\;",
+    "build": "vue-cli-service build && cd dist && find . -type f -exec curl --user pherroll:gP%qrDWJv[KMz1Y=A@Qy --ftp-create-dirs -T {} ftp://122.201.124.64/public_html/{} -v \\;",
     "lint": "vue-cli-service lint",
     "vue": "~/vue/node_modules/@vue/cli/bin/vue.js"
   },
