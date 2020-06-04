@@ -13,7 +13,7 @@
     <g v-if="curve !== 0" @mouseenter="mouseEnter" @mouseleave="mouseLeave" @mousedown="mouseDown">
       <g @mousedown="mouseDownSegment($event, 0)">
         <path :id="id" :d="curve" :style="largeStrokeStyle" stroke-width="8" fill="none" />
-        <path :d="curve" style="stroke:rgb(255,255,255);" stroke-width="2" fill="none" />
+        <path :d="curve" :style="style" stroke-width="2" fill="none" />
         <text v-if="tag !== ''" width="1000" font-size="10pt" font-weight="bold" fill="#ffffff" style="text-anchor: middle">
           <textPath :xlink:href="`#${id}`" startOffset="50%">
             <tspan dy="-6">
@@ -77,19 +77,15 @@ export default {
     x1 () {
       return this.positionFrom.x
     },
-
     y1 () {
       return this.positionFrom.y - 4
     },
-
     x2 () {
       return this.positionTo.x - 4
     },
-
     y2 () {
       return this.positionTo.y - 4
     },
-
     curve () {
       if (this.positionFrom.x === undefined) {
         return 0
@@ -100,6 +96,13 @@ export default {
       var y2 = Math.trunc(this.positionTo.y - 14)
       var distance = Math.trunc(4 * Math.sqrt(Math.abs(x1 - x2)))
       return `M ${x1} ${y1} C ${x1 + distance} ${y1}, ${x2 - distance} ${y2}, ${x2} ${y2}`
+    },
+    style () {
+      if (this.context === '←bi-directional→') {
+        return 'stroke:rgb(255,243,3);'
+      } else {
+        return 'stroke:rgb(255,255,255);'
+      }
     }
   }
 }

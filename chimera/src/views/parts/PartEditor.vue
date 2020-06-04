@@ -65,10 +65,10 @@
           </v-alert>
           <v-tabs-items v-model="tab">
             <v-tab-item key="0">
-              <component :is="part(0)" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+              <component :is="part(0)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-tab-item>
             <v-tab-item key="1">
-              <component :is="part(1)" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+              <component :is="part(1)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>

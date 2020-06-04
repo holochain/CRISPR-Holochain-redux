@@ -876,22 +876,7 @@ const baseProjects = [
           templateTypeName: 'origin',
           itemsTemplatesName: 'template1',
           name: 'Tags',
-          entryTypes: [
-            {
-              id: 'QmTagEntryTypeHash',
-              name: 'tag',
-              template: 'list_anchor_types_1',
-              fields: [
-                {
-                  id: 'Qm1333',
-                  fieldName: 'text',
-                  fieldType: 'String',
-                  fieldDescription: 'The tag',
-                  required: true
-                }
-              ]
-            }
-          ],
+          entryTypes: [],
           anchorTypes: [
             {
               id: 'Qmlist_tags1',
@@ -900,7 +885,94 @@ const baseProjects = [
               tag: ' ',
               context: 'permanent',
               links: [],
-              anchors: []
+              anchors: [
+                {
+                  id: 'QmTagsAnchor1',
+                  type: 'list_tags',
+                  text: 'Techno',
+                  links: [],
+                  anchors: [
+                    {
+                      id: 'QmTagsAnchor2',
+                      type: 'notes dht instanceId',
+                      text: 'note1 id',
+                      links: []
+                    },
+                    {
+                      id: 'QmTagsAnchor44',
+                      type: 'notes dht instanceId',
+                      text: 'note2 id',
+                      links: []
+                    }
+                  ]
+                },
+                {
+                  id: 'QmTagsAnchor1',
+                  type: 'list_tags',
+                  text: 'Psytrance',
+                  links: [],
+                  anchors: [
+                    {
+                      id: 'QmTagsAnchor7',
+                      type: 'notes dht instanceId 2',
+                      text: 'note3 id',
+                      links: []
+                    },
+                    {
+                      id: 'QmTagsAnchor44',
+                      type: 'notes dht instanceId',
+                      text: 'note2 id',
+                      links: []
+                    }
+                  ]
+                },
+                {
+                  id: 'QmTagsAnchor3',
+                  type: 'list_tags',
+                  text: 'Metal',
+                  links: [],
+                  anchors: [
+                    {
+                      id: 'QmTagsAnchor44',
+                      type: 'notes dht instanceId',
+                      text: 'note2 id',
+                      links: []
+                    },
+                    {
+                      id: 'QmTagsAnchor12',
+                      type: 'notes dht instanceId 2',
+                      text: 'note47 id',
+                      links: []
+                    },
+                    {
+                      id: 'QmTagsAnchor123',
+                      type: 'notes dht instanceId 2',
+                      text: 'note201 id',
+                      links: []
+                    }
+                  ]
+                },
+                {
+                  id: 'QmTagsAnchor4',
+                  type: 'list_tags',
+                  text: 'Rock',
+                  links: [],
+                  anchors: [
+                    {
+                      id: 'QmTagsAnchor12',
+                      type: 'notes dht instanceId 2',
+                      text: 'note47 id',
+                      links: []
+                    },
+                    {
+                      id: 'QmTagsAnchor123',
+                      type: 'notes dht instanceId 2',
+                      text: 'note201 id',
+                      links: []
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }

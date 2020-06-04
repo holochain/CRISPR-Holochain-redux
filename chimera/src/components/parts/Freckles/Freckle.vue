@@ -46,7 +46,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['base', 'freckle', 'partBase'],
+  props: ['instance', 'base', 'freckle', 'partBase'],
   data () {
     return {
       instanceFreckle: {},

@@ -54,7 +54,7 @@ class DiagramModel {
     anchorTypeNode.addField('anchor_text')
     anchorTypeIndex += 1
     const anchorTypeInPort = anchorTypeNode.addInPort('address()')
-    this.addLink(rootAnchorPort, anchorTypeInPort, anchorType.type)
+    this.addLink(rootAnchorPort, anchorTypeInPort, anchorType.type, '→')
     return anchorTypeNode
   }
 
@@ -103,8 +103,20 @@ class DiagramModel {
     anchorNode.addField(`anchor_type|${anchor.type}`)
     anchorNode.addField(`anchor_text|${anchor.text}`)
     const anchorInPort = anchorNode.addInPort('address()')
-    this.addLink(anchorTypeOutPort, anchorInPort, anchor.text)
+    this.addLink(anchorTypeOutPort, anchorInPort, anchor.text, '→')
     return anchorNode
+  }
+
+  addAnchorAnchor (anchorAnchor, anchorOutPort, colOffset, yOffset, cardWidth, anchorIndex, color) {
+    const anchorAnchorNode = this.addNode(`anchor::${anchorAnchor.text}`, colOffset, yOffset, cardWidth, 165, 'anchor', anchorIndex, color, 58)
+    anchorAnchorNode.addField('entry!|name:holochain::anchor')
+    anchorAnchorNode.addField('link!|from:holochain::anchor')
+    anchorAnchorNode.addField('link!|type:holochain::anchor_link')
+    anchorAnchorNode.addField(`anchor_type|${anchorAnchor.type}`)
+    anchorAnchorNode.addField(`anchor_text|${anchorAnchor.text}`)
+    const anchorInPort = anchorAnchorNode.addInPort('address()')
+    this.addLink(anchorOutPort, anchorInPort, anchorAnchor.text, '←bi-directional→')
+    return anchorAnchorNode
   }
 
   deleteNode (node) {
