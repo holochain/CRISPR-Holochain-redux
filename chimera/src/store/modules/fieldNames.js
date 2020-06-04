@@ -46,7 +46,7 @@ export default {
   },
   actions: {
     fetchFields: ({ state, commit, rootState }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('fields', 'fields', 'list_fields')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res.Ok)

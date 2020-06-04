@@ -105,7 +105,7 @@ export default {
     // order: ({ state, commit, rootState }, payload) => {
     //   commit('setWebsitesList', { base: payload.base, websites: payload.websites })
     //   payload.websites.forEach(website => {
-    //     rootState.devHolochainConnection.then(({ callZome }) => {
+    //     rootState.holochainConnection.then(({ callZome }) => {
     //       callZome('websites', 'websites', 'update_website')({ id: website.id, created_at: website.createdAt, address: website.address, website_input: { uuid: website.uuid, content: website.content } }).then((result) => {
     //         const res = JSON.parse(result)
     //         // console.log(res)
@@ -119,7 +119,7 @@ export default {
     //   })
     // },
     // rebase: ({ state, commit, rootState }, payload) => {
-    //   rootState.devHolochainConnection.then(({ callZome }) => {
+    //   rootState.holochainConnection.then(({ callZome }) => {
     //     callZome('websites', 'websites', 'rebase_website')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
     //       const res = JSON.parse(result)
     //       console.log(res)
@@ -130,7 +130,7 @@ export default {
     //   })
     // },
     agentAddress: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('websites', 'websites', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
@@ -143,7 +143,7 @@ export default {
       })
     },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('websites', 'websites', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
@@ -172,7 +172,7 @@ export default {
     },
     fetchWebsites: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('websites', 'websites', 'list_websites')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
@@ -187,7 +187,7 @@ export default {
     saveWebsite: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.website.id === 'new' || payload.website.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('websites', 'websites', 'create_website')({ base: payload.base, website_input: { uuid: uuidv4(), content: payload.website.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -199,7 +199,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('websites', 'websites', 'update_website')({ id: payload.website.id, created_at: payload.website.createdAt, address: payload.website.address, website_input: { uuid: payload.website.uuid, content: payload.website.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -214,7 +214,7 @@ export default {
     },
     deleteWebsite: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('websites', 'websites', 'delete_website')({ base: payload.base, id: payload.website.id, created_at: payload.website.createdAt, address: payload.website.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

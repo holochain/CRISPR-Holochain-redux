@@ -95,7 +95,7 @@ export default {
       commit('resetErrors', base)
     },
     agentAddress: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('kanban', 'kanban', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
@@ -109,7 +109,7 @@ export default {
       })
     },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('kanban', 'kanban', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           console.log(res.Ok)
@@ -143,7 +143,7 @@ export default {
     },
     fetchColumns: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('kanban', 'kanban', 'list_columns')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
@@ -158,7 +158,7 @@ export default {
     saveColumn: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.column.id === '' || payload.column.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('kanban', 'kanban', 'create_column')({ base: payload.base, column_input: { uuid: uuidv4(), title: payload.column.title, order: payload.column.order } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
@@ -169,7 +169,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('kanban', 'kanban', 'update_column')({ id: payload.column.id, created_at: payload.column.createdAt, address: payload.column.address, column_input: { uuid: payload.column.uuid, title: payload.column.title, order: payload.column.order } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
@@ -183,7 +183,7 @@ export default {
     },
     deleteColumn: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('kanban', 'kanban', 'delete_column')({ base: payload.base, id: payload.column.id, created_at: payload.column.createdAt, address: payload.column.address }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)

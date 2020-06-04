@@ -63,11 +63,14 @@
             <v-divider class="my-4 info" style="opacity: 0.22" />
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
-          <v-row>
-            <v-col>
-              <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
-            </v-col>
-          </v-row>
+          <v-tabs-items v-model="tab">
+            <v-tab-item key="0">
+              <component :is="part(0)" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+            </v-tab-item>
+            <v-tab-item key="1">
+              <component :is="part(1)" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+            </v-tab-item>
+          </v-tabs-items>
         </v-card>
       </v-col>
     </v-row>
@@ -124,6 +127,9 @@ export default {
     },
     onResizeCodeStore () {
       this.$refs.cmPartCodeStore.codemirror.setSize(null, window.innerHeight - 155)
+    },
+    part (index) {
+      return this.files[index].replace('.vue', '').toLowerCase()
     },
     save () {
       if (this.$refs.cmPartCodeItem) {

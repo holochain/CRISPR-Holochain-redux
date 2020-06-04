@@ -107,7 +107,7 @@ export default {
     order: ({ state, commit, rootState }, payload) => {
       commit('setNotesList', { base: payload.base, notes: payload.notes })
       payload.notes.forEach(note => {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'update_note')({ id: note.id, created_at: note.createdAt, address: note.address, note_input: { uuid: note.uuid, title: note.title, content: note.content, order: note.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -121,7 +121,7 @@ export default {
       })
     },
     rebase: ({ state, commit, rootState }, payload) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'rebase_note')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
@@ -133,7 +133,7 @@ export default {
     },
     fetchNotes: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'list_notes')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
@@ -148,7 +148,7 @@ export default {
     saveNote: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.note.id === 'new' || payload.note.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'create_note')({ base: payload.base, note_input: { uuid: uuidv4(), title: payload.note.title, content: payload.note.content, order: payload.note.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -160,7 +160,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('notes', 'notes', 'update_note')({ id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address, note_input: { uuid: payload.note.uuid, title: payload.note.title, content: payload.note.content, order: payload.note.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -175,7 +175,7 @@ export default {
     },
     deleteNote: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('notes', 'notes', 'delete_note')({ base: payload.base, id: payload.note.id, created_at: payload.note.createdAt, address: payload.note.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

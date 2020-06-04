@@ -19,6 +19,18 @@ export default {
           {
             id: 'PartEditor3',
             text: 'Metal'
+          },
+          {
+            id: 'PartEditor4',
+            text: 'Rock'
+          },
+          {
+            id: 'PartEditor5',
+            text: 'Pop'
+          },
+          {
+            id: 'PartEditor6',
+            text: 'Country'
           }
         ]
       },
@@ -28,6 +40,10 @@ export default {
           {
             id: 'PartEditor1',
             text: 'Techno'
+          },
+          {
+            id: 'PartEditor3',
+            text: 'Metal'
           }
         ]
       }

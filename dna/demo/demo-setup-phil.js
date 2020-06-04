@@ -865,6 +865,45 @@ const baseProjects = [
             fields: []
           }
         }
+      },
+      {
+        id: 'QmTagsHash',
+        name: 'Tags',
+        preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Tags/preview.png',
+        description: 'Tags',
+        zome: {
+          template: 'Origins',
+          templateTypeName: 'origin',
+          itemsTemplatesName: 'template1',
+          name: 'Tags',
+          entryTypes: [
+            {
+              id: 'QmTagEntryTypeHash',
+              name: 'tag',
+              template: 'list_anchor_types_1',
+              fields: [
+                {
+                  id: 'Qm1333',
+                  fieldName: 'text',
+                  fieldType: 'String',
+                  fieldDescription: 'The tag',
+                  required: true
+                }
+              ]
+            }
+          ],
+          anchorTypes: [
+            {
+              id: 'Qmlist_tags1',
+              type: 'list_tags',
+              text: '',
+              tag: ' ',
+              context: 'permanent',
+              links: [],
+              anchors: []
+            }
+          ]
+        }
       }
     ]
   }

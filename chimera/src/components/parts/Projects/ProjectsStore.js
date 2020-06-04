@@ -332,7 +332,7 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'list_projects')({ base: base }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
+          // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -347,7 +347,7 @@ export default {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome('projects', 'projects', 'create_project')({ base: payload.base, project_input: { uuid: uuidv4(), name: payload.project.name, description: payload.project.description, preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.png', zome: JSON.stringify(payload.project.zome), order: 0 } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
+            // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
