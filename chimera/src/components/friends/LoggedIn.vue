@@ -28,7 +28,6 @@ export default {
     ...mapGetters('friends', ['agentProfile']),
     ...mapGetters('personalInformation', ['profileByDna']),
     profile () {
-      console.log(this.agentProfile)
       if (this.agentProfile) {
         return this.agentProfile
       } else {

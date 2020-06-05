@@ -63,11 +63,14 @@
             <v-divider class="my-4 info" style="opacity: 0.22" />
             Click <v-icon>mdi-code-braces</v-icon> (Code) to go to the Zome Modeller.
           </v-alert>
-          <v-row>
-            <v-col>
-              <component :is="project.name" base="PartEditor" title="Part Editor" :agent="agentAddress" />
-            </v-col>
-          </v-row>
+          <v-tabs-items v-model="tab">
+            <v-tab-item key="0">
+              <component :is="part(0)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+            </v-tab-item>
+            <v-tab-item key="1">
+              <component :is="part(1)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+            </v-tab-item>
+          </v-tabs-items>
         </v-card>
       </v-col>
     </v-row>
@@ -125,6 +128,9 @@ export default {
     onResizeCodeStore () {
       this.$refs.cmPartCodeStore.codemirror.setSize(null, window.innerHeight - 155)
     },
+    part (index) {
+      return this.files[index].replace('.vue', '').toLowerCase()
+    },
     save () {
       if (this.$refs.cmPartCodeItem) {
         fs.writeFileSync(this.partCodeItemFileName, this.partCodeItem, (err) => {
@@ -151,6 +157,7 @@ export default {
     ...mapGetters('notes', ['listTasks']),
     ...mapGetters('portfolio', ['projectById']),
     project () {
+      console.log('project')
       return this.projectById(this.$route.params.id)
     },
     files () {
@@ -162,8 +169,12 @@ export default {
     }
   },
   created () {
-    this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
-    this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    if (this.files[1]) {
+      this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
+      this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
+    } else {
+      this.partCodeItem = ''
+    }
     if (this.files[1]) {
       this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
       this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')

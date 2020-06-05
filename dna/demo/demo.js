@@ -1,27 +1,12 @@
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
-const { Orchestrator, Config, combine, singleConductor, localOnly, tapeExecutor } = require('@holochain/tryorama')
+const { Orchestrator, Config, combine, localOnly, tapeExecutor } = require('@holochain/tryorama')
 const fs = require('fs')
-
-function base64_encode(file) {
-    var bitmap = fs.readFileSync(file);
-    return `data:image/png;base64, ${new Buffer(bitmap).toString('base64')}`
+const orchestrator = new Orchestrator({middleware: combine(tapeExecutor(require('tape')), localOnly,)})
+const network = {
+  type: 'sim2h',
+  sim2h_url: 'ws://localhost:9000'
 }
-
-process.on('unhandledRejection', error => {
-  // Will print "unhandledRejection err is not defined"
-  console.error('got unhandledRejection:', error);
-});
-
-const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
-const projectsDnaPath = path.join(__dirname, "../projects/dna/dist/dna.dna.json")
-const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
-const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
-const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
-const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
-const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna.dna.json")
-const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
-
 const logger = {
   type: 'error',
   rules: {
@@ -58,9 +43,28 @@ const logger = {
   },
   state_dump: true
 }
-const orchestrator = new Orchestrator({middleware: combine(tapeExecutor(require('tape')), localOnly,)})
+
+process.on('unhandledRejection', error => {
+  console.error('got unhandledRejection:', error)
+})
+
+function base64_encode(file) {
+  var bitmap = fs.readFileSync(file);
+  return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
+}
+
+const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
+const tagsDnaPath = path.join(__dirname, "../tags/dna/dist/dna.dna.json")
+const projectsDnaPath = path.join(__dirname, "../projects/dna/dist/dna.dna.json")
+const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
+const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
+const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
+const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
+const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna.dna.json")
+const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const projectsDna = Config.dna(projectsDnaPath, 'projects-test')
+const tagsDna = Config.dna(tagsDnaPath, 'tags-test')
 const originsDna = Config.dna(originsDnaPath, 'origins-test')
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
@@ -74,53 +78,12 @@ const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'pers
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
-
-const lucysConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
-
-const rudysConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
-
-const arthursConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
-
-const alicesConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
-
-const marksConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {
-  network: {
-    type: 'sim2h',
-    sim2h_url: 'ws://localhost:9000'
-  },
-  logger: logger
-})
+const philsConductorConfig = Config.gen({tags: tagsDna, projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, freckles: philsFrecklesDna}, { network: network, logger: logger })
+const lucysConductorConfig = Config.gen({tags: tagsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, freckles: philsFrecklesDna}, { network: network, logger: logger })
+const rudysConductorConfig = Config.gen({tags: tagsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, freckles: philsFrecklesDna}, { network: network, logger: logger })
+const arthursConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, freckles: philsFrecklesDna}, { network: network, logger: logger })
+const alicesConductorConfig = Config.gen({origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, freckles: philsFrecklesDna}, { network: network, logger: logger })
+const marksConductorConfig = Config.gen({projects: projectsDna, origins: originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, freckles: philsFrecklesDna}, {network: network, logger: logger })
 
 orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
   const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
@@ -229,284 +192,286 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('lucyFrecklesProfile', lucyFrecklesProfile)
   const aliceFrecklesProfile = await alice.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mhairi.jpg'), "handle": "Mha Iri"}})
   console.log('aliceFrecklesProfile', aliceFrecklesProfile)
-  const artFrecklesProfile = await arthur.call("freckles", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
-  console.log('artFrecklesProfile', artFrecklesProfile)
 
   const philKanbanProfile = await phil.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
   console.log('philKanbanProfile', philKanbanProfile)
   const markKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark"}})
   console.log('markKanbanProfile', markKanbanProfile)
-  const lucyKanbanProfile = await mark.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+  const lucyKanbanProfile = await lucy.call("kanban", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
   console.log('lucyKanbanProfile', lucyKanbanProfile)
 
+  const philProjectsProfile = await phil.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "philip.beadle"}})
+  console.log('philProjectsProfile', philProjectsProfile)
+  const artProjectsProfile = await arthur.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
+  console.log('artProjectsProfile', artProjectsProfile)
+  const markProjectsProfile = await mark.call("projects", "projects", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "Mark Keenan"}})
+  console.log('markProjectsProfile', markProjectsProfile)
+
+  // const originDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // await s.consistency()
+  // const originDoing = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // await s.consistency()
+  // const originDone = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // await s.consistency()
+  // const originDoNote1 = await phil.call("notes", "notes", "create_note", {"base":originDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Clone parts files", "content":"As part fo the cloning process need to copy the 'Origin' UI files for the store, component and view", "order": 0}})
+  // await s.consistency()
+  // const originDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  // console.log('originDoNote1Task1', originDoNote1Task1)
+  // await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write store", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write component", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write view", "done":false}})
+  // await s.consistency()
 
 
-
-  const originDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  await s.consistency()
-  const originDoing = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  await s.consistency()
-  const originDone = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigoriginhashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  await s.consistency()
-  const originDoNote1 = await phil.call("notes", "notes", "create_note", {"base":originDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Clone parts files", "content":"As part fo the cloning process need to copy the 'Origin' UI files for the store, component and view", "order": 0}})
-  await s.consistency()
-  const originDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
-  console.log('originDoNote1Task1', originDoNote1Task1)
-  await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write store", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write component", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": originDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write view", "done":false}})
-  await s.consistency()
-
-
-  const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  await s.consistency()
-  const chimeraDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  await s.consistency()
-  const chimeraDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  await s.consistency()
+  // const chimeraDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // await s.consistency()
+  // const chimeraDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // await s.consistency()
+  // const chimeraDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyChimera", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // await s.consistency()
   
   
-  await phil.call("notes", "notes", "create_note", {"base": chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Create Profile form for Chimera", "content":"Needs to have avatar and handle", "order": 1}})
-  await s.consistency()
-  const chimeraDoNote2 = await phil.call("notes", "notes", "create_note", {"base":chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA for Chimera Parts and invites", "content":"Currently hard coded into the vuex store. Needs to be editable", "order": 1}})
-  await s.consistency()
-  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
-  await s.consistency()
+  // await phil.call("notes", "notes", "create_note", {"base": chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Create Profile form for Chimera", "content":"Needs to have avatar and handle", "order": 1}})
+  // await s.consistency()
+  // const chimeraDoNote2 = await phil.call("notes", "notes", "create_note", {"base":chimeraDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA for Chimera Parts and invites", "content":"Currently hard coded into the vuex store. Needs to be editable", "order": 1}})
+  // await s.consistency()
+  // await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": chimeraDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  // await s.consistency()
 
-  const crisprDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  await s.consistency()
-  const crisprDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  await s.consistency()
-  const crisprDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  await s.consistency()
-  const crisprDoNote1 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Model for CRISPR", "content":"Create the DNA Model to store all the information in a project including the zome model", "order": 0}})
-  await s.consistency()
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
-  await s.consistency()
-  const crisprDoNote2 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Clone parts files", "content":"As part fo the cloning process need to copy the 'Origin' UI files for the store, component and view", "order": 0}})
-  await s.consistency()
-  const crisprDoNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
-  console.log('crisprDoNote2Task1', crisprDoNote2Task1)
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write store", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write component", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write view", "done":false}})
+  // const crisprDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // await s.consistency()
+  // const crisprDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // await s.consistency()
+  // const crisprDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCRSIPR", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // await s.consistency()
+  // const crisprDoNote1 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Model for CRISPR", "content":"Create the DNA Model to store all the information in a project including the zome model", "order": 0}})
+  // await s.consistency()
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  // await s.consistency()
+  // const crisprDoNote2 = await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Clone parts files", "content":"As part fo the cloning process need to copy the 'Origin' UI files for the store, component and view", "order": 0}})
+  // await s.consistency()
+  // const crisprDoNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  // console.log('crisprDoNote2Task1', crisprDoNote2Task1)
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write store", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write component", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": crisprDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Copy, Replace, Write view", "done":false}})
   
-  await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Promote project to Parts library", "content":"When a Part is ready to be used promote it to the Parts list.", "order": 1}})
-  await s.consistency()
+  // await phil.call("notes", "notes", "create_note", {"base":crisprDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Promote project to Parts library", "content":"When a Part is ready to be used promote it to the Parts list.", "order": 1}})
+  // await s.consistency()
 
-  const columnNotesDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  console.log('columnNotesDo', columnNotesDo)
-  await s.consistency()
-  const columnNotesDoing = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  console.log('columnNotesDoing', columnNotesDoing)
-  await s.consistency()
-  const columnNotesDone = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  console.log('columnNotesDone', columnNotesDone)
-  await s.consistency()
-  const columnNotesDoneNote1 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add order field", "content":"Notes should be orderable so they need an order field", "order": 0}})
-  console.log('columnNotesDoneNote1', columnNotesDoneNote1)
-  await s.consistency()
-  const columnNotesDoneNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnNotesDoneNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add order field", "done":true}})
-  console.log('columnNotesDoneNote1Task1', columnNotesDoneNote1Task1)
-  const columnNotesDoneNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnNotesDoneNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update listNotes to be ordered", "done":true}})
-  console.log('columnNotesDoneNote1Task2', columnNotesDoneNote1Task2)
-  await s.consistency()
-  const columnNotesDoneNote2 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add a note", "content":"An agent can add new notes", "order": 1}})
-  console.log('columnNotesDoneNote2', columnNotesDoneNote2)
-  await s.consistency()
-  const columnNotesDoneNote3 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a note", "content":"An agent can add edit", "order": 2}})
-  console.log('columnNotesDoneNote3', columnNotesDoneNote3)
-  await s.consistency()
+  // const columnNotesDo = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // console.log('columnNotesDo', columnNotesDo)
+  // await s.consistency()
+  // const columnNotesDoing = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // console.log('columnNotesDoing', columnNotesDoing)
+  // await s.consistency()
+  // const columnNotesDone = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebighashes333", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // console.log('columnNotesDone', columnNotesDone)
+  // await s.consistency()
+  // const columnNotesDoneNote1 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add order field", "content":"Notes should be orderable so they need an order field", "order": 0}})
+  // console.log('columnNotesDoneNote1', columnNotesDoneNote1)
+  // await s.consistency()
+  // const columnNotesDoneNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnNotesDoneNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add order field", "done":true}})
+  // console.log('columnNotesDoneNote1Task1', columnNotesDoneNote1Task1)
+  // const columnNotesDoneNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnNotesDoneNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update listNotes to be ordered", "done":true}})
+  // console.log('columnNotesDoneNote1Task2', columnNotesDoneNote1Task2)
+  // await s.consistency()
+  // const columnNotesDoneNote2 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Add a note", "content":"An agent can add new notes", "order": 1}})
+  // console.log('columnNotesDoneNote2', columnNotesDoneNote2)
+  // await s.consistency()
+  // const columnNotesDoneNote3 = await phil.call("notes", "notes", "create_note", {"base":columnNotesDone.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a note", "content":"An agent can add edit", "order": 2}})
+  // console.log('columnNotesDoneNote3', columnNotesDoneNote3)
+  // await s.consistency()
 
-  const columnKanbanDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  console.log('columnKanbanDo', columnKanbanDo)
-  await s.consistency()
-  const columnKanbanDoNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop Notes", "content":"An agent should be able to drag Notes between columns", "order": 0}})
-  console.log('columnKanbanDoNote1', columnKanbanDoNote1)
-  await s.consistency()
-  const columnKanbanDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":false}})
-  console.log('columnKanbanDoNote1Task1', columnKanbanDoNote1Task1)
-  const columnKanbanDoNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column in Note on drop", "done":false}})
-  console.log('columnKanbanDoNote1Task2', columnKanbanDoNote1Task2)
-  const columnKanbanDoNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update order of notes in column on drop", "done":false}})
-  console.log('columnKanbanDoNote1Task3', columnKanbanDoNote1Task3)
-  await s.consistency()
+  // const columnKanbanDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // console.log('columnKanbanDo', columnKanbanDo)
+  // await s.consistency()
+  // const columnKanbanDoNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop Notes", "content":"An agent should be able to drag Notes between columns", "order": 0}})
+  // console.log('columnKanbanDoNote1', columnKanbanDoNote1)
+  // await s.consistency()
+  // const columnKanbanDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":false}})
+  // console.log('columnKanbanDoNote1Task1', columnKanbanDoNote1Task1)
+  // const columnKanbanDoNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column in Note on drop", "done":false}})
+  // console.log('columnKanbanDoNote1Task2', columnKanbanDoNote1Task2)
+  // const columnKanbanDoNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update order of notes in column on drop", "done":false}})
+  // console.log('columnKanbanDoNote1Task3', columnKanbanDoNote1Task3)
+  // await s.consistency()
 
-  const columnKanbanDoNote2 = await arthur.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns", "order": 1}})
-  console.log('columnKanbanDoNote1', columnKanbanDoNote1)
-  await s.consistency()
-  const columnKanbanDoNote2Task1 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":true}})
-  console.log('columnKanbanDoNote2Task1', columnKanbanDoNote2Task1)
-  const columnKanbanDoNote2Task2 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column order on drop", "done":true}})
-  console.log('columnKanbanDoNote2Task2', columnKanbanDoNote2Task2)
-  const columnKanbanDoNote2Task3 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update base on drop", "done":true}})
-  console.log('columnKanbanDoNote2Task3', columnKanbanDoNote2Task3)
-  const columnKanbanDoNote2Task4 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add new handler to move link to new base", "done":true}})
-  console.log('columnKanbanDoNote2Task24', columnKanbanDoNote2Task4)
-  await s.consistency()
+  // const columnKanbanDoNote2 = await arthur.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Drag & Drop columns", "content":"An agent should be able to reorder columns", "order": 1}})
+  // console.log('columnKanbanDoNote1', columnKanbanDoNote1)
+  // await s.consistency()
+  // const columnKanbanDoNote2Task1 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Enable Drag & Drop", "done":true}})
+  // console.log('columnKanbanDoNote2Task1', columnKanbanDoNote2Task1)
+  // const columnKanbanDoNote2Task2 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update column order on drop", "done":true}})
+  // console.log('columnKanbanDoNote2Task2', columnKanbanDoNote2Task2)
+  // const columnKanbanDoNote2Task3 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update base on drop", "done":true}})
+  // console.log('columnKanbanDoNote2Task3', columnKanbanDoNote2Task3)
+  // const columnKanbanDoNote2Task4 = await arthur.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add new handler to move link to new base", "done":true}})
+  // console.log('columnKanbanDoNote2Task24', columnKanbanDoNote2Task4)
+  // await s.consistency()
 
-  const columnKanbanDoNote3 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Reorder Notes", "content":"An agent should be able to drag Notes in a column to reorder them", "order": 2}})
-  console.log('columnKanbanDoNote3', columnKanbanDoNote3)
-  await s.consistency()
-  const columnKanbanDoNote3Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote3.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update order of notes in column on drop", "done":false}})
-  console.log('columnKanbanDoNote3Task1', columnKanbanDoNote3Task1)
-  await s.consistency()
+  // const columnKanbanDoNote3 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Reorder Notes", "content":"An agent should be able to drag Notes in a column to reorder them", "order": 2}})
+  // console.log('columnKanbanDoNote3', columnKanbanDoNote3)
+  // await s.consistency()
+  // const columnKanbanDoNote3Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoNote3.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update order of notes in column on drop", "done":false}})
+  // console.log('columnKanbanDoNote3Task1', columnKanbanDoNote3Task1)
+  // await s.consistency()
 
-  const columnKanbanDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  console.log('columnKanbanDoing', columnKanbanDoing)
-  await s.consistency()
-  const columnKanbanDoingNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Demo Setup", "content":"Work out how to write try-o-rama test to setup all the demo data for multiple DNAs", "order": 0}})
-  console.log('columnKanbanDoingNote1', columnKanbanDoingNote1)
-  await s.consistency()
-  const columnKanbanDoingNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Create new Demo folder", "done":false}})
-  console.log('columnKanbanDoingNote1Task1', columnKanbanDoingNote1Task1)
-  const columnKanbanDoingNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add Notes, Tasks and Kanban dnas", "done":false}})
-  console.log('columnKanbanDoingNote1Task2', columnKanbanDoingNote1Task2)
-  const columnKanbanDoingNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Write a scenario that adds columns, notes and tasks", "done":false}})
-  console.log('columnKanbanDoingNote1Task3', columnKanbanDoingNote1Task3)
-  await s.consistency()
+  // const columnKanbanDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // console.log('columnKanbanDoing', columnKanbanDoing)
+  // await s.consistency()
+  // const columnKanbanDoingNote1 = await phil.call("notes", "notes", "create_note", {"base":columnKanbanDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Demo Setup", "content":"Work out how to write try-o-rama test to setup all the demo data for multiple DNAs", "order": 0}})
+  // console.log('columnKanbanDoingNote1', columnKanbanDoingNote1)
+  // await s.consistency()
+  // const columnKanbanDoingNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Create new Demo folder", "done":false}})
+  // console.log('columnKanbanDoingNote1Task1', columnKanbanDoingNote1Task1)
+  // const columnKanbanDoingNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add Notes, Tasks and Kanban dnas", "done":false}})
+  // console.log('columnKanbanDoingNote1Task2', columnKanbanDoingNote1Task2)
+  // const columnKanbanDoingNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnKanbanDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Write a scenario that adds columns, notes and tasks", "done":false}})
+  // console.log('columnKanbanDoingNote1Task3', columnKanbanDoingNote1Task3)
+  // await s.consistency()
 
-  const columnKanbanDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  console.log('columnKanbanDone', columnKanbanDone)
+  // const columnKanbanDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyKanban", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // console.log('columnKanbanDone', columnKanbanDone)
 
-  const columnTasksDo = await alice.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
-  console.log('columnTasksDo', columnTasksDo)
-  await s.consistency()
-  const columnTasksDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a task", "content":"An agent should be able to edit a task", "order": 0}})
-  console.log('columnTasksDoNote1', columnTasksDoNote1)
-  await s.consistency()
-  const columnTasksDoNote1Task1 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add Edit icon where tick is", "done":false}})
-  console.log('columnTasksDoNote1Task1', columnTasksDoNote1Task1)
-  const columnTasksDoNote1Task2 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Click edit shows text-field and edit changes to Save", "done":false}})
-  console.log('columnTasksDoNote1Task2', columnTasksDoNote1Task2)
-  const columnTasksDoNote1Task3 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update task on save", "done":false}})
-  console.log('columnTasksDoNote1Task3', columnTasksDoNote1Task3)  
-  const columnTasksDoNote1Task4 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update task on check", "done":false}})
-  console.log('columnTasksDoNote1Task4', columnTasksDoNote1Task4)
-  await s.consistency()
+  // const columnTasksDo = await alice.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 1}})
+  // console.log('columnTasksDo', columnTasksDo)
+  // await s.consistency()
+  // const columnTasksDoNote1 = await alice.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Edit a task", "content":"An agent should be able to edit a task", "order": 0}})
+  // console.log('columnTasksDoNote1', columnTasksDoNote1)
+  // await s.consistency()
+  // const columnTasksDoNote1Task1 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add Edit icon where tick is", "done":false}})
+  // console.log('columnTasksDoNote1Task1', columnTasksDoNote1Task1)
+  // const columnTasksDoNote1Task2 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Click edit shows text-field and edit changes to Save", "done":false}})
+  // console.log('columnTasksDoNote1Task2', columnTasksDoNote1Task2)
+  // const columnTasksDoNote1Task3 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update task on save", "done":false}})
+  // console.log('columnTasksDoNote1Task3', columnTasksDoNote1Task3)  
+  // const columnTasksDoNote1Task4 = await alice.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update task on check", "done":false}})
+  // console.log('columnTasksDoNote1Task4', columnTasksDoNote1Task4)
+  // await s.consistency()
 
-  const columnTasksDoNote2 = await phil.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Delete a task", "content":"An agent should be able to delete a task", "order": 1}})
-  console.log('columnTasksDoNote2', columnTasksDoNote2)
-  await s.consistency()
-  const columnTasksDoNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add delete icon right of edit", "done":false}})
-  console.log('columnTasksDoNote2Task1', columnTasksDoNote2Task1)
-  const columnTasksDoNote2Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Click delete shows confirmation dialog", "done":false}})
-  console.log('columnTasksDoNote2Task2', columnTasksDoNote2Task2)
-  const columnTasksDoNote2Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Delete on confirm", "done":false}})
-  console.log('columnTasksDoNote2Task3', columnTasksDoNote2Task3)
-  await s.consistency()
+  // const columnTasksDoNote2 = await phil.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Delete a task", "content":"An agent should be able to delete a task", "order": 1}})
+  // console.log('columnTasksDoNote2', columnTasksDoNote2)
+  // await s.consistency()
+  // const columnTasksDoNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Add delete icon right of edit", "done":false}})
+  // console.log('columnTasksDoNote2Task1', columnTasksDoNote2Task1)
+  // const columnTasksDoNote2Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Click delete shows confirmation dialog", "done":false}})
+  // console.log('columnTasksDoNote2Task2', columnTasksDoNote2Task2)
+  // const columnTasksDoNote2Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnTasksDoNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Delete on confirm", "done":false}})
+  // console.log('columnTasksDoNote2Task3', columnTasksDoNote2Task3)
+  // await s.consistency()
 
-  const columnTasksDoNote3 = await lucy.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Rename task to Checklist", "content":"Checklist seems to be a more appropriate name", "order": 2}})
-  console.log('columnTasksDoNote3', columnTasksDoNote3)
+  // const columnTasksDoNote3 = await lucy.call("notes", "notes", "create_note", {"base":columnTasksDo.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Rename task to Checklist", "content":"Checklist seems to be a more appropriate name", "order": 2}})
+  // console.log('columnTasksDoNote3', columnTasksDoNote3)
 
-  const columnTasksDoing = await lucy.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  console.log('columnTasksDoing', columnTasksDoing)
+  // const columnTasksDoing = await lucy.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // console.log('columnTasksDoing', columnTasksDoing)
 
-  const columnTasksDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  console.log('columnTasksDone', columnTasksDone)
-
-
-  const columnFrecklesDraft = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Draft", "order": 0}})
-  console.log('columnFrecklesDraft', columnFrecklesDraft)
-  const columnFrecklesDraftNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Software creation, collaboration & sharing at the edge.", "content":"Chimera will foster its own creation as the people’s networks of DHTs, software creation, collaboration & sharing at the edge. Anyone can build a simple Chimera part, and those parts make up the whole.", "order": 0}})
-  console.log('columnFrecklesDraftNote1', columnFrecklesDraftNote1)
-  const columnFrecklesDraftNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mhairi.rocks", "done":false}})
-  console.log('columnFrecklesDraftNote1Task1', columnFrecklesDraftNote1Task1)
-  const columnFrecklesDraftNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mittens.rocks", "done":false}})
-  console.log('columnFrecklesDraftNote1Task2', columnFrecklesDraftNote1Task2)
-  const columnFrecklesDraftNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://rayman.rocks", "done":false}})
-  console.log('columnFrecklesDraftNote1Task3', columnFrecklesDraftNote1Task3)
-  const columnFrecklesDraftNote1Task4 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://missjade.rocks", "done":false}})
-  console.log('columnFrecklesDraftNote1Task4', columnFrecklesDraftNote1Task4)
-
-  const columnFrecklesDraftNote2 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera", "content":"Chimera: In Greek mythology, the Chimera was a creature composed of body parts from many other creatures. In biomimicry, we talk of a Chimera approach as a combination of different biomimetic designs into one application.", "order": 1}})
-  console.log('columnFrecklesDraftNote2', columnFrecklesDraftNote2)
-
-  const columnFrecklesReview = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Review", "order": 1}})
-  console.log('columnFrecklesReview', columnFrecklesReview)  
-  const columnFrecklesReviewNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesReview.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera: Is this the name", "content":"I like it, been working with it for a few weeks now and it still holds up well. Might write something about that.", "order": 0}})
-  console.log('columnFrecklesReviewNote1', columnFrecklesReviewNote1)
-
-  const columnFrecklesPublish = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Ready to Publish", "order": 2}})
-  console.log('columnFrecklesPublish', columnFrecklesPublish)
+  // const columnTasksDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorehashyTasks", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // console.log('columnTasksDone', columnTasksDone)
 
 
-  const columnAgentsOfAnarchyDraft = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Draft It", "order": 0}})
-  console.log('columnAgentsOfAnarchyDraft', columnAgentsOfAnarchyDraft)
-  const columnAgentsOfAnarchyDraftNote1 = await phil.call("notes", "notes", "create_note", {"base":columnAgentsOfAnarchyDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Ghost the System", "content":`
-  They have stolen your mind
-  Enslaved you with deceit
-  Sold your privacy for profit
-  And made you think it was free
+  // const columnFrecklesDraft = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Draft", "order": 0}})
+  // console.log('columnFrecklesDraft', columnFrecklesDraft)
+  // const columnFrecklesDraftNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Software creation, collaboration & sharing at the edge.", "content":"Chimera will foster its own creation as the people’s networks of DHTs, software creation, collaboration & sharing at the edge. Anyone can build a simple Chimera part, and those parts make up the whole.", "order": 0}})
+  // console.log('columnFrecklesDraftNote1', columnFrecklesDraftNote1)
+  // const columnFrecklesDraftNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mhairi.rocks", "done":false}})
+  // console.log('columnFrecklesDraftNote1Task1', columnFrecklesDraftNote1Task1)
+  // const columnFrecklesDraftNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://mittens.rocks", "done":false}})
+  // console.log('columnFrecklesDraftNote1Task2', columnFrecklesDraftNote1Task2)
+  // const columnFrecklesDraftNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://rayman.rocks", "done":false}})
+  // console.log('columnFrecklesDraftNote1Task3', columnFrecklesDraftNote1Task3)
+  // const columnFrecklesDraftNote1Task4 = await phil.call("tasks", "tasks", "create_task", {"base": columnFrecklesDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"http://missjade.rocks", "done":false}})
+  // console.log('columnFrecklesDraftNote1Task4', columnFrecklesDraftNote1Task4)
+
+  // const columnFrecklesDraftNote2 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera", "content":"Chimera: In Greek mythology, the Chimera was a creature composed of body parts from many other creatures. In biomimicry, we talk of a Chimera approach as a combination of different biomimetic designs into one application.", "order": 1}})
+  // console.log('columnFrecklesDraftNote2', columnFrecklesDraftNote2)
+
+  // const columnFrecklesReview = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Review", "order": 1}})
+  // console.log('columnFrecklesReview', columnFrecklesReview)  
+  // const columnFrecklesReviewNote1 = await phil.call("notes", "notes", "create_note", {"base":columnFrecklesReview.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Chimera: Is this the name", "content":"I like it, been working with it for a few weeks now and it still holds up well. Might write something about that.", "order": 0}})
+  // console.log('columnFrecklesReviewNote1', columnFrecklesReviewNote1)
+
+  // const columnFrecklesPublish = await phil.call("kanban", "kanban", "create_column", {"base": "Qmmorebigfrecklehashes333", "column_input" : {"uuid":uuidv4(), "title":"Ready to Publish", "order": 2}})
+  // console.log('columnFrecklesPublish', columnFrecklesPublish)
+
+
+  // const columnAgentsOfAnarchyDraft = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Draft It", "order": 0}})
+  // console.log('columnAgentsOfAnarchyDraft', columnAgentsOfAnarchyDraft)
+  // const columnAgentsOfAnarchyDraftNote1 = await phil.call("notes", "notes", "create_note", {"base":columnAgentsOfAnarchyDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Ghost the System", "content":`
+  // They have stolen your mind
+  // Enslaved you with deceit
+  // Sold your privacy for profit
+  // And made you think it was free
   
-  If you fight the System,
-  The System fights back,
-  If you Ghost the System
-  We get our freedom back
-  `, "order": 0}})
-  console.log('columnAgentsOfAnarchyDraftNote1', columnAgentsOfAnarchyDraftNote1)
-  const columnAgentsOfAnarchyDraftNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Write the story", "done":true}})
-  console.log('columnAgentsOfAnarchyDraftNote1Task1', columnAgentsOfAnarchyDraftNote1Task1)
-  const columnAgentsOfAnarchyDraftNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Sketch up panels", "done":false}})
-  console.log('columnAgentsOfAnarchyDraftNote1Task2', columnAgentsOfAnarchyDraftNote1Task2)
-  const columnAgentsOfAnarchyDraftNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Speech bubbbles", "done":false}})
-  console.log('columnAgentsOfAnarchyDraftNote1Task3', columnAgentsOfAnarchyDraftNote1Task3)
-  const columnAgentsOfAnarchyDraftNote1Task4 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Panel footers", "done":false}})
-  console.log('columnAgentsOfAnarchyDraftNote1Task4', columnAgentsOfAnarchyDraftNote1Task4)
+  // If you fight the System,
+  // The System fights back,
+  // If you Ghost the System
+  // We get our freedom back
+  // `, "order": 0}})
+  // console.log('columnAgentsOfAnarchyDraftNote1', columnAgentsOfAnarchyDraftNote1)
+  // const columnAgentsOfAnarchyDraftNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Write the story", "done":true}})
+  // console.log('columnAgentsOfAnarchyDraftNote1Task1', columnAgentsOfAnarchyDraftNote1Task1)
+  // const columnAgentsOfAnarchyDraftNote1Task2 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Sketch up panels", "done":false}})
+  // console.log('columnAgentsOfAnarchyDraftNote1Task2', columnAgentsOfAnarchyDraftNote1Task2)
+  // const columnAgentsOfAnarchyDraftNote1Task3 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Speech bubbbles", "done":false}})
+  // console.log('columnAgentsOfAnarchyDraftNote1Task3', columnAgentsOfAnarchyDraftNote1Task3)
+  // const columnAgentsOfAnarchyDraftNote1Task4 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Panel footers", "done":false}})
+  // console.log('columnAgentsOfAnarchyDraftNote1Task4', columnAgentsOfAnarchyDraftNote1Task4)
   
-  const columnAgentsOfAnarchyDraftNote2 = await phil.call("notes", "notes", "create_note", {"base":columnAgentsOfAnarchyDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Website", "content":"Update the website to be generated by Profile Website builder", "order": 1}})
-  console.log('columnAgentsOfAnarchyDraftNote2', columnAgentsOfAnarchyDraftNote2)
-  const columnAgentsOfAnarchyDraftNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Check Crazy Domains", "done":true}})
-  console.log('columnAgentsOfAnarchyDraftNote2Task1', columnAgentsOfAnarchyDraftNote2Task1)
+  // const columnAgentsOfAnarchyDraftNote2 = await phil.call("notes", "notes", "create_note", {"base":columnAgentsOfAnarchyDraft.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Website", "content":"Update the website to be generated by Profile Website builder", "order": 1}})
+  // console.log('columnAgentsOfAnarchyDraftNote2', columnAgentsOfAnarchyDraftNote2)
+  // const columnAgentsOfAnarchyDraftNote2Task1 = await phil.call("tasks", "tasks", "create_task", {"base": columnAgentsOfAnarchyDraftNote2.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Check Crazy Domains", "done":true}})
+  // console.log('columnAgentsOfAnarchyDraftNote2Task1', columnAgentsOfAnarchyDraftNote2Task1)
   
-  const columnAgentsOfAnarchyReview = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Animate It", "order": 1}})
-  console.log('columnAgentsOfAnarchyReview', columnAgentsOfAnarchyReview)  
+  // const columnAgentsOfAnarchyReview = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Animate It", "order": 1}})
+  // console.log('columnAgentsOfAnarchyReview', columnAgentsOfAnarchyReview)  
   
-  const columnAgentsOfAnarchyPublish = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Publish It", "order": 2}})
-  console.log('columnAgentsOfAnarchyPublish', columnAgentsOfAnarchyPublish)
+  // const columnAgentsOfAnarchyPublish = await phil.call("kanban", "kanban", "create_column", {"base": "QmmorebigfAgentsOfAnarchyhash", "column_input" : {"uuid":uuidv4(), "title":"Publish It", "order": 2}})
+  // console.log('columnAgentsOfAnarchyPublish', columnAgentsOfAnarchyPublish)
 
-  // Personal Information
-  const personalInfoDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  await s.consistency()
-  const personalInfoDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  await s.consistency()
-  const personalInfoDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  await s.consistency()
-  const personalInfoDoingNote1 = await phil.call("notes", "notes", "create_note", {"base":personalInfoDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA Model for Personas & Profiles", "content":"Create the DNA Model", "order": 0}})
-  await s.consistency()
-  const personalInfoDoingNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
-  console.log('personalInfoDoingNote1Task1', personalInfoDoingNote1Task1)
-  await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
-  await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
-  await s.consistency()
+  // // Personal Information
+  // const personalInfoDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // await s.consistency()
+  // const personalInfoDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // await s.consistency()
+  // const personalInfoDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyPersonasProfiles", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // await s.consistency()
+  // const personalInfoDoingNote1 = await phil.call("notes", "notes", "create_note", {"base":personalInfoDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"DNA Model for Personas & Profiles", "content":"Create the DNA Model", "order": 0}})
+  // await s.consistency()
+  // const personalInfoDoingNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoingNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Build & test DNA", "done":false}})
+  // console.log('personalInfoDoingNote1Task1', personalInfoDoingNote1Task1)
+  // await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern templates code files", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Pattern zome", "done":false}})
+  // await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Project zome section", "done":false}})
+  // await s.consistency()
 
-  const personalInfoDoNote1 = await phil.call("notes", "notes", "create_note", {"base":personalInfoDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Move personal information profiles to Holochain", "content":"profiels are json files, move that info to Holochain.", "order": 0}})
-  await s.consistency()
-  const personalInfoDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update store file", "done":false}})
-  await s.consistency()
+  // const personalInfoDoNote1 = await phil.call("notes", "notes", "create_note", {"base":personalInfoDoing.Ok.id, "note_input": {"uuid":uuidv4(), "title":"Move personal information profiles to Holochain", "content":"profiels are json files, move that info to Holochain.", "order": 0}})
+  // await s.consistency()
+  // const personalInfoDoNote1Task1 = await phil.call("tasks", "tasks", "create_task", {"base": personalInfoDoNote1.Ok.id, "task_input" : {"uuid":uuidv4(), "title":"Update store file", "done":false}})
+  // await s.consistency()
 
-  // Curated Fields
-  const curFieldsDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-  await s.consistency()
-  const curFieldsDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-  await s.consistency()
-  const curFieldsDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-  await s.consistency()
+  // // Curated Fields
+  // const curFieldsDo = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  // await s.consistency()
+  // const curFieldsDoing = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  // await s.consistency()
+  // const curFieldsDone = await phil.call("kanban", "kanban", "create_column", {"base": "QmHashyCuratedFields", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  // await s.consistency()
 
-   // Events
-   const eventsDo = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
-   await s.consistency()
-   const eventsDoing = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
-   await s.consistency()
-   const eventsDone = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
-   await s.consistency()
+  //  // Events
+  //  const eventsDo = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Do", "order": 0}})
+  //  await s.consistency()
+  //  const eventsDoing = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Doing", "order": 1}})
+  //  await s.consistency()
+  //  const eventsDone = await phil.call("kanban", "kanban", "create_column", {"base": "new", "column_input" : {"uuid":uuidv4(), "title":"Done", "order": 2}})
+  //  await s.consistency()
 
   // Phil's freckles
   const philFreckle1 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})

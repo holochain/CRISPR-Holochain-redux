@@ -40,7 +40,7 @@
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Project Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
             <v-text-field class="ml-2 white--text" v-if="clone.zome" v-model="clone.zome.name" label="Zome Name" :hint="`A plural such as ${project.name} or Notes`" />
-            <v-text-field class="ml-2 white--text" v-if="clone.zome" v-model="clone.zome.entryTypes[0].name" label="Entry Type Name" :hint="`A singular such as ${project.zome.entryTypes[0].name} or note`" />
+            <v-text-field class="ml-2 white--text" v-if="clone.zome.entryTypes[0]" v-model="clone.zome.entryTypes[0].name" label="Entry Type Name" :hint="`A singular such as ${project.zome.entryTypes[0].name} or note`" />
             <v-image-input v-model="clone.preview" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="200" :image-width="200"/>
           </v-col>
         </v-row>

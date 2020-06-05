@@ -9,7 +9,7 @@ export default {
         origins: [
           {
             id: 'PartEditor1',
-            content: 'Content for Origin 10'
+            content: 'Content for Origin 1'
           },
           {
             id: 'PartEditor2',
@@ -102,7 +102,7 @@ export default {
     // order: ({ state, commit, rootState }, payload) => {
     //   commit('setOriginsList', { base: payload.base, origins: payload.origins })
     //   payload.origins.forEach(origin => {
-    //     rootState.devHolochainConnection.then(({ callZome }) => {
+    //     rootState.holochainConnection.then(({ callZome }) => {
     //       callZome('origins', 'origins', 'update_origin')({ id: origin.id, created_at: origin.createdAt, address: origin.address, origin_input: { uuid: origin.uuid, content: origin.content } }).then((result) => {
     //         const res = JSON.parse(result)
     //         // console.log(res)
@@ -116,7 +116,7 @@ export default {
     //   })
     // },
     // rebase: ({ state, commit, rootState }, payload) => {
-    //   rootState.devHolochainConnection.then(({ callZome }) => {
+    //   rootState.holochainConnection.then(({ callZome }) => {
     //     callZome('origins', 'origins', 'rebase_origin')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
     //       const res = JSON.parse(result)
     //       console.log(res)
@@ -127,7 +127,7 @@ export default {
     //   })
     // },
     agentAddress: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
@@ -140,7 +140,7 @@ export default {
       })
     },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
@@ -169,7 +169,7 @@ export default {
     },
     fetchOrigins: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'list_origins')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
@@ -184,7 +184,7 @@ export default {
     saveOrigin: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.origin.id === 'new' || payload.origin.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('origins', 'origins', 'create_origin')({ base: payload.base, origin_input: { uuid: uuidv4(), content: payload.origin.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -196,7 +196,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('origins', 'origins', 'update_origin')({ id: payload.origin.id, created_at: payload.origin.createdAt, address: payload.origin.address, origin_input: { uuid: payload.origin.uuid, content: payload.origin.content } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -211,7 +211,7 @@ export default {
     },
     deleteOrigin: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('origins', 'origins', 'delete_origin')({ base: payload.base, id: payload.origin.id, created_at: payload.origin.createdAt, address: payload.origin.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

@@ -100,7 +100,7 @@ export default {
     },
     fetchTasks: ({ state, commit, rootState }, base) => {
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'list_tasks')({ base: base }).then((result) => {
           const res = JSON.parse(result)
           console.log(base, res)
@@ -115,7 +115,7 @@ export default {
     saveTask: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.task.id === '' || payload.task.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('tasks', 'tasks', 'create_task')({ base: payload.base, task_input: { uuid: uuidv4(), title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(payload, res)
@@ -127,7 +127,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('tasks', 'tasks', 'update_task')({ id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address, task_input: { uuid: payload.task.uuid, title: payload.task.title, done: payload.task.done } }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
@@ -141,7 +141,7 @@ export default {
     },
     deleteTask: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('tasks', 'tasks', 'delete_task')({ base: payload.base, id: payload.task.id, created_at: payload.task.createdAt, address: payload.task.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

@@ -102,7 +102,7 @@ export default {
         content: ''
       })
     },
-    ...mapActions('projects', ['fetchProjects', 'acknowledgeErrors'])
+    ...mapActions('projects', ['fetchProjects', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
@@ -116,6 +116,8 @@ export default {
     }
   },
   created () {
+    this.agentAddress()
+    this.fetchProfiles()
     this.fetchProjects(this.base)
   }
 }

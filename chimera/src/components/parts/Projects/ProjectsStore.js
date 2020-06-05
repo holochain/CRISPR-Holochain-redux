@@ -258,10 +258,51 @@ export default {
     acknowledgeErrors: ({ state, commit, rootState }, base) => {
       commit('resetErrors', base)
     },
+    agentAddress: ({ state, commit, rootState, dispatch }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('projects', 'projects', 'agent_address')({ }).then((result) => {
+          const res = JSON.parse(result)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
+            console.log(rootState.auth.agentAddress)
+          }
+        })
+      })
+    },
+    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('projects', 'projects', 'list_profiles')({ base: '' }).then((result) => {
+          const res = JSON.parse(result)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            const friends = res.Ok.map(p => {
+              return {
+                id: p.id,
+                agentAddress: p.agentId,
+                name: p.handle,
+                online: true,
+                info: {
+                  id: 10,
+                  avatar: p.avatar,
+                  name: ''
+                },
+                notifications: 0,
+                value: 0,
+                start: 0
+              }
+            })
+            dispatch('friends/profiles', { profiles: friends }, { root: true })
+          }
+        })
+      })
+    },
     order: ({ state, commit, rootState }, payload) => {
       commit('setProjectsList', { base: payload.base, projects: payload.projects })
       payload.projects.forEach(project => {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('projects', 'projects', 'update_project')({ id: project.id, created_at: project.createdAt, address: project.address, project_input: { uuid: project.uuid, title: project.title, content: project.content, order: project.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -275,7 +316,7 @@ export default {
       })
     },
     rebase: ({ state, commit, rootState }, payload) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'rebase_project')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
@@ -288,10 +329,10 @@ export default {
     fetchProjects: ({ state, commit, rootState }, base) => {
       // alert(JSON.stringify(state.baseProjects[0].projects[0].zome))
       if (base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'list_projects')({ base: base }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
+          // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -303,10 +344,10 @@ export default {
     saveProject: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       if (payload.project.id === 'new' || payload.project.id === undefined) {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('projects', 'projects', 'create_project')({ base: payload.base, project_input: { uuid: uuidv4(), name: payload.project.name, description: payload.project.description, preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.png', zome: JSON.stringify(payload.project.zome), order: 0 } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
+            // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { base: payload.base, error: res.Err.Internal })
             } else {
@@ -315,7 +356,7 @@ export default {
           })
         })
       } else {
-        rootState.devHolochainConnection.then(({ callZome }) => {
+        rootState.holochainConnection.then(({ callZome }) => {
           callZome('projects', 'projects', 'update_project')({ id: payload.project.id, created_at: payload.project.createdAt, address: payload.project.address, project_input: { uuid: payload.project.uuid, name: payload.project.name, description: payload.project.description, preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Origins/preview.png', zome: JSON.stringify(payload.project.zome), order: payload.project.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
@@ -330,7 +371,7 @@ export default {
     },
     deleteProject: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'delete_project')({ base: payload.base, id: payload.project.id, created_at: payload.project.createdAt, address: payload.project.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {

@@ -18,7 +18,7 @@
       </v-row>
     </v-alert>
     <v-col cols="12" v-for="freckle in freckles" :key="freckle.id">
-      <freckle :key="freckle.id" :base="base" :freckle="freckle">
+      <freckle :key="freckle.id" :instance="instance" :base="base" :partBase="base" :freckle="freckle">
       </freckle>
     </v-col>
     <slot></slot>
@@ -31,7 +31,7 @@ export default {
   components: {
     Freckle: () => import('./Freckle')
   },
-  props: ['base', 'title'],
+  props: ['instance', 'base', 'title'],
   methods: {
     add () {
       this.freckles.splice(0, 0, {

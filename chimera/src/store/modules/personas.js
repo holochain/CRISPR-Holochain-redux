@@ -17,7 +17,7 @@ export default {
   },
   actions: {
     fetchPersonas: ({ state, commit, rootState }) => {
-      rootState.devHolochainConnection.then(({ callZome }) => {
+      rootState.holochainConnection.then(({ callZome }) => {
         callZome('personalinformation', 'personalinformation', 'list_anchor_tags')({ anchor_type: 'list_personafields' }).then((result) => {
           const res = JSON.parse(result)
           // console.log(res)
