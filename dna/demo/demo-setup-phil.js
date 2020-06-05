@@ -904,15 +904,21 @@ const projects = [
   }
 ]
 const projectCRISPR = projects.find(p => p.name === 'CRISPR')
-
 const projectOrigins = projects.find(p => p.name === 'Origins')
 const projectChimera = projects.find(p => p.name === 'Chimera')
+const projectKanban = projects.find(p => p.name === 'Kanban')
+const projectPersonalInformation = projects.find(p => p.name === 'Personal Information')
+const projectCuratedFields = projects.find(p => p.name === 'Curated Fields')
+const projectFreckles = projects.find(p => p.name === 'Freckles')
+const projectNotes = projects.find(p => p.name === 'Notes')
+const projectTasks = projects.find(p => p.name === 'Tasks')
+const projectRatings = projects.find(p => p.name === 'Ratings')
+const projectProjects = projects.find(p => p.name === 'Projects')
+const projectTags = projects.find(p => p.name === 'Tags')
 
 let startedConductor = false
 const tryConnection = () => {
-  client.connect(
-    { port },
-    () => {
+  client.connect({ port }, () => {
       client.end()
       if (!startedConductor) {
         console.log('starting ui, connect to:' + port)
@@ -957,8 +963,7 @@ const tryConnection = () => {
                 console.log(JSON.parse(result))
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Research Vue components', done:true }})
                 .then((result) => {
-                  const res = JSON.parse(result)
-                  console.log('projectCRISPR', res.Ok)                  
+                  console.log(JSON.parse(result))               
                 }).catch(err =>{console.log(err)})
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Clone Origins to Tags', done:true }})
                 .then((result) => {
@@ -1035,56 +1040,169 @@ const tryConnection = () => {
                   console.log(JSON.parse(result))                   
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Part Editor Improvements', content: 'When using the Part Editor to modify the code of a Part it is quite normal to save code that does not compile due to missed symbols etc. The issue is that it is the editor being used that fails to compile and another code editor has to be used to fix the issue. Not ideal. Most issues could be caught with a code linter that is run before saving the file.', order: 0 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Investigate running eslint in the browser', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                                                 
+                }).catch(err =>{console.log(err)})
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Lint each file on Save', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                                                 
+                }).catch(err =>{console.log(err)})
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Do not save if lint errors', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                                                
+                }).catch(err =>{console.log(err)})
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Install invite DHT on accept invite', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                   
+                }).catch(err =>{console.log(err)})
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Add Tags part to each instance', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                   
+                }).catch(err =>{console.log(err)})
+              }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
+          }).catch(err =>{console.log(err)})
+
+          // projectChimera
+          callZome('projects', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectChimera.name, description: projectChimera.description, preview: projectChimera.preview, zome: JSON.stringify(projectChimera.zome), order: 1 }})
+          .then((result) => {
+            const projectChimeraId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+              console.log(JSON.parse(result))
             }).catch(err =>{console.log(err)})
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Make partBase []', content: 'When the partBase is an "Application" need to be able to add parts to the parts as well', order: 0 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'partBase is []', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                  
+                }).catch(err =>{console.log(err)})
+                callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Add each part in the []', done:false }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                                                 
+                }).catch(err =>{console.log(err)})
+              }).catch(err =>{console.log(err)})
+            }).catch(err =>{console.log(err)})
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Applications / Parts "store"', content: 'We need an easy way to find new apps and parts as well as a way to publish newly built parts and apps. This "store" is an integral part of socialising DHTs.', order: 0 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Player settings for UI', content: 'It would be really cool to be able to change up the way the UI looks for a part. Eg a note currently is just the text, being able to change the UI to make it look like a PostIt would be great.', order: 0 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'List item options', content: 'Options for listing items could be a straight list, calendar, carousel etc.', order: 0 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+            }).catch(err =>{console.log(err)})
+          }).catch(err =>{console.log(err)})
+
+          // projectKanban
+          callZome('projects', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectKanban.name, description: projectKanban.description, preview: projectKanban.preview, zome: JSON.stringify(projectKanban.zome), order: 3 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectPersonalInformation
+          callZome('projects', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectPersonalInformation.name, description: projectPersonalInformation.description, preview: projectPersonalInformation.preview, zome: JSON.stringify(projectPersonalInformation.zome), order: 4 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
 
           // projectOrigins
           callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
           .then((result) => {
-            const res = JSON.parse(result)
-            console.log('ok_projectChimera', res.Ok)
-            projectOriginsId = res.Ok.id
+            const projectOriginsId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
             callZome('kanban', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
-              const res = JSON.parse(result)
-              console.log('ok_projectChimeraColumnIdDoing', res.Ok)
-              const columnId = res.Ok.id
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
               callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
               .then((result) => {
-                const res = JSON.parse(result)
-                console.log('ok_projectChimeraColumnIdDoingNote', res.Ok)
-                const noteId = res.Ok.id
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Build & test DNA', done:true }})
                 .then((result) => {
-                  const res = JSON.parse(result)
-                  console.log('ok_projectChimeraColumnIdDoingNoteTask', res.Ok)                  
+                  console.log(JSON.parse(result))                
                 }).catch(err =>{console.log(err)})
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write store', done:true }})
                 .then((result) => {
-                  const res = JSON.parse(result)
-                  console.log('ok_projectChimeraColumnIdDoingNoteTask', res.Ok)                  
+                  console.log(JSON.parse(result))                 
                 }).catch(err =>{console.log(err)})
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write component', done:true }})
                 .then((result) => {
-                  const res = JSON.parse(result)
-                  console.log('ok_projectChimeraColumnIdDoingNoteTask', res.Ok)                  
+                  console.log(JSON.parse(result))                  
                 }).catch(err =>{console.log(err)})
                 callZome('tasks', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Part Editor', done:true }})
                 .then((result) => {
-                  const res = JSON.parse(result)
-                  console.log('ok_projectChimeraColumnIdDoingNoteTask', res.Ok)                  
+                  console.log(JSON.parse(result))                 
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
             callZome('kanban', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
-              const res = JSON.parse(result)
-              console.log('ok_projectChimeraColumnIdDoing', res.Ok)
+              console.log(JSON.parse(result))
             }).catch(err =>{console.log(err)})
             callZome('kanban', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
-              const res = JSON.parse(result)
-              console.log('ok_projectChimeraColumnIdDoing', res.Ok)
+              console.log(JSON.parse(result))
             }).catch(err =>{console.log(err)})
           }).catch(err =>{console.log(err)})
+
+          // projectCuratedFields
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectCuratedFields.name, description: projectCuratedFields.description, preview: projectCuratedFields.preview, zome: JSON.stringify(projectCuratedFields.zome), order: 1 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectFreckles
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectFreckles.name, description: projectFreckles.description, preview: projectFreckles.preview, zome: JSON.stringify(projectFreckles.zome), order: 2 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectNotes
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectNotes.name, description: projectNotes.description, preview: projectNotes.preview, zome: JSON.stringify(projectNotes.zome), order: 3 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectTasks
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTasks.name, description: projectTasks.description, preview: projectTasks.preview, zome: JSON.stringify(projectTasks.zome), order: 4 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectRatings
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectRatings.name, description: projectRatings.description, preview: projectRatings.preview, zome: JSON.stringify(projectRatings.zome), order: 5 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
+          // projectProjects
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectProjects.name, description: projectProjects.description, preview: projectProjects.preview, zome: JSON.stringify(projectProjects.zome), order: 6 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})                    
+
+          // projectTags
+          callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTags.name, description: projectTags.description, preview: projectTags.preview, zome: JSON.stringify(projectTags.zome), order: 7 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})  
         })
       }
     }

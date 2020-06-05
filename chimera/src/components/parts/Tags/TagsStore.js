@@ -259,6 +259,30 @@ export default {
         })
       })
     },
+    addTag: ({ state, commit, rootState }, payload) => {
+      console.log(payload)
+      if (state.mock) {
+        const tag = payload.tag
+        if (tag.id === 'new') {
+          tag.id = uuidv4()
+          commit('createTag', { base: payload.base, data: tag })
+        } else {
+          commit('updateTag', { base: payload.base, data: tag })
+        }
+        return
+      }
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('tags', 'tags', 'create_tag')({ base: payload.base, tag_input: { text: payload.tag.content } }).then((result) => {
+          const res = JSON.parse(result)
+          // console.log(res)
+          if (res.Ok === undefined) {
+            commit('error', { base: payload.base, error: res.Err.Internal })
+          } else {
+            commit('createTag', { base: payload.base, data: res.Ok })
+          }
+        })
+      })
+    },
     saveTag: ({ state, commit, rootState }, payload) => {
       console.log(payload)
       if (state.mock) {

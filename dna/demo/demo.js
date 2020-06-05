@@ -44,6 +44,7 @@ const logger = {
   state_dump: true
 }
 
+
 process.on('unhandledRejection', error => {
   console.error('got unhandledRejection:', error)
 })
