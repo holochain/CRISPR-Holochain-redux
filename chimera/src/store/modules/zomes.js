@@ -81,6 +81,19 @@ export default {
           anchorTypes: [],
           entryTypes: []
         }
+      },
+      {
+        template: 'Tags',
+        zome:
+        {
+          id: 'QmZomeTags',
+          name: 'Tags',
+          libCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/zomes/tags/code/src/lib.rs`, 'utf8'),
+          libZome: '',
+          items: [],
+          anchorTypes: [],
+          entryTypes: []
+        }
       }
     ],
     entryTypeTemplates: [
@@ -231,6 +244,53 @@ export default {
               { name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/package.json`, 'utf8') },
               { name: 'Procfile', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/Procfile`, 'utf8') },
               { name: 'README.md', file: 'md', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/README.md`, 'utf8') }
+            ]
+          }
+        ]
+      },
+      {
+        template: 'tags',
+        items: [
+          {
+            name: 'Tags',
+            children: [
+              { name: 'config.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/config.nix`, 'utf8') },
+              { name: 'default.nix', file: 'nix', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/default.nix`, 'utf8') },
+              {
+                name: 'DNA',
+                children: [
+                  { name: '.hcignore', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/.hcignore`, 'utf8') },
+                  { name: 'app.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/app.json`, 'utf8') },
+                  {
+                    name: 'Zomes',
+                    children: [
+                      {
+                        name: 'Tags',
+                        index: 0,
+                        children: [
+                          { name: 'zome.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/zomes/tags/zome.json`, 'utf8') },
+                          {
+                            name: 'code',
+                            children: [
+                              { name: '.hcbuild', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/zomes/tags/code/.hcbuild`, 'utf8') },
+                              { name: 'Cargo.toml', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/DNA/zomes/tags/code/Cargo.toml`, 'utf8') },
+                              {
+                                name: 'src',
+                                children: [
+                                  { name: 'lib.rs', file: 'rs', code: '' }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              { name: 'package.json', file: 'json', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/package.json`, 'utf8') },
+              { name: 'Procfile', file: 'code', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/Procfile`, 'utf8') },
+              { name: 'README.md', file: 'md', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/Tags/README.md`, 'utf8') }
             ]
           }
         ]

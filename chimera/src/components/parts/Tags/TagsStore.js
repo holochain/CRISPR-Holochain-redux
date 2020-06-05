@@ -9,27 +9,77 @@ export default {
         base: '',
         tags: [
           {
-            id: 'PartEditor1',
-            text: 'Techno'
+            text: 'Techno',
+            taggedEntries: [
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'PartEditor'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack23'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              }
+            ]
           },
           {
-            id: 'PartEditor2',
-            text: 'Trance'
+            text: 'Trance',
+            taggedEntries: [
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'PartEditor'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack23'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              }
+            ]
           },
           {
-            id: 'PartEditor3',
-            text: 'Metal'
+            text: 'Metal',
+            taggedEntries: [
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack23'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              }
+            ]
           },
           {
-            id: 'PartEditor4',
-            text: 'Rock'
+            text: 'Rock',
+            taggedEntries: [
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack23'
+              },
+              {
+                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                id: 'QmIdTrack1'
+              }
+            ]
           },
           {
-            id: 'PartEditor5',
             text: 'Pop'
           },
           {
-            id: 'PartEditor6',
             text: 'Country'
           }
         ]

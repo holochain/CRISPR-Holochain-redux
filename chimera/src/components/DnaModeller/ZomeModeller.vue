@@ -193,13 +193,15 @@ export default {
         anchorsOffset = anchorsYIndex * 185
         const anchorTypeNode = dnaModel.addAnchorType(anchorType, rootAnchorPort, col1Offset, yOffset + anchorsOffset, cardWidth, this.$vuetify.theme.themes.dark.anchor)
         let entryTypeInPort = 0
-        anchorType.links.forEach(link => {
-          const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
-          const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
-          entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
-          const entryTypeOutPort = anchorTypeNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
-          dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context + '→')
-        })
+        if (anchorType.links) {
+          anchorType.links.forEach(link => {
+            const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
+            const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
+            entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
+            const entryTypeOutPort = anchorTypeNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
+            dnaModel.addLink(entryTypeOutPort, entryTypeInPort, link.tag, link.context + '→')
+          })
+        }
         nodes.push({ id: anchorType.id, node: anchorTypeNode })
         let anchorTypeOutPort = 0
         if (anchorType.anchors.length > 0) {
@@ -207,15 +209,24 @@ export default {
         }
         anchorsOffset += entryTypesOffset
         anchorType.anchors.forEach((anchor, index) => {
-          const anchorNode = dnaModel.addAnchor(anchor, anchorTypeOutPort, col2Offset, yOffset + anchorsOffset, cardWidth, anchorIndex, this.$vuetify.theme.themes.dark.anchor)
+          let anchorNode = nodes.find(node => node.id === anchor.id)
+          if (!anchorNode) {
+            anchorNode = dnaModel.addAnchor(anchor, anchorTypeOutPort, col2Offset, yOffset + anchorsOffset, cardWidth, anchorIndex, this.$vuetify.theme.themes.dark.anchor)
+          } else {
+            const anchorInPort = anchorNode.node.ports.find(port => port.name === 'address()').id
+            dnaModel.addLink(anchorTypeOutPort, anchorInPort, anchor.text, anchor.context + '→')
+            anchorNode = anchorNode.node
+          }
           let entryTypeInPort = 0
-          anchor.links.forEach(link => {
-            const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
-            const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
-            entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
-            const anchorOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
-            dnaModel.addLink(anchorOutPort, entryTypeInPort, link.tag, link.context + '→')
-          })
+          if (anchor.links) {
+            anchor.links.forEach(link => {
+              const entryType = this.zome.entryTypes.find(entryType => entryType.id === link.entityId)
+              const existingEntryTypeNode = nodes.find(node => node.id === link.entityId)
+              entryTypeInPort = existingEntryTypeNode.node.ports.find(port => port.name === `id:initial_${entryType.name.toLowerCase()}_entry_address`).id
+              const anchorOutPort = anchorNode.addOutPort(`${entryType.name.toLowerCase()}_link`)
+              dnaModel.addLink(anchorOutPort, entryTypeInPort, link.tag, link.context + '→')
+            })
+          }
           nodes.push({ id: anchor.id, node: anchorNode })
           anchorIndex += 1
           if (anchor.anchors) {
@@ -230,7 +241,7 @@ export default {
                 anchorsOffset += 185
               } else {
                 const anchorAnchorInPort = existingAnchorAnchorNode.node.ports.find(port => port.name === 'address()').id
-                dnaModel.addLink(anchorOutPort, anchorAnchorInPort, anchorAnchor.text, '←bi-directional→')
+                dnaModel.addLink(anchorOutPort, anchorAnchorInPort, `${anchorAnchor.text}→`, `←${anchorAnchor.context}`)
               }
             })
             anchorsOffset -= 185

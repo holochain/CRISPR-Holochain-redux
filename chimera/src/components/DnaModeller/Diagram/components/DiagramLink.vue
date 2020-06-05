@@ -98,7 +98,7 @@ export default {
       return `M ${x1} ${y1} C ${x1 + distance} ${y1}, ${x2 - distance} ${y2}, ${x2} ${y2}`
     },
     style () {
-      if (this.context === '←bi-directional→') {
+      if (this.context.startsWith('←')) {
         return 'stroke:rgb(255,243,3);'
       } else {
         return 'stroke:rgb(255,255,255);'
