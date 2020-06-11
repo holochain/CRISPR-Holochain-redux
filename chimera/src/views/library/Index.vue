@@ -32,7 +32,7 @@
     </v-alert>
     <v-divider />
     <applications :showProfile="showProfile"/>
-    <v-overlay :absolute="true" :opacity="0.7" :value="splash">
+    <v-overlay :absolute="true" :opacity="overlayOpacity" :value="splash">
       <v-card flat>
       <v-img height='600' :src="require('@/assets/icons/chimera-overlay.png')" @click="turnSplashOff" class="white--text align-end justify-center">
       </v-img>
@@ -51,7 +51,9 @@ export default {
   data () {
     return {
       showProfile: false,
-      help: false
+      help: false,
+      overlayOpacity: 1,
+      timerCount: 10
     }
   },
   methods: {
@@ -59,6 +61,21 @@ export default {
   },
   computed: {
     ...mapState('auth', ['splash'])
+  },
+  watch: {
+    timerCount: {
+      handler (value) {
+        if (value > 0) {
+          setTimeout(() => {
+            this.timerCount--
+            this.overlayOpacity = 0.1 * this.timerCount
+          }, 1000)
+        } else {
+          this.turnSplashOff()
+        }
+      },
+      immediate: true // This ensures the watcher is triggered upon creation
+    }
   }
 }
 </script>

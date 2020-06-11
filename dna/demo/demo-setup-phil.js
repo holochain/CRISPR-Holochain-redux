@@ -32,8 +32,8 @@ const projects = [
     happId: 'QmHashykanban',
     name: 'Kanban',
     type: 'application',
-    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Kanban/preview.png',
-    description: 'A kanban board that you can kanban any type of part using the slot.',
+    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/happs/Kanban/preview.png',
+    description: 'Music & Video sharing and live DJ streaming application & Unity 3D Game..',
     zome: {
       template: 'Origins',
       templateTypeName: 'origin',
@@ -125,7 +125,14 @@ const projects = [
         template: 'identify',
         fields: []
       }
-    }
+    },
+  },
+  {
+    name: 'Holo Punk Records',
+    type: 'application',
+    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/happs/holopunk-records/bg.png',
+    description: 'Music & Video sharing and live DJ streaming application & Unity 3D Game.',
+    zome: {}
   },
   {
     name: 'Personal Information',
@@ -809,45 +816,46 @@ const projects = [
           text: '',
           tag: ' ',
           context: 'permanent',
-          links: [],
           anchors: [
             {
               id: 'QmTagsAnchor1',
               type: 'list_tags',
               text: 'Techno',
-              links: [],
               anchors: [
                 {
                   id: 'QmTagsAnchor2',
-                  type: 'notes dht instanceId',
-                  text: 'note1 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht instanceId::note1 id',
+                  biDirectional: true,
+                  context: 'Techno'
                 },
                 {
                   id: 'QmTagsAnchor44',
-                  type: 'notes dht instanceId',
-                  text: 'note2 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht instanceId::note2 id',
+                  biDirectional: true,
+                  context: 'Techno'
                 }
               ]
             },
             {
-              id: 'QmTagsAnchor1',
+              id: 'QmTagsAnchor155555',
               type: 'list_tags',
               text: 'Psytrance',
-              links: [],
               anchors: [
                 {
                   id: 'QmTagsAnchor7',
-                  type: 'notes dht instanceId 2',
-                  text: 'note3 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht 2 instanceId::note3 id',
+                  biDirectional: true,
+                  context: 'Psytrance'
                 },
                 {
                   id: 'QmTagsAnchor44',
-                  type: 'notes dht instanceId',
-                  text: 'note2 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht instanceId::note2 id',
+                  biDirectional: true,
+                  context: 'Psytrance'
                 }
               ]
             },
@@ -855,25 +863,27 @@ const projects = [
               id: 'QmTagsAnchor3',
               type: 'list_tags',
               text: 'Metal',
-              links: [],
               anchors: [
                 {
                   id: 'QmTagsAnchor44',
-                  type: 'notes dht instanceId',
-                  text: 'note2 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht instanceId::note2 id',
+                  biDirectional: true,
+                  context: 'Metal'
                 },
                 {
                   id: 'QmTagsAnchor12',
-                  type: 'notes dht instanceId 2',
-                  text: 'note47 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht 2 instanceId::note47 id',
+                  biDirectional: true,
+                  context: 'Metal'
                 },
                 {
                   id: 'QmTagsAnchor123',
-                  type: 'notes dht instanceId 2',
-                  text: 'note201 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht 2 instanceId::note201 id',
+                  biDirectional: true,
+                  context: 'Metal'
                 }
               ]
             },
@@ -881,19 +891,20 @@ const projects = [
               id: 'QmTagsAnchor4',
               type: 'list_tags',
               text: 'Rock',
-              links: [],
               anchors: [
                 {
                   id: 'QmTagsAnchor12',
-                  type: 'notes dht instanceId 2',
-                  text: 'note47 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht 2 instanceId::note47 id',
+                  biDirectional: true,
+                  context: 'Rock'
                 },
                 {
                   id: 'QmTagsAnchor123',
-                  type: 'notes dht instanceId 2',
-                  text: 'note201 id',
-                  links: []
+                  type: 'tagged_entries',
+                  text: 'notes dht 2 instanceId::note201 id',
+                  biDirectional: true,
+                  context: 'Rock'
                 }
               ]
             }
@@ -915,6 +926,7 @@ const projectTasks = projects.find(p => p.name === 'Tasks')
 const projectRatings = projects.find(p => p.name === 'Ratings')
 const projectProjects = projects.find(p => p.name === 'Projects')
 const projectTags = projects.find(p => p.name === 'Tags')
+const projectHoloPunkRecords = projects.find(p => p.name === 'Holo Punk Records')
 
 let startedConductor = false
 const tryConnection = () => {
@@ -1124,6 +1136,45 @@ const tryConnection = () => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
 
+          // projectHoloPunkRecords
+          callZome('projects', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectHoloPunkRecords.name, description: projectHoloPunkRecords.description, preview: projectHoloPunkRecords.preview, zome: JSON.stringify(projectHoloPunkRecords.zome), order: 1 }})
+          .then((result) => {
+            const projectChimeraId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+            callZome('kanban', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed DJ streaming', content: 'Players in the Unity game get the upcoming playlist (can be updated during the performance) so there is no buffering or delay. Tracks are played by Unity for the players using the tracklist and the MIDI messags from the DJ. All messages are saved into the DHT as well as being direct messages (possibly WebRTC). Live performance can be replayed and track artists get paid using info such as how much of the track was played.', order: 0 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Using http://42noir.com/es/ & https://github.com/shaltiel/42Noir-UnityEasyController we can connect up any MIDI controller and record the messages and Direct Message to players who are listening to the live Stream.', order: 1 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Looks like this https://assetstore.unity.com/packages/tools/audio/dj-pro-41993 will be good for playing the DJ set at the players device.', order: 2 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed VJ streaming', content: 'Same approach as DJing just using video clips, can also be controlled by DJ  using the same MIDI messages.', order: 3 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('notes', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'In game lighting & effects', content: 'Using the same MIDI messages for DJing we can control the in game lights & effects.', order: 4 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+            }).catch(err =>{console.log(err)})
+          }).catch(err =>{console.log(err)})
+
           // projectOrigins
           callZome('projects', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
           .then((result) => {
@@ -1203,6 +1254,12 @@ const tryConnection = () => {
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})  
+
+            // Phil's freckles
+          // const philFreckle1 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})
+          // console.log('philFreckle1', philFreckle1)
+          // const philFreckle2 = await phil.call("freckles", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>`}})
+          // console.log('philFreckle2', philFreckle2)
         })
       }
     }

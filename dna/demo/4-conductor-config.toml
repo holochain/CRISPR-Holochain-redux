@@ -1,111 +1,111 @@
 bridges = []
-persistence_dir = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq'
+persistence_dir = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr'
 ui_bundles = []
 ui_interfaces = []
 
 [[agents]]
 id = 'projects'
 keystore_file = '[UNUSED]'
-name = 'arthur::projects::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSci7mNaa6qBg4pmvCOYGGEUHtvbgng3hkoNjg7PDumevznFKa5SRuJ49Sgz7z'
+name = 'arthur::projects::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCIG3qKcTRxrj7mfE3W9e6f7s93EVVgHMU8U6rG8r4Ayt8pABukd7MKgsquca'
 test_agent = true
 
 [[agents]]
 id = 'origins'
 keystore_file = '[UNUSED]'
-name = 'arthur::origins::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSCjm377ouGMqs3a8IJD45YcKJ9u5wqvBtAJve4d3enuii684TB9pAj3E6dJxr'
+name = 'arthur::origins::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCJfkSs56q88vkmcF4YHP9qVvEv4wtyW6ZKAcBmnrvjhdqZcrZ5ywcknakdor'
 test_agent = true
 
 [[agents]]
 id = 'kanban'
 keystore_file = '[UNUSED]'
-name = 'arthur::kanban::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSCJMeIy8C5GfdqbyEErqiBx9Dwzf7ogzPXYSXv6g4ksk7kGEtTqDK9U3y6acr'
+name = 'arthur::kanban::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCIqYQg9Uri6mt9aTWQCc7xrNgx9xzzgnmQW9cVu5m9pyaacuDZVg9D8xe9ei'
 test_agent = true
 
 [[agents]]
 id = 'notes'
 keystore_file = '[UNUSED]'
-name = 'arthur::notes::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcScI4S4ABFDVa4dts74yP7mUakWjf54mzVT868CdnguxaxsN7YnCbcW4Mnj7fa'
+name = 'arthur::notes::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcScIdfYwAKgzdpc863ownOCvS8Ti4cpykS6bq6eVjkoofn9y5teQAova74c9rz'
 test_agent = true
 
 [[agents]]
 id = 'tasks'
 keystore_file = '[UNUSED]'
-name = 'arthur::tasks::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSCIqae6UAi5a5praKE37jm5YiMeri3tkvu3386vXjKffiyGv7I64bVsn74Yyz'
+name = 'arthur::tasks::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCizHZDJ6vg3asw6TYxBhKiQp973y8ijarZEbT64mtuqv54Kw6pX79DRc9sda'
 test_agent = true
 
 [[agents]]
 id = 'fields'
 keystore_file = '[UNUSED]'
-name = 'arthur::fields::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSCIp3Tz55Xv55ImrhOh8MUGrp7753n3fKuecHSkpcby4dsJ45p5H46ppctcbr'
+name = 'arthur::fields::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCJE6Ht6Gf4QjfcuM4Up87NbTOejmidPcHzostJqxryb4hxfBsdacedn3pqha'
 test_agent = true
 
 [[agents]]
 id = 'personalinformation'
 keystore_file = '[UNUSED]'
-name = 'arthur::personalinformation::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcScI6e9b9FWt9g6cu7NnqmXZES8jcfvv3ar9vm5uH76cjwbQSQeGo588783o7Z'
+name = 'arthur::personalinformation::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCje6Xy3vnMakzxvq73pqwOATObuyh37kH99rZuMbF4kwnK3wkKZC94S5hbza'
 test_agent = true
 
 [[agents]]
 id = 'freckles'
 keystore_file = '[UNUSED]'
-name = 'arthur::freckles::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
-public_address = 'HcSCIww6FsPO5jj6g3kei49ibBQNcubcgarARgV4mpbrp43rv9OxQhCJ9Dbokea'
+name = 'arthur::freckles::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
+public_address = 'HcSCI4S5ojZF6hj9dgrMxYFK5sDbnujdsH7CagYjPpyh6m5p6fkqyOjyci53azz'
 test_agent = true
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/projects/dna/dist/dna.dna.json'
-hash = 'QmTWPHy3wW8ykVXTzmFQCiXqZFf74wjdSSppH2ZCgdoeWB'
+hash = 'QmZy6baFVXRqJwEbTa2PzEQTAwSXLcFh8wjZLtUkYRBb9Q'
 id = 'projects-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/origins/dna/dist/dna.dna.json'
-hash = 'QmPBaGbmisGCYgPqV82xZUX3ozuEmJqmtbhDCRZkjzF1t2'
+hash = 'QmUnZVzRcXX2nBYgfpTJDVQVTYHnX3R7bwJ1WRdUn4JmPF'
 id = 'origins-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/kanban/dna/dist/dna.dna.json'
-hash = 'QmPHWJrJV9M8KhEkRQZhwqtC9cjKc6VUQG6axBVFwxcWWx'
+hash = 'QmTxSTHTjwMwEW6sUizD8euRk2RV6kLqkXCT4NBXxMkgzq'
 id = 'kanban-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/notes/dna/dist/dna.dna.json'
-hash = 'QmP1hHTmSf77Q41E5Z8tvoyEefgLHBCWQ3wTBDucDAsMGf'
+hash = 'QmQDHS5v5V1cCtik1RiZzBiZLdAmrFqCffe74oHWh2DqSW'
 id = 'notes-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/tasks/dna/dist/dna.dna.json'
-hash = 'QmeJz3YttC3m6QKpxkR2saYnLPpsoUUyB8Cf6nvftnGMnU'
+hash = 'QmdHzqRj1X2woEa5wxKVx4VHx8HfEK7jKyoXdhZFPLvFpN'
 id = 'tasks-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/curatedfields/dna/dist/dna.dna.json'
-hash = 'QmP3JEF2b3JnZ3iqY96pq3hDyKMr2HLShLT2qojFCMbNHo'
+hash = 'QmRzbVi6sBZ15yAS3ri7WXakpJ9XtbTMpkdbYhGS3qLcVU'
 id = 'fields-test'
-uuid = '60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+uuid = '9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/personalinformation/dna/dist/dna.dna.json'
-hash = 'QmbdXEv1ytuqx5cnZf99vkLBHWbGTbez3YFstN5ehzuVZc'
-id = 'personalinformation-test::f79dff71-5241-4129-9b37-149f075ef22c'
-uuid = 'f79dff71-5241-4129-9b37-149f075ef22c::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+hash = 'QmTny3GZWFu32DNYNiY69BKywBvwcJon5WY4LofpbPsYpN'
+id = 'personalinformation-test::6fab93ae-3f96-4421-8741-019de6da050a'
+uuid = '6fab93ae-3f96-4421-8741-019de6da050a::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[dnas]]
 file = '/Users/philipbeadle/holochain/CRISPR/dna/freckles/dna/dist/dna.dna.json'
-hash = 'QmV4kNmjK3i5yWb8HbAXpnCsdhLaAs5LjfGZBZadRRnT46'
-id = 'freckles-test::a794d207-53c0-434f-b1a1-16c730db9017'
-uuid = 'a794d207-53c0-434f-b1a1-16c730db9017::60d01a31-b8f4-4d61-91ca-cc4cb04df86d'
+hash = 'QmeYjU1hubDJth1NWHCmgPEddPzhnFQDkjoY99ttg9oV67'
+id = 'freckles-test::93309f35-de11-4f62-8af4-af46a19ab638'
+uuid = '93309f35-de11-4f62-8af4-af46a19ab638::9a0d0246-e446-4a1e-909a-5485a1a56b0e'
 
 [[instances]]
 agent = 'projects'
@@ -113,7 +113,7 @@ dna = 'projects-test'
 id = 'projects'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/projects'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/projects'
 type = 'lmdb'
 
 [[instances]]
@@ -122,7 +122,7 @@ dna = 'origins-test'
 id = 'origins'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/origins'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/origins'
 type = 'lmdb'
 
 [[instances]]
@@ -131,7 +131,7 @@ dna = 'kanban-test'
 id = 'kanban'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/kanban'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/kanban'
 type = 'lmdb'
 
 [[instances]]
@@ -140,7 +140,7 @@ dna = 'notes-test'
 id = 'notes'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/notes'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/notes'
 type = 'lmdb'
 
 [[instances]]
@@ -149,7 +149,7 @@ dna = 'tasks-test'
 id = 'tasks'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/tasks'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/tasks'
 type = 'lmdb'
 
 [[instances]]
@@ -158,25 +158,25 @@ dna = 'fields-test'
 id = 'fields'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/fields'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/fields'
 type = 'lmdb'
 
 [[instances]]
 agent = 'personalinformation'
-dna = 'personalinformation-test::f79dff71-5241-4129-9b37-149f075ef22c'
+dna = 'personalinformation-test::6fab93ae-3f96-4421-8741-019de6da050a'
 id = 'personalinformation'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/personalinformation'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/personalinformation'
 type = 'lmdb'
 
 [[instances]]
 agent = 'freckles'
-dna = 'freckles-test::a794d207-53c0-434f-b1a1-16c730db9017'
+dna = 'freckles-test::93309f35-de11-4f62-8af4-af46a19ab638'
 id = 'freckles'
 
 [instances.storage]
-path = '/tmp/tmp.Hpt3E1hjCM/tryorama/iAopiq/freckles'
+path = '/tmp/tmp.2oszwWo19C/tryorama/2cNmmr/freckles'
 type = 'lmdb'
 
 [[interfaces]]
