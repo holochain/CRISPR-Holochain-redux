@@ -13,6 +13,7 @@
   "scripts": {
     "demo:setup": "node demo.js | tee conductor-output.txt && node config-copy.js",
     "demo:setup:phil": "node demo-setup-phil.js",
+    "demo:setup:philFreckles": "node demo-setup-phil-freckles.js",
     "demo:setup:fields": "node demo-setup-fields.js",
     "demo:setup:lucy": "node demo-setup-lucy.js",
     "hc:run:alice": "holochain -c ./1-conductor-config.toml",

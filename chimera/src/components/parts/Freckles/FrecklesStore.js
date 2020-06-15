@@ -5,18 +5,40 @@ export default {
     profiles: [],
     instances: [
       {
-        instance: 'c8655cb3-76de-4c04-8a06-b232f7c2683e',
+        instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
         baseFreckles: [
           {
-            base: 'PartEditor',
+            base: '',
             freckles: [
               {
-                id: 'PartEditor1',
-                content: 'Content for Freckle 1'
+                id: 'QmFreckle1',
+                content: 'Some friendly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
               },
               {
-                id: 'PartEditor2',
-                content: 'Content for Freckle 2'
+                id: 'QmFreckle2',
+                content: 'Another freckly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
+              },
+              {
+                id: 'QmFreckle3',
+                content: '3rd freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
+        baseFreckles: [
+          {
+            base: '',
+            freckles: [
+              {
+                id: 'QmFreckle11',
+                content: 'Phil\'s first freckle in 0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
+              },
+              {
+                id: 'QmFreckle33',
+                content: 'Another witty freckle in 0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
               }
             ]
           }
@@ -79,38 +101,46 @@ export default {
       state.errors = state.errors.filter(e => e.base !== payload)
     },
     setFrecklesList (state, payload) {
-      const base = state.baseFreckles.find(b => b.base === payload.base)
-      if (base !== undefined) {
-        base.freckles = payload.freckles
+      const instance = state.instances.find(i => i.instanceId === payload.instanceBase.instanceId)
+      if (instance) {
+        const base = instance.baseFreckles.find(b => b.base === payload.instanceBase.base)
+        if (base !== undefined) {
+          base.freckles = payload.freckles
+        } else {
+          instance.baseFreckles.push({ base: payload.instanceBase.base, freckles: payload.freckles })
+        }
       } else {
-        state.baseFreckles.push(payload)
+        state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: { base: payload.instanceBase.base, freckles: payload.freckles } })
       }
     }
   },
   getters: {
-    featured: (state, getters) => {
-      return getters.parsedGames.sort((a, b) => {
-        if (a.updated < b.updated) return -1
-        if (a.updated > b.updated) return 1
-        return 0
-      }).slice(0, 3)
-    },
     listFreckles: state => (base) => {
-      const baseFreckle = state.baseFreckles.find(n => n.base === base)
-      if (baseFreckle) {
-        return baseFreckle.freckles.sort((a, b) => {
-          if (a.order < b.order) return -1
-          if (a.order > b.order) return 1
-          return 0
-        })
+      const instance = state.instances.find(i => i.instanceId === base.instanceId)
+      if (instance) {
+        const baseFreckle = instance.baseFreckles.find(n => n.base === base.base)
+        if (baseFreckle) {
+          return baseFreckle.freckles.sort((a, b) => {
+            if (a.order < b.order) return -1
+            if (a.order > b.order) return 1
+            return 0
+          })
+        } else {
+          return []
+        }
       } else {
         return []
       }
     },
     listErrors: state => (base) => {
-      const baseErrors = state.errors.filter(e => e.base === base)
-      if (baseErrors) {
-        return baseErrors.map(b => JSON.parse(b.error).kind)
+      const instance = state.instances.find(i => i.instanceId === base.instanceId)
+      if (instance) {
+        const baseErrors = state.errors.filter(e => e.base === base)
+        if (baseErrors) {
+          return baseErrors.map(b => JSON.parse(b.error).kind)
+        } else {
+          return []
+        }
       } else {
         return []
       }
@@ -124,7 +154,7 @@ export default {
       commit('setFrecklesList', { base: payload.base, freckles: payload.freckles })
       payload.freckles.forEach(freckle => {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('freckles', 'freckles', 'update_freckle')({ id: freckle.id, created_at: freckle.createdAt, address: freckle.address, freckle_input: { uuid: freckle.uuid, title: freckle.title, content: freckle.content, order: freckle.order } }).then((result) => {
+          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'update_freckle')({ id: freckle.id, created_at: freckle.createdAt, address: freckle.address, freckle_input: { uuid: freckle.uuid, title: freckle.title, content: freckle.content, order: freckle.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
             if (res.Ok === undefined) {
@@ -138,7 +168,7 @@ export default {
     },
     rebase: ({ state, commit, rootState }, payload) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'rebase_freckle')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
+        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'rebase_freckle')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
@@ -149,7 +179,7 @@ export default {
     },
     agentAddress: ({ state, commit, rootState, dispatch }) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'agent_address')({ }).then((result) => {
+        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
@@ -163,7 +193,7 @@ export default {
     },
     sendMessage: ({ state, commit, rootState }, message) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'send_message')({ message: message }).then((result) => {
+        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'send_message')({ message: message }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
         })
@@ -171,7 +201,7 @@ export default {
     },
     fetchProfiles: ({ state, commit, rootState, dispatch }) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'list_profiles')({ base: '' }).then((result) => {
+        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           console.log(res.Ok)
           if (res.Ok === undefined) {
@@ -193,25 +223,22 @@ export default {
                 start: 0
               }
             })
-            console.log(rootState.auth.agentAddress)
-            // const friendList = friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
-            console.log(friends)
             dispatch('friends/profiles', { profiles: friends }, { root: true })
             console.log(rootState.friends.friends)
           }
         })
       })
     },
-    fetchFreckles: ({ state, commit, rootState }, base) => {
-      if (base === 'PartEditor') return
+    fetchFreckles: ({ state, commit, rootState }, instanceBase) => {
+      if (instanceBase.instanceId === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'list_freckles')({ base: base }).then((result) => {
+        callZome(instanceBase.instanceId, 'freckles', 'list_freckles')({ base: instanceBase.base }).then((result) => {
           const res = JSON.parse(result)
-          // console.log(res)
+          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setFrecklesList', { base: base, freckles: res.Ok })
+            commit('setFrecklesList', { instanceBase: instanceBase, freckles: res.Ok })
           }
         })
       })
@@ -220,7 +247,7 @@ export default {
       if (payload.base === 'PartEditor') return
       if (payload.freckle.id === 'new' || payload.freckle.id === undefined) {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('freckles', 'freckles', 'create_freckle')({ base: payload.base, freckle_input: { uuid: uuidv4(), title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: payload.base, freckle_input: { uuid: uuidv4(), title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
             const res = JSON.parse(result)
             console.log(res)
             if (res.Ok === undefined) {
@@ -232,7 +259,7 @@ export default {
         })
       } else {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('freckles', 'freckles', 'update_freckle')({ id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address, freckle_input: { uuid: payload.freckle.uuid, title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'update_freckle')({ id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address, freckle_input: { uuid: payload.freckle.uuid, title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
             const res = JSON.parse(result)
             // console.log(res)
             if (res.Ok === undefined) {
@@ -247,7 +274,7 @@ export default {
     deleteFreckle: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('freckles', 'freckles', 'delete_freckle')({ base: payload.base, id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address }).then((result) => {
+        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'delete_freckle')({ base: payload.base, id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             commit('error', { base: payload.base, error: res.Err.Internal })

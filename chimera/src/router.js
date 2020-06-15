@@ -103,7 +103,7 @@ const router = new Router({
       component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
-      path: '/freckles',
+      path: '/freckles/:id',
       name: 'Freckles',
       component: () => import('@/views/freckles/Index')
     },

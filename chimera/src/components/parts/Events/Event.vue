@@ -13,24 +13,24 @@
       </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveFreckle({ base: '', freckle: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteFreckle({ base: '', freckle: instanceFreckle})">mdi-delete-outline</v-icon>
-      <part-manager :base="instanceFreckle.id" @add-part="addPart"/>
+      <v-icon v-if="isEditing" @click="saveEvent({ base: '', event: instanceEvent}); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEvent({ base: '', event: instanceEvent})">mdi-delete-outline</v-icon>
+      <part-manager :base="instanceEvent.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
       <div v-if="chimera">
-        Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to this Freckle.
+        Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to this Event.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
-      Click <v-icon>mdi-note-text-outline</v-icon> to edit a Freckle Rudy.
+      Click <v-icon>mdi-note-text-outline</v-icon> to edit a Event Rudy.
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-content-save</v-icon> to save a Freckle.
+      Click <v-icon>mdi-content-save</v-icon> to save a Event.
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
+      Click <v-icon>mdi-delete-outline</v-icon> to delete a Event.
     </v-alert>
-    <v-card-text v-if="!isEditing" v-html="instanceFreckle.content" />
-    <tiptap-vuetify v-if="isEditing" v-model="instanceFreckle.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-text v-if="!isEditing" v-html="instanceEvent.content" />
+    <tiptap-vuetify v-if="isEditing" v-model="instanceEvent.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
     </v-col>
@@ -41,17 +41,17 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Freckle',
+  name: 'Event',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instance', 'base', 'freckle', 'partBase'],
+  props: ['instance', 'base', 'event', 'partBase'],
   data () {
     return {
-      instanceFreckle: {},
+      instanceEvent: {},
       clean: {},
-      isEditing: this.freckle.id === 'new',
+      isEditing: this.event.id === 'new',
       parts: [],
       help: false,
       extensions: [
@@ -78,14 +78,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions('freckles', ['saveFreckle', 'deleteFreckle']),
+    ...mapActions('events', ['saveEvent', 'deleteEvent']),
     addPart (name) {
       this.parts.push(name)
     }
   },
   created () {
-    this.clean = { ...this.freckle }
-    this.instanceFreckle = { ...this.freckle }
+    this.clean = { ...this.event }
+    this.instanceEvent = { ...this.event }
     this.parts = this.partParts(this.partBase)
   },
   computed: {
@@ -93,7 +93,7 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.freckle.createdBy)
+      return this.friend(this.event.createdBy)
     }
   }
 }

@@ -8,6 +8,8 @@ import tasks from '@/components/parts/Tasks/TasksStore'
 import projects from '@/components/parts/Projects/ProjectsStore'
 import websites from '@/components/parts/Websites/WebsitesStore'
 import tags from '@/components/parts/Tags/TagsStore'
+import instancemanager from '@/components/parts/InstanceManager/InstanceManagerStore'
+import events from '@/components/parts/Events/EventsStore'
 // NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
@@ -43,6 +45,8 @@ const store = new Vuex.Store({
     tasks,
     websites,
     tags,
+    instancemanager,
+    events,
     // NewModule
     app,
     auth,

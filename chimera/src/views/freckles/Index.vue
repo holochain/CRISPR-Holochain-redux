@@ -15,31 +15,26 @@
       Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
-      <v-col cols="12" md="6" lg="4">
-        <freckle key="new" :freckle="newFreckle" placeholder="What's your freckle?"/>
+      <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
+        <freckles :instanceId="instance.instanceId" base="" :title="instance.name"/>
       </v-col>
-      <v-col cols="12" md="6" lg="4">
-        <!-- v-for instance in instances -->
+      <!-- <v-col cols="12" md="6" lg="4">
         <tasks :instance="instance" base="a note id" title="name of the instance"/>
-      </v-col>
+      </v-col> -->
     </v-row>
   </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'Freckles',
+  name: 'FrecklesView',
   components: {
-    Freckle: () => import('@/components/parts/Freckles/Freckle')
+    Freckles: () => import('@/components/parts/Freckles/Freckles')
   },
   data () {
     return {
-      help: false,
-      newFreckle: {
-        id: 'new',
-        content: ''
-      }
+      help: false
     }
   },
   methods: {
@@ -48,6 +43,12 @@ export default {
   created () {
     this.fetchProfiles()
     this.agentAddress()
+  },
+  computed: {
+    ...mapGetters('instancemanager', ['listInstances']),
+    instances () {
+      return this.listInstances('Freckles')
+    }
   }
 }
 </script>

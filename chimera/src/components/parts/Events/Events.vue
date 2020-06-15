@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <v-icon>mdi-freckle-multiple-outline</v-icon>
+      <v-icon>mdi-event-multiple-outline</v-icon>
       <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
-      <v-icon @click="add">mdi-freckle-plus-outline</v-icon>
+      <v-icon @click="add">mdi-event-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
     </v-system-bar>
     <v-alert v-if="errors.length" type="error">
@@ -17,9 +17,9 @@
         </v-col>
       </v-row>
     </v-alert>
-    <v-col cols="12" v-for="freckle in freckles" :key="freckle.id">
-      <freckle :key="freckle.id" :instanceId="instanceId" :base="base" :partBase="base" :freckle="freckle">
-      </freckle>
+    <v-col cols="12" v-for="event in events" :key="event.id">
+      <event :key="event.id" :instanceId="instanceId" :base="base" :partBase="base" :event="event">
+      </event>
     </v-col>
     <slot></slot>
   </v-card>
@@ -27,38 +27,33 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Freckles',
+  name: 'Events',
   components: {
-    Freckle: () => import('./Freckle')
+    Event: () => import('./Event')
   },
   props: ['instanceId', 'base', 'title'],
-  data () {
-    return {
-      instanceBase: { instanceId: this.instanceId, base: this.base }
-    }
-  },
   methods: {
     add () {
-      this.freckles.splice(0, 0, {
+      this.events.splice(0, 0, {
         title: '',
         content: ''
       })
     },
-    ...mapActions('freckles', ['fetchFreckles', 'acknowledgeErrors'])
+    ...mapActions('events', ['fetchEvents', 'acknowledgeErrors'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('freckles', ['errors']),
-    ...mapGetters('freckles', ['listFreckles', 'listErrors']),
-    freckles () {
-      return this.listFreckles(this.instanceBase)
+    ...mapState('events', ['errors']),
+    ...mapGetters('events', ['listEvents', 'listErrors']),
+    events () {
+      return this.listEvents(this.base)
     },
     errors () {
-      return this.listErrors(this.instanceBase)
+      return this.listErrors(this.base)
     }
   },
   created () {
-    this.fetchFreckles(this.instanceBase)
+    this.fetchEvents({ instanceId: this.instanceId, base: this.base })
   }
 }
 </script>

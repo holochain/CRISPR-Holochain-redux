@@ -57,7 +57,6 @@ export default {
       this.tags = val.map(tag => {
         if (typeof tag === 'string') {
           tag = { id: 'new', text: tag }
-          // this.allTags.push(tag)
           this.saveTag({ base: this.base, tag: tag })
           this.nonce++
         }
