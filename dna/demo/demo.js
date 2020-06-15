@@ -91,12 +91,6 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
   console.log("started_ok_demo")
 
-  // Phil's freckles
-  const philFreckle1 = await phil.call("0d765fcf-118f-4122-8f03-f5f9ba74e7fa", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Hows this for a freckle??</h1><p>Rad</p>`}})
-  console.log('philFreckle1', philFreckle1)
-  const philFreckle2 = await phil.call("0d765fcf-118f-4122-8f03-f5f9ba74e7fa", "freckles", "create_freckle",  {"base": "", "freckle_input" : {"uuid":uuidv4(), "content": `<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>`}})
-  console.log('philFreckle2', philFreckle2)
-
   // managed fields list
   const fullNameId = await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Full Name", "ui": "text-field"}})
   console.log('fullNameId', fullNameId)

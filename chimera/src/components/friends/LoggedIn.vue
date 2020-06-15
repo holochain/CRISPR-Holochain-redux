@@ -18,18 +18,21 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 export default {
   name: 'FriendsLoggedIn',
   methods: {
     ...mapActions('auth', ['logout'])
   },
   computed: {
-    ...mapGetters('friends', ['agentProfile']),
+    ...mapState('friends', ['selectedGroup']),
+    ...mapGetters('auth', ['agentAddress']),
+    ...mapGetters('friends', ['friend']),
     ...mapGetters('personalInformation', ['profileByDna']),
     profile () {
-      if (this.agentProfile) {
-        return this.agentProfile
+      const agent = this.agentAddress(this.selectedGroup.instanceId)
+      if (this.friend(this.selectedGroup.instanceId, agent)) {
+        return this.friend(this.selectedGroup.instanceId, agent)
       } else {
         return {
           id: '',

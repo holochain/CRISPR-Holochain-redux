@@ -16,7 +16,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <freckles :instanceId="instance.instanceId" base="" :title="instance.name"/>
+        <freckles :instanceId="instance.instanceId" base="" :instanceName="instance.instanceName"/>
       </v-col>
       <!-- <v-col cols="12" md="6" lg="4">
         <tasks :instance="instance" base="a note id" title="name of the instance"/>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
   name: 'FrecklesView',
   components: {
@@ -36,13 +36,6 @@ export default {
     return {
       help: false
     }
-  },
-  methods: {
-    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
-  },
-  created () {
-    this.fetchProfiles()
-    this.agentAddress()
   },
   computed: {
     ...mapGetters('instancemanager', ['listInstances']),

@@ -3,48 +3,7 @@ export default {
   namespaced: true,
   state: {
     profiles: [],
-    instances: [
-      {
-        instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
-        baseFreckles: [
-          {
-            base: '',
-            freckles: [
-              {
-                id: 'QmFreckle1',
-                content: 'Some friendly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
-              },
-              {
-                id: 'QmFreckle2',
-                content: 'Another freckly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
-              },
-              {
-                id: 'QmFreckle3',
-                content: '3rd freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
-        baseFreckles: [
-          {
-            base: '',
-            freckles: [
-              {
-                id: 'QmFreckle11',
-                content: 'Phil\'s first freckle in 0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
-              },
-              {
-                id: 'QmFreckle33',
-                content: 'Another witty freckle in 0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
-              }
-            ]
-          }
-        ]
-      }
-    ],
+    instances: [],
     baseFreckles: [
       {
         base: 'PartEditor',
@@ -110,7 +69,7 @@ export default {
           instance.baseFreckles.push({ base: payload.instanceBase.base, freckles: payload.freckles })
         }
       } else {
-        state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: { base: payload.instanceBase.base, freckles: payload.freckles } })
+        state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: [{ base: payload.instanceBase.base, freckles: payload.freckles }] })
       }
     }
   },
@@ -177,33 +136,31 @@ export default {
         })
       })
     },
-    agentAddress: ({ state, commit, rootState, dispatch }) => {
+    agentAddress: ({ state, commit, rootState, dispatch }, instanceId) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'agent_address')({ }).then((result) => {
+        callZome(instanceId, 'freckles', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
-            console.log(rootState.auth.agentAddress)
+            dispatch('auth/agentAddress', { instanceId: instanceId, agentAddress: res.Ok }, { root: true })
           }
         })
       })
     },
-    sendMessage: ({ state, commit, rootState }, message) => {
+    // sendMessage: ({ state, commit, rootState }, message) => {
+    //   rootState.holochainConnection.then(({ callZome }) => {
+    //     callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'send_message')({ message: message }).then((result) => {
+    //       const res = JSON.parse(result)
+    //       console.log(res)
+    //     })
+    //   })
+    // },
+    fetchProfiles: ({ state, commit, rootState, dispatch }, instanceBase) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'send_message')({ message: message }).then((result) => {
+        callZome(instanceBase.instanceId, 'freckles', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
-        })
-      })
-    },
-    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'list_profiles')({ base: '' }).then((result) => {
-          const res = JSON.parse(result)
-          console.log(res.Ok)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -214,7 +171,6 @@ export default {
                 name: p.handle,
                 online: true,
                 info: {
-                  id: 10,
                   avatar: p.avatar,
                   name: ''
                 },
@@ -223,8 +179,7 @@ export default {
                 start: 0
               }
             })
-            dispatch('friends/profiles', { profiles: friends }, { root: true })
-            console.log(rootState.friends.friends)
+            dispatch('friends/profiles', { instanceBase: instanceBase, profiles: friends }, { root: true })
           }
         })
       })
@@ -234,7 +189,6 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(instanceBase.instanceId, 'freckles', 'list_freckles')({ base: instanceBase.base }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -247,25 +201,23 @@ export default {
       if (payload.base === 'PartEditor') return
       if (payload.freckle.id === 'new' || payload.freckle.id === undefined) {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: payload.base, freckle_input: { uuid: uuidv4(), title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome(payload.instanceId, 'freckles', 'create_freckle')({ base: payload.base, freckle_input: { uuid: uuidv4(), title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
             if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
+              commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
             } else {
-              commit('createFreckle', { base: payload.base, data: res.Ok })
+              commit('createFreckle', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'update_freckle')({ id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address, freckle_input: { uuid: payload.freckle.uuid, title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome(payload.instanceId, 'freckles', 'update_freckle')({ id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address, freckle_input: { uuid: payload.freckle.uuid, title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
             const res = JSON.parse(result)
-            // console.log(res)
             if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
+              commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
             } else {
-              commit('updateFreckle', { base: payload.base, data: res.Ok })
+              commit('updateFreckle', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
             }
           })
         })
@@ -274,12 +226,12 @@ export default {
     deleteFreckle: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'delete_freckle')({ base: payload.base, id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address }).then((result) => {
+        callZome(payload.instanceId, 'freckles', 'delete_freckle')({ base: payload.base, id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
-            commit('error', { base: payload.base, error: res.Err.Internal })
+            commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
           } else {
-            commit('deleteFreckle', { base: payload.base, data: payload.freckle.id })
+            commit('deleteFreckle', { instanceId: payload.instanceId, base: payload.base, data: payload.freckle.id })
           }
         })
       })

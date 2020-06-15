@@ -27,12 +27,12 @@ export default {
           {
             id: 'QmFreckles1',
             instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
-            name: 'Phil\'s Freckles'
+            instanceName: 'Phil\'s Freckles'
           },
           {
             id: 'QmFreckles2',
             instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
-            name: 'My Friends Freckles'
+            instanceName: 'My Friends Freckles'
           }
         ]
       }

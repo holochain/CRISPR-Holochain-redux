@@ -4,7 +4,7 @@ const fs = require('fs')
 const { connect } = require('@holochain/hc-web-client')
 const holochainConnection = connect({ url: 'ws://localhost:33003' })
 const net = require('net')
-const port = 33003;
+const port = 33000;
 const client = new net.Socket()
 
 function base64_encode(file) {
@@ -22,15 +22,6 @@ const tryConnection = () => {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: `<h1>Lucy's first freckle??</h1><p>So Rad</p>` }})
-          .then((result) => {
-            console.log(JSON.parse(result))
-          }).catch(err =>{console.log(err)})
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>How good are Lucy's freckles 💋!</h1><p>Just freckly</p>` } })
-          .then((result) => {
-            console.log(JSON.parse(result))
-          })
-          // console.log('started_demo_setup_lucy')
           // callZome('notes', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'lucys Note 2', content: 'Get this from demo again', order: 1 } }).then((result) => {
           //   const res = JSON.parse(result)
           //   console.log('ok_demo_setup_lucy', res)
@@ -39,14 +30,14 @@ const tryConnection = () => {
           //     console.log('ok_demo_setup_lucy_task', res)
           //   })
           // })
-          // callZome('freckles', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>Lucy's first freckle??</h1><p>So Rad</p>` } }).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('ok_demo_setup_lucy_freckle', res)
-          // })
-          // callZome('freckles', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>How good are freckles 💋!</h1><p>So Rad</p>` } }).then((result) => {
-          //   const res = JSON.parse(result)
-          //   console.log('ok_demo_setup_lucy_freckle', res)
-          // })
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: `<h1>Mark's first freckle??</h1><p>So Rad</p>` }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), content: `<h1>How good are Mark's freckles 💋!</h1><p>Metal</p>` } })
+          .then((result) => {
+            console.log(JSON.parse(result))
+          })
         })
       }
     }

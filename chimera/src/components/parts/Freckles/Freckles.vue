@@ -2,7 +2,7 @@
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-freckle-multiple-outline</v-icon>
-      <span class="subtitle">{{title}}</span>
+      <span class="subtitle">{{instanceName}}</span>
       <v-spacer></v-spacer>
       <v-icon @click="add">mdi-freckle-plus-outline</v-icon>
       <!-- <v-icon>mdi-folder-edit-outline</v-icon> -->
@@ -31,10 +31,10 @@ export default {
   components: {
     Freckle: () => import('./Freckle')
   },
-  props: ['instanceId', 'base', 'title'],
+  props: ['instanceId', 'instanceName', 'base'],
   data () {
     return {
-      instanceBase: { instanceId: this.instanceId, base: this.base }
+      instanceBase: { instanceId: this.instanceId, instanceName: this.instanceName, base: this.base }
     }
   },
   methods: {
@@ -44,7 +44,8 @@ export default {
         content: ''
       })
     },
-    ...mapActions('freckles', ['fetchFreckles', 'acknowledgeErrors'])
+    ...mapActions('freckles', ['fetchFreckles', 'acknowledgeErrors']),
+    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
@@ -58,6 +59,8 @@ export default {
     }
   },
   created () {
+    this.agentAddress(this.instanceId)
+    this.fetchProfiles(this.instanceBase)
     this.fetchFreckles(this.instanceBase)
   }
 }

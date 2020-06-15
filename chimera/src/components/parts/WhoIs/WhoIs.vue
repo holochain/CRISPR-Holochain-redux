@@ -15,12 +15,12 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Whois',
-  props: ['agent'],
+  props: ['instanceId', 'agent'],
   computed: {
     ...mapGetters('friends', ['friend', 'agentProfile']),
     whois () {
-      if (this.agent) return this.friend(this.agent)
-      return this.agentProfile
+      if (this.agent) return this.friend(this.instanceId, this.agent)
+      return this.agentProfile(this.instanceId, this.agent)
     }
   }
 }

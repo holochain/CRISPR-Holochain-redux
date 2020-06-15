@@ -13,8 +13,8 @@
       </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveFreckle({ base: '', freckle: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteFreckle({ base: '', freckle: instanceFreckle})">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing" @click="saveFreckle({ instanceId: instanceId, base: '', freckle: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteFreckle({ instanceId: instanceId, base: '', freckle: instanceFreckle})">mdi-delete-outline</v-icon>
       <part-manager :base="instanceFreckle.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -46,7 +46,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instance', 'base', 'freckle', 'partBase'],
+  props: ['instanceId', 'base', 'freckle', 'partBase'],
   data () {
     return {
       instanceFreckle: {},
@@ -93,7 +93,7 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.freckle.createdBy)
+      return this.friend(this.instanceId, this.freckle.createdBy)
     }
   }
 }

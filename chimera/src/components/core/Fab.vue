@@ -6,8 +6,8 @@
       </v-btn>
     </template>
     <v-list>
-      <v-list-item v-for="(group, index) in groups" :key="index" @click="setFriendsList(group.name)">
-        <v-list-item-title>{{ group.name }}</v-list-item-title>
+      <v-list-item v-for="(group, index) in groups" :key="index" @click="setFriendsList(group)">
+        <v-list-item-title>{{ group.instanceName }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
@@ -21,9 +21,9 @@ export default {
   name: 'CoreFab',
   methods: {
     ...mapMutations('friends', ['toggleDrawer', 'setDrawer', 'setGroup']),
-    setFriendsList (name) {
+    setFriendsList (instance) {
       this.setDrawer()
-      this.setGroup(name)
+      this.setGroup({ instanceId: instance.instanceId, instanceName: instance.instanceName })
     }
   },
   computed: {
