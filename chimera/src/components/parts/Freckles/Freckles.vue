@@ -1,10 +1,9 @@
 <template>
   <v-card class="mx-auto" max-width="520" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <v-icon>mdi-freckle-multiple-outline</v-icon>
       <span class="subtitle">{{instanceName}}</span>
       <v-spacer></v-spacer>
-      <v-icon @click="add">mdi-plus-outline</v-icon>
+      <v-icon @click="add">mdi-plus</v-icon>
       <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -13,7 +12,7 @@
         Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to the Kanban board.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
-      Click the <v-icon @click="add">mdi-plus-outline</v-icon> to start a new Freckle.
+      Click the <v-icon @click="add">mdi-plus</v-icon> to start a new Freckle.
     </v-alert>
     <v-alert v-if="errors.length" type="error">
       <v-row no-gutters>
@@ -21,7 +20,7 @@
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(base)">mdi-close-box-outline</v-icon>
+          <v-icon @click="acknowledgeErrors(instanceBase)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>

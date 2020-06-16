@@ -2,7 +2,7 @@
   <v-card class="ma-1" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
-      <v-list-item>
+      <v-list-item v-if="whois">
         <v-list-item-avatar size="24" class="pl-0 ml-0">
           <v-img :src="whois.info.avatar" />
         </v-list-item-avatar>
@@ -11,8 +11,8 @@
         </v-list-item-content>
       </v-list-item>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveOrigin({ base: base, origin: instanceOrigin}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteOrigin({ base: base, origin: instanceOrigin})">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing" @click="saveOrigin({ instanceId: instanceId, base: base, origin: instanceOrigin}); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteOrigin({ instanceId: instanceId, base: base, origin: instanceOrigin})">mdi-delete-outline</v-icon>
       <part-manager :base="instanceOrigin.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -91,7 +91,6 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      console.log(this.instanceId, this.origin.createdBy)
       return this.friend(this.instanceId, this.origin.createdBy)
     }
   }

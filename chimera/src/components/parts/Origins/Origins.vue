@@ -12,6 +12,7 @@
         Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to the Kanban board.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
+      Click the <v-icon @click="add">mdi-plus</v-icon> to add a new origin entry.
     </v-alert>
     <v-alert v-if="errors.length" type="error">
       <v-row no-gutters>
@@ -19,7 +20,7 @@
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(base)">mdi-close-box-outline</v-icon>
+          <v-icon @click="acknowledgeErrors(instanceBase)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>

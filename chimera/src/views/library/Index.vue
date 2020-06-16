@@ -5,7 +5,7 @@
         <canvas id="network" width="1000" height="1000"></canvas>
         <v-fade-transition mode="in-out">
           <v-overlay v-show="showOverlayImage" :absolute="true" opacity="0">
-            <canvas id="overlayImage" width="1000" height="1000" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
+            <canvas id="overlayImage" width="1000" height="1000" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1.1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
           </v-overlay>
         </v-fade-transition>
       </v-overlay>
@@ -91,7 +91,7 @@ export default {
     renderMainSymbol () {
       var i
       for (i = 0; i < this.sideNumb / 2; i++) {
-        for (var delay = 0; delay < 2000 / this.sideNumb; delay++) {
+        for (var delay = 0; delay < 3000 / this.sideNumb; delay++) {
           // console.log('delay')
         }
         this.vueCanvas.beginPath()
@@ -101,7 +101,7 @@ export default {
         const posYto = this.yCenter + this.sideLen * Math.sin(this.rotation + ((this.ticks + i) * 2 * Math.PI / this.sideNumb))
         this.vueCanvas.moveTo(posX, posY)
         var gradient = this.vueCanvas.createLinearGradient(posX, posY, posXto, posYto)
-        var alpha1 = this.canvasAlpha / (i + 1) * 1.5
+        var alpha1 = this.canvasAlpha / (i + 0.1) * 1.5
         gradient.addColorStop(0, 'rgb(128,0,128, ' + alpha1 + ')')
         gradient.addColorStop(0.5, 'rgb(0,128,128, ' + alpha1 / 2 + ')')
         gradient.addColorStop(1, 'rgb(128,0,128, ' + alpha1 + ')')
@@ -118,8 +118,9 @@ export default {
         this.width = this.width / 1.5
         this.sideLen = this.sideLen / 1.5
         this.canvasAlpha = this.canvasAlpha / 1.5
+        this.vueCanvas.lineWidth = this.vueCanvas.lineWidth * 1.2
         this.sideNumb = this.sideNumb / 2
-        if (this.networks < 7) {
+        if (this.networks < 5) {
           window.requestAnimationFrame(this.renderMainSymbol)
         } else {
           this.showOverlayImage = true

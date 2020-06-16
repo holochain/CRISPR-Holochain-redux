@@ -65,35 +65,61 @@ export default {
       }
     },
     updateFreckle (state, payload) {
-      const base = state.baseFreckles.find(e => e.base === payload.base)
-      if (!base) {
-        state.baseFreckles.push(payload)
+      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
+      if (instance) {
+        const baseFreckle = instance.baseFreckles.find(n => n.base === payload.base)
+        if (baseFreckle) {
+          const updatedFreckles = baseFreckle.freckles.map(freckle => {
+            if (freckle.id === payload.data.id) {
+              return Object.assign({}, freckle, payload.data)
+            }
+            return freckle
+          })
+          instance.baseFreckles.find(e => e.base === payload.base).freckles = updatedFreckles
+        } else {
+          instance.baseFreckles.push(
+            {
+              base: payload.base,
+              freckles: [payload.data]
+            }
+          )
+        }
       } else {
-        const updatedFreckles = base.freckles.map(freckle => {
-          if (freckle.id === payload.data.id) {
-            return Object.assign({}, freckle, payload.data)
-          }
-          return freckle
+        state.instances.push({
+          instanceId: payload.instanceId,
+          baseFreckles: [
+            {
+              base: payload.base,
+              freckles: [payload.data]
+            }
+          ]
         })
-        state.baseFreckles.find(e => e.base === payload.base).freckles = updatedFreckles
       }
     },
     deleteFreckle (state, payload) {
-      console.log(state, payload)
-      const base = state.baseFreckles.find(b => b.base === payload.base)
-      if (base) {
-        state.baseFreckles.find(e => e.base === payload.base).freckles = base.freckles.filter(e => e.id !== payload.data)
+      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
+      if (instance) {
+        const baseFreckle = instance.baseFreckles.find(b => b.base === payload.base)
+        if (baseFreckle) {
+          baseFreckle.freckles = baseFreckle.freckles.filter(f => f.id !== payload.data.id)
+        }
       }
     },
     error (state, payload) {
       state.errors.push(payload)
     },
     resetErrors (state, payload) {
-      state.errors = state.errors.filter(e => e.base !== payload)
+      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
+      if (instance) {
+        const baseError = instance.baseErrors.find(e => e.base === payload.base)
+        if (baseError) {
+          baseError.errors = []
+        }
+      }
     },
     setFrecklesList (state, payload) {
       state.instances = state.instances.filter(i => i.instanceId !== payload.instanceBase.instanceId)
-      state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: [{ base: payload.instanceBase.base, freckles: payload.freckles }] })
+      state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: [{ base: payload.instanceBase.base, freckles: payload.freckles }], baseErrors: [] })
     }
   },
   getters: {
@@ -129,8 +155,8 @@ export default {
     }
   },
   actions: {
-    acknowledgeErrors: ({ state, commit, rootState }, base) => {
-      commit('resetErrors', base)
+    acknowledgeErrors: ({ state, commit, rootState }, instanceBase) => {
+      commit('resetErrors', instanceBase)
     },
     agentAddress: ({ state, commit, rootState, dispatch }, instanceId) => {
       rootState.holochainConnection.then(({ callZome }) => {
@@ -219,7 +245,7 @@ export default {
           if (res.Ok === undefined) {
             commit('error', { base: payload.base, error: res.Err.Internal })
           } else {
-            commit('deleteFreckle', { instanceId: payload.instanceId, base: payload.base, data: payload.freckle.id })
+            commit('deleteFreckle', { instanceId: payload.instanceId, base: payload.base, data: payload.freckle })
           }
         })
       })
