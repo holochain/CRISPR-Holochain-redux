@@ -1,8 +1,15 @@
 <template>
   <section>
-    <v-overlay :absolute="true" :opacity="overlayOpacity" :value="splash" v-resize="onResizeSplash">
-      <canvas id="network" width="1000" height="1000" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')'}" style="backgroundSize: cover; background-repeat: no-repeat;"></canvas>
-    </v-overlay>
+    <v-fade-transition mode="out-in">
+      <v-overlay v-if="splash" :absolute="true" :opacity="overlayOpacity" v-resize="onResizeSplash">
+        <canvas id="network" width="1000" height="1000"></canvas>
+        <v-fade-transition mode="in-out">
+          <v-overlay v-show="showOverlayImage" :absolute="true" opacity="0">
+            <canvas id="overlayImage" width="1000" height="1000" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
+          </v-overlay>
+        </v-fade-transition>
+      </v-overlay>
+    </v-fade-transition>
     <v-toolbar flat>
       <v-btn icon  @click="$router.go(-1)">
         <v-icon>mdi-chevron-left</v-icon>
@@ -48,15 +55,16 @@ export default {
     return {
       showProfile: false,
       help: false,
+      timerCount: 120,
       overlayOpacity: 1,
-      timerCount: 100,
+      showOverlayImage: false,
       network: undefined,
       vueCanvas: undefined,
       s: 0,
       height: 0,
       width: 0,
       sideLen: 500,
-      sideNumb: 24,
+      sideNumb: 48,
       rotation: 0,
       fractals: 0,
       xCenter: 0,
@@ -66,7 +74,7 @@ export default {
       offSet: 0,
       ticks: 0,
       networks: 0,
-      canvasAlpha: 0.5
+      canvasAlpha: 1
     }
   },
   methods: {
@@ -83,6 +91,9 @@ export default {
     renderMainSymbol () {
       var i
       for (i = 0; i < this.sideNumb / 2; i++) {
+        for (var delay = 0; delay < 2000 / this.sideNumb; delay++) {
+          // console.log('delay')
+        }
         this.vueCanvas.beginPath()
         const posX = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks - 1) * 2 * Math.PI / this.sideNumb))
         const posXto = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks + i) * 2 * Math.PI / this.sideNumb))
@@ -103,11 +114,16 @@ export default {
       if (this.ticks > (this.sideNumb - 1)) {
         this.networks += 1
         this.ticks = 1
-        this.height = this.height / 2
-        this.width = this.width / 2
-        this.sideLen = this.sideLen / 2
-        this.canvasAlpha = this.canvasAlpha / 2
-        if (this.networks < 5) window.requestAnimationFrame(this.renderMainSymbol)
+        this.height = this.height / 1.5
+        this.width = this.width / 1.5
+        this.sideLen = this.sideLen / 1.5
+        this.canvasAlpha = this.canvasAlpha / 1.5
+        this.sideNumb = this.sideNumb / 2
+        if (this.networks < 7) {
+          window.requestAnimationFrame(this.renderMainSymbol)
+        } else {
+          this.showOverlayImage = true
+        }
       } else {
         this.ticks = this.ticks + 1
         window.requestAnimationFrame(this.renderMainSymbol)
@@ -116,7 +132,9 @@ export default {
     drawMainSymbol () {
       this.network.width = this.width
       this.network.height = this.width
-      this.vueCanvas.lineWidth = 5
+      document.getElementById('overlayImage').width = this.width * 0.8
+      document.getElementById('overlayImage').height = this.width * 0.8
+      this.vueCanvas.lineWidth = 2
       this.vueCanvas.lineCap = 'round'
       this.xCenter = this.width / 2
       this.yCenter = this.height / 2
@@ -144,7 +162,7 @@ export default {
         if (value > 0) {
           setTimeout(() => {
             this.timerCount--
-            this.overlayOpacity = 0.01 * this.timerCount
+            this.overlayOpacity = value / 100
           }, 100)
         } else {
           this.turnSplashOff()

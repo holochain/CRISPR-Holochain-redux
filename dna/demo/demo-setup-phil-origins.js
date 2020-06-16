@@ -16,25 +16,25 @@ const tryConnection = () => {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
-          // My Personal Freckles
-          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Hows this for a freckle??</h1><p>Rad</p>' }})
+          // Mates
+          callZome('164449a2-e7d4-47dc-acc8-2fe317b8d9fe', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>This origin</h1><p>is in the Mates instance</p>' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})          
-          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>' }})
+          callZome('164449a2-e7d4-47dc-acc8-2fe317b8d9fe', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Control who accesses the network</h1><p>using the permissions and invites</p>' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
-          // My Friends Freckles
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1> Some friendly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce' }})
+          // Broadcast Origins
+          callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1> Some friendly origin in 57c01ed8-30ae-4fca-b6f9-40192821fed2' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1>Another freckly freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce' }})
+          callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1>Another origin in 57c01ed8-30ae-4fca-b6f9-40192821fed2' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1>3rd freckle in 0098d2a1-5668-4a5a-8ef8-503d58dd38ce' }})
+          callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1>3rd origin in 57c01ed8-30ae-4fca-b6f9-40192821fed2' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})

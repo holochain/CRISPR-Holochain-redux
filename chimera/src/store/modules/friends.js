@@ -26,7 +26,12 @@ export default {
     friends: (state, getters, rootState) => (instanceId) => {
       const instance = state.instances.find(i => i.instanceId === instanceId)
       if (instance) {
-        return instance.friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
+        const agent = rootState.auth.agentAddresses.find(p => p.instanceId === instanceId)
+        if (agent) {
+          return instance.friends.filter(f => f.agentAddress !== agent.agentAddress)
+        } else {
+          return []
+        }
       } else {
         return []
       }

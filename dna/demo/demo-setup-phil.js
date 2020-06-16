@@ -1,10 +1,10 @@
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
 const fs = require('fs')
-const { connect } = require('@holochain/hc-web-client')
-const holochainConnection = connect({ url: 'ws://localhost:33000' })
-const net = require('net')
 const port = 33000;
+const { connect } = require('@holochain/hc-web-client')
+const holochainConnection = connect({ url: `ws://localhost:${port}` })
+const net = require('net')
 const client = new net.Socket()
 
 function base64Encode(file) {

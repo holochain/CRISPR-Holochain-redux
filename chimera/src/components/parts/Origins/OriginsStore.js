@@ -3,6 +3,7 @@ export default {
   namespaced: true,
   state: {
     profiles: [],
+    instances: [],
     baseOrigins: [
       {
         base: 'PartEditor',
@@ -62,12 +63,8 @@ export default {
       state.errors = state.errors.filter(e => e.base !== payload)
     },
     setOriginsList (state, payload) {
-      const base = state.baseOrigins.find(b => b.base === payload.base)
-      if (base !== undefined) {
-        base.origins = payload.origins
-      } else {
-        state.baseOrigins.push(payload)
-      }
+      state.instances = state.instances.filter(i => i.instanceId !== payload.instanceBase.instanceId)
+      state.instances.push({ instanceId: payload.instanceBase.instanceId, baseOrigins: [{ base: payload.instanceBase.base, origins: payload.origins }] })
     }
   },
   getters: {
@@ -79,17 +76,27 @@ export default {
       }).slice(0, 3)
     },
     listOrigins: state => (base) => {
-      const baseOrigin = state.baseOrigins.find(n => n.base === base)
-      if (baseOrigin) {
-        return baseOrigin.origins
+      const instance = state.instances.find(i => i.instanceId === base.instanceId)
+      if (instance) {
+        const baseOrigin = instance.baseOrigins.find(n => n.base === base.base)
+        if (baseOrigin) {
+          return baseOrigin.origins
+        } else {
+          return []
+        }
       } else {
         return []
       }
     },
     listErrors: state => (base) => {
-      const baseErrors = state.errors.filter(e => e.base === base)
-      if (baseErrors) {
-        return baseErrors.map(b => JSON.parse(b.error).kind)
+      const instance = state.instances.find(i => i.instanceId === base.instanceId)
+      if (instance) {
+        const baseErrors = state.errors.filter(e => e.base === base)
+        if (baseErrors) {
+          return baseErrors.map(b => JSON.parse(b.error).kind)
+        } else {
+          return []
+        }
       } else {
         return []
       }
@@ -99,49 +106,22 @@ export default {
     acknowledgeErrors: ({ state, commit, rootState }, base) => {
       commit('resetErrors', base)
     },
-    // order: ({ state, commit, rootState }, payload) => {
-    //   commit('setOriginsList', { base: payload.base, origins: payload.origins })
-    //   payload.origins.forEach(origin => {
-    //     rootState.holochainConnection.then(({ callZome }) => {
-    //       callZome('origins', 'origins', 'update_origin')({ id: origin.id, created_at: origin.createdAt, address: origin.address, origin_input: { uuid: origin.uuid, content: origin.content } }).then((result) => {
-    //         const res = JSON.parse(result)
-    //         // console.log(res)
-    //         if (res.Ok === undefined) {
-    //           commit('error', { base: payload.base, error: res.Err.Internal })
-    //         } else {
-    //           commit('updateOrigin', { base: payload.base, data: res.Ok })
-    //         }
-    //       })
-    //     })
-    //   })
-    // },
-    // rebase: ({ state, commit, rootState }, payload) => {
-    //   rootState.holochainConnection.then(({ callZome }) => {
-    //     callZome('origins', 'origins', 'rebase_origin')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
-    //       const res = JSON.parse(result)
-    //       console.log(res)
-    //       if (res.Ok === undefined) {
-    //         commit('error', { base: payload.base, error: res.Err.Internal })
-    //       }
-    //     })
-    //   })
-    // },
-    agentAddress: ({ state, commit, rootState, dispatch }) => {
+    agentAddress: ({ state, commit, rootState, dispatch }, instanceId) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'agent_address')({ }).then((result) => {
+        callZome(instanceId, 'origins', 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
+          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
-            console.log(rootState.auth.agentAddress)
+            dispatch('auth/agentAddress', { instanceId: instanceId, agentAddress: res.Ok }, { root: true })
           }
         })
       })
     },
-    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
+    fetchProfiles: ({ state, commit, rootState, dispatch }, instanceBase) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'list_profiles')({ base: '' }).then((result) => {
+        callZome(instanceBase.instanceId, 'origins', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             console.log(res)
@@ -153,7 +133,6 @@ export default {
                 name: p.handle,
                 online: true,
                 info: {
-                  id: 10,
                   avatar: p.avatar,
                   name: ''
                 },
@@ -162,21 +141,20 @@ export default {
                 start: 0
               }
             })
-            dispatch('friends/profiles', { profiles: friends }, { root: true })
+            dispatch('friends/profiles', { instanceBase: instanceBase, profiles: friends }, { root: true })
           }
         })
       })
     },
-    fetchOrigins: ({ state, commit, rootState }, base) => {
-      if (base === 'PartEditor') return
+    fetchOrigins: ({ state, commit, rootState }, instanceBase) => {
+      if (instanceBase.instanceId === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('origins', 'origins', 'list_origins')({ base: base }).then((result) => {
+        callZome(instanceBase.instanceId, 'origins', 'list_origins')({ base: instanceBase.base }).then((result) => {
           const res = JSON.parse(result)
-          // console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setOriginsList', { base: base, origins: res.Ok })
+            commit('setOriginsList', { instanceBase: instanceBase, origins: res.Ok })
           }
         })
       })

@@ -1,9 +1,9 @@
 <template>
   <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <span class="subtitle">{{title}}</span>
+      <span class="subtitle">{{instanceName}}</span>
       <v-spacer></v-spacer>
-      <v-icon @click="add">mdi-calendar-plus</v-icon>
+      <v-icon @click="add">mdi-plus</v-icon>
       <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -24,24 +24,25 @@
       </v-row>
     </v-alert>
     <v-col cols="12" v-for="origin in origins" :key="origin.id">
-      <origin :key="origin.id" :base="base" :origin="origin">
+      <origin :key="origin.id" :instanceId="instanceId" :base="base" :origin="origin">
       </origin>
     </v-col>
     <slot></slot>
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Origins',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     Origin: () => import('./Origin')
   },
-  props: ['base', 'title'],
+  props: ['instanceId', 'instanceName', 'base'],
   data () {
     return {
-      help: false
+      help: false,
+      instanceBase: { instanceId: this.instanceId, instanceName: this.instanceName, base: this.base }
     }
   },
   methods: {
@@ -52,23 +53,24 @@ export default {
       })
     },
     ...mapActions('origins', ['fetchOrigins', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
-    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
+    ...mapMutations('friends', ['setGroup'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('origins', ['errors']),
     ...mapGetters('origins', ['listOrigins', 'listErrors']),
     origins () {
-      return this.listOrigins(this.base)
+      return this.listOrigins(this.instanceBase)
     },
     errors () {
-      return this.listErrors(this.base)
+      return this.listErrors(this.instanceBase)
     }
   },
   created () {
-    this.agentAddress()
-    this.fetchProfiles()
-    this.fetchOrigins(this.base)
+    this.setGroup(this.instanceBase)
+    this.agentAddress(this.instanceId)
+    this.fetchProfiles(this.instanceBase)
+    this.fetchOrigins(this.instanceBase)
   }
 }
 </script>

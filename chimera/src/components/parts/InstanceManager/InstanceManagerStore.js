@@ -35,6 +35,21 @@ export default {
             instanceName: 'My Friends Freckles'
           }
         ]
+      },
+      {
+        base: 'Origins',
+        instances: [
+          {
+            id: 'QmOrigins1',
+            instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2',
+            instanceName: 'Broadcast Origins'
+          },
+          {
+            id: 'QmOrigins2',
+            instanceId: '164449a2-e7d4-47dc-acc8-2fe317b8d9fe',
+            instanceName: 'Mates'
+          }
+        ]
       }
     ],
     errors: []

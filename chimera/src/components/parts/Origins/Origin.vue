@@ -44,7 +44,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['base', 'origin', 'partBase'],
+  props: ['instanceId', 'base', 'origin', 'partBase'],
   data () {
     return {
       instanceOrigin: {},
@@ -89,10 +89,10 @@ export default {
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapGetters('parts', ['partParts']),
-    ...mapGetters('friends', ['friend', 'agentProfile']),
+    ...mapGetters('friends', ['friend']),
     whois () {
-      if (this.origin.createdBy) return this.friend(this.origin.createdBy)
-      return this.agentProfile
+      console.log(this.instanceId, this.origin.createdBy)
+      return this.friend(this.instanceId, this.origin.createdBy)
     }
   }
 }
