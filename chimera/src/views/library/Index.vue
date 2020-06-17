@@ -65,7 +65,7 @@ export default {
       width: 0,
       sideLen: 500,
       sideNumb: 48,
-      rotation: 0,
+      rotation: 30 * Math.PI / 180,
       fractals: 0,
       xCenter: 0,
       yCenter: 0,

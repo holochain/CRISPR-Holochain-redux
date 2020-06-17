@@ -1,172 +1,49 @@
-import { v4 as uuidv4 } from 'uuid'
 export default {
   namespaced: true,
   state: {
-    profiles: [],
-    instances: [
-      {
-        instanceId: 'dgjdgh',
-        baseFreckles: [
-          {
-            base: 'PartEditor',
-            freckles: [
-              {
-                id: 'PartEditor1',
-                content: 'Content for Freckle 1'
-              },
-              {
-                id: 'PartEditor2',
-                content: 'Content for Freckle 2'
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    baseFreckles: [
-      {
-        base: 'PartEditor',
-        freckles: [
-          {
-            id: 'PartEditor1',
-            content: 'Content for Freckle 1'
-          },
-          {
-            id: 'PartEditor2',
-            content: 'Content for Freckle 2'
-          }
-        ]
-      }
-    ],
-    editing: false,
-    errors: []
+    entries: {},
+    errors: {}
   },
   mutations: {
-    createFreckle (state, payload) {
-      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
-      if (instance) {
-        const baseFreckle = instance.baseFreckles.find(n => n.base === payload.base)
-        if (baseFreckle) {
-          baseFreckle.freckles = baseFreckle.freckles.filter(n => n.id !== 'new')
-          baseFreckle.freckles.splice(0, 0, payload.data)
-        } else {
-          instance.baseFreckles = { base: payload.base, freckles: [payload.data] }
-        }
-      } else {
-        state.instances.push({
-          instanceId: payload.instanceId,
-          baseFreckles: [
-            {
-              base: payload.base,
-              freckles: [payload.data]
-            }
-          ]
-        })
-      }
+    createEntry (state, payload) {
+      const entry = state.entries[`${payload.instanceId}${payload.base}`].find(n => n.id === 'new')
+      Object.assign(entry, payload.data)
     },
-    updateFreckle (state, payload) {
-      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
-      if (instance) {
-        const baseFreckle = instance.baseFreckles.find(n => n.base === payload.base)
-        if (baseFreckle) {
-          const updatedFreckles = baseFreckle.freckles.map(freckle => {
-            if (freckle.id === payload.data.id) {
-              return Object.assign({}, freckle, payload.data)
-            }
-            return freckle
-          })
-          instance.baseFreckles.find(e => e.base === payload.base).freckles = updatedFreckles
-        } else {
-          instance.baseFreckles.push(
-            {
-              base: payload.base,
-              freckles: [payload.data]
-            }
-          )
-        }
-      } else {
-        state.instances.push({
-          instanceId: payload.instanceId,
-          baseFreckles: [
-            {
-              base: payload.base,
-              freckles: [payload.data]
-            }
-          ]
-        })
-      }
+    updateEntry (state, payload) {
+      const entry = state.entries[`${payload.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
+      Object.assign(entry, payload.data)
     },
-    deleteFreckle (state, payload) {
-      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
-      if (instance) {
-        const baseFreckle = instance.baseFreckles.find(b => b.base === payload.base)
-        if (baseFreckle) {
-          baseFreckle.freckles = baseFreckle.freckles.filter(f => f.id !== payload.data.id)
-        }
-      }
+    deleteEntry (state, payload) {
+      state.entries[`${payload.instanceId}${payload.base}`] = state.entries[`${payload.instanceId}${payload.base}`].filter(n => n.id !== payload.data.id)
     },
     error (state, payload) {
-      state.errors.push(payload)
+      const errors = {}
+      errors[`${payload.instanceId}${payload.base}`] = [payload.error]
+      state.errors = { ...state.errors, ...errors }
     },
     resetErrors (state, payload) {
-      const instance = state.instances.find(i => i.instanceId === payload.instanceId)
-      if (instance) {
-        const baseError = instance.baseErrors.find(e => e.base === payload.base)
-        if (baseError) {
-          baseError.errors = []
-        }
-      }
+      const errors = {}
+      errors[`${payload.instanceId}${payload.base}`] = undefined
+      state.errors = { ...state.errors, ...errors }
     },
-    setFrecklesList (state, payload) {
-      state.instances = state.instances.filter(i => i.instanceId !== payload.instanceBase.instanceId)
-      state.instances.push({ instanceId: payload.instanceBase.instanceId, baseFreckles: [{ base: payload.instanceBase.base, freckles: payload.freckles }], baseErrors: [] })
-    }
-  },
-  getters: {
-    listFreckles: state => (base) => {
-      const instance = state.instances.find(i => i.instanceId === base.instanceId)
-      if (instance) {
-        const baseFreckle = instance.baseFreckles.find(n => n.base === base.base)
-        if (baseFreckle) {
-          return baseFreckle.freckles.sort((a, b) => {
-            if (a.order < b.order) return -1
-            if (a.order > b.order) return 1
-            return 0
-          })
-        } else {
-          return []
-        }
-      } else {
-        return []
-      }
-    },
-    listErrors: state => (base) => {
-      const instance = state.instances.find(i => i.instanceId === base.instanceId)
-      if (instance) {
-        const baseErrors = state.errors.filter(e => e.base === base)
-        if (baseErrors) {
-          return baseErrors.map(b => JSON.parse(b.error).kind)
-        } else {
-          return []
-        }
-      } else {
-        return []
-      }
+    setList (state, payload) {
+      const entries = {}
+      entries[`${payload.instanceBase.instanceId}${payload.instanceBase.base}`] = payload.freckles
+      state.entries = { ...state.entries, ...entries }
     }
   },
   actions: {
-    acknowledgeErrors: ({ state, commit, rootState }, instanceBase) => {
+    resetErrors: ({ state, commit, rootState }, instanceBase) => {
       commit('resetErrors', instanceBase)
     },
-    agentAddress: ({ state, commit, rootState, dispatch }, instanceId) => {
+    agentAddress: ({ state, commit, rootState, dispatch }, instanceBase) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome(instanceId, 'freckles', 'agent_address')({ }).then((result) => {
+        callZome(instanceBase.instanceId, `${instanceBase.type}s`, 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { instanceId: instanceId, agentAddress: res.Ok }, { root: true })
+            dispatch('auth/agentAddress', { instanceId: instanceBase.instanceId, agentAddress: res.Ok }, { root: true })
           }
         })
       })
@@ -206,46 +83,46 @@ export default {
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setFrecklesList', { instanceBase: instanceBase, freckles: res.Ok })
+            commit('setList', { instanceBase: instanceBase, freckles: res.Ok })
           }
         })
       })
     },
-    saveFreckle: ({ state, commit, rootState }, payload) => {
+    saveEntry: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
-      if (payload.freckle.id === 'new' || payload.freckle.id === undefined) {
+      if (payload.entry.id === 'new' || payload.entry.id === undefined) {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome(payload.instanceId, 'freckles', 'create_freckle')({ base: payload.base, freckle_input: { uuid: uuidv4(), title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome(payload.instanceId, `${payload.type}s`, `create_${payload.type}`)({ base: payload.base, [`${payload.type}_input`]: payload.entry }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
+              commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
             } else {
-              commit('createFreckle', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
+              commit('createEntry', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
             }
           })
         })
       } else {
         rootState.holochainConnection.then(({ callZome }) => {
-          callZome(payload.instanceId, 'freckles', 'update_freckle')({ id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address, freckle_input: { uuid: payload.freckle.uuid, title: payload.freckle.title, content: payload.freckle.content, order: payload.freckle.order } }).then((result) => {
+          callZome(payload.instanceId, `${payload.type}s`, `update_${payload.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.type}_input`]: payload.entry }).then((result) => {
             const res = JSON.parse(result)
             if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
+              commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
             } else {
-              commit('updateFreckle', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
+              commit('updateEntry', { instanceId: payload.instanceId, base: payload.base, data: res.Ok })
             }
           })
         })
       }
     },
-    deleteFreckle: ({ state, commit, rootState }, payload) => {
+    deleteEntry: ({ state, commit, rootState }, payload) => {
       if (payload.base === 'PartEditor') return
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome(payload.instanceId, 'freckles', 'delete_freckle')({ base: payload.base, id: payload.freckle.id, created_at: payload.freckle.createdAt, address: payload.freckle.address }).then((result) => {
+        callZome(payload.instanceId, `${payload.type}s`, `delete_${payload.type}`)({ base: payload.base, id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
-            commit('error', { base: payload.base, error: res.Err.Internal })
+            commit('error', { instanceId: payload.instanceId, base: payload.base, error: res.Err.Internal })
           } else {
-            commit('deleteFreckle', { instanceId: payload.instanceId, base: payload.base, data: payload.freckle })
+            commit('deleteEntry', { instanceId: payload.instanceId, base: payload.base, data: payload.entry })
           }
         })
       })

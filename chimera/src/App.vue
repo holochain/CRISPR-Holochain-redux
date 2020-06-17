@@ -29,8 +29,8 @@ export default {
     this.fetchFields()
     this.fetchPersonas()
     this.setGroup({ instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends' })
-    this.fetchProfiles({ instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
-    this.agentAddress('0098d2a1-5668-4a5a-8ef8-503d58dd38ce')
+    this.fetchProfiles({ type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
+    this.agentAddress({ type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
   }
 }
 </script>

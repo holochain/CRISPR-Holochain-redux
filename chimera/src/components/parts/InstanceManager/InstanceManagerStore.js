@@ -50,6 +50,16 @@ export default {
             instanceName: 'Mates'
           }
         ]
+      },
+      {
+        base: 'Projects',
+        instances: [
+          {
+            id: 'QmOrigins1',
+            instanceId: 'projects',
+            instanceName: 'Holochain Projects'
+          }
+        ]
       }
     ],
     errors: []

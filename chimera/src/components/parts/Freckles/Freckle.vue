@@ -13,8 +13,8 @@
       </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveFreckle({ instanceId: instanceId, base: '', freckle: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteFreckle({ instanceId: instanceId, base: '', freckle: instanceFreckle})">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing" @click="saveEntry({ instanceId: instanceId, type: 'freckle', base: '', entry: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry({ instanceId: instanceId, type: 'freckle', base: '', entry: instanceFreckle})">mdi-delete-outline</v-icon>
       <part-manager :base="instanceFreckle.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('freckles', ['saveFreckle', 'deleteFreckle']),
+    ...mapActions('freckles', ['saveEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }

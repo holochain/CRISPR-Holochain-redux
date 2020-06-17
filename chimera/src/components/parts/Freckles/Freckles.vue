@@ -14,13 +14,13 @@
       </div>
       Click the <v-icon @click="add">mdi-plus</v-icon> to start a new Freckle.
     </v-alert>
-    <v-alert v-if="errors.length" type="error">
+    <v-alert v-if="errors" type="error">
       <v-row no-gutters>
         <v-col cols="11">
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(instanceBase)">mdi-close-box-outline</v-icon>
+          <v-icon @click="resetErrors(instanceBase)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
@@ -34,7 +34,8 @@
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { v4 as uuidv4 } from 'uuid'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Freckles',
   components: {
@@ -45,33 +46,35 @@ export default {
   data () {
     return {
       help: false,
-      instanceBase: { instanceId: this.instanceId, instanceName: this.instanceName, base: this.base }
+      instanceBase: { type: 'freckle', instanceId: this.instanceId, instanceName: this.instanceName, base: this.base }
     }
   },
   methods: {
     add () {
       this.freckles.splice(0, 0, {
         id: 'new',
+        uuid: uuidv4(),
         content: ''
       })
     },
-    ...mapActions('freckles', ['fetchFreckles', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('freckles', ['fetchFreckles', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
     ...mapMutations('friends', ['setGroup'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('freckles', ['listFreckles', 'listErrors']),
-    freckles () {
-      return this.listFreckles(this.instanceBase)
-    },
-    errors () {
-      return this.listErrors(this.instanceBase)
-    }
+    ...mapState({
+      freckles (state) {
+        return state.freckles.entries[`${this.instanceId}${this.base}`]
+      },
+      errors (state) {
+        return state.freckles.errors[`${this.instanceId}${this.base}`]
+      }
+    })
   },
   created () {
     this.setGroup(this.instanceBase)
-    this.agentAddress(this.instanceId)
+    this.agentAddress(this.instanceBase)
     this.fetchProfiles(this.instanceBase)
     this.fetchFreckles(this.instanceBase)
   }

@@ -265,8 +265,7 @@ export default {
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
-            console.log(rootState.auth.agentAddress)
+            dispatch('auth/agentAddress', { instanceId: 'projects', agentAddress: res.Ok }, { root: true })
           }
         })
       })
@@ -275,6 +274,7 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome('projects', 'projects', 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
+          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
@@ -294,7 +294,9 @@ export default {
                 start: 0
               }
             })
-            dispatch('friends/profiles', { profiles: friends }, { root: true })
+            const instanceBase = { type: 'project', instanceId: 'projects', instanceName: 'Holochain Projects', base: '' }
+
+            dispatch('friends/profiles', { instanceBase: instanceBase, profiles: friends }, { root: true })
           }
         })
       })
