@@ -55,20 +55,21 @@ function base64_encode(file) {
 }
 
 const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
+const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
 const tagsDnaPath = path.join(__dirname, "../tags/dna/dist/dna.dna.json")
 const projectsDnaPath = path.join(__dirname, "../projects/dna/dist/dna.dna.json")
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
 const notesDnaPath = path.join(__dirname, "../notes/dna/dist/dna.dna.json")
 const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
-const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna.dna.json")
 const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
+
+const editorFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
 
 const projectsDna = Config.dna(projectsDnaPath, 'projects-test')
 const tagsDna = Config.dna(tagsDnaPath, 'tags-test')
 const originsDna = Config.dna(originsDnaPath, 'origins-test')
 const originsMatesDna = Config.dna(originsDnaPath, 'origins-test', { uuid: uuidv4() })
-
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban-test')
 const notesDna = Config.dna(notesDnaPath, 'notes-test')
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test')
@@ -82,7 +83,7 @@ const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'pers
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({tags: tagsDna, projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
+const philsConductorConfig = Config.gen({'41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, tags: tagsDna, projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const lucysConductorConfig = Config.gen({tags: tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const rudysConductorConfig = Config.gen({tags: tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const arthursConductorConfig = Config.gen({projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
@@ -109,6 +110,9 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   const urlProfileField =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Url","ui": "text-field"}})
   console.log('urlProfileField', urlProfileField)
   
+  const editorFrecklesProfile = await phil.call("41553681-4c82-4c8c-87bb-ae2a3d2ba4cc", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
+  console.log('editorFrecklesProfile', editorFrecklesProfile)
+
   // Phil's Personal persona
   const philPersonalFullName = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Philip Beadle"}})
   console.log('philPersonalFullName', philPersonalFullName)

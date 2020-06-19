@@ -52,8 +52,23 @@ export default {
       state.selectedGroup = instance
     },
     setProfiles (state, payload) {
+      const friends = payload.profiles.map(p => {
+        return {
+          id: p.id,
+          agentAddress: p.agentId,
+          name: p.handle,
+          online: true,
+          info: {
+            avatar: p.avatar,
+            name: ''
+          },
+          notifications: 0,
+          value: 0,
+          start: 0
+        }
+      })
       state.instances = state.instances.filter(i => i.instanceId !== payload.instanceBase.instanceId)
-      state.instances.push({ instanceId: payload.instanceBase.instanceId, instanceName: payload.instanceBase.instanceName, friends: payload.profiles })
+      state.instances.push({ instanceId: payload.instanceBase.instanceId, instanceName: payload.instanceBase.instanceName, friends: friends })
     }
   }
 }

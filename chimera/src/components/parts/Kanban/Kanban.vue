@@ -38,7 +38,7 @@
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Kanban',
   components: {
@@ -50,12 +50,14 @@ export default {
     return {
       newColumn: false,
       newColumnTitle: '',
-      help: false
+      help: false,
+      instanceBase: { zome: 'kanban', type: 'column', instanceId: 'kanban', instanceName: this.instanceName, base: this.base }
     }
   },
   methods: {
     ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
-    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
+    ...mapMutations('friends', ['setGroup'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
@@ -65,8 +67,9 @@ export default {
     }
   },
   created () {
-    this.agentAddress()
-    this.fetchProfiles()
+    this.setGroup(this.instanceBase)
+    this.agentAddress(this.instanceBase)
+    this.fetchProfiles(this.instanceBase)
     this.fetchColumns(this.base)
   }
 }

@@ -11,9 +11,10 @@
         </v-list-item-content>
       </v-list-item>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveOrigin({ instanceId: instanceId, base: base, origin: instanceOrigin}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteOrigin({ instanceId: instanceId, base: base, origin: instanceOrigin})">mdi-delete-outline</v-icon>
-      <part-manager :base="instanceOrigin.id" @add-part="addPart"/>
+      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(instance); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(instance); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(instance)">mdi-delete-outline</v-icon>
+      <part-manager :base="instance.entry.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -27,8 +28,8 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Origin.
     </v-alert>
-    <v-card-text v-if="!isEditing" v-html="instanceOrigin.content" />
-    <tiptap-vuetify v-if="isEditing" v-model="instanceOrigin.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-text v-if="!isEditing" v-html="entry.content" />
+    <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
     </v-col>
@@ -44,12 +45,12 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instanceId', 'base', 'origin', 'partBase'],
+  props: ['instanceId', 'base', 'entry', 'partBase'],
   data () {
     return {
-      instanceOrigin: {},
+      instance: { zome: 'origins', type: 'origin', instanceId: this.instanceId, base: this.base, entry: this.entry },
       clean: {},
-      isEditing: this.origin.id === 'new',
+      isEditing: this.entry.id === 'new',
       parts: [],
       help: false,
       extensions: [
@@ -76,14 +77,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('origins', ['saveOrigin', 'deleteOrigin']),
+    ...mapActions('origins', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }
   },
   created () {
     this.clean = { ...this.origin }
-    this.instanceOrigin = { ...this.origin }
     this.parts = this.partParts(this.partBase)
   },
   computed: {
@@ -91,7 +91,7 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.instanceId, this.origin.createdBy)
+      return this.friend(this.instanceId, this.entry.createdBy)
     }
   }
 }

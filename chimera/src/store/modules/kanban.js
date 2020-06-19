@@ -94,49 +94,26 @@ export default {
     acknowledgeErrors: ({ state, commit, rootState }, base) => {
       commit('resetErrors', base)
     },
-    agentAddress: ({ state, commit, rootState, dispatch }) => {
+    agentAddress: ({ state, commit, rootState, dispatch }, instanceBase) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('kanban', 'kanban', 'agent_address')({ }).then((result) => {
+        callZome(instanceBase.instanceId, instanceBase.zome, 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
-            console.log(rootState.auth.agentAddress)
+            dispatch('auth/agentAddress', { instanceId: instanceBase.instanceId, agentAddress: res.Ok }, { root: true })
           }
         })
       })
     },
-    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
+    fetchProfiles: ({ state, commit, rootState, dispatch }, instanceBase) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('kanban', 'kanban', 'list_profiles')({ base: '' }).then((result) => {
+        callZome(instanceBase.instanceId, instanceBase.zome, 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res.Ok)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            const friends = res.Ok.map(p => {
-              return {
-                id: p.id,
-                agentAddress: p.agentId,
-                name: p.handle,
-                online: true,
-                info: {
-                  id: 10,
-                  avatar: p.avatar,
-                  name: ''
-                },
-                notifications: 0,
-                value: 0,
-                start: 0
-              }
-            })
-            console.log(rootState.auth.agentAddress)
-            // const friendList = friends.filter(f => f.agentAddress !== rootState.auth.agentAddress)
-            console.log(friends)
-            dispatch('friends/profiles', { profiles: friends }, { root: true })
-            console.log(rootState.friends.friends)
+            dispatch('friends/profiles', { instanceBase: instanceBase, profiles: res.Ok }, { root: true })
           }
         })
       })

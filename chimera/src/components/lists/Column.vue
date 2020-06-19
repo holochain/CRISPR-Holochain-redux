@@ -1,10 +1,10 @@
 <template>
   <v-card class="mx-auto" max-width="520" dark>
     <v-system-bar color="indigo darken-2" dark>
-      <span class="subtitle">{{instanceName}}</span>
+      <span class="subtitle">{{instance.instanceName}}</span>
       <v-spacer></v-spacer>
       <v-icon @click="add">mdi-plus</v-icon>
-      <part-manager :base="partBase" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
+      <part-manager :base="instance.partBase" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -20,42 +20,35 @@
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="resetErrors(instanceBase)">mdi-close-box-outline</v-icon>
+          <v-icon @click="resetErrors(instance)">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12" v-for="entry in entries" :key="entry.id">
-        <freckle :key="entry.id" :instanceId="instanceId" :base="base" :partBase="partBase" :entry="entry">
-        </freckle>
+        <component :is="instance.type" :key="entry.id" :instanceId="instance.instanceId" :base="instance.base" :partBase="instance.partBase" :entry="entry" />
       </v-col>
     </v-row>
     <slot></slot>
   </v-card>
 </template>
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
-  name: 'Freckles',
+  name: 'Column',
   components: {
-    PartManager: () => import('@/components/chimera/PartManager'),
-    Freckle: () => import('./Freckle')
+    PartManager: () => import('@/components/chimera/PartManager')
   },
-  props: ['instanceId', 'instanceName', 'base', 'partBase'],
+  props: ['instance'],
   data () {
     return {
-      help: false,
-      instanceBase: { zome: 'freckles', type: 'freckle', instanceId: this.instanceId, instanceName: this.instanceName, base: this.base }
+      help: false
     }
   },
   methods: {
     add () {
-      this.entries.splice(0, 0, {
-        id: 'new',
-        uuid: uuidv4(),
-        content: ''
-      })
+      this.instance.entry.id = 'new'
+      this.entries.splice(0, 0, this.instance.entry)
     },
     ...mapActions('origins', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
@@ -65,18 +58,18 @@ export default {
     ...mapState('auth', ['chimera']),
     ...mapState({
       entries (state) {
-        return state.origins.entries[`${this.instanceId}${this.base}`]
+        return state.origins.entries[`${this.instance.instanceId}${this.instance.base}`]
       },
       errors (state) {
-        return state.origins.errors[`${this.instanceId}${this.base}`]
+        return state.origins.errors[`${this.instance.instanceId}${this.instance.base}`]
       }
     })
   },
   created () {
-    this.setGroup(this.instanceBase)
-    this.agentAddress(this.instanceBase)
-    this.fetchProfiles(this.instanceBase)
-    this.fetchEntries(this.instanceBase)
+    this.setGroup(this.instance)
+    this.agentAddress(this.instance)
+    this.fetchProfiles(this.instance)
+    this.fetchEntries(this.instance)
   }
 }
 </script>

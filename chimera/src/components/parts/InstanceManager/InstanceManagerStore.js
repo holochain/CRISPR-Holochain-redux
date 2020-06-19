@@ -25,14 +25,34 @@ export default {
         base: 'Freckles',
         instances: [
           {
+            id: 'QmFrecklesEditor',
+            zome: 'freckles',
+            type: 'freckle',
+            instanceId: '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc',
+            instanceName: 'Freckles Editor',
+            entry: {
+              content: ''
+            }
+          },
+          {
             id: 'QmFreckles1',
+            zome: 'freckles',
+            type: 'freckle',
             instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
-            instanceName: 'Phil\'s Freckles'
+            instanceName: 'Phil\'s Freckles',
+            entry: {
+              content: ''
+            }
           },
           {
             id: 'QmFreckles2',
+            zome: 'freckles',
+            type: 'freckle',
             instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
-            instanceName: 'My Friends Freckles'
+            instanceName: 'My Friends Freckles',
+            entry: {
+              content: ''
+            }
           }
         ]
       },
@@ -58,6 +78,16 @@ export default {
             id: 'QmOrigins1',
             instanceId: 'projects',
             instanceName: 'Holochain Projects'
+          }
+        ]
+      },
+      {
+        base: 'Kanban',
+        instances: [
+          {
+            id: 'QmOkb1',
+            instanceId: 'kanban',
+            instanceName: 'Holochain Kanban'
           }
         ]
       }

@@ -13,9 +13,10 @@
       </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveEntry({ instanceId: instanceId, type: 'freckle', base: '', entry: instanceFreckle}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteEntry({ instanceId: instanceId, type: 'freckle', base: '', entry: instanceFreckle})">mdi-delete-outline</v-icon>
-      <part-manager :base="instanceFreckle.id" @add-part="addPart"/>
+      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(instance); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(instance); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(instance)">mdi-delete-outline</v-icon>
+      <part-manager :base="instance.entry.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -29,8 +30,8 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
     </v-alert>
-    <v-card-text v-if="!isEditing" v-html="instanceFreckle.content" />
-    <tiptap-vuetify v-if="isEditing" v-model="instanceFreckle.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-text v-if="!isEditing" v-html="entry.content" />
+    <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
     </v-col>
@@ -46,12 +47,12 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instanceId', 'base', 'freckle', 'partBase'],
+  props: ['instanceId', 'base', 'entry', 'partBase'],
   data () {
     return {
-      instanceFreckle: {},
+      instance: { zome: 'freckles', type: 'freckle', instanceId: this.instanceId, base: this.base, entry: this.entry },
       clean: {},
-      isEditing: this.freckle.id === 'new',
+      isEditing: this.entry.id === 'new',
       parts: [],
       help: false,
       extensions: [
@@ -78,14 +79,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions('freckles', ['saveEntry', 'deleteEntry']),
+    ...mapActions('origins', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }
   },
   created () {
-    this.clean = { ...this.freckle }
-    this.instanceFreckle = { ...this.freckle }
+    this.clean = { ...this.entry }
     this.parts = this.partParts(this.partBase)
   },
   computed: {
@@ -93,7 +93,7 @@ export default {
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.instanceId, this.freckle.createdBy)
+      return this.friend(this.instanceId, this.entry.createdBy)
     }
   }
 }

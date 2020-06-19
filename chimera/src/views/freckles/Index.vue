@@ -15,11 +15,14 @@
       Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <freckles :instanceId="instance.instanceId" base="" :instanceName="instance.instanceName"/>
+      <v-col cols="12" md="6" lg="4">
+        <column key="QmFreckles1" :instance="instance"/>
       </v-col>
-      <!-- <v-col cols="12" md="6" lg="4">
-        <tasks :instance="instance" base="a note id" title="name of the instance"/>
+      <v-col cols="12" md="6" lg="4">
+        <column key="origin1" :instance="instanceOrigin"/>
+      </v-col>
+      <!-- <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
+        <column :key="instance.id" :instance="{ zome: instance.zome, type: instance.type, instanceId: instance.instanceId, partBase:instance.instanceId, base:'', instanceName: instance.instanceName }"/>
       </v-col> -->
     </v-row>
   </section>
@@ -30,11 +33,13 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FrecklesView',
   components: {
-    Freckles: () => import('@/components/parts/Freckles/Freckles')
+    Column: () => import('@/components/lists/Column')
   },
   data () {
     return {
-      help: false
+      help: false,
+      instance: { zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', partBase: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', base: '', instanceName: 'My Friends Freckles', entry: { content: '' } },
+      instanceOrigin: { zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', partBase: '57c01ed8-30ae-4fca-b6f9-40192821fed2', base: '', instanceName: 'Broadcast', entry: { content: '' } }
     }
   },
   computed: {

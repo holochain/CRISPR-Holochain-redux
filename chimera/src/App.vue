@@ -22,15 +22,15 @@ export default {
     ...mapActions('fieldNames', ['fetchFields']),
     ...mapActions('personas', ['fetchPersonas']),
     ...mapActions('projects', ['fetchProjects']),
-    ...mapActions('freckles', ['agentAddress', 'fetchProfiles']),
+    ...mapActions('origins', ['agentAddress', 'fetchProfiles']),
     ...mapMutations('friends', ['setGroup'])
   },
   created () {
     this.fetchFields()
     this.fetchPersonas()
     this.setGroup({ instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends' })
-    this.fetchProfiles({ type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
-    this.agentAddress({ type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
+    this.fetchProfiles({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
+    this.agentAddress({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
   }
 }
 </script>
