@@ -35,7 +35,7 @@
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
         </v-toolbar>
-        <v-row no-gutters align="start" justify="center">
+        <!-- <v-row no-gutters align="start" justify="center">
           <v-col cols="12">
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Project Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
@@ -43,7 +43,7 @@
             <v-text-field class="ml-2 white--text" v-if="clone.zome.entryTypes[0]" v-model="clone.zome.entryTypes[0].name" label="Entry Type Name" :hint="`A singular such as ${project.zome.entryTypes[0].name} or note`" />
             <v-image-input v-model="clone.preview" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="200" :image-width="200"/>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -63,7 +63,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { mapActions, mapState } from 'vuex'
-import VImageInput from 'vuetify-image-input/a-la-carte'
+// import VImageInput from 'vuetify-image-input/a-la-carte'
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
   if (!fs.existsSync(dirname)) {
@@ -80,7 +80,7 @@ function replacePlaceHolders (content, placeHolder, replacement) {
 export default {
   name: 'HolochainProject',
   components: {
-    VImageInput
+    // VImageInput
   },
   data () {
     return {

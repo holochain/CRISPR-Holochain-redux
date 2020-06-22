@@ -22,7 +22,7 @@ const tryConnection = () => {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
-          callZome('notes', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'Rudys Note 2', content: 'Get this from demo again', order: 1 } }).then((result) => {
+          callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'Rudys Note 2', content: 'Get this from demo again', order: 1 } }).then((result) => {
             const res = JSON.parse(result)
             console.log('ok_demo_setup_Rudy', res)
             callZome('tasks', 'tasks', 'create_task')({ base: res.Ok.id, task_input: { uuid: uuidv4(), title: 'Rudys Task', "done":false } }).then((result) => {

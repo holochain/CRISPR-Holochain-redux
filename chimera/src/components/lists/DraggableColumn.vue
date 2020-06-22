@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="520" dark>
+  <v-card class="mx-auto" dark>
     <v-system-bar color="indigo darken-2" dark>
       <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
@@ -24,9 +24,10 @@
         </v-col>
       </v-row>
     </v-alert>
-    <draggable v-model="entries" :id="`${instance.instanceId}${base}`" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
+    <draggable v-if="isDraggable" v-model="entries" :id="`${instance.instanceId}${base}`" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
       <component :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
     </draggable>
+    <component v-else :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
     <slot></slot>
   </v-card>
 </template>
@@ -39,7 +40,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     draggable
   },
-  props: ['instance', 'base', 'title'],
+  props: ['instance', 'base', 'title', 'hasProfile', 'isDraggable'],
   data () {
     return {
       help: false
@@ -52,13 +53,13 @@ export default {
       this.entries.splice(0, 0, this.instance.entry)
     },
     move (evt) {
-      // if (evt.from.id !== evt.to.id) {
-      //   console.log(evt.draggedContext.element.id)
-      //   console.log(evt.draggedContext.element.createdAt)
-      //   console.log(evt.from.id)
-      //   console.log(evt.to.id)
-      //   // this.rebase({ from: evt.from.id, to: evt.to.id, id: evt.draggedContext.element.id, createdAt: evt.draggedContext.element.createdAt })
-      // }
+      if (evt.from.id !== evt.to.id) {
+        console.log(evt.draggedContext.element.id)
+        console.log(evt.draggedContext.element.createdAt)
+        console.log(evt.from.id)
+        console.log(evt.to.id)
+        this.rebase({ from: evt.from.id, to: evt.to.id, id: evt.draggedContext.element.id, createdAt: evt.draggedContext.element.createdAt })
+      }
     },
     ...mapActions('origins', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
@@ -80,14 +81,16 @@ export default {
           ...entry,
           order: index
         }))
-        this.$store.dispatch('origins/order', { instance: this.instance, entries: newOrder })
+        this.$store.dispatch('origins/order', { instance: this.instance, base: this.base, entries: newOrder })
       }
     }
   },
   created () {
-    this.setGroup(this.instance)
-    this.agentAddress(this.instance)
-    this.fetchProfiles(this.instance)
+    if (this.hasProfile) {
+      this.setGroup(this.instance)
+      this.agentAddress(this.instance)
+      this.fetchProfiles(this.instance)
+    }
     this.fetchEntries({ instance: this.instance, base: this.base })
   }
 }

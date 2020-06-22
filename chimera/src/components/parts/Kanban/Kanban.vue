@@ -4,7 +4,7 @@
       <v-icon>mdi-piano</v-icon>
       <span class="subtitle">{{title}} Board</span>
       <v-spacer></v-spacer>
-      <v-icon @click="fetchColumns(base)">mdi-refresh</v-icon>
+      <v-icon @click="fetchEntries({ instance: this.instance, base: this.base })">mdi-refresh</v-icon>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
       <part-manager :base="base" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
@@ -21,56 +21,42 @@
     </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <notes-kanban-column :key="column.id" :base="base" :column="column">
-        </notes-kanban-column>
-      </v-col>
-      <v-col v-if="newColumn">
-        <v-card class="mx-auto" max-width="520" color="secondary" dark>
-          <v-system-bar color="indigo darken-2" dark>
-            <v-icon>mdi-note-multiple-outline</v-icon>
-            <span class="subtitle">{{title}}</span>
-            <v-spacer></v-spacer>
-          </v-system-bar>
-          <v-text-field class="ml-2 white--text" v-model="newColumnTitle" label="Column Title" @keydown.enter="saveColumn({ base: base, column: { title: newColumnTitle, order: columns.length}}); newColumn=false" append-icon="mdi-content-save" @click:append="saveColumn({ base: base, column: { title: newColumnTitle, order: columns.length}}); newColumn=false"/>
-        </v-card>
+        <draggable-column :isDraggable="true" :key="column.id" :instance="noteInstance" :title="column.title" :base="column.id"/>
       </v-col>
     </v-row>
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Kanban',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
-    NotesKanbanColumn: () => import('@/components/parts/Kanban/NotesKanbanColumn')
+    DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
-  props: ['base', 'title'],
+  props: ['instance', 'base', 'title'],
   data () {
     return {
+      noteInstance: { zome: 'notes', type: 'note', instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', partBase: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', instanceName: 'All Notes', entry: { title: '', content: '' } },
       newColumn: false,
       newColumnTitle: '',
-      help: false,
-      instanceBase: { zome: 'kanban', type: 'column', instanceId: 'kanban', instanceName: this.instanceName, base: this.base }
+      help: false
     }
   },
   methods: {
-    ...mapActions('kanban', ['fetchColumns', 'saveColumn', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
-    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
-    ...mapMutations('friends', ['setGroup'])
+    ...mapActions('origins', ['fetchEntries', 'resetErrors']),
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('kanban', ['listColumns']),
-    columns () {
-      return this.listColumns(this.base)
-    }
+    ...mapState({
+      columns (state) {
+        return this.$store.state.origins.entries[`${this.instance.instanceId}${this.base}`]
+      }
+    })
   },
   created () {
-    this.setGroup(this.instanceBase)
-    this.agentAddress(this.instanceBase)
-    this.fetchProfiles(this.instanceBase)
-    this.fetchColumns(this.base)
+    this.fetchEntries({ instance: this.instance, base: this.base })
   }
 }
 </script>

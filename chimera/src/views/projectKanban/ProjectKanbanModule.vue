@@ -28,7 +28,7 @@
           </v-alert>
           <v-row>
             <v-col cols="12">
-              <kanban :key="project.id" :base="project.id" :title="project.name"/>
+              <kanban :key="project.id" :instance="instance" :base="project.id" :title="project.name"/>
             </v-col>
           </v-row>
         </v-card>
@@ -45,7 +45,8 @@ export default {
   },
   data () {
     return {
-      help: false
+      help: false,
+      instance: { zome: 'kanban', type: 'column', instanceId: 'kanban', instanceName: 'kanbans' }
     }
   },
   computed: {

@@ -258,45 +258,26 @@ export default {
     acknowledgeErrors: ({ state, commit, rootState }, base) => {
       commit('resetErrors', base)
     },
-    agentAddress: ({ state, commit, rootState, dispatch }) => {
+    agentAddress: ({ state, commit, rootState, dispatch }, instance) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('projects', 'projects', 'agent_address')({ }).then((result) => {
+        callZome(instance.instanceId, instance.zome, 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            dispatch('auth/agentAddress', { instanceId: 'projects', agentAddress: res.Ok }, { root: true })
+            dispatch('auth/agentAddress', { instanceId: instance.instanceId, agentAddress: res.Ok }, { root: true })
           }
         })
       })
     },
-    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
+    fetchProfiles: ({ state, commit, rootState, dispatch }, instance) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('projects', 'projects', 'list_profiles')({ base: '' }).then((result) => {
+        callZome(instance.instanceId, instance.zome, 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            const friends = res.Ok.map(p => {
-              return {
-                id: p.id,
-                agentAddress: p.agentId,
-                name: p.handle,
-                online: true,
-                info: {
-                  id: 10,
-                  avatar: p.avatar,
-                  name: ''
-                },
-                notifications: 0,
-                value: 0,
-                start: 0
-              }
-            })
-            const instanceBase = { type: 'project', instanceId: 'projects', instanceName: 'Holochain Projects', base: '' }
-
-            dispatch('friends/profiles', { instanceBase: instanceBase, profiles: friends }, { root: true })
+            dispatch('friends/profiles', { instance: instance, profiles: res.Ok }, { root: true })
           }
         })
       })

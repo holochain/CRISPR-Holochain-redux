@@ -1,29 +1,41 @@
+const fs = require('fs')
+function base64Encode (file) {
+  var bitmap = fs.readFileSync(file)
+  return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
+}
 export default {
   namespaced: true,
   getters: {
-    applicationProjects: (state, getters, rootState, rootGetters) => {
-      const projects = []
-      for (const project of rootGetters['projects/applicationProjects']) {
-        projects.push(project)
+    projectById: (state, getters, rootState) => (payload) => {
+      const project = rootState.origins.entries[`${payload.instance.instanceId}${payload.base}`].find(p => p.id === payload.projectId)
+      if (project) {
+        fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(project), (err) => {
+          if (err) throw err
+          console.log('The project has been serialised!')
+        })
+        return project
+      } else {
+        const project = fs.readFileSync(`${rootState.auth.developer.folder}/project.json`, 'utf8')
+        return JSON.parse(project)
       }
-      return projects
     },
-    partProjects: (state, getters, rootState, rootGetters) => {
+    listProjects: (state, getters, rootState, rootGetters) => (payload) => {
       const projects = []
-      for (const project of rootGetters['projects/partProjects']) {
-        projects.push(project)
+      const entries = rootState.origins.entries[`${payload.instance.instanceId}${payload.base}`]
+      if (entries) {
+        entries.forEach(p => {
+          const project = { ...p }
+          project.zome = Object.assign({}, JSON.parse(p.zome))
+          project.preview = base64Encode(p.preview)
+          projects.push(project)
+        })
+        return projects
+      } else {
+        return []
       }
-      return projects
-    },
-    projectById: (state, getters, rootState, rootGetters) => (projectId) => {
-      return rootGetters['projects/projectById'](projectId)
     },
     zomes: (state, getters, rootState, rootGetters) => {
-      const zomes = []
-      for (const zome of rootGetters['zomes/allZomes']) {
-        zomes.push(zome)
-      }
-      return zomes
+      return rootGetters['zomes/allZomes']
     },
     zomeByBaseIdFromTemplate: (state, getters, rootState, rootGetters) => (zome) => {
       return rootGetters['zomes/zomeByBaseIdFromTemplate'](zome)

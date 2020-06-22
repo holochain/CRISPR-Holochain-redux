@@ -98,8 +98,10 @@ export default {
         base: 'Projects',
         instances: [
           {
-            id: 'QmOrigins1',
-            instanceId: 'projects',
+            id: 'QmProjects1',
+            zome: 'projects',
+            type: 'project',
+            instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
             instanceName: 'Holochain Projects'
           }
         ]

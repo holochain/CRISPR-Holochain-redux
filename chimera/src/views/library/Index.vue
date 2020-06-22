@@ -2,10 +2,10 @@
   <section>
     <v-fade-transition mode="out-in">
       <v-overlay v-if="splash" :absolute="true" :opacity="overlayOpacity" v-resize="onResizeSplash">
-        <canvas id="network" width="1000" height="1000"></canvas>
+        <canvas id="network" width="1000" height="1000" @click="turnSplashOff()"></canvas>
         <v-fade-transition mode="in-out">
           <v-overlay v-show="showOverlayImage" :absolute="true" opacity="0">
-            <canvas id="overlayImage" width="1000" height="1000" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1.1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
+            <canvas id="overlayImage" width="1000" height="1000" @click="turnSplashOff()" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1.1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
           </v-overlay>
         </v-fade-transition>
       </v-overlay>

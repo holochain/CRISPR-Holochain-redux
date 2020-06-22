@@ -63,22 +63,13 @@ export default {
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapState({
+      entries (state) {
+        return this.$store.state.origins.entries[`${this.instance.instanceId}${this.base}`]
+      },
       errors (state) {
         return state.origins.errors[`${this.instance.instanceId}${this.base}`]
       }
-    }),
-    entries: {
-      get () {
-        return this.$store.state.origins.entries[`${this.instance.instanceId}${this.base}`]
-      },
-      set (val) {
-        const newOrder = val.map((entry, index) => ({
-          ...entry,
-          order: index
-        }))
-        this.$store.dispatch('origins/order', { instance: this.instance, entries: newOrder })
-      }
-    }
+    })
   },
   created () {
     this.setGroup(this.instance)

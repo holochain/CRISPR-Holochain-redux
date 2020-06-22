@@ -16,7 +16,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <column :instance="instance" base="" :title="instance.instanceName"/>
+        <draggable-column :isDraggable="false" :key="instance.id" :instance="instance" :title="instance.instanceName" base="" :hasProfile="true"/>
       </v-col>
     </v-row>
   </section>
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'OriginsView',
   components: {
-    Column: () => import('@/components/lists/Column')
+    DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
   data () {
     return {

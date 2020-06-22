@@ -19,14 +19,11 @@
         <column key="QmFreckles1" :instance="instance"/>
       </v-col> -->
       <v-col cols="12" md="6" lg="4">
-        <draggable-column key="QmFreckles1" :instance="instance" title="My Freckles" base=""/>
+        <draggable-column key="QmFreckles1" :instance="instance" title="My Freckles" base="" :hasProfile="true"/>
       </v-col>
       <v-col cols="12" md="6" lg="4">
-        <column key="origin1" :instance="instanceOrigin" base=""/>
+        <draggable-column :isDraggable="true" key="origin1" :instance="instanceOrigin" title="Broadcast" base="" :hasProfile="true"/>
       </v-col>
-      <!-- <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <column :key="instance.id" :instance="{ zome: instance.zome, type: instance.type, instanceId: instance.instanceId, partBase:instance.instanceId, base:'', instanceName: instance.instanceName }"/>
-      </v-col> -->
     </v-row>
   </section>
 </template>
@@ -36,7 +33,6 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FrecklesView',
   components: {
-    Column: () => import('@/components/lists/Column'),
     DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
   data () {

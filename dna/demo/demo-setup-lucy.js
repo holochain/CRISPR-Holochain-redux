@@ -31,7 +31,7 @@ const tryConnection = () => {
             console.log(JSON.parse(result))
           })
           console.log('started_demo_setup_lucy')
-          callZome('notes', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'lucys Note 2', content: 'Get this from demo again', order: 1 } })
+          callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({ base: '', note_input: { uuid: uuidv4(), title: 'lucys Note 2', content: 'Get this from demo again', order: 1 } })
           .then((result) => {
             const res = JSON.parse(result)
             console.log('ok_demo_setup_lucy', res)

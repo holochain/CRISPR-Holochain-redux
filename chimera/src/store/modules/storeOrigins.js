@@ -7,8 +7,6 @@ export default {
   },
   mutations: {
     createEntry (state, payload) {
-      console.log(state.entries)
-      console.log(`${payload.instance.instanceId}${payload.base}`)
       const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === 'new' || n.id === payload.data.id)
       Object.assign(entry, payload.data)
     },
@@ -51,12 +49,25 @@ export default {
         })
       })
     },
+    fetchProfiles: ({ state, commit, rootState, dispatch }, instance) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome(instance.instanceId, instance.zome, 'list_profiles')({ base: '' }).then((result) => {
+          const res = JSON.parse(result)
+          if (res.Ok === undefined) {
+            console.log(res)
+          } else {
+            dispatch('friends/profiles', { instance: instance, profiles: res.Ok }, { root: true })
+          }
+        })
+      })
+    },
     order: ({ state, commit, rootState }, payload) => {
-      commit('setList', { instance: payload.instance, entries: payload.entries })
+      commit('setList', { instance: payload.instance, base: payload.base, entries: payload.entries })
       payload.entries.forEach(entry => {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: entry.id, created_at: entry.createdAt, address: entry.address, [`${payload.instance.type}_input`]: { ...entry } }).then((result) => {
             const res = JSON.parse(result)
+            console.log(res)
             if (res.Ok === undefined) {
               commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
             } else {
@@ -68,23 +79,11 @@ export default {
     },
     rebase: ({ state, commit, rootState }, payload) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome('notes', 'notes', 'rebase_note')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
+        callZome(payload.instance.instanceId, payload.instance.zome, `rebase_${payload.instance.type}`)({ base_from: payload.entry.from, base_to: payload.entry.to, id: payload.entry.id, created_at: payload.entry.createdAt }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
             commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
-          }
-        })
-      })
-    },
-    fetchProfiles: ({ state, commit, rootState, dispatch }, instance) => {
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome(instance.instanceId, instance.zome, 'list_profiles')({ base: '' }).then((result) => {
-          const res = JSON.parse(result)
-          if (res.Ok === undefined) {
-            console.log(res)
-          } else {
-            dispatch('friends/profiles', { instance: instance, profiles: res.Ok }, { root: true })
           }
         })
       })
@@ -105,7 +104,7 @@ export default {
       console.log(payload)
       payload.entry.uuid = uuidv4()
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: payload.entry }).then((result) => {
+        callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
@@ -117,13 +116,8 @@ export default {
       })
     },
     updateEntry: ({ state, commit, rootState }, payload) => {
-      const instance = { ...payload.instance }
-      const entry = { ...payload.entry }
-      console.log(payload)
-      console.log(entry)
-
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome(instance.instanceId, instance.zome, `update_${instance.type}`)({ id: entry.id, created_at: entry.createdAt, address: entry.address, [`${instance.type}_input`]: { ...entry } }).then((result) => {
+        callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {
