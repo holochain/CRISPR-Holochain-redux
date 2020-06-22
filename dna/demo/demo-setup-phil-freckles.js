@@ -17,9 +17,14 @@ const tryConnection = () => {
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
           // My Personal Freckles
-          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Hows this for a freckle??</h1><p>Rad</p>' }})
+          callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>A new frckle</h1>' }})
           .then((result) => {
+            const res = JSON.parse(result)
             console.log(JSON.parse(result))
+            callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'update_freckle')({ id: res.Ok.id, created_at: res.Ok.createdAt, address: res.Ok.address, freckle_input: { uuid:res.Ok.uuid, content: 'updated content' } })
+            .then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})   
           }).catch(err =>{console.log(err)})          
           callZome('0d765fcf-118f-4122-8f03-f5f9ba74e7fa', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), content: '<h1>Context friend list??</h1><p>Pretty cool how each DHT has its own list of friends.</p>' }})
           .then((result) => {

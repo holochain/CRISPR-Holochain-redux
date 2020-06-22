@@ -65,6 +65,7 @@ const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna
 const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
 const editorFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
+const editorOriginsDna = Config.dna(originsDnaPath, 'origins-test', { uuid: uuidv4() })
 
 const projectsDna = Config.dna(projectsDnaPath, 'projects-test')
 const tagsDna = Config.dna(tagsDnaPath, 'tags-test')
@@ -83,7 +84,7 @@ const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'pers
 const arthursPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 
-const philsConductorConfig = Config.gen({'41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, tags: tagsDna, projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
+const philsConductorConfig = Config.gen({'6261170b-2064-4920-be43-98cc7ca1d68b': editorOriginsDna, '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, tags: tagsDna, projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const lucysConductorConfig = Config.gen({tags: tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: lucysPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const rudysConductorConfig = Config.gen({tags: tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const arthursConductorConfig = Config.gen({projects: projectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, kanban: kanbanDna, notes: notesDna, tasks: tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })

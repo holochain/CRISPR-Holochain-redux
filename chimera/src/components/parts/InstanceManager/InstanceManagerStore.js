@@ -60,14 +60,37 @@ export default {
         base: 'Origins',
         instances: [
           {
+            id: 'QmOriginsEditor',
+            zome: 'origins',
+            type: 'origin',
+            instanceId: '6261170b-2064-4920-be43-98cc7ca1d68b',
+            instanceName: 'Origins Editor',
+            entry: {
+              content: ''
+            },
+            schema: {
+              content: { type: 'textarea', label: 'Content' }
+            }
+          },
+          {
             id: 'QmOrigins1',
+            zome: 'origins',
+            type: 'origin',
             instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2',
-            instanceName: 'Broadcast Origins'
+            instanceName: 'Broadcast Origins',
+            entry: {
+              content: ''
+            }
           },
           {
             id: 'QmOrigins2',
+            zome: 'origins',
+            type: 'origin',
             instanceId: '164449a2-e7d4-47dc-acc8-2fe317b8d9fe',
-            instanceName: 'Mates'
+            instanceName: 'Mates',
+            entry: {
+              content: ''
+            }
           }
         ]
       },

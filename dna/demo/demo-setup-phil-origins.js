@@ -29,6 +29,11 @@ const tryConnection = () => {
           callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1> Some friendly origin in 57c01ed8-30ae-4fca-b6f9-40192821fed2' }})
           .then((result) => {
             console.log(JSON.parse(result))
+            const res = JSON.parse(result)
+            callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'update_origin')({ id: res.Ok.id, created_at: res.Ok.createdAt, address: res.Ok.address, origin_input: { uuid: res.Ok.uuid, content: 'updated' } })
+            .then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
           }).catch(err =>{console.log(err)})
           callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Phil wrote this</h1>Another origin in 57c01ed8-30ae-4fca-b6f9-40192821fed2' }})
           .then((result) => {

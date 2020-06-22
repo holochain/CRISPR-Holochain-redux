@@ -174,18 +174,18 @@ export default {
     } else {
       this.partCodeItem = ''
     }
-    if (this.files[1]) {
-      this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
-      this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')
-    } else {
-      this.partCodeItems = ''
-    }
-    if (this.files[2]) {
-      this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
-      this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')
-    } else {
-      this.partCodeStore = ''
-    }
+    // if (this.files[1]) {
+    //   this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
+    //   this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')
+    // } else {
+    //   this.partCodeItems = ''
+    // }
+    // if (this.files[2]) {
+    //   this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
+    //   this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')
+    // } else {
+    //   this.partCodeStore = ''
+    // }
   }
 }
 </script>

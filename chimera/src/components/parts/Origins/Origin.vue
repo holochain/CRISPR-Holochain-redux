@@ -11,9 +11,9 @@
         </v-list-item-content>
       </v-list-item>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(instance); isEditing=false">mdi-content-save</v-icon>
-      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(instance); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteEntry(instance)">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon>
       <part-manager :base="instance.entry.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -40,15 +40,15 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Origin',
+  name: 'Freckle',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instanceId', 'base', 'entry', 'partBase'],
+  props: ['instance', 'base', 'entry'],
   data () {
     return {
-      instance: { zome: 'origins', type: 'origin', instanceId: this.instanceId, base: this.base, entry: this.entry },
+      payload: { instance: this.instance, base: this.base, entry: this.entry },
       clean: {},
       isEditing: this.entry.id === 'new',
       parts: [],
@@ -83,15 +83,15 @@ export default {
     }
   },
   created () {
-    this.clean = { ...this.origin }
-    this.parts = this.partParts(this.partBase)
+    this.clean = { ...this.entry }
+    this.parts = this.partParts(this.instance.partBase)
   },
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.instanceId, this.entry.createdBy)
+      return this.friend(this.instance.instanceId, this.entry.createdBy)
     }
   }
 }

@@ -67,8 +67,8 @@ export default {
           start: 0
         }
       })
-      state.instances = state.instances.filter(i => i.instanceId !== payload.instanceBase.instanceId)
-      state.instances.push({ instanceId: payload.instanceBase.instanceId, instanceName: payload.instanceBase.instanceName, friends: friends })
+      state.instances = state.instances.filter(i => i.instanceId !== payload.instance.instanceId)
+      state.instances.push({ instanceId: payload.instance.instanceId, instanceName: payload.instance.instanceName, friends: friends })
     }
   }
 }

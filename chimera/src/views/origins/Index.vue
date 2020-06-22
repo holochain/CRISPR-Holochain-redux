@@ -16,7 +16,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <origins :instanceId="instance.instanceId" base="" :instanceName="instance.instanceName"/>
+        <column :instance="instance" base="" :title="instance.instanceName"/>
       </v-col>
     </v-row>
   </section>
@@ -27,7 +27,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'OriginsView',
   components: {
-    Origins: () => import('@/components/parts/Origins/Origins.vue')
+    Column: () => import('@/components/lists/Column')
   },
   data () {
     return {

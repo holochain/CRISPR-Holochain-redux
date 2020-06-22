@@ -13,9 +13,9 @@
       </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(instance); isEditing=false">mdi-content-save</v-icon>
-      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(instance); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteEntry(instance)">mdi-delete-outline</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon>
       <part-manager :base="instance.entry.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
@@ -47,10 +47,10 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['instanceId', 'base', 'entry', 'partBase'],
+  props: ['instance', 'base', 'entry'],
   data () {
     return {
-      instance: { zome: 'freckles', type: 'freckle', instanceId: this.instanceId, base: this.base, entry: this.entry },
+      payload: { instance: this.instance, base: this.base, entry: this.entry },
       clean: {},
       isEditing: this.entry.id === 'new',
       parts: [],
@@ -86,14 +86,14 @@ export default {
   },
   created () {
     this.clean = { ...this.entry }
-    this.parts = this.partParts(this.partBase)
+    this.parts = this.partParts(this.instance.partBase)
   },
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
-      return this.friend(this.instanceId, this.entry.createdBy)
+      return this.friend(this.instance.instanceId, this.entry.createdBy)
     }
   }
 }

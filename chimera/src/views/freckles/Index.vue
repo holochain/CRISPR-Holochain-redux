@@ -15,11 +15,14 @@
       Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
-      <v-col cols="12" md="6" lg="4">
+      <!-- <v-col cols="12" md="6" lg="4">
         <column key="QmFreckles1" :instance="instance"/>
+      </v-col> -->
+      <v-col cols="12" md="6" lg="4">
+        <draggable-column key="QmFreckles1" :instance="instance" title="My Freckles" base=""/>
       </v-col>
       <v-col cols="12" md="6" lg="4">
-        <column key="origin1" :instance="instanceOrigin"/>
+        <column key="origin1" :instance="instanceOrigin" base=""/>
       </v-col>
       <!-- <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
         <column :key="instance.id" :instance="{ zome: instance.zome, type: instance.type, instanceId: instance.instanceId, partBase:instance.instanceId, base:'', instanceName: instance.instanceName }"/>
@@ -33,13 +36,14 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'FrecklesView',
   components: {
-    Column: () => import('@/components/lists/Column')
+    Column: () => import('@/components/lists/Column'),
+    DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
   data () {
     return {
       help: false,
-      instance: { zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', partBase: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', base: '', instanceName: 'My Friends Freckles', entry: { content: '' } },
-      instanceOrigin: { zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', partBase: '57c01ed8-30ae-4fca-b6f9-40192821fed2', base: '', instanceName: 'Broadcast', entry: { content: '' } }
+      instance: { zome: 'freckles', type: 'freckle', instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa', partBase: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa', instanceName: 'My Freckles', entry: { content: '' } },
+      instanceOrigin: { zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', partBase: '57c01ed8-30ae-4fca-b6f9-40192821fed2', instanceName: 'Broadcast', entry: { content: '' } }
     }
   },
   computed: {

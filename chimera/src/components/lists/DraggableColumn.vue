@@ -24,16 +24,20 @@
         </v-col>
       </v-row>
     </v-alert>
-    <component :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
+    <draggable v-model="entries" :id="`${instance.instanceId}${base}`" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
+      <component :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
+    </draggable>
     <slot></slot>
   </v-card>
 </template>
 <script>
+import draggable from 'vuedraggable'
 import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Column',
   components: {
-    PartManager: () => import('@/components/chimera/PartManager')
+    PartManager: () => import('@/components/chimera/PartManager'),
+    draggable
   },
   props: ['instance', 'base', 'title'],
   data () {
