@@ -40,7 +40,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     draggable
   },
-  props: ['instance', 'base', 'title', 'hasProfile', 'isDraggable'],
+  props: ['instance', 'base', 'title', 'hasProfile', 'isDraggable', 'sortKey'],
   data () {
     return {
       help: false
@@ -61,7 +61,7 @@ export default {
         this.rebase({ from: evt.from.id, to: evt.to.id, id: evt.draggedContext.element.id, createdAt: evt.draggedContext.element.createdAt })
       }
     },
-    ...mapActions('origins', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
     ...mapMutations('friends', ['setGroup'])
   },
@@ -69,19 +69,19 @@ export default {
     ...mapState('auth', ['chimera']),
     ...mapState({
       errors (state) {
-        return state.origins.errors[`${this.instance.instanceId}${this.base}`]
+        return state.root.errors[`${this.instance.instanceId}${this.base}`]
       }
     }),
     entries: {
       get () {
-        return this.$store.state.origins.entries[`${this.instance.instanceId}${this.base}`]
+        return this.$store.state.root.entries[`${this.instance.instanceId}${this.base}`]
       },
       set (val) {
         const newOrder = val.map((entry, index) => ({
           ...entry,
           order: index
         }))
-        this.$store.dispatch('origins/order', { instance: this.instance, base: this.base, entries: newOrder })
+        this.$store.dispatch('root/order', { instance: this.instance, base: this.base, entries: newOrder })
       }
     }
   },
@@ -91,7 +91,7 @@ export default {
       this.agentAddress(this.instance)
       this.fetchProfiles(this.instance)
     }
-    this.fetchEntries({ instance: this.instance, base: this.base })
+    this.fetchEntries({ instance: this.instance, base: this.base, sortKey: this.sortKey })
   }
 }
 </script>

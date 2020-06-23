@@ -31,6 +31,20 @@ export default {
       const entries = {}
       entries[`${payload.instance.instanceId}${payload.base}`] = payload.entries
       state.entries = { ...state.entries, ...entries }
+    },
+    setSortedList (state, payload) {
+      const sortedEntries = payload.entries.sort((a, b) => {
+        let compare = 0
+        if (a[payload.sortKey] > b[payload.sortKey]) {
+          compare = 1
+        } else if (b[payload.sortKey] > a[payload.sortKey]) {
+          compare = -1
+        }
+        return compare
+      })
+      const entries = {}
+      entries[`${payload.instance.instanceId}${payload.base}`] = sortedEntries
+      state.entries = { ...state.entries, ...entries }
     }
   },
   actions: {
@@ -95,7 +109,11 @@ export default {
           if (res.Ok === undefined) {
             console.log(res)
           } else {
-            commit('setList', { instance: payload.instance, base: payload.base, entries: res.Ok })
+            if (payload.sortKey) {
+              commit('setSortedList', { instance: payload.instance, base: payload.base, entries: res.Ok, sortKey: payload.sortKey })
+            } else {
+              commit('setList', { instance: payload.instance, base: payload.base, entries: res.Ok })
+            }
           }
         })
       })

@@ -1,6 +1,6 @@
 <template>
   <div class="ma-0">
-      <v-menu open-on-hover bottom offset-y>
+      <v-menu open-on-hover bottom nudge-top="-20">
         <template v-slot:activator="{ on }">
           <v-avatar left v-if="chimera">
             <v-icon small v-on="on">mdi-dna</v-icon>
@@ -42,6 +42,7 @@ export default {
       this.$emit('reject-invite', invite)
     },
     addPart (name) {
+      console.log('add-part', { base: this.base, part: { title: name } })
       this.$emit('add-part', { base: this.base, part: { title: name } })
     }
   },

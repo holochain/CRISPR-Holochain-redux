@@ -7,8 +7,9 @@ export default {
   namespaced: true,
   getters: {
     projectById: (state, getters, rootState) => (payload) => {
-      const project = rootState.origins.entries[`${payload.instance.instanceId}${payload.base}`].find(p => p.id === payload.projectId)
-      if (project) {
+      const projects = rootState.root.entries[`${payload.instanceId}${payload.base}`]
+      if (projects) {
+        const project = projects.find(p => p.id === payload.projectId)
         fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(project), (err) => {
           if (err) throw err
           console.log('The project has been serialised!')
@@ -21,7 +22,7 @@ export default {
     },
     listProjects: (state, getters, rootState, rootGetters) => (payload) => {
       const projects = []
-      const entries = rootState.origins.entries[`${payload.instance.instanceId}${payload.base}`]
+      const entries = rootState.root.entries[`${payload.instance.instanceId}${payload.base}`]
       if (entries) {
         entries.forEach(p => {
           const project = { ...p }

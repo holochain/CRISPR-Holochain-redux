@@ -3,7 +3,7 @@
     <v-list-item-action>
     <v-checkbox v-model="task.done" :color="task.done && 'grey' || 'white'">
       <template v-slot:label>
-      <div :class="task.done && 'grey--text' || 'white--text'" class="ml-4" v-text="task.title"></div>
+        <div :class="task.done && 'grey--text' || 'white--text'" class="ml-4" v-text="task.title"></div>
       </template>
     </v-checkbox>
     </v-list-item-action>

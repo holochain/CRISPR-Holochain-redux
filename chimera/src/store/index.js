@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { connect } from '@holochain/hc-web-client'
 import tasks from '@/components/parts/Tasks/TasksStore'
-import projects from '@/components/parts/Projects/ProjectsStore'
 import tags from '@/components/parts/Tags/TagsStore'
 import instancemanager from '@/components/parts/InstanceManager/InstanceManagerStore'
 // NewImportModule
@@ -26,7 +25,7 @@ import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
 import kanban from '@/store/modules/kanban'
 import verify from '@/store/modules/verify'
-import origins from '@/store/modules/storeOrigins'
+import root from '@/store/modules/rootStore'
 
 Vue.use(Vuex)
 console.log(process.env.VUE_APP_HOLOCHAIN_URL)
@@ -49,7 +48,6 @@ const store = new Vuex.Store({
     install,
     library,
     portfolio,
-    projects,
     personalInformation,
     fieldNames,
     profiles,
@@ -60,7 +58,7 @@ const store = new Vuex.Store({
     verify,
     mediaLibrary,
     tracks,
-    origins
+    root
   },
   actions: {
     init: async () => {

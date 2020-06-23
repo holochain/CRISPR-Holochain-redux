@@ -17,13 +17,13 @@
     </div>
     <v-divider />
     <v-card-actions>
-      <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
+      <v-btn color="action" icon :to="`/projectKanban/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn v-if="cloneable" color="action" icon :to="`/part/${project.id}`">
+      <v-btn v-if="cloneable" color="action" icon :to="`/part/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/project/${project.id}`">
+      <v-btn color="action" icon :to="`/project/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
       <v-btn v-if="cloneable" color="alert" icon @click="cloningDialog = true">
@@ -50,7 +50,7 @@
           <v-btn color="action darken-1" text @click="cloningDialog = false">
             Cancel
           </v-btn>
-          <v-btn color="action darken-1" text @click="saveProject({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
+          <v-btn color="action darken-1" text @click="createEntry({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
             Clone
           </v-btn>
         </v-card-actions>
@@ -89,6 +89,12 @@ export default {
     }
   },
   props: {
+    instance: {
+      type: Object
+    },
+    base: {
+      type: String
+    },
     project: {
       type: Object,
       default: function () {
@@ -117,7 +123,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('projects', ['saveProject']),
+    ...mapActions('root', ['createEntry']),
     copyParts () {
       let listPart = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
       const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`

@@ -25,7 +25,7 @@
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="note.id" :title="part.title" :agent="note.createdBy" :key="part.title" />
+      <component :is="part.title" :base="note.id" :title="part.title" :agent="entry.createdBy" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
@@ -71,7 +71,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('origins', ['createEntry', 'updateEntry', 'deleteEntry']),
+    ...mapActions('root', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }

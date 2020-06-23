@@ -35,7 +35,7 @@ const tryConnection = () => {
           .then((result) => {
             const res = JSON.parse(result)
             console.log('ok_demo_setup_lucy', res)
-            callZome('tasks', 'tasks', 'create_task')({ base: res.Ok.id, task_input: { uuid: uuidv4(), title: 'lucys Task', "done":false } })
+            callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({ base: res.Ok.id, task_input: { uuid: uuidv4(), title: 'lucys Task', "done":false } })
             .then((result) => {
               const res = JSON.parse(result)
               console.log('ok_demo_setup_lucy_task', res)

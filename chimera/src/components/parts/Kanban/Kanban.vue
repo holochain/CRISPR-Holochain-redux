@@ -21,7 +21,7 @@
     </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <draggable-column :isDraggable="true" :key="column.id" :instance="noteInstance" :title="column.title" :base="column.id"/>
+        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :instance="noteInstance" :title="column.title" :base="column.id"/>
       </v-col>
     </v-row>
   </v-card>
@@ -37,21 +37,21 @@ export default {
   props: ['instance', 'base', 'title'],
   data () {
     return {
-      noteInstance: { zome: 'notes', type: 'note', instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', partBase: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', instanceName: 'All Notes', entry: { title: '', content: '' } },
+      noteInstance: { zome: 'notes', type: 'note', instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', partBase: this.base, instanceName: 'All Notes', entry: { title: '', content: '' } },
       newColumn: false,
       newColumnTitle: '',
       help: false
     }
   },
   methods: {
-    ...mapActions('origins', ['fetchEntries', 'resetErrors']),
+    ...mapActions('root', ['fetchEntries', 'resetErrors']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
     ...mapState({
       columns (state) {
-        return this.$store.state.origins.entries[`${this.instance.instanceId}${this.base}`]
+        return this.$store.state.root.entries[`${this.instance.instanceId}${this.base}`]
       }
     })
   },

@@ -22,7 +22,7 @@ export default {
     ...mapActions('fieldNames', ['fetchFields']),
     ...mapActions('personas', ['fetchPersonas']),
     ...mapActions('projects', ['fetchProjects']),
-    ...mapActions('origins', ['agentAddress', 'fetchProfiles']),
+    ...mapActions('root', ['agentAddress', 'fetchProfiles']),
     ...mapMutations('friends', ['setGroup'])
   },
   created () {

@@ -11,7 +11,7 @@
       <v-btn color="action" icon @click="profileSpecDialog = true">
         <v-icon>mdi-badge-account-outline</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+      <v-btn color="action" icon :to="`/projectKanban/${instanceId}/${base}/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/part/${project.id}`">
@@ -227,7 +227,7 @@ export default {
     EntryTypeProperties: () => import('./EntryTypeProperties'),
     EntryTypePermissions: () => import('./EntryTypePermissions')
   },
-  props: ['base'],
+  props: ['instanceId', 'base', 'project'],
   data () {
     return {
       zomeTab: null,
@@ -385,155 +385,7 @@ export default {
   },
   computed: {
     ...mapState('auth', ['developer']),
-    ...mapGetters('portfolio', ['projectById', 'zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
-    project () {
-      // return {
-      //   id: 'QmTagsHash',
-      //   name: 'Tags',
-      //   preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Tags/preview.png',
-      //   description: 'Tags',
-      //   zome: {
-      //     template: 'Tags',
-      //     itemsTemplatesName: 'tags',
-      //     name: 'Tags',
-      //     entryTypes: [],
-      //     anchorTypes: [
-      //       {
-      //         id: 'Qmlist_tags1',
-      //         type: 'list_tags',
-      //         text: '',
-      //         tag: ' ',
-      //         context: 'permanent',
-      //         links: [],
-      //         anchors: [
-      //           {
-      //             id: 'QmTagsAnchor1',
-      //             type: 'list_tags',
-      //             text: 'Techno',
-      //             anchors: [
-      //               {
-      //                 id: 'QmTagsAnchor2',
-      //                 type: 'tagged_entries',
-      //                 text: 'notesDHTinstanceId::note1Id',
-      //                 context: 'Techno'
-      //               },
-      //               {
-      //                 id: 'QmTagsAnchor44',
-      //                 type: 'tagged_entries',
-      //                 text: 'notesDHTinstanceId::note33Id',
-      //                 context: 'Techno'
-      //               }
-      //             ]
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor1345',
-      //             type: 'list_tags',
-      //             text: 'Psytrance',
-      //             anchors: [
-      //               {
-      //                 id: 'QmTagsAnchor7',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note31Id',
-      //                 context: 'Psytrance'
-      //               },
-      //               {
-      //                 id: 'QmTagsAnchor44',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note45Id',
-      //                 context: 'Psytrance'
-      //               }
-      //             ]
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor3',
-      //             type: 'list_tags',
-      //             text: 'Metal',
-      //             anchors: [
-      //               {
-      //                 id: 'QmTagsAnchor44',
-      //                 type: 'tagged_entries',
-      //                 text: 'notesDHTinstanceId::note33Id',
-      //                 context: 'Metal'
-      //               },
-      //               {
-      //                 id: 'QmTagsAnchor12',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note343Id',
-      //                 context: 'Metal'
-      //               },
-      //               {
-      //                 id: 'QmTagsAnchor123',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note43Id',
-      //                 context: 'Metal'
-      //               }
-      //             ]
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor4',
-      //             type: 'list_tags',
-      //             text: 'Rock',
-      //             anchors: [
-      //               {
-      //                 id: 'QmTagsAnchor12',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note343Id',
-      //                 context: 'Rock'
-      //               },
-      //               {
-      //                 id: 'QmTagsAnchor123',
-      //                 type: 'tagged_entries',
-      //                 text: 'notes2DHTinstanceId::note43Id',
-      //                 context: 'Rock'
-      //               }
-      //             ]
-      //           }
-      //         ]
-      //       },
-      //       {
-      //         id: 'Qmtagged_entries',
-      //         type: 'tagged_entries',
-      //         text: '',
-      //         tag: ' ',
-      //         context: 'permanent',
-      //         anchors: [
-      //           {
-      //             id: 'QmTagsAnchor2',
-      //             type: 'tagged_entries',
-      //             text: 'notesDHTinstanceId::note1Id',
-      //             context: ' '
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor44',
-      //             type: 'tagged_entries',
-      //             text: 'notesDHTinstanceId::note33Id',
-      //             context: ' '
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor7',
-      //             type: 'tagged_entries',
-      //             text: 'notes2DHTinstanceId::note31Id',
-      //             context: ' '
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor12',
-      //             type: 'tagged_entries',
-      //             text: 'notes2DHTinstanceId::note343Id',
-      //             context: ' '
-      //           },
-      //           {
-      //             id: 'QmTagsAnchor123',
-      //             type: 'tagged_entries',
-      //             text: 'notes2DHTinstanceId::note43Id',
-      //             context: ' '
-      //           }
-      //         ]
-      //       }
-      //     ]
-      //   }
-      // }
-      return this.projectById(this.$route.params.id)
-    },
+    ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
       z.template = this.project.zome.template

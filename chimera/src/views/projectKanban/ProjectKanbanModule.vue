@@ -13,7 +13,7 @@
               <v-btn color="action" icon :to="`/part/${project.id}`">
                 <v-icon>mdi-application</v-icon>
               </v-btn>
-              <v-btn color="action" icon :to="`/project/${project.id}`">
+              <v-btn color="action" icon :to="`/project/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">
                 <v-icon>mdi-code-braces</v-icon>
               </v-btn>
               <v-btn color="action" icon @click="help=!help">
@@ -46,14 +46,13 @@ export default {
   data () {
     return {
       help: false,
-      instance: { zome: 'kanban', type: 'column', instanceId: 'kanban', instanceName: 'kanbans' }
+      instance: { zome: 'kanban', type: 'column', instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04', instanceName: 'Holochain Kanban' }
     }
   },
   computed: {
     ...mapGetters('portfolio', ['projectById']),
     project () {
-      console.log(this.$route.params.id)
-      return this.projectById(this.$route.params.id)
+      return this.projectById({ instanceId: this.$route.params.instanceId, base: this.$route.params.base, projectId: this.$route.params.projectId })
     }
   }
 }

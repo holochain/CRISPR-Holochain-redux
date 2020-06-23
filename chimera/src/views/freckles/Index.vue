@@ -15,15 +15,12 @@
       Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
-      <!-- <v-col cols="12" md="6" lg="4">
-        <column key="QmFreckles1" :instance="instance"/>
-      </v-col> -->
       <v-col cols="12" md="6" lg="4">
         <draggable-column key="QmFreckles1" :instance="instance" title="My Freckles" base="" :hasProfile="true"/>
       </v-col>
-      <v-col cols="12" md="6" lg="4">
+      <!-- <v-col cols="12" md="6" lg="4">
         <draggable-column :isDraggable="true" key="origin1" :instance="instanceOrigin" title="Broadcast" base="" :hasProfile="true"/>
-      </v-col>
+      </v-col> -->
     </v-row>
   </section>
 </template>

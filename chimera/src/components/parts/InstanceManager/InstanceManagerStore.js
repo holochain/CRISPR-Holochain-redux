@@ -111,8 +111,22 @@ export default {
         instances: [
           {
             id: 'QmOkb1',
-            instanceId: 'kanban',
+            zome: 'kanban',
+            type: 'column',
+            instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04',
             instanceName: 'Holochain Kanban'
+          }
+        ]
+      },
+      {
+        base: 'Tasks',
+        instances: [
+          {
+            id: 'Qmtaskb1',
+            zome: 'tasks',
+            type: 'task',
+            instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
+            instanceName: 'Holochain Tasks'
           }
         ]
       }

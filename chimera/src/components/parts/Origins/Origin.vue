@@ -77,7 +77,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('origins', ['createEntry', 'updateEntry', 'deleteEntry']),
+    ...mapActions('root', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }

@@ -74,7 +74,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" lg="2">
-        <project :key="project.id" :base="base" :project="project" :details="details" :cloneable="cloneable" />      </v-col>
+        <project :key="project.id" :instance="instance" :base="base" :project="project" :details="details" :cloneable="cloneable" />      </v-col>
     </v-row>
     <slot></slot>
   </v-card>
@@ -94,7 +94,7 @@ export default {
   },
   props: ['instance', 'base', 'title', 'cloneable'],
   methods: {
-    ...mapActions('origins', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapMutations('friends', ['setGroup'])
   },
   computed: {
@@ -105,7 +105,7 @@ export default {
     },
     ...mapState({
       errors (state) {
-        return state.origins.errors[`${this.instance.instanceId}${this.base}`]
+        return state.root.errors[`${this.instance.instanceId}${this.base}`]
       }
     })
   },
