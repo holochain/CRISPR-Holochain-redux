@@ -16,7 +16,7 @@
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <draggable-column :isDraggable="false" :key="instance.id" :instance="instance" :title="instance.instanceName" base="" :hasProfile="true"/>
+        <draggable-column :isDraggable="false" :key="instance.id" :contentInstance="instance" :title="instance.instanceName" contentBase="" :hasProfile="true"/>
       </v-col>
     </v-row>
   </section>

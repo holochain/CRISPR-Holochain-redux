@@ -29,7 +29,7 @@ export default {
             zome: 'freckles',
             type: 'freckle',
             instanceId: '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc',
-            instanceName: 'Freckles Editor',
+            instanceName: 'Part Editor',
             entry: {
               content: ''
             }
@@ -64,7 +64,7 @@ export default {
             zome: 'origins',
             type: 'origin',
             instanceId: '6261170b-2064-4920-be43-98cc7ca1d68b',
-            instanceName: 'Origins Editor',
+            instanceName: 'Part Editor',
             entry: {
               content: ''
             },
@@ -114,7 +114,11 @@ export default {
             zome: 'kanban',
             type: 'column',
             instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04',
-            instanceName: 'Holochain Kanban'
+            instanceName: 'Holochain Kanban',
+            entry: {
+              title: '',
+              order: 0
+            }
           }
         ]
       },
@@ -183,7 +187,7 @@ export default {
     listInstances: state => (base) => {
       const baseInstance = state.baseInstances.find(n => n.base === base)
       if (baseInstance) {
-        return baseInstance.instances
+        return baseInstance.instances.filter(n => n.instanceName !== 'Part Editor')
       } else {
         return []
       }

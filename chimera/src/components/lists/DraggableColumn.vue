@@ -3,8 +3,12 @@
     <v-system-bar color="indigo darken-2" dark>
       <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
+      <!-- <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
+      <v-icon v-if="isEditing && contentInstance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && contentInstance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon> -->
       <v-icon @click="add">mdi-plus</v-icon>
-      <part-manager :base="instance.partBase" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
+      <part-manager :base="contentInstance.partBase" @add-part="addPart" @accept-invite="acceptInvite" @reject-invite="rejectInvite"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -20,14 +24,14 @@
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="resetErrors({ instance: instance, base: base })">mdi-close-box-outline</v-icon>
+          <v-icon @click="resetErrors({ instance: contentInstance, base: contentBase })">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
-    <draggable v-if="isDraggable" v-model="entries" :id="`${instance.instanceId}${base}`" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
-      <component :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
+    <draggable v-if="isDraggable" v-model="entries" :id="`${contentInstance.instanceId}${contentBase}`" :animation="200" ghost-class="ghost-card" group="notes" class="pa-1" :move="move">
+      <component :is="contentInstance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="contentInstance" :base="contentBase" :entry="entry" />
     </draggable>
-    <component v-else :is="instance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="instance" :base="base" :entry="entry" />
+    <component v-else :is="contentInstance.type" v-for="entry in entries" :id="entry.id" :key="entry.id" :instance="contentInstance" :base="contentBase" :entry="entry" />
     <slot></slot>
   </v-card>
 </template>
@@ -40,17 +44,18 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     draggable
   },
-  props: ['instance', 'base', 'title', 'hasProfile', 'isDraggable', 'sortKey'],
+  props: ['contentInstance', 'contentBase', 'title', 'hasProfile', 'isDraggable', 'sortKey'],
   data () {
     return {
+      isEditing: false,
       help: false
     }
   },
   methods: {
     add () {
-      this.instance.entry.id = 'new'
-      this.instance.entry.order = 0
-      this.entries.splice(0, 0, this.instance.entry)
+      this.contentInstance.entry.id = 'new'
+      this.contentInstance.entry.order = 0
+      this.entries.splice(0, 0, this.contentInstance.entry)
     },
     move (evt) {
       if (evt.from.id !== evt.to.id) {
@@ -69,29 +74,29 @@ export default {
     ...mapState('auth', ['chimera']),
     ...mapState({
       errors (state) {
-        return state.root.errors[`${this.instance.instanceId}${this.base}`]
+        return state.root.errors[`${this.contentInstance.instanceId}${this.contentBase}`]
       }
     }),
     entries: {
       get () {
-        return this.$store.state.root.entries[`${this.instance.instanceId}${this.base}`]
+        return this.$store.state.root.entries[`${this.contentInstance.instanceId}${this.contentBase}`]
       },
       set (val) {
         const newOrder = val.map((entry, index) => ({
           ...entry,
           order: index
         }))
-        this.$store.dispatch('root/order', { instance: this.instance, base: this.base, entries: newOrder })
+        this.$store.dispatch('root/order', { instance: this.contentInstance, base: this.contentBase, entries: newOrder })
       }
     }
   },
   created () {
     if (this.hasProfile) {
-      this.setGroup(this.instance)
-      this.agentAddress(this.instance)
-      this.fetchProfiles(this.instance)
+      this.setGroup(this.contentInstance)
+      this.agentAddress(this.contentInstance)
+      this.fetchProfiles(this.contentInstance)
     }
-    this.fetchEntries({ instance: this.instance, base: this.base, sortKey: 'order' })
+    this.fetchEntries({ instance: this.contentInstance, base: this.contentBase, sortKey: 'order' })
   }
 }
 </script>

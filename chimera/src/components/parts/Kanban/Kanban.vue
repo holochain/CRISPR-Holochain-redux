@@ -21,7 +21,7 @@
     </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :instance="noteInstance" :title="column.title" :base="column.id"/>
+        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :contentInstance="noteInstance" :title="column.title" :contentBase="column.id"/>
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>
