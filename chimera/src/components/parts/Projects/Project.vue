@@ -17,13 +17,13 @@
     </div>
     <v-divider />
     <v-card-actions>
-      <v-btn color="action" icon :to="`/projectKanban/${project.id}`">
+      <v-btn color="action" icon :to="`/projectKanban/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn v-if="cloneable" color="action" icon :to="`/part/${project.id}`">
+      <v-btn v-if="cloneable" color="action" icon :to="`/part/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/project/${project.id}`">
+      <v-btn color="action" icon :to="`/project/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
       <v-btn v-if="cloneable" color="alert" icon @click="cloningDialog = true">
@@ -35,7 +35,7 @@
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
         </v-toolbar>
-        <v-row no-gutters align="start" justify="center">
+        <!-- <v-row no-gutters align="start" justify="center">
           <v-col cols="12">
             <v-text-field class="ml-2 white--text" v-model="clone.name" label="Project Name" :hint="`A plural such as ${project.name} or Notes`" />
             <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
@@ -43,14 +43,14 @@
             <v-text-field class="ml-2 white--text" v-if="clone.zome.entryTypes[0]" v-model="clone.zome.entryTypes[0].name" label="Entry Type Name" :hint="`A singular such as ${project.zome.entryTypes[0].name} or note`" />
             <v-image-input v-model="clone.preview" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="200" :image-width="200"/>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-spacer></v-spacer>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="action darken-1" text @click="cloningDialog = false">
             Cancel
           </v-btn>
-          <v-btn color="action darken-1" text @click="saveProject({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
+          <v-btn color="action darken-1" text @click="createEntry({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
             Clone
           </v-btn>
         </v-card-actions>
@@ -63,7 +63,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { mapActions, mapState } from 'vuex'
-import VImageInput from 'vuetify-image-input/a-la-carte'
+// import VImageInput from 'vuetify-image-input/a-la-carte'
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
   if (!fs.existsSync(dirname)) {
@@ -80,7 +80,7 @@ function replacePlaceHolders (content, placeHolder, replacement) {
 export default {
   name: 'HolochainProject',
   components: {
-    VImageInput
+    // VImageInput
   },
   data () {
     return {
@@ -89,6 +89,12 @@ export default {
     }
   },
   props: {
+    instance: {
+      type: Object
+    },
+    base: {
+      type: String
+    },
     project: {
       type: Object,
       default: function () {
@@ -117,7 +123,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('projects', ['saveProject']),
+    ...mapActions('root', ['createEntry']),
     copyParts () {
       let listPart = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
       const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`

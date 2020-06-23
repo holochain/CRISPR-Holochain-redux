@@ -62,27 +62,25 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-dna</v-icon> (Clone) to create a new DNA from an existing one.
     </v-alert>
-    <v-alert v-if="errors.length" type="error">
+    <v-alert v-if="errors" type="error">
       <v-row no-gutters>
         <v-col cols="11">
           {{errors}}
         </v-col>
         <v-col cols="1">
-          <v-icon @click="acknowledgeErrors(base)">mdi-close-box-outline</v-icon>
+          <v-icon @click="resetErrors({ instance: instance, base: base })">mdi-close-box-outline</v-icon>
         </v-col>
       </v-row>
     </v-alert>
     <v-row no-gutters>
       <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" lg="2">
-        <project :key="project.id" :base="base" :project="project" :details="details" :cloneable="cloneable">
-        </project>
-      </v-col>
+        <project :key="project.id" :instance="instance" :base="base" :project="project" :details="details" :cloneable="cloneable" />      </v-col>
     </v-row>
     <slot></slot>
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'Projects',
   components: {
@@ -94,31 +92,28 @@ export default {
       details: false
     }
   },
-  props: ['base', 'title', 'cloneable'],
+  props: ['instance', 'base', 'title', 'cloneable'],
   methods: {
-    add () {
-      this.projects.splice(0, 0, {
-        title: '',
-        content: ''
-      })
-    },
-    ...mapActions('projects', ['fetchProjects', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles'])
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapMutations('friends', ['setGroup'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('projects', ['errors']),
-    ...mapGetters('projects', ['listProjects', 'listErrors']),
+    ...mapGetters('portfolio', ['listProjects']),
     projects () {
-      return this.listProjects(this.base)
+      return this.listProjects({ instance: this.instance, base: this.base })
     },
-    errors () {
-      return this.listErrors(this.base)
-    }
+    ...mapState({
+      errors (state) {
+        return state.root.errors[`${this.instance.instanceId}${this.base}`]
+      }
+    })
   },
   created () {
-    this.agentAddress()
-    this.fetchProfiles()
-    this.fetchProjects(this.base)
+    this.setGroup(this.instance)
+    this.agentAddress(this.instance)
+    this.fetchProfiles(this.instance)
+    this.fetchEntries({ instance: this.instance, base: this.base })
   }
 }
 </script>

@@ -115,7 +115,9 @@ class DiagramModel {
     anchorAnchorNode.addField(`anchor_type|${anchorAnchor.type}`)
     anchorAnchorNode.addField(`anchor_text|${anchorAnchor.text}`)
     const anchorInPort = anchorAnchorNode.addInPort('address()')
-    this.addLink(anchorOutPort, anchorInPort, `${anchorAnchor.text}→`, `←${anchorAnchor.context}`)
+    let context = ''
+    if (anchorAnchor.biDirectional === true) context = `←${anchorAnchor.context}`
+    this.addLink(anchorOutPort, anchorInPort, `${anchorAnchor.text}→`, context)
     return anchorAnchorNode
   }
 

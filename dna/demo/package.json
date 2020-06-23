@@ -13,13 +13,18 @@
   "scripts": {
     "demo:setup": "node demo.js | tee conductor-output.txt && node config-copy.js",
     "demo:setup:phil": "node demo-setup-phil.js",
+    "demo:setup:philFreckles": "node demo-setup-phil-freckles.js",
+    "demo:setup:philorigins": "node demo-setup-phil-origins.js",
     "demo:setup:fields": "node demo-setup-fields.js",
     "demo:setup:lucy": "node demo-setup-lucy.js",
-    "hc:run:alice": "holochain -c ./1-conductor-config.toml",
-    "hc:run:bob": "holochain -c ./2-conductor-config.toml",
-    "hc:run:phil": "holochain -c ./3-conductor-config.toml",
-    "hc:run:lucy": "holochain -c ./4-conductor-config.toml",
-    "hc:run:all": "npm run hc:run:alice & npm run hc:run:bob & npm run hc:run:phil & npm run hc:run:lucy",
+    "demo:setup:rudy": "node demo-setup-rudy.js",
+    "hc:run:phil": "holochain -c ./1-conductor-config.toml",
+    "hc:run:lucy": "holochain -c ./2-conductor-config.toml",
+    "hc:run:rudy": "holochain -c ./3-conductor-config.toml",
+    "hc:run:arthur": "holochain -c ./4-conductor-config.toml",
+    "hc:run:alice": "holochain -c ./5-conductor-config.toml",
+    "hc:run:mark": "holochain -c ./6-conductor-config.toml",
+    "hc:run:all": "npm run hc:run:phil & npm run hc:run:lucy & npm run hc:run:rudy & npm run hc:run:arthur & npm run hc:run:alice & npm run hc:run:mark",
     "hc:start": "npm run demo:setup && npm run hc:run:all",
     "demo": "nf start"
   }

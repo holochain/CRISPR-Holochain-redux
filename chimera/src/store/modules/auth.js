@@ -2,10 +2,8 @@ import { set } from '@/utils/vuex'
 
 export default {
   namespaced: true,
-
   state: {
-    agentAddress: '',
-    agentProfile: {},
+    agentAddresses: [],
     loggedIn: false,
     chimera: false,
     splash: true,
@@ -14,11 +12,11 @@ export default {
     }
   },
   actions: {
-    agentAddress: async ({ commit }, agentAddress) => {
-      commit('setAgentAddress', agentAddress)
+    agentAddress: async ({ commit }, { instanceId, agentAddress }) => {
+      commit('setAgentAddress', { instanceId, agentAddress })
     },
-    agentProfile: async ({ commit }, agentProfile) => {
-      commit('setAgentProfile', agentProfile)
+    agentProfile: async ({ commit }, { instanceId, profiles }) => {
+      commit('setAgentProfile', { instanceId, profiles })
     },
     turnChimeraOn: async ({ commit }) => {
       commit('setChimeraOn', true)
@@ -35,16 +33,17 @@ export default {
     setChimeraOn: set('chimera'),
     setSplashOff: set('splash'),
     setAgentAddress (state, payload) {
-      state.agentAddress = payload.agentAddress
-    },
-    setAgentProfile (state, payload) {
-      console.log(payload)
-      state.agentProfile = payload.agentProfile
+      state.agentAddresses.push({ instanceId: payload.instanceId, agentAddress: payload.agentAddress })
     }
   },
   getters: {
-    agentProfile: (state, getters) => {
-      return state.agentProfile
+    agentAddress: (state, getters) => instanceId => {
+      const agent = state.agentAddresses.find(p => p.instanceId === instanceId)
+      if (agent) {
+        return agent.agentAddress
+      } else {
+        return ''
+      }
     }
   }
 }

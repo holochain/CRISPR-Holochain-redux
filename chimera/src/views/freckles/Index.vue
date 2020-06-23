@@ -12,42 +12,35 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
-      Write a new freckle in the open editor.
+      Click the <v-icon>mdi-plus</v-icon> to write a new freckle.
     </v-alert>
     <v-row no-gutters>
-      <v-col cols="12" md="6" lg="4">
-        <freckle key="new" :freckle="newFreckle" placeholder="What's your freckle?"/>
-      </v-col>
-      <v-col cols="12" md="6" lg="4">
-        <!-- v-for instance in instances -->
-        <tasks :instance="instance" base="a note id" title="name of the instance"/>
+      <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
+        <draggable-column :isDraggable="false" :key="instance.id" :contentInstance="instance" :title="instance.instanceName" contentBase="" :hasProfile="true"/>
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  name: 'Freckles',
+  name: 'FrecklesView',
   components: {
-    Freckle: () => import('@/components/parts/Freckles/Freckle')
+    DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
   data () {
     return {
       help: false,
-      newFreckle: {
-        id: 'new',
-        content: ''
-      }
+      frecklesInstance: { zome: 'freckles', type: 'freckle', instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa', partBase: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa', instanceName: 'My Freckles', entry: { content: '' } },
+      originsInstance: { zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', partBase: '57c01ed8-30ae-4fca-b6f9-40192821fed2', instanceName: 'Broadcast', entry: { content: '' } }
     }
   },
-  methods: {
-    ...mapActions('freckles', ['agentAddress', 'fetchProfiles'])
-  },
-  created () {
-    this.fetchProfiles()
-    this.agentAddress()
+  computed: {
+    ...mapGetters('instancemanager', ['listInstances']),
+    instances () {
+      return this.listInstances('Freckles')
+    }
   }
 }
 </script>

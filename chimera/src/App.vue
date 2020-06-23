@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   components: {
     // CoreAppBar: () => import('@/components/core/AppBar'),
@@ -22,14 +22,15 @@ export default {
     ...mapActions('fieldNames', ['fetchFields']),
     ...mapActions('personas', ['fetchPersonas']),
     ...mapActions('projects', ['fetchProjects']),
-    ...mapActions('origins', ['agentAddress', 'fetchProfiles'])
+    ...mapActions('root', ['agentAddress', 'fetchProfiles']),
+    ...mapMutations('friends', ['setGroup'])
   },
   created () {
     this.fetchFields()
     this.fetchPersonas()
-    this.fetchProfiles()
-    this.agentAddress()
-    console.log('App created')
+    this.setGroup({ instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends' })
+    this.fetchProfiles({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
+    this.agentAddress({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
   }
 }
 </script>

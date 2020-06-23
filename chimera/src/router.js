@@ -46,7 +46,7 @@ const router = new Router({
       component: () => import('@/views/projects/Index')
     },
     {
-      path: '/project/:id',
+      path: '/project/:instanceId/:base/:projectId',
       name: 'Project',
       component: () => import('@/views/projects/DnaModeller'),
       props: true
@@ -98,12 +98,12 @@ const router = new Router({
       component: () => import('@/views/profileSite/Index')
     },
     {
-      path: '/projectKanban/:id',
+      path: '/projectKanban/:instanceId/:base/:projectId',
       name: 'Project Kanban',
       component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
-      path: '/freckles',
+      path: '/freckles/:id',
       name: 'Freckles',
       component: () => import('@/views/freckles/Index')
     },

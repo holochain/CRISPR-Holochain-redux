@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { connect } from '@holochain/hc-web-client'
-import origins from '@/components/parts/Origins/OriginsStore'
-import notes from '@/components/parts/Notes/NotesStore'
-import freckles from '@/components/parts/Freckles/FrecklesStore'
 import tasks from '@/components/parts/Tasks/TasksStore'
-import projects from '@/components/parts/Projects/ProjectsStore'
-import websites from '@/components/parts/Websites/WebsitesStore'
 import tags from '@/components/parts/Tags/TagsStore'
+import instancemanager from '@/components/parts/InstanceManager/InstanceManagerStore'
 // NewImportModule
 import app from '@/store/modules/app'
 import auth from '@/store/modules/auth'
@@ -27,8 +23,8 @@ import snackbar from '@/store/modules/snackbar'
 import zomes from '@/store/modules/zomes'
 import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
-import kanban from '@/store/modules/kanban'
 import verify from '@/store/modules/verify'
+import root from '@/store/modules/rootStore'
 
 Vue.use(Vuex)
 console.log(process.env.VUE_APP_HOLOCHAIN_URL)
@@ -37,12 +33,9 @@ const store = new Vuex.Store({
     holochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
-    origins,
-    notes,
-    freckles,
     tasks,
-    websites,
     tags,
+    instancemanager,
     // NewModule
     app,
     auth,
@@ -54,17 +47,16 @@ const store = new Vuex.Store({
     install,
     library,
     portfolio,
-    projects,
     personalInformation,
     fieldNames,
     profiles,
     personas,
     snackbar,
-    kanban,
     zomes,
     verify,
     mediaLibrary,
-    tracks
+    tracks,
+    root
   },
   actions: {
     init: async () => {

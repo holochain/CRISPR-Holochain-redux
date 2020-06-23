@@ -3,9 +3,10 @@
     <v-system-bar color="indigo darken-2" dark>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
-      <v-icon v-if="isEditing" @click="saveNote({ base: base, note: instanceNote}); isEditing=false">mdi-content-save</v-icon>
-      <v-icon @click="deleteNote({ base: base, note: instanceNote})">mdi-delete-outline</v-icon>
-      <part-manager :base="instanceNote.id" @add-part="addPart"/>
+      <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
+      <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon>
+      <part-manager :base="entry.id" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -19,12 +20,12 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Note.
     </v-alert>
-    <v-card-title v-if="!isEditing">{{instanceNote.title}}</v-card-title>
-    <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="instanceNote.title" label="Title" />
-    <v-card-text v-if="!isEditing" v-html="instanceNote.content" />
-    <tiptap-vuetify v-if="isEditing" v-model="instanceNote.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-title v-if="!isEditing">{{entry.title}}</v-card-title>
+    <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="entry.title" label="Title" />
+    <v-card-text v-if="!isEditing" v-html="entry.content" />
+    <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="note.id" :title="part.title" :agent="note.createdBy" :key="part.title" />
+      <component :is="part.title" :base="note.id" :title="part.title" :agent="entry.createdBy" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
@@ -33,17 +34,17 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Note',
+  name: 'Freckle',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
-  props: ['base', 'note', 'partBase'],
+  props: ['instance', 'base', 'entry'],
   data () {
     return {
-      instanceNote: {},
+      payload: { instance: this.instance, base: this.base, entry: this.entry },
       clean: {},
-      isEditing: this.note.id === 'new',
+      isEditing: this.entry.id === 'new',
       parts: [],
       help: false,
       extensions: [
@@ -70,15 +71,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions('notes', ['saveNote', 'deleteNote']),
+    ...mapActions('root', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
     }
   },
   created () {
-    this.clean = { ...this.note }
-    this.instanceNote = { ...this.note }
-    this.parts = this.partParts(this.partBase)
+    this.clean = { ...this.entry }
+    this.parts = this.partParts(this.instance.partBase)
   },
   computed: {
     ...mapState('auth', ['chimera']),

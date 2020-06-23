@@ -7,8 +7,8 @@
             <auth />
             <template>
               <v-divider class="mb-5" />
-              <span class="title ml-1">{{selectedGroup}}</span>
-              <v-menu v-for="(friend, i) in friends" :key="i" :offset-x="$vuetify.breakpoint.mdAndUp" :offset-y="$vuetify.breakpoint.smAndDown" :left="$vuetify.breakpoint.mdAndUp" :min-width="$vuetify.breakpoint.smAndDown ? '100%' : undefined" attach :max-width="$vuetify.breakpoint.mdAndUp ? 200 : undefined" style="max-height: 0; max-width: 0;">
+              <span class="title ml-1">{{selectedGroup.instanceName}}</span>
+              <v-menu v-for="(friend, i) in groupFriends" :key="i" :offset-x="$vuetify.breakpoint.mdAndUp" :offset-y="$vuetify.breakpoint.smAndDown" :left="$vuetify.breakpoint.mdAndUp" :min-width="$vuetify.breakpoint.smAndDown ? '100%' : undefined" attach :max-width="$vuetify.breakpoint.mdAndUp ? 200 : undefined" style="max-height: 0; max-width: 0;">
                 <template v-slot:activator="{ attrs, on }">
                   <v-list-item link v-bind="attrs" class="mx-n3" v-on="on">
                     <v-list-item-action class="justify-center">
@@ -119,6 +119,9 @@ export default {
     ...mapGetters('friends', ['online', 'friends']),
     ...mapState('auth', ['loggedIn']),
     ...mapState('friends', ['drawer', 'selectedGroup']),
+    groupFriends () {
+      return this.friends(this.selectedGroup.instanceId)
+    },
     friendsDrawer: {
       get () {
         return this.drawer

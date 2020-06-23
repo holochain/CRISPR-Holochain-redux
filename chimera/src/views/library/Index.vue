@@ -1,5 +1,15 @@
 <template>
   <section>
+    <v-fade-transition mode="out-in">
+      <v-overlay v-if="splash" :absolute="true" :opacity="overlayOpacity" v-resize="onResizeSplash">
+        <canvas id="network" width="1000" height="1000" @click="turnSplashOff()"></canvas>
+        <v-fade-transition mode="in-out">
+          <v-overlay v-show="showOverlayImage" :absolute="true" opacity="0">
+            <canvas id="overlayImage" width="1000" height="1000" @click="turnSplashOff()" :style="{ backgroundImage: 'url(' + require('@/assets/chimera-splash.png') + ')', opacity: 1.1 - overlayOpacity}" style="backgroundSize: cover; backgroundRepeat: no-repeat;"></canvas>
+          </v-overlay>
+        </v-fade-transition>
+      </v-overlay>
+    </v-fade-transition>
     <v-toolbar flat>
       <v-btn icon  @click="$router.go(-1)">
         <v-icon>mdi-chevron-left</v-icon>
@@ -32,13 +42,6 @@
     </v-alert>
     <v-divider />
     <applications :showProfile="showProfile"/>
-    <v-overlay :absolute="true" :opacity="0.7" :value="splash">
-      <v-card flat>
-      <v-img height='600' :src="require('@/assets/icons/chimera-overlay.png')" @click="turnSplashOff" class="white--text align-end justify-center">
-      </v-img>
-      <v-img width="650" :src="require('@/assets/icons/powered-by-holochain.png')" />
-      </v-card>
-    </v-overlay>
   </section>
 </template>
 <script>
@@ -51,14 +54,123 @@ export default {
   data () {
     return {
       showProfile: false,
-      help: false
+      help: false,
+      timerCount: 120,
+      overlayOpacity: 1,
+      showOverlayImage: false,
+      network: undefined,
+      vueCanvas: undefined,
+      s: 0,
+      height: 0,
+      width: 0,
+      sideLen: 500,
+      sideNumb: 48,
+      rotation: 30 * Math.PI / 180,
+      fractals: 0,
+      xCenter: 0,
+      yCenter: 0,
+      symbol: '',
+      scale: 0,
+      offSet: 0,
+      ticks: 0,
+      networks: 0,
+      canvasAlpha: 1
     }
   },
   methods: {
-    ...mapActions('auth', ['turnSplashOff'])
+    ...mapActions('auth', ['turnSplashOff']),
+    onResizeSplash () {
+      if (window.innerHeight < window.innerWidth) {
+        this.width = window.innerHeight * 0.9
+      } else {
+        this.width = window.innerWidth * 0.9
+      }
+      this.height = this.width
+      this.sideLen = this.width / 2
+    },
+    renderMainSymbol () {
+      var i
+      for (i = 0; i < this.sideNumb / 2; i++) {
+        for (var delay = 0; delay < 3000 / this.sideNumb; delay++) {
+          // console.log('delay')
+        }
+        this.vueCanvas.beginPath()
+        const posX = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks - 1) * 2 * Math.PI / this.sideNumb))
+        const posXto = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks + i) * 2 * Math.PI / this.sideNumb))
+        const posY = this.yCenter + this.sideLen * Math.sin(this.rotation + ((this.ticks - 1) * 2 * Math.PI / this.sideNumb))
+        const posYto = this.yCenter + this.sideLen * Math.sin(this.rotation + ((this.ticks + i) * 2 * Math.PI / this.sideNumb))
+        this.vueCanvas.moveTo(posX, posY)
+        var gradient = this.vueCanvas.createLinearGradient(posX, posY, posXto, posYto)
+        var alpha1 = this.canvasAlpha / (i + 0.1) * 1.5
+        gradient.addColorStop(0, 'rgb(128,0,128, ' + alpha1 + ')')
+        gradient.addColorStop(0.5, 'rgb(0,128,128, ' + alpha1 / 2 + ')')
+        gradient.addColorStop(1, 'rgb(128,0,128, ' + alpha1 + ')')
+        this.vueCanvas.strokeStyle = gradient
+        this.vueCanvas.lineTo(posXto, posYto)
+        this.vueCanvas.stroke()
+        this.vueCanvas.closePath()
+      }
+
+      if (this.ticks > (this.sideNumb - 1)) {
+        this.networks += 1
+        this.ticks = 1
+        this.height = this.height / 1.5
+        this.width = this.width / 1.5
+        this.sideLen = this.sideLen / 1.5
+        this.canvasAlpha = this.canvasAlpha / 1.5
+        this.vueCanvas.lineWidth = this.vueCanvas.lineWidth * 1.2
+        this.sideNumb = this.sideNumb / 2
+        if (this.networks < 5) {
+          window.requestAnimationFrame(this.renderMainSymbol)
+        } else {
+          this.showOverlayImage = true
+        }
+      } else {
+        this.ticks = this.ticks + 1
+        window.requestAnimationFrame(this.renderMainSymbol)
+      }
+    },
+    drawMainSymbol () {
+      this.network.width = this.width
+      this.network.height = this.width
+      document.getElementById('overlayImage').width = this.width * 0.8
+      document.getElementById('overlayImage').height = this.width * 0.8
+      this.vueCanvas.lineWidth = 2
+      this.vueCanvas.lineCap = 'round'
+      this.xCenter = this.width / 2
+      this.yCenter = this.height / 2
+      this.ticks = 1
+      fetch('./symbol.txt')
+        .then(response => response.text())
+        .then((data) => {
+          this.symbol = data
+          this.vueCanvas.clearRect(0, 0, this.width, this.height)
+          this.renderMainSymbol()
+        })
+    }
   },
   computed: {
     ...mapState('auth', ['splash'])
+  },
+  mounted () {
+    this.network = document.getElementById('network')
+    this.vueCanvas = this.network.getContext('2d')
+    this.drawMainSymbol()
+  },
+  watch: {
+    timerCount: {
+      handler (value) {
+        if (value > 0) {
+          setTimeout(() => {
+            this.timerCount--
+            this.overlayOpacity = value / 100
+          }, 100)
+        } else {
+          this.turnSplashOff()
+        }
+      },
+      immediate: true // This ensures the watcher is triggered upon creation
+    }
   }
 }
 </script>

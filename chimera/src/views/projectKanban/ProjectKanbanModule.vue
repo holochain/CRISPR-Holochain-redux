@@ -13,7 +13,7 @@
               <v-btn color="action" icon :to="`/part/${project.id}`">
                 <v-icon>mdi-application</v-icon>
               </v-btn>
-              <v-btn color="action" icon :to="`/project/${project.id}`">
+              <v-btn color="action" icon :to="`/project/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">
                 <v-icon>mdi-code-braces</v-icon>
               </v-btn>
               <v-btn color="action" icon @click="help=!help">
@@ -28,7 +28,7 @@
           </v-alert>
           <v-row>
             <v-col cols="12">
-              <kanban :key="project.id" :base="project.id" :title="project.name"/>
+              <kanban :key="project.id" :instance="instance" :base="project.id" :title="project.name"/>
             </v-col>
           </v-row>
         </v-card>
@@ -45,14 +45,14 @@ export default {
   },
   data () {
     return {
-      help: false
+      help: false,
+      instance: { zome: 'kanban', type: 'column', instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04', instanceName: 'Holochain Kanban', entry: { title: '', order: 0 } }
     }
   },
   computed: {
     ...mapGetters('portfolio', ['projectById']),
     project () {
-      console.log(this.$route.params.id)
-      return this.projectById(this.$route.params.id)
+      return this.projectById({ instanceId: this.$route.params.instanceId, base: this.$route.params.base, projectId: this.$route.params.projectId })
     }
   }
 }

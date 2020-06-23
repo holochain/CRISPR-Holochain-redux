@@ -22,19 +22,18 @@
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects base="Applications" title="Application Projects"/>
+        <projects :instance="instance" base="Applications" title="Application Projects"/>
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects base="Parts" title="Part Projects" :cloneable="true" />
+        <projects :instance="instance" base="Parts" title="Part Projects" :cloneable="true" />
       </v-col>
     </v-row>
   </section>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 export default {
   name: 'AllProjects',
   components: {
@@ -42,7 +41,8 @@ export default {
   },
   data () {
     return {
-      help: false
+      help: false,
+      instance: { zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', partBase: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects' }
     }
   }
 }

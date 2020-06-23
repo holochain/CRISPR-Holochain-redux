@@ -19,20 +19,20 @@
       </template>
       </v-progress-linear>
     </v-row>
-    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/>
+    <!-- <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/> -->
   </v-card>
   <v-card v-else>
-    <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/>
+    <!-- <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/> -->
   </v-card>
 </template>
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Tasks',
   components: {
     Task: () => import('./Task')
   },
-  props: ['base', 'title'],
+  props: ['instance', 'base', 'title'],
   data () {
     return {
       task: {
@@ -42,20 +42,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions('tasks', ['fetchTasks', 'saveTask', 'deleteTask', 'acknowledgeErrors'])
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('tasks', ['errors']),
-    ...mapGetters('tasks', ['listTasks', 'listErrors']),
-    tasks () {
-      console.log(this.base)
-      console.log(this.listTasks(this.base))
-      return this.listTasks(this.base)
-    },
-    errors () {
-      return this.listErrors(this.base)
-    },
+    ...mapState({
+      errors (state) {
+        return state.root.errors[`${this.instance.instanceId}${this.base}`]
+      },
+      tasks (state) {
+        return state.root.entries[`${this.instance.instanceId}${this.base}`]
+      }
+    }),
     completedTasks () {
       return this.tasks.filter(task => task.done).length
     },
@@ -67,7 +65,7 @@ export default {
     }
   },
   created () {
-    this.fetchTasks(this.base)
+    this.fetchEntries({ instance: this.instance, base: this.base })
   },
   watch: {
     tasks () {

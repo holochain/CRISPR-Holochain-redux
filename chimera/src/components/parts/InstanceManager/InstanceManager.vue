@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="520" dark>
+  <v-card class="mx-auto" max-width="520" color="secondary" dark>
     <v-system-bar color="indigo darken-2" dark>
       <span class="subtitle">{{title}}</span>
       <v-spacer></v-spacer>
@@ -23,9 +23,9 @@
         </v-col>
       </v-row>
     </v-alert>
-    <v-col cols="12" v-for="website in websites" :key="website.id">
-      <website :key="website.id" :base="base" :website="website">
-      </website>
+    <v-col cols="12" v-for="instance in instances" :key="instance.id">
+      <instance :key="instance.id" :base="base" :instance="instance">
+      </instance>
     </v-col>
     <slot></slot>
   </v-card>
@@ -33,10 +33,10 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Websites',
+  name: 'InstanceManager',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
-    Website: () => import('./Website')
+    Instance: () => import('./Instance')
   },
   props: ['base', 'title'],
   data () {
@@ -46,20 +46,20 @@ export default {
   },
   methods: {
     add () {
-      this.websites.splice(0, 0, {
+      this.instances.splice(0, 0, {
         id: 'new',
         content: ''
       })
     },
-    ...mapActions('websites', ['fetchWebsites', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('instances', ['fetchInstances', 'acknowledgeErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapState('websites', ['errors']),
-    ...mapGetters('websites', ['listWebsites', 'listErrors']),
-    websites () {
-      return this.listWebsites(this.base)
+    ...mapState('instances', ['errors']),
+    ...mapGetters('instances', ['listInstances', 'listErrors']),
+    instances () {
+      return this.listInstances(this.base)
     },
     errors () {
       return this.listErrors(this.base)
@@ -68,7 +68,7 @@ export default {
   created () {
     this.agentAddress()
     this.fetchProfiles()
-    this.fetchWebsites(this.base)
+    this.fetchInstances(this.base)
   }
 }
 </script>

@@ -65,10 +65,10 @@
           </v-alert>
           <v-tabs-items v-model="tab">
             <v-tab-item key="0">
-              <component :is="part(0)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+              <component :is="part(0)" instance="41553681-4c82-4c8c-87bb-ae2a3d2ba4cc" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-tab-item>
             <v-tab-item key="1">
-              <component :is="part(1)" instance="PartEditor" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+              <component :is="part(1)" instance="41553681-4c82-4c8c-87bb-ae2a3d2ba4cc" base="PartEditor" title="Part Editor" :agent="agentAddress" />
             </v-tab-item>
           </v-tabs-items>
         </v-card>
@@ -154,7 +154,6 @@ export default {
   },
   computed: {
     ...mapState('auth', ['developer', 'agentAddress']),
-    ...mapGetters('notes', ['listTasks']),
     ...mapGetters('portfolio', ['projectById']),
     project () {
       console.log('project')
@@ -175,18 +174,18 @@ export default {
     } else {
       this.partCodeItem = ''
     }
-    if (this.files[1]) {
-      this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
-      this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')
-    } else {
-      this.partCodeItems = ''
-    }
-    if (this.files[2]) {
-      this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
-      this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')
-    } else {
-      this.partCodeStore = ''
-    }
+    // if (this.files[1]) {
+    //   this.partCodeItemsFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[1]}`
+    //   this.partCodeItems = fs.readFileSync(this.partCodeItemsFileName, 'utf8')
+    // } else {
+    //   this.partCodeItems = ''
+    // }
+    // if (this.files[2]) {
+    //   this.partCodeStoreFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[2]}`
+    //   this.partCodeStore = fs.readFileSync(this.partCodeStoreFileName, 'utf8')
+    // } else {
+    //   this.partCodeStore = ''
+    // }
   }
 }
 </script>

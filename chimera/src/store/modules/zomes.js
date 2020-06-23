@@ -389,7 +389,7 @@ export default {
       return state.zomes.find(z => z.base === base)
     },
     zomeByBaseIdFromTemplate: (state) => (project) => {
-      const zome = project.zome
+      const zome = JSON.parse(project.zome)
       const zomeTemplate = state.zomeTemplates.find(t => t.template === zome.template)
       const zomeItems = state.itemsTemplates.find(t => t.template === zome.itemsTemplatesName)
       const template = JSON.parse(JSON.stringify(zomeTemplate.zome))
@@ -442,7 +442,6 @@ export default {
         template.profileSpec = profileSpecTemplate
         template.libCode += replacePlaceHolders(template.libDeclarations, template.profileSpec.name, 'profile')
         profileZomeCode = profileSpecTemplate.libZomeCode
-        console.log(profileSpecTemplate)
         zomesItemSrc.children.push(
           {
             name: 'profile',
@@ -455,7 +454,6 @@ export default {
       }
       template.libCode += template.libZome
       template.libCode += profileZomeCode
-      console.log(template)
       return template
     }
   }

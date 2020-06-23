@@ -61,7 +61,7 @@ export default {
         {
           icon: 'mdi-thought-bubble-outline',
           text: 'Freckles',
-          to: '/projectKanban/Qmmorebigfrecklehashes333'
+          to: '/freckles/0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
         },
         // {
         //   icon: 'mdi-image-multiple-outline',
