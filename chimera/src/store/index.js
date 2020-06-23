@@ -23,7 +23,6 @@ import snackbar from '@/store/modules/snackbar'
 import zomes from '@/store/modules/zomes'
 import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
-import kanban from '@/store/modules/kanban'
 import verify from '@/store/modules/verify'
 import root from '@/store/modules/rootStore'
 
@@ -53,7 +52,6 @@ const store = new Vuex.Store({
     profiles,
     personas,
     snackbar,
-    kanban,
     zomes,
     verify,
     mediaLibrary,

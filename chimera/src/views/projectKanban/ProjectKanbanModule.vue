@@ -46,7 +46,7 @@ export default {
   data () {
     return {
       help: false,
-      instance: { zome: 'kanban', type: 'column', instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04', instanceName: 'Holochain Kanban' }
+      instance: { zome: 'kanban', type: 'column', instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04', instanceName: 'Holochain Kanban', entry: { title: '', order: 0 } }
     }
   },
   computed: {

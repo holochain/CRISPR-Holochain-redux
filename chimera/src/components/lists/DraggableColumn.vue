@@ -91,7 +91,7 @@ export default {
       this.agentAddress(this.instance)
       this.fetchProfiles(this.instance)
     }
-    this.fetchEntries({ instance: this.instance, base: this.base, sortKey: this.sortKey })
+    this.fetchEntries({ instance: this.instance, base: this.base, sortKey: 'order' })
   }
 }
 </script>

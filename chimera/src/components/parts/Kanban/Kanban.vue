@@ -23,6 +23,16 @@
       <v-col v-for="column in columns" :key="column.id">
         <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :instance="noteInstance" :title="column.title" :base="column.id"/>
       </v-col>
+      <v-col v-if="newColumn">
+        <v-card class="mx-auto" max-width="520" color="secondary" dark>
+          <v-system-bar color="indigo darken-2" dark>
+            <v-icon>mdi-note-multiple-outline</v-icon>
+            <span class="subtitle">{{title}}</span>
+            <v-spacer></v-spacer>
+          </v-system-bar>
+          <v-text-field class="ml-2 white--text" v-model="instance.entry.title" label="Column Title" @keydown.enter="add" append-icon="mdi-content-save" @click:append="add"/>
+        </v-card>
+      </v-col>
     </v-row>
   </v-card>
 </template>
@@ -39,13 +49,19 @@ export default {
     return {
       noteInstance: { zome: 'notes', type: 'note', instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888', partBase: this.base, instanceName: 'All Notes', entry: { title: '', content: '' } },
       newColumn: false,
-      newColumnTitle: '',
       help: false
     }
   },
   methods: {
-    ...mapActions('root', ['fetchEntries', 'resetErrors']),
-    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite'])
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'createEntry']),
+    ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
+    add () {
+      this.instance.entry.id = 'new'
+      this.instance.entry.order = this.columns.length
+      this.columns.push(this.instance.entry)
+      this.createEntry({ instance: this.instance, base: this.base, entry: this.instance.entry })
+      this.newColumn = false
+    }
   },
   computed: {
     ...mapState('auth', ['chimera']),
@@ -56,7 +72,7 @@ export default {
     })
   },
   created () {
-    this.fetchEntries({ instance: this.instance, base: this.base })
+    this.fetchEntries({ instance: this.instance, base: this.base, sortKey: 'order' })
   }
 }
 </script>
