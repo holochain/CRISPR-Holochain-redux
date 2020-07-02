@@ -31,7 +31,7 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-col cols="12">
-            <h2 class="title">Playing Next at</h2>
+            <h2 class="title">Recently played at</h2>
             <v-img :src="require('../assets/images/psyland-2020.jpg')">
             </v-img>
         </v-col>
@@ -47,6 +47,9 @@
       <v-col cols="12" md="6">
         <h2 class="title">Set Recordings</h2>
         <v-row no-gutters class="mx-auto">
+          <v-col cols="12">
+            <iframe width="100%" height="400" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/841473073&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/user-602930137" title="End Of Now" target="_blank" style="color: #cccccc; text-decoration: none;">End Of Now</a> · <a href="https://soundcloud.com/user-602930137/survivor-series-ep-4-pherrol" title="Survivor Series: Ep 4- Pherrol" target="_blank" style="color: #cccccc; text-decoration: none;">Survivor Series: Ep 4- Pherrol</a></div>
+          </v-col>
           <v-col cols="12">
             <iframe width="100%" height="400" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/835531798&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/pherrol" title="@pherrol" target="_blank" style="color: #cccccc; text-decoration: none;">@pherrol</a> · <a href="https://soundcloud.com/pherrol/psyland-2020-pherrol" title="Psyland - 2020 - @pherrol" target="_blank" style="color: #cccccc; text-decoration: none;">Psyland - 2020 - @pherrol</a></div>
           </v-col>

@@ -25,6 +25,7 @@ import mediaLibrary from '@/store/modules/mediaLibrary'
 import tracks from '@/store/modules/tracks'
 import verify from '@/store/modules/verify'
 import root from '@/store/modules/rootStore'
+import knowledgeBaseStore from '@/store/modules/knowledgeBaseStore'
 
 Vue.use(Vuex)
 console.log(process.env.VUE_APP_HOLOCHAIN_URL)
@@ -56,7 +57,8 @@ const store = new Vuex.Store({
     verify,
     mediaLibrary,
     tracks,
-    root
+    root,
+    knowledgeBaseStore
   },
   actions: {
     init: async () => {

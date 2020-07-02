@@ -33,12 +33,13 @@ export default {
     ...mapGetters('tags', ['listTags'])
   },
   created () {
-    this.fetchTags('')
+    this.fetchTags(this.instance)
     const tagWeights = []
-    this.listTags('').forEach((tag, index) => {
-      tagWeights.push([tag.text, (index + 1) * 5])
+    this.listTags(this.instance.instanceId).forEach((tag, index) => {
+      if (!tag.header) {
+        tagWeights.push([tag.text, (tag.taggedEntries.length + 1) * 5])
+      }
     })
-    console.log(tagWeights)
     this.words = tagWeights
   }
 }

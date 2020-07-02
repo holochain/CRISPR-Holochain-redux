@@ -29,15 +29,15 @@ export default {
             text: 'Trance',
             taggedEntries: [
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'PartEditor'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack23'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack1'
               }
             ]
@@ -46,15 +46,15 @@ export default {
             text: 'Metal',
             taggedEntries: [
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack1'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack23'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack1'
               }
             ]
@@ -63,15 +63,15 @@ export default {
             text: 'Rock',
             taggedEntries: [
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack1'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack23'
               },
               {
-                instance: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
+                instanceId: 'a0c3f385-18e7-4d88-91b3-d735ddbae55f',
                 id: 'QmIdTrack1'
               }
             ]
@@ -81,6 +81,46 @@ export default {
           },
           {
             text: 'Country'
+          }
+        ]
+      },
+      {
+        base: 'ChimeraKnowledgeBase',
+        tags: [
+          {
+            text: 'Chimera',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
+              },
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
+              },
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
+              }
+            ]
+          },
+          {
+            text: 'Holochain',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
+              }
+            ]
+          },
+          {
+            text: 'CRISPR',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryCRISPR'
+              }
+            ]
           }
         ]
       },
@@ -147,17 +187,18 @@ export default {
     }
   },
   getters: {
-    latest: (state, getters) => {
-      return getters.parsedGames.sort((a, b) => {
-        if (a.updatedAt < b.updatedAt) return -1
-        if (a.updatedAt > b.updatedAt) return 1
-        return 0
-      }).slice(0, 3)
-    },
     listTags: state => (base) => {
       const baseTag = state.baseTags.find(n => n.base === base)
       if (baseTag) {
         return baseTag.tags
+      } else {
+        return []
+      }
+    },
+    entryTags: state => (base, entryId) => {
+      const baseTag = state.baseTags.find(n => n.base === base)
+      if (baseTag) {
+        return baseTag.tags.filter(t => t.taggedEntries.some(te => te.id === entryId))
       } else {
         return []
       }

@@ -2,15 +2,22 @@
   <v-hover v-model="hover">
     <v-sheet :color="hover || menu ? 'secondary' : 'transparent'" class="transition-swing launch-action" tile height="64">
       <v-row align="center" class="fill-height ma-0">
-        <div class="text-uppercase fill-height d-flex align-center ml-4 grow" @click="launch">
-          {{ hoverInner || menu ? '⚙️ Settings' : '💻 Open' }}
+        <div class="text-uppercase fill-height d-flex align-center ml-4 grow" @click="lauchMenu = true">
+          {{ hoverInner || menu ? 'Settings' : '💻 Open' }}
         </div>
+        <v-menu v-model="lauchMenu" :close-on-content-click="false" attach bottom offset-y class="fill-height" min-width="100%" transition="slide-y-transition">
+          <v-list light>
+            <v-list-item v-for="instance in instances" :key="instance.id" :to="`/${value.name}/${instance.instanceId}`">
+              <v-list-item-title>{{instance.instanceName}}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <v-menu v-model="menu" :close-on-content-click="false" attach bottom class="fill-height" left min-width="100%" offset-y transition="slide-y-transition">
           <template v-slot:activator="{ attrs, on }">
             <v-hover v-model="hoverInner">
               <v-sheet :color="!hoverInner ? 'transparent' : 'secondary darken-2'" class="d-flex justify-center align-center transition-swing v-sheet--settings" height="64" width="64" v-bind="attrs" v-on="on">
                 <v-icon>
-                  {{ `mdi-${menu ? 'close' : 'settings'}` }}
+                  {{ `mdi-${menu ? 'close' : 'cog'}` }}
                 </v-icon>
               </v-sheet>
             </v-hover>
@@ -42,42 +49,36 @@
 </template>
 
 <script>
-// Utilities
-import {
-  mapActions,
-  mapState,
-  mapMutations
-} from 'vuex'
-
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'LibraryLaunchAction',
-
   props: {
     value: {
       type: Object,
       default: () => ({})
     }
   },
-
   data: () => ({
     autoUpdate: true,
     dialog: false,
     hover: false,
     hoverInner: false,
-    menu: false
+    menu: false,
+    lauchMenu: false
   }),
-
   computed: {
     ...mapState('library', ['installed']),
-    ...mapState('verify', ['verifying'])
+    ...mapState('verify', ['verifying']),
+    ...mapGetters('instancemanager', ['listInstances']),
+    instances () {
+      return this.listInstances(this.value.name)
+    }
   },
-
   watch: {
     dialog (val) {
       setTimeout(() => (this.dialog = false), 4000)
     }
   },
-
   methods: {
     ...mapActions('verify', ['verifyInstall']),
     ...mapMutations('snackbar', [
@@ -106,9 +107,7 @@ export default {
     uninstall () {
       this.menu = false
       this.hover = false
-
       const installed = this.installed
-
       this.setInstalled(installed.filter(id => id !== this.value.id))
     }
   }

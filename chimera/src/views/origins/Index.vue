@@ -15,8 +15,8 @@
       Write a new freckle in the open editor.
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="instance in instances" :key="instance.id" cols="12" md="6" lg="4">
-        <draggable-column :isDraggable="false" :key="instance.id" :contentInstance="instance" :title="instance.instanceName" contentBase="" :hasProfile="true"/>
+      <v-col cols="12">
+      <draggable-column v-if="instance" :isDraggable="false" :key="instance.id" :contentInstance="instance" :title="instance.instanceName" contentBase="" :hasProfile="true"/>
       </v-col>
     </v-row>
   </section>
@@ -36,8 +36,8 @@ export default {
   },
   computed: {
     ...mapGetters('instancemanager', ['listInstances']),
-    instances () {
-      return this.listInstances('Origins')
+    instance () {
+      return this.listInstances('Origins').find(i => i.instanceId === this.$route.params.instanceId)
     }
   }
 }

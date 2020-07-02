@@ -28,6 +28,8 @@
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      Chimera has help built in everywhere you may need it. Just click the <v-icon>mdi-help</v-icon> help icon 😎
+      <v-divider class="my-4 info" style="opacity: 0.22" />
       Click on an application to get more information about it.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click on 💻 Open to use the application.

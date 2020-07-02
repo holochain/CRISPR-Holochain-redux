@@ -1,4 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
+const fs = require('fs')
+// function base64Encode (file) {
+//   var bitmap = fs.readFileSync(file)
+//   return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
+// }
 export default {
   namespaced: true,
   state: {
@@ -11,8 +16,13 @@ export default {
       Object.assign(entry, payload.data)
     },
     updateEntry (state, payload) {
-      const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
-      Object.assign(entry, payload.data)
+      // const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
+      // Object.assign(entry, payload.data)
+    },
+    updateEntryReceiver (state, payload) {
+      console.log('updateEntryReceiver Mutation')
+      // const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
+      // Object.assign(entry, payload.data)
     },
     deleteEntry (state, payload) {
       state.entries[`${payload.instance.instanceId}${payload.base}`] = state.entries[`${payload.instance.instanceId}${payload.base}`].filter(n => n.id !== payload.data.id)
@@ -119,32 +129,60 @@ export default {
       })
     },
     createEntry: ({ state, commit, rootState }, payload) => {
-      console.log(payload)
       payload.entry.uuid = uuidv4()
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
-          const res = JSON.parse(result)
-          console.log(res)
-          if (res.Ok === undefined) {
-            commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
-          } else {
-            commit('createEntry', { instance: payload.instance, base: payload.base, data: res.Ok })
-          }
-        })
-      })
+      // fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(payload.entry), (err) => {
+      //   if (err) throw err
+      //   console.log('The project has been serialised!')
+      // })
+      // rootState.holochainConnection.then(({ callZome }) => {
+      //   callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
+      //     const res = JSON.parse(result)
+      //     console.log(res)
+      //     if (res.Ok === undefined) {
+      //       commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
+      //     } else {
+      //       commit('createEntry', { instance: payload.instance, base: payload.base, data: res.Ok })
+      //     }
+      //   })
+      // })
     },
     updateEntry: ({ state, commit, rootState }, payload) => {
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
-          const res = JSON.parse(result)
-          console.log(res)
-          if (res.Ok === undefined) {
-            commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
-          } else {
-            commit('updateEntry', { instance: payload.instance, base: payload.base, data: payload.entry })
-          }
-        })
+      commit('updateEntry', { instance: payload.instance, base: payload.base, data: payload.entry })
+      fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(payload.entry), (err) => {
+        if (err) {
+          commit('error', { instance: payload.instance, base: payload.base, error: err })
+        } else {
+          commit('updateEntry', { instance: payload.instance, base: payload.base, data: payload.entry })
+        }
       })
+      // rootState.holochainConnection.then(({ callZome }) => {
+      //   callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
+      //     const res = JSON.parse(result)
+      //     console.log(res)
+      //     if (res.Ok === undefined) {
+      //       commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
+      //     }
+      //   })
+      // })
+    },
+    updateEntryReceiver: ({ state, commit, rootState }, payload) => {
+      // commit('updateEntryReceiver', { instanceId: payload.instanceId, base: '', data: payload.entry })
+      fs.writeFileSync(`${rootState.auth.developer.folder}/project.json`, JSON.stringify(payload.entry), (err) => {
+        if (err) {
+          commit('error', { instance: payload.instance, base: payload.base, error: err })
+        } else {
+          commit('updateEntryReceiver', { instanceId: payload.instanceId, base: '', data: payload.entry })
+        }
+      })
+      // rootState.holochainConnection.then(({ callZome }) => {
+      //   callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
+      //     const res = JSON.parse(result)
+      //     console.log(res)
+      //     if (res.Ok === undefined) {
+      //       commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
+      //     }
+      //   })
+      // })
     },
     deleteEntry: ({ state, commit, rootState }, payload) => {
       if (payload.entry.id === 'new') {

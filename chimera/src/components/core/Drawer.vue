@@ -55,19 +55,14 @@ export default {
       return [
         {
           icon: 'mdi-view-grid',
-          text: 'Applications',
+          text: 'My Applications',
           to: '/library/false'
         },
         {
-          icon: 'mdi-thought-bubble-outline',
-          text: 'Freckles',
-          to: '/freckles/0d765fcf-118f-4122-8f03-f5f9ba74e7fa'
+          icon: 'mdi-plus-box-multiple-outline',
+          text: 'My Parts',
+          to: '/parts'
         },
-        // {
-        //   icon: 'mdi-image-multiple-outline',
-        //   text: 'Agents of Anarchy',
-        //   to: '/projectKanban/QmmorebigfAgentsOfAnarchyhash'
-        // },
         {
           icon: 'mdi-newspaper',
           text: 'News',
@@ -80,19 +75,25 @@ export default {
         },
         { spacer: true },
         {
-          icon: 'mdi-plus-box-multiple-outline',
-          text: 'Parts',
-          to: '/parts'
+          icon: 'mdi-store-outline',
+          text: 'App Store',
+          to: '/app-store'
         },
-        // {
-        //   icon: 'mdi-fire',
-        //   text: 'Parts Store',
-        //   to: '/store'
-        // },
         {
-          icon: 'mdi-source-pull',
+          icon: 'mdi-store',
+          text: 'Parts Store',
+          to: '/part-store'
+        },
+        { spacer: true },
+        {
+          icon: 'mdi-dna',
           text: 'CRISPR',
           to: '/projects'
+        },
+        {
+          icon: 'mdi-help',
+          text: 'Knowledge Base',
+          to: '/knowledge-base'
         }
       ]
     }
