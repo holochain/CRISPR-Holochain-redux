@@ -14,9 +14,10 @@ const router = new Router({
       component: () => import('@/views/library/Index')
     },
     {
-      path: '/origins',
-      name: 'Origins',
-      component: () => import('@/views/origins/Index')
+      path: '/library/:profiles',
+      name: 'My Applications',
+      component: () => import('@/views/library/Index'),
+      props: true
     },
     {
       path: '/news',
@@ -24,37 +25,25 @@ const router = new Router({
       component: () => import('@/views/home/Index')
     },
     {
-      path: '/article/:id',
-      name: 'Article',
-      component: () => import('@/views/article/Index'),
-      props: true
-    },
-    {
-      path: '/library/:profiles',
-      name: 'Library',
-      component: () => import('@/views/library/Index'),
-      props: true
-    },
-    {
-      path: '/store',
-      name: 'Store',
-      component: () => import('@/views/store/Index')
-    },
-    {
-      path: '/projects',
-      name: 'Projects',
-      component: () => import('@/views/projects/Index')
-    },
-    {
-      path: '/project/:instanceId/:base/:projectId',
-      name: 'Project',
-      component: () => import('@/views/projects/DnaModeller'),
-      props: true
-    },
-    {
       path: '/settings',
       name: 'Settings',
       component: () => import('@/views/settings/Index')
+    },
+    // {
+    //   path: '/article/:id',
+    //   name: 'Article',
+    //   component: () => import('@/views/article/Index'),
+    //   props: true
+    // },
+    {
+      path: '/app-store',
+      name: 'Applications Store',
+      component: () => import('@/views/store/Index')
+    },
+    {
+      path: '/part-store',
+      name: 'Parts Store',
+      component: () => import('@/views/store/Index')
     },
     {
       path: '/store/part/:id',
@@ -67,9 +56,15 @@ const router = new Router({
       component: () => import('@/views/store-page/Happ')
     },
     {
-      path: '/kanbans',
-      name: 'Kanbans',
-      component: () => import('@/views/kanbans/Kanbans')
+      path: '/projects',
+      name: 'Projects',
+      component: () => import('@/views/projects/Index')
+    },
+    {
+      path: '/project/:instanceId/:base/:projectId',
+      name: 'Project',
+      component: () => import('@/views/projects/DnaModeller'),
+      props: true
     },
     {
       path: '/parts',
@@ -98,19 +93,34 @@ const router = new Router({
       component: () => import('@/views/profileSite/Index')
     },
     {
+      path: '/kanbans',
+      name: 'Kanbans',
+      component: () => import('@/views/kanbans/Kanbans')
+    },
+    {
       path: '/projectKanban/:instanceId/:base/:projectId',
       name: 'Project Kanban',
       component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
-      path: '/freckles/:id',
+      path: '/freckles/:instanceId',
       name: 'Freckles',
       component: () => import('@/views/freckles/Index')
+    },
+    {
+      path: '/origins/:instanceId',
+      name: 'Origins',
+      component: () => import('@/views/origins/Index')
     },
     {
       path: '/holopunk-records/library',
       name: 'Holopunk Records',
       component: () => import('@/components/parts/MusicLibrary/MusicManager')
+    },
+    {
+      path: '/knowledge-base',
+      name: 'Knowledge Base',
+      component: () => import('@/views/knowledgeBase/Index')
     }
   ]
 })

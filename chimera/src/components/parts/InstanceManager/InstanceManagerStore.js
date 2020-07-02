@@ -133,6 +133,18 @@ export default {
             instanceName: 'Holochain Tasks'
           }
         ]
+      },
+      {
+        base: 'Knowledge Base',
+        instances: [
+          {
+            id: 'QmKnowledgeBase1',
+            zome: 'projects',
+            type: 'project',
+            instanceId: 'ChimeraKnowledgeBase',
+            instanceName: 'Chimera Knowledge Base'
+          }
+        ]
       }
     ],
     errors: []

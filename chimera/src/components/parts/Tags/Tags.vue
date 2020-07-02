@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-combobox v-model="tags" :filter="filter" :hide-no-data="!search" :items="allTags" :search-input.sync="search" hide-selected label="Search for an option" multiple small-chips solo>
+    <v-combobox :disabled="disabled" v-model="tags" :filter="filter" :hide-no-data="!search" :items="allTags" :search-input.sync="search" hide-selected label="Search for an option" multiple small-chips solo>
       <template v-slot:no-data>
         <v-list-item>
           <span class="subheading">Create</span>
@@ -37,7 +37,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Tags',
-  props: ['instance', 'base', 'title'],
+  props: ['instance', 'base', 'title', 'disabled'],
   data: () => ({
     activator: null,
     attach: null,
@@ -89,22 +89,20 @@ export default {
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('tags', ['listTags']),
+    ...mapGetters('tags', ['listTags', 'entryTags']),
     allTags () {
-      const tags = this.listTags('')
+      const tags = this.listTags(this.instance.instanceId)
       tags.splice(0, 0, { header: 'Select an option or create one' })
       return tags
     },
     color () {
       const rnd = Math.floor(Math.random() * 6)
-      console.log(rnd)
       return this.colors[rnd]
     }
   },
   created () {
-    this.fetchTags('')
-    this.fetchTags(this.base)
-    this.tags = this.listTags(this.base)
+    this.fetchTags(this.instance)
+    this.tags = this.entryTags(this.instance.instanceId, this.base)
   }
 }
 </script>

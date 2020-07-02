@@ -16,7 +16,7 @@ export default {
         id: 'QmHashyTasks',
         name: 'Tasks',
         src: 'tasks',
-        description: 'Task lists are super handy. Manage your tasks in a list or combine with other parts such as Parts and Kanban to get the kanban board in the image above.',
+        description: 'Task lists are super handy. Manage your tasks in a list or combine with other parts such as Notes and Kanban to get the kanban board to the left.',
         price: 9.99,
         compareAt: 12.99,
         publisher: 'Eat Sleep Code Repeat',
