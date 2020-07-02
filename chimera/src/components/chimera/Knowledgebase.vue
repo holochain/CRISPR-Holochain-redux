@@ -51,8 +51,7 @@
             <v-divider class="my-4 info" style="opacity: 0.22" />
             Click <v-icon>mdi-delete-outline</v-icon> to delete this knowledgebase article.
           </v-alert>
-          <v-card-text v-if="!isEditing" v-html="entry.content" />
-          <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+          <v-form-base id="form-base-css" :editing="isEditing" :value="bubble.value" :schema="bubble.schema" @change:form-base-css="log"></v-form-base>
           <tags :disabled="!isEditing" :instance="instance" :base="entry.id" />
         </v-card>
       </v-col>
@@ -60,20 +59,30 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
-import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import VFormBase from '@/components/vFormBase'
 export default {
   name: 'Knowledgebase',
   components: {
     Tagcloud: () => import('@/components/parts/Tags/Tagcloud'),
     Tags: () => import('@/components/parts/Tags/Tags'),
-    TiptapVuetify
+    VFormBase
   },
   props: ['instance'],
   data: () => ({
     payload: {},
-    isEditing: true,
+    isEditing: false,
     cloud: true,
     help: false,
+    bubble: {
+      value: {
+        title: '',
+        content: ''
+      },
+      schema: {
+        title: { type: 'text', label: 'Title', col: 12, tooltip: 'Title' },
+        content: { type: 'tiptap', label: 'Content', col: 12, tooltip: 'Content' }
+      }
+    },
     entry: { id: 'new', content: '' },
     open: ['public'],
     files: {
@@ -95,13 +104,22 @@ export default {
     tree: [],
     items: [
       {
-        name: 'Knowledge Cloud',
+        name: 'Thought Bubbles',
         id: 'tag-cloud',
         file: 'cloud'
       },
       {
         name: 'What is Chimera?',
-        content: 'What is it?',
+        bubble: {
+          value: {
+            title: 'Blowing Bubbles',
+            content: '<h1 class="title">Blowing ink bubbles and making prints</h1><p>Need to hook up tiptap events to keep model up to date</p>'
+          },
+          schema: {
+            title: { type: 'text', label: 'Title', col: 12, tooltip: 'Title', class: 'display-1' },
+            content: { type: 'tiptap', label: 'Content', col: 12, tooltip: 'Content' }
+          }
+        },
         id: 'entryChimera',
         file: 'note'
       },
@@ -163,30 +181,12 @@ export default {
           }
         ]
       }
-    ],
-    extensions: [
-      History,
-      Blockquote,
-      Link,
-      Underline,
-      Strike,
-      Italic,
-      ListItem,
-      BulletList,
-      OrderedList,
-      [Heading, {
-        options: {
-          levels: [1, 2, 3]
-        }
-      }],
-      Bold,
-      Code,
-      HorizontalRule,
-      Paragraph,
-      HardBreak
     ]
   }),
   methods: {
+    log (event) {
+      console.log(event)
+    },
     ...mapActions('knowledgeBaseStore', ['createEntry', 'updateEntry', 'deleteEntry']),
     loadFile (item) {
       if (item.id === 'tag-cloud') {
@@ -195,7 +195,7 @@ export default {
         this.cloud = false
         this.isEditing = false
         this.entry.id = item.id
-        this.entry.content = item.content
+        this.bubble = item.bubble
       }
     }
   },

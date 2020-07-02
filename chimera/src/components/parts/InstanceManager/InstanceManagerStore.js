@@ -102,7 +102,7 @@ export default {
             zome: 'projects',
             type: 'project',
             instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
-            instanceName: 'Holochain Projects'
+            instanceName: 'Chimera Projects'
           }
         ]
       },
@@ -114,7 +114,7 @@ export default {
             zome: 'kanban',
             type: 'column',
             instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04',
-            instanceName: 'Holochain Kanban',
+            instanceName: 'Chimera Kanban',
             entry: {
               title: '',
               order: 0
@@ -130,7 +130,7 @@ export default {
             zome: 'tasks',
             type: 'task',
             instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-            instanceName: 'Holochain Tasks'
+            instanceName: 'Chimera Tasks'
           }
         ]
       },
@@ -143,6 +143,18 @@ export default {
             type: 'project',
             instanceId: 'ChimeraKnowledgeBase',
             instanceName: 'Chimera Knowledge Base'
+          }
+        ]
+      },
+      {
+        base: 'Tags',
+        instances: [
+          {
+            id: 'Qmtag1',
+            zome: 'tags',
+            type: 'tag',
+            instanceId: '4b7641fe-145d-4217-9768-1e0bff70fdf5',
+            instanceName: 'Chimera Tags'
           }
         ]
       }

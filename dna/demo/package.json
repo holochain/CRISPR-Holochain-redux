@@ -14,7 +14,7 @@
     "demo:setup": "node demo.js | tee conductor-output.txt && node config-copy.js",
     "demo:setup:phil": "node demo-setup-phil.js",
     "demo:setup:philFreckles": "node demo-setup-phil-freckles.js",
-    "demo:setup:philorigins": "node demo-setup-phil-origins.js",
+    "demo:setup:philOrigins": "node demo-setup-phil-origins.js",
     "demo:setup:fields": "node demo-setup-fields.js",
     "demo:setup:lucy": "node demo-setup-lucy.js",
     "demo:setup:rudy": "node demo-setup-rudy.js",

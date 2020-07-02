@@ -91,8 +91,8 @@ export default {
           to: '/projects'
         },
         {
-          icon: 'mdi-help',
-          text: 'Knowledge Base',
+          icon: 'mdi-thought-bubble-outline',
+          text: 'Bubbles',
           to: '/knowledge-base'
         }
       ]

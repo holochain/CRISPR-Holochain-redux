@@ -66,7 +66,7 @@ export default {
       height: 0,
       width: 0,
       sideLen: 500,
-      sideNumb: 48,
+      sideNumb: 96,
       rotation: 30 * Math.PI / 180,
       fractals: 0,
       xCenter: 0,
@@ -116,13 +116,13 @@ export default {
       if (this.ticks > (this.sideNumb - 1)) {
         this.networks += 1
         this.ticks = 1
-        this.height = this.height / 1.5
-        this.width = this.width / 1.5
-        this.sideLen = this.sideLen / 1.5
-        this.canvasAlpha = this.canvasAlpha / 1.5
+        this.height = this.height / 1.4
+        this.width = this.width / 1.4
+        this.sideLen = this.sideLen / 1.4
+        this.canvasAlpha = this.canvasAlpha / 1.4
         this.vueCanvas.lineWidth = this.vueCanvas.lineWidth * 1.2
         this.sideNumb = this.sideNumb / 2
-        if (this.networks < 5) {
+        if (this.networks < 6) {
           window.requestAnimationFrame(this.renderMainSymbol)
         } else {
           this.showOverlayImage = true

@@ -1,1 +1,1 @@
-{"id":"entryChimera","content":"What is it?"}
+{"id":"entryChimera","content":{"value":{"title":"Blowing Family Bubbles","content":"<h1 class=\"title\">Blowing ink bubbles and making prints</h1><p>Need to hook up tiptap events to keep model up to date</p>"},"schema":{"title":{"type":"text","label":"Title","col":12,"appendIcon":"more_vert","tooltip":"Title"},"content":{"type":"tiptap","label":"Content","col":12,"appendIcon":"more_vert","tooltip":"Content"}}}}

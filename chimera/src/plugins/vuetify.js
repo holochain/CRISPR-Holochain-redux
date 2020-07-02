@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import Vuetify, { VLayout, VFlex, VList } from 'vuetify/lib'
+import { Touch } from 'vuetify/lib/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 import 'tiptap-vuetify/dist/main.css'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify, {
+  directives: {
+    Touch
+  },
   components: {
     VFlex,
     VLayout,
