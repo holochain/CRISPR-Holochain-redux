@@ -1,12 +1,41 @@
 <template>
-  <v-row no-gutters>
+  <section>
+    <v-toolbar flat>
+      <v-btn icon  @click="$router.go(-1)">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-divider class="mx-3" inset vertical />
+      <span class="title">Knowledgebase</span>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon @click="addFolder">
+          mdi-folder-plus-outline
+        </v-icon>
+      </v-btn>
+      <v-btn icon @click="newItemDialog = true">
+        <v-icon>
+          mdi-note-plus-outline
+        </v-icon>
+      </v-btn>
+      <v-btn color="action" icon @click="help=!help">
+        <v-icon>mdi-help</v-icon>
+      </v-btn>
+    </v-toolbar>
+    <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
+      Click one of the <v-icon>mdi-cloud-tags</v-icon> Thought Bubbles to see the articles tagged to that thought.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <v-icon>mdi-folder-plus-outline</v-icon> to add a new folder for your articles
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <v-icon>mdi-note-plus-outline</v-icon> to add a new article
+    </v-alert>
+    <v-row no-gutters>
       <v-col cols="3">
         <v-card flat tile height="94vh" class="pa-0 ma-0 overflow-auto">
           <v-row no-gutters>
             <v-col cols="12">
               <v-treeview v-model="tree" :open="open" :items="items" activatable item-key="name" open-on-click>
                 <template v-slot:prepend="{ item, open }">
-                  <v-icon v-if="!item.file">
+                  <v-icon v-if="!item.file" @click="folderTagCloud(item)">
                     {{ open ? 'mdi-folder-open' : 'mdi-folder' }}
                   </v-icon>
                   <v-icon v-else @click="loadFile(item)">
@@ -14,7 +43,10 @@
                   </v-icon>
                 </template>
                 <template v-slot:label="{ item }">
-                  <v-btn text @click="loadFile(item)" class="text-none">
+                  <v-btn v-if="!item.file" text @click="folderTagCloud(item)" class="text-none">
+                    {{item.name}}
+                  </v-btn>
+                  <v-btn v-else text @click="loadFile(item)" class="text-none">
                     {{item.name}}
                   </v-btn>
                 </template>
@@ -25,7 +57,7 @@
       </v-col>
       <v-col cols="9">
         <tagcloud v-if="cloud" :instance="instance" />
-        <v-card  v-else flat tile height="93vh">
+        <v-card v-else flat tile height="94vh" class="pa-1">
           <v-system-bar color="indigo darken-2" dark>
             <v-list-item v-if="whois" class="mb-1 ml-n3">
               <v-progress-circular color="green" size="34" value="45" rotate="20">
@@ -54,8 +86,27 @@
           <v-form-base id="form-base-css" :editing="isEditing" :value="bubble.value" :schema="bubble.schema" @change:form-base-css="log"></v-form-base>
           <tags :disabled="!isEditing" :instance="instance" :base="entry.id" />
         </v-card>
+        <v-dialog v-model="newItemDialog" max-width="1000px">
+          <v-card>
+            <v-card-title>New Article</v-card-title>
+            <v-card-text>
+              <v-form-base id="form-base-css" :editing="true" :value="bubble.value" :schema="bubble.schema" @change:form-base-css="log"></v-form-base>
+              <tags :disabled="false" :instance="instance" :base="entry.id" />
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="action darken-1" text @click="addItem(); newItemDialog = false">
+                Add
+              </v-btn>
+              <v-btn color="action darken-1" text @click="newItemDialog = false">
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-col>
     </v-row>
+  </section>
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -71,6 +122,7 @@ export default {
   data: () => ({
     payload: {},
     isEditing: false,
+    newItemDialog: false,
     cloud: true,
     help: false,
     bubble: {
@@ -79,11 +131,12 @@ export default {
         content: ''
       },
       schema: {
-        title: { type: 'text', label: 'Title', col: 12, tooltip: 'Title' },
-        content: { type: 'tiptap', label: 'Content', col: 12, tooltip: 'Content' }
+        title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+        content: { type: 'tiptap', label: 'Content', col: 12 }
       }
     },
-    entry: { id: 'new', content: '' },
+    folderItem: {},
+    entry: { id: '' },
     open: ['public'],
     files: {
       cloud: 'mdi-cloud-tags',
@@ -109,23 +162,17 @@ export default {
         file: 'cloud'
       },
       {
-        name: 'What is Chimera?',
+        name: 'What is CRISPR?',
         bubble: {
           value: {
             title: 'Blowing Bubbles',
             content: '<h1 class="title">Blowing ink bubbles and making prints</h1><p>Need to hook up tiptap events to keep model up to date</p>'
           },
           schema: {
-            title: { type: 'text', label: 'Title', col: 12, tooltip: 'Title', class: 'display-1' },
-            content: { type: 'tiptap', label: 'Content', col: 12, tooltip: 'Content' }
+            title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+            content: { type: 'tiptap', label: 'Content', col: 12 }
           }
         },
-        id: 'entryChimera',
-        file: 'note'
-      },
-      {
-        name: 'What is CRISPR?',
-        content: 'What is it?',
         id: 'entryCRISPR',
         file: 'note'
       },
@@ -184,11 +231,35 @@ export default {
     ]
   }),
   methods: {
+    addFolder () {
+      this.items.push({
+        name: 'New Folder',
+        children: [
+          {
+            name: 'New Article',
+            bubble: this.bubble,
+            id: 'entryChimera',
+            file: 'note'
+          }
+        ]
+      })
+    },
+    addItem () {
+      const item = {
+        name: this.bubble.value.title,
+        bubble: this.bubble,
+        id: 'new',
+        file: 'note'
+      }
+      this.folderItem.push(item)
+      this.loadFile(item)
+    },
     log (event) {
       console.log(event)
     },
-    ...mapActions('knowledgeBaseStore', ['createEntry', 'updateEntry', 'deleteEntry']),
+    ...mapActions('root', ['createEntry', 'updateEntry', 'deleteEntry']),
     loadFile (item) {
+      console.log(item)
       if (item.id === 'tag-cloud') {
         this.cloud = true
       } else {
@@ -197,6 +268,10 @@ export default {
         this.entry.id = item.id
         this.bubble = item.bubble
       }
+    },
+    folderTagCloud (item) {
+      console.log('folder', item)
+      this.folderItem = item
     }
   },
   computed: {
@@ -207,6 +282,7 @@ export default {
   created () {
     console.log(this.instance)
     this.payload = { instance: this.instance, base: '', entry: this.entry }
+    this.folderItem = this.items
   }
 }
 </script>

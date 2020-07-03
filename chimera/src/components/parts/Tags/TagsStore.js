@@ -110,6 +110,10 @@ export default {
               {
                 instanceId: 'ChimeraKnowledgeBase',
                 id: 'entryChimera'
+              },
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
               }
             ]
           },

@@ -92,7 +92,7 @@ export default {
     ...mapGetters('tags', ['listTags', 'entryTags']),
     allTags () {
       const tags = this.listTags(this.instance.instanceId)
-      tags.splice(0, 0, { header: 'Select an option or create one' })
+      if (!tags[0].header) tags.splice(0, 0, { header: 'Select an option or create one' })
       return tags
     },
     color () {
