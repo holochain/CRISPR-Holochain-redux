@@ -162,7 +162,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-     <v-dialog v-model="profileSpecDialog"  max-width="900px">
+    <v-dialog v-model="profileSpecDialog"  max-width="900px">
       <v-card flat>
         <v-row no-gutters align="start">
           <v-col cols="12">

@@ -88,11 +88,11 @@ export default {
         {
           icon: 'mdi-dna',
           text: 'CRISPR',
-          to: '/projects'
+          to: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2'
         },
         {
-          icon: 'mdi-help',
-          text: 'Knowledge Base',
+          icon: 'mdi-thought-bubble-outline',
+          text: 'Bubbles',
           to: '/knowledge-base'
         }
       ]

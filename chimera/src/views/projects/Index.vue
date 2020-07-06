@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       help: false,
-      instance: { zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', partBase: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects' }
+      instance: { zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', partBase: '', instanceName: 'Holochain Projects' }
     }
   }
 }

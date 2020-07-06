@@ -110,6 +110,10 @@ export default {
               {
                 instanceId: 'ChimeraKnowledgeBase',
                 id: 'entryChimera'
+              },
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
               }
             ]
           },
@@ -119,6 +123,24 @@ export default {
               {
                 instanceId: 'ChimeraKnowledgeBase',
                 id: 'entryCRISPR'
+              }
+            ]
+          },
+          {
+            text: 'Bubbles',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
+              }
+            ]
+          },
+          {
+            text: 'Music',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryChimera'
               }
             ]
           }

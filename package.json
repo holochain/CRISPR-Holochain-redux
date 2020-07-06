@@ -23,6 +23,7 @@
     "start": "nf start"
   },
   "dependencies": {
-    "foreman": "^3.0.1"
+    "foreman": "^3.0.1",
+    "vue-the-mask": "^0.11.1"
   }
 }

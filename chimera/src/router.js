@@ -29,12 +29,12 @@ const router = new Router({
       name: 'Settings',
       component: () => import('@/views/settings/Index')
     },
-    // {
-    //   path: '/article/:id',
-    //   name: 'Article',
-    //   component: () => import('@/views/article/Index'),
-    //   props: true
-    // },
+    {
+      path: '/article/:id',
+      name: 'Article',
+      component: () => import('@/views/article/Index'),
+      props: true
+    },
     {
       path: '/app-store',
       name: 'Applications Store',
@@ -56,7 +56,7 @@ const router = new Router({
       component: () => import('@/views/store-page/Happ')
     },
     {
-      path: '/projects',
+      path: '/projects/:instanceId',
       name: 'Projects',
       component: () => import('@/views/projects/Index')
     },
@@ -93,7 +93,7 @@ const router = new Router({
       component: () => import('@/views/profileSite/Index')
     },
     {
-      path: '/kanbans',
+      path: '/kanbans/:instanceId',
       name: 'Kanbans',
       component: () => import('@/views/kanbans/Kanbans')
     },
