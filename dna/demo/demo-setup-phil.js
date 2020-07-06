@@ -24,7 +24,99 @@ const projects = [
     name: 'CRISPR',
     preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/CRISPR/preview.png',
     description: 'Holochain DNA editing system that enables cloning of DNA patterns to create new DNAs. Agents can configure new DNA to store information and behave the way they want. Uses Holochain as a git like source control with branching, permission control and traceability of changes.',
-    zome: {}
+    zome: {
+      template: 'Origins',
+      templateTypeName: 'origin',
+      itemsTemplatesName: 'template1',
+      name: 'Projects',
+      entryTypes: [
+        {
+          id: 'QmProjectEntryTypeHash',
+          name: 'project',
+          template: 'list_anchor_types_1',
+          fields: [
+            {
+              id: 'Qm1333',
+              fieldName: 'name',
+              fieldType: 'String',
+              fieldDescription: 'Title of the project',
+              required: true
+            },
+            {
+              id: 'QM234566777887q',
+              fieldName: 'description',
+              fieldType: 'String',
+              fieldDescription: 'What new characteristics are you giving your clone?',
+              required: false
+            },
+            {
+              id: 'QM234566777887',
+              fieldName: 'preview',
+              fieldType: 'String',
+              fieldDescription: 'Image for the project',
+              required: false
+            },
+            {
+              id: 'QM23456677w',
+              fieldName: 'zome',
+              fieldType: 'String',
+              fieldDescription: 'Zome definition',
+              required: false
+            },
+            {
+              id: 'QM2345667778871',
+              fieldName: 'order',
+              fieldType: 'u32',
+              fieldDescription: '',
+              required: false
+            }
+          ]
+        }
+      ],
+      anchorTypes: [
+        {
+          id: 'Qmlist_projects1',
+          type: 'list_projects',
+          text: '',
+          tag: ' ',
+          context: 'permanent',
+          links: [],
+          anchors: [
+            {
+              id: 'Qmlist_Qmhashproject1',
+              type: 'list_projects',
+              text: 'Parts',
+              links: [
+                {
+                  entityId: 'QmProjectEntryTypeHash',
+                  type: 'project_link',
+                  tag: ' ',
+                  context: 'exclusive'
+                }
+              ]
+            },
+            {
+              id: 'Qmlist_Qmhashproject2',
+              type: 'list_projects',
+              text: 'Applications',
+              links: [
+                {
+                  entityId: 'QmProjectEntryTypeHash',
+                  type: 'project_link',
+                  tag: ' ',
+                  context: 'exclusive'
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      profileSpec: {
+        id: 'QmKanbanProfileSpecHash',
+        template: 'identify',
+        fields: []
+      }
+    }
   },
   {
     name: 'Holo Punk Records',
@@ -698,104 +790,6 @@ const projects = [
     }
   },
   {
-    name: 'Projects',
-    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Projects/preview.png',
-    description: 'Projects',
-    zome: {
-      template: 'Origins',
-      templateTypeName: 'origin',
-      itemsTemplatesName: 'template1',
-      name: 'Projects',
-      entryTypes: [
-        {
-          id: 'QmProjectEntryTypeHash',
-          name: 'project',
-          template: 'list_anchor_types_1',
-          fields: [
-            {
-              id: 'Qm1333',
-              fieldName: 'name',
-              fieldType: 'String',
-              fieldDescription: 'Title of the project',
-              required: true
-            },
-            {
-              id: 'QM234566777887q',
-              fieldName: 'description',
-              fieldType: 'String',
-              fieldDescription: 'What new characteristics are you giving your clone?',
-              required: false
-            },
-            {
-              id: 'QM234566777887',
-              fieldName: 'preview',
-              fieldType: 'String',
-              fieldDescription: 'Image for the project',
-              required: false
-            },
-            {
-              id: 'QM23456677w',
-              fieldName: 'zome',
-              fieldType: 'String',
-              fieldDescription: 'Zome definition',
-              required: false
-            },
-            {
-              id: 'QM2345667778871',
-              fieldName: 'order',
-              fieldType: 'u32',
-              fieldDescription: '',
-              required: false
-            }
-          ]
-        }
-      ],
-      anchorTypes: [
-        {
-          id: 'Qmlist_projects1',
-          type: 'list_projects',
-          text: '',
-          tag: ' ',
-          context: 'permanent',
-          links: [],
-          anchors: [
-            {
-              id: 'Qmlist_Qmhashproject1',
-              type: 'list_projects',
-              text: 'Parts',
-              links: [
-                {
-                  entityId: 'QmProjectEntryTypeHash',
-                  type: 'project_link',
-                  tag: ' ',
-                  context: 'exclusive'
-                }
-              ]
-            },
-            {
-              id: 'Qmlist_Qmhashproject2',
-              type: 'list_projects',
-              text: 'Applications',
-              links: [
-                {
-                  entityId: 'QmProjectEntryTypeHash',
-                  type: 'project_link',
-                  tag: ' ',
-                  context: 'exclusive'
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      profileSpec: {
-        id: 'QmKanbanProfileSpecHash',
-        template: 'identify',
-        fields: []
-      }
-    }
-  },
-  {
     name: 'Tags',
     preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Tags/preview.png',
     description: 'Tags',
@@ -1172,6 +1166,18 @@ const tryConnection = () => {
             }).catch(err =>{console.log(err)})
           }).catch(err =>{console.log(err)})
 
+          // // projectProjects
+          // callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectProjects.name, description: projectProjects.description, preview: projectProjects.preview, zome: JSON.stringify(projectProjects.zome), order: 6 }})
+          // .then((result) => {
+          //   console.log(JSON.parse(result))
+          // }).catch(err =>{console.log(err)})   
+
+          // projectCuratedFields
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectCuratedFields.name, description: projectCuratedFields.description, preview: projectCuratedFields.preview, zome: JSON.stringify(projectCuratedFields.zome), order: 1 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
+
           // projectOrigins
           callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
           .then((result) => {
@@ -1210,12 +1216,6 @@ const tryConnection = () => {
             }).catch(err =>{console.log(err)})
           }).catch(err =>{console.log(err)})
 
-          // projectCuratedFields
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectCuratedFields.name, description: projectCuratedFields.description, preview: projectCuratedFields.preview, zome: JSON.stringify(projectCuratedFields.zome), order: 1 }})
-          .then((result) => {
-            console.log(JSON.parse(result))
-          }).catch(err =>{console.log(err)})
-
           // projectFreckles
           callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectFreckles.name, description: projectFreckles.description, preview: projectFreckles.preview, zome: JSON.stringify(projectFreckles.zome), order: 2 }})
           .then((result) => {
@@ -1238,13 +1238,7 @@ const tryConnection = () => {
           callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectRatings.name, description: projectRatings.description, preview: projectRatings.preview, zome: JSON.stringify(projectRatings.zome), order: 5 }})
           .then((result) => {
             console.log(JSON.parse(result))
-          }).catch(err =>{console.log(err)})
-
-          // projectProjects
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectProjects.name, description: projectProjects.description, preview: projectProjects.preview, zome: JSON.stringify(projectProjects.zome), order: 6 }})
-          .then((result) => {
-            console.log(JSON.parse(result))
-          }).catch(err =>{console.log(err)})                    
+          }).catch(err =>{console.log(err)})                 
 
           // projectTags
           callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTags.name, description: projectTags.description, preview: projectTags.preview, zome: JSON.stringify(projectTags.zome), order: 7 }})

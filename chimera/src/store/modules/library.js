@@ -2,7 +2,7 @@ import { set } from '@/utils/vuex'
 export default {
   namespaced: true,
   state: {
-    installedHapps: ['QmHashyOrigins', 'QmHashyholopunk-records', 'QmHashyFreckles', 'QmHashykanban', 'QmHashyCRISPR', 'QmHashyholopunk-records', 'QmHashyFreckles'],
+    installedHapps: ['QmHashyOrigins', 'QmHashyFreckles', 'QmHashykanban', 'QmHashyCRISPR', 'QmHashyholopunk-records', 'QmHashyFreckles'],
     installedParts: ['QmHashyNotes', 'QmHashyTasks', 'QmHashyratings']
   },
   getters: {

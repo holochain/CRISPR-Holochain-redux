@@ -162,11 +162,28 @@ export default {
         file: 'cloud'
       },
       {
+        name: 'What is Chimera?',
+        bubble: {
+          value: {
+            title: 'What is Chimera?',
+            content: `<h1 class="title">Chimera is your personalised Holochain experience</h1>
+            <p>You can install "Applications" and use them as is, or you can also install "Parts" that you can add into applications to ge the functionality that suits you. You can then share the data for the part with whoever you like</p>`
+          },
+          schema: {
+            title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+            content: { type: 'tiptap', label: 'Content', col: 12 }
+          }
+        },
+        id: 'entryCRISPR',
+        file: 'note'
+      },
+      {
         name: 'What is CRISPR?',
         bubble: {
           value: {
-            title: 'Blowing Bubbles',
-            content: '<h1 class="title">Blowing ink bubbles and making prints</h1><p>Need to hook up tiptap events to keep model up to date</p>'
+            title: 'What is CRISPR?',
+            content: `<h1 class="title">CRISPR is a Rapid Application Developemnt IDE for Holochain</h1>
+            <p>Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.</p>`
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
@@ -281,7 +298,7 @@ export default {
   },
   created () {
     console.log(this.instance)
-    this.payload = { instance: this.instance, base: '', entry: this.entry }
+    this.payload = { instance: this.instance, base: '', entry: this.bubble }
     this.folderItem = this.items
   }
 }

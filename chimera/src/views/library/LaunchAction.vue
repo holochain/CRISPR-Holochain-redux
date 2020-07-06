@@ -7,7 +7,7 @@
         </div>
         <v-menu v-model="lauchMenu" :close-on-content-click="false" attach bottom offset-y class="fill-height" min-width="100%" transition="slide-y-transition">
           <v-list light>
-            <v-list-item v-for="instance in instances" :key="instance.id" :to="`/${value.name}/${instance.instanceId}`">
+            <v-list-item v-for="instance in instances" :key="instance.id" :to="`${value.launch}/${instance.instanceId}`">
               <v-list-item-title>{{instance.instanceName}}</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -24,13 +24,10 @@
           </template>
           <v-list light>
             <v-list-item :disabled="verifying && verifying !== value.id" @click="verify">
-              <v-list-item-title><v-icon>mdi-certificate-outline</v-icon> Verify</v-list-item-title>
+              <v-list-item-title><v-icon>mdi-certificate-outline</v-icon> Verify this Holochain Application</v-list-item-title>
             </v-list-item>
             <v-list-item @click="createShortcut">
-              <v-list-item-title><v-icon>mdi-account-multiple-plus-outline</v-icon> New group</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-title>🌹Power of Beadle</v-list-item-title>
+              <v-list-item-title><v-icon>mdi-account-multiple-plus-outline</v-icon> Start a new {{value.name}} group</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>

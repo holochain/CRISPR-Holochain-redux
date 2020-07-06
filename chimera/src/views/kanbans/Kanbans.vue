@@ -7,7 +7,7 @@
             <v-btn icon @click="$router.go(-1)">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-            <v-toolbar-title>All Project Kanban Boards</v-toolbar-title>
+            <v-toolbar-title>Kanban Boards</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon @click="help=!help">mdi-help</v-icon>
           </v-toolbar>
@@ -37,7 +37,7 @@
               </v-card-title>
                 <v-row>
                   <v-col>
-                    <kanban :key="project.id" :base="project.id" :title="project.name"/>
+                    <kanban :instance="instance" :key="project.id" :base="project.id" :title="project.name"/>
                   </v-col>
                 </v-row>
               </v-card>
@@ -60,7 +60,7 @@
               </v-card-title>
                 <v-row>
                   <v-col>
-                    <kanban :key="project.id" :base="project.id" :title="project.name"/>
+                    <kanban :instance="instance" :key="project.id" :base="project.id" :title="project.name"/>
                   </v-col>
                 </v-row>
               </v-card>
@@ -72,7 +72,7 @@
   </section>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Kanbans',
   components: {
@@ -80,11 +80,30 @@ export default {
   },
   data () {
     return {
-      help: false
+      help: false,
+      crisprInstance: { zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'CRISPR Projects' },
+      instance: { zome: 'kanban', type: 'column', instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04', instanceName: 'Holochain Kanban', entry: { title: '', order: 0 } }
     }
   },
+  methods: {
+    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapMutations('friends', ['setGroup'])
+  },
   computed: {
-    ...mapGetters('portfolio', ['applicationProjects', 'partProjects'])
+    ...mapGetters('portfolio', ['listProjects']),
+    applicationProjects () {
+      return this.listProjects({ instance: this.crisprInstance, base: 'Applications' })
+    },
+    partProjects () {
+      return this.listProjects({ instance: this.crisprInstance, base: 'Parts' })
+    }
+  },
+  created () {
+    this.setGroup(this.crisprInstance)
+    this.agentAddress(this.crisprInstance)
+    this.fetchProfiles(this.crisprInstance)
+    this.fetchEntries({ instance: this.crisprInstance, base: 'Applications' })
+    this.fetchEntries({ instance: this.crisprInstance, base: 'Parts' })
   }
 }
 </script>

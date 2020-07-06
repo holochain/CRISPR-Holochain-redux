@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" color="accent" dark>
+  <v-card class="mx-auto" color="info" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-piano</v-icon>
       <span class="subtitle">{{title}} Board</span>

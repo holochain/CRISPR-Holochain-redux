@@ -95,14 +95,14 @@ export default {
         ]
       },
       {
-        base: 'Projects',
+        base: 'CRISPR',
         instances: [
           {
             id: 'QmProjects1',
             zome: 'projects',
             type: 'project',
             instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
-            instanceName: 'Chimera Projects'
+            instanceName: 'Holochain Projects'
           }
         ]
       },
@@ -114,7 +114,7 @@ export default {
             zome: 'kanban',
             type: 'column',
             instanceId: '95569e2e-0de2-4073-8a7d-579f87534c04',
-            instanceName: 'Chimera Kanban',
+            instanceName: 'Holochain Projects Kanban Boards',
             entry: {
               title: '',
               order: 0
