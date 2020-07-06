@@ -24,10 +24,10 @@
           </template>
           <v-list light>
             <v-list-item :disabled="verifying && verifying !== value.id" @click="verify">
-              <v-list-item-title><v-icon>mdi-certificate-outline</v-icon> Verify this Holochain Application</v-list-item-title>
+              <v-list-item-title><v-icon>mdi-certificate-outline</v-icon> Verify Holochain Application "{{value.name}}"</v-list-item-title>
             </v-list-item>
             <v-list-item @click="createShortcut">
-              <v-list-item-title><v-icon>mdi-account-multiple-plus-outline</v-icon> Start a new {{value.name}} group</v-list-item-title>
+              <v-list-item-title><v-icon>mdi-account-multiple-plus-outline</v-icon> Create a new "{{value.name}}" group</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -86,7 +86,7 @@ export default {
     createShortcut () {
       this.menu = false
       this.setSnackbar({
-        msg: 'Shortcut created'
+        msg: `Created new ${this.value.name} group`
       })
       this.setValue(true)
     },

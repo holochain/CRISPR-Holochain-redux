@@ -1,12 +1,7 @@
-See the Wiki
-https://github.com/holochain/CRISPR/wiki
-
-# THIS IS NOT READY FOR PUBLIC YET
-Still getting it ready to be portable on other machines.
-
 # Steps
 - Clone this repo
 - ``` cd CRISPR/chimera ```
 - ``` yarn install --ignore-engines ```
 - ``` cd .. ```
 - ``` yarn chimera ```
+- Click the thought bubble at the bottom of the menu for Support to see what to do next.

@@ -32,6 +32,7 @@
     </v-alert>
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-card-text v-if="!isEditing">Written {{new Date(entry.createdAt).toLocaleString('en-AU')}}</v-card-text>
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
     </v-col>

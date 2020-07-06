@@ -136,7 +136,7 @@ export default {
             ]
           },
           {
-            text: 'Music',
+            text: 'Testing',
             taggedEntries: [
               {
                 instanceId: 'ChimeraKnowledgeBase',

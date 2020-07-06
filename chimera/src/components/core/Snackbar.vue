@@ -25,6 +25,7 @@
       <v-spacer />
 
       <v-btn
+        icon
         :color="computedColor"
         :text="snackbar.color !== 'store'"
         :ripple="false"
@@ -33,7 +34,7 @@
         depressed
         @click="setValue(false)"
       >
-        {{ snackbar.text }}
+        <v-icon>mdi-close</v-icon>
       </v-btn>
 
       <v-btn
@@ -42,7 +43,7 @@
         class="ml-3"
         icon
       >
-        <v-icon>clear</v-icon>
+        <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-row>
   </v-snackbar>

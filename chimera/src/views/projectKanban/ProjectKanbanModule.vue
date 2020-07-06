@@ -10,7 +10,7 @@
           <v-toolbar-title>{{project.name}}</v-toolbar-title>
           <v-spacer></v-spacer>
             <v-card-actions>
-              <v-btn color="action" icon :to="`/part/${project.id}`">
+              <v-btn color="action" icon :to="`/part/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">
                 <v-icon>mdi-application</v-icon>
               </v-btn>
               <v-btn color="action" icon :to="`/project/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">

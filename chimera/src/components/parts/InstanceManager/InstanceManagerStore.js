@@ -103,6 +103,20 @@ export default {
             type: 'project',
             instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
             instanceName: 'Holochain Projects'
+          },
+          {
+            id: 'QmProjects2',
+            zome: 'projects',
+            type: 'project',
+            instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
+            instanceName: 'Client Projects'
+          },
+          {
+            id: 'QmProjects3',
+            zome: 'projects',
+            type: 'project',
+            instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
+            instanceName: 'Personal Projects'
           }
         ]
       },
@@ -212,6 +226,14 @@ export default {
       const baseInstance = state.baseInstances.find(n => n.base === base)
       if (baseInstance) {
         return baseInstance.instances.filter(n => n.instanceName !== 'Part Editor')
+      } else {
+        return []
+      }
+    },
+    partEditorInstance: state => (base) => {
+      const baseInstance = state.baseInstances.find(n => n.base === base)
+      if (baseInstance) {
+        return baseInstance.instances.find(n => n.instanceName === 'Part Editor')
       } else {
         return []
       }

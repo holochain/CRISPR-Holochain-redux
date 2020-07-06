@@ -225,6 +225,8 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('markProjectsProfile', markProjectsProfile)
 
   await s.consistency()
+  console.log('Holochain settled ready to run setup data.')
+
 })
 
 orchestrator.run()
