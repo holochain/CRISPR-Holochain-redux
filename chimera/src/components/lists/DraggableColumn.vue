@@ -44,7 +44,7 @@ export default {
     PartManager: () => import('@/components/chimera/PartManager'),
     draggable
   },
-  props: ['contentInstance', 'contentBase', 'title', 'hasProfile', 'isDraggable', 'sortKey'],
+  props: ['contentInstance', 'contentBase', 'partBase', 'title', 'hasProfile', 'isDraggable', 'sortKey'],
   data () {
     return {
       isEditing: false,

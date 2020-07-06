@@ -25,7 +25,7 @@
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="note.id" :title="part.title" :agent="entry.createdBy" :key="part.title" />
+      <component :is="part.title" :instance="part.instance" :base="entry.id" :agent="entry.createdBy" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
@@ -34,7 +34,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Freckle',
+  name: 'Note',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify

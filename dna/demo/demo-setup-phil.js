@@ -1037,9 +1037,9 @@ const tryConnection = () => {
           // projectCRISPR
           callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectCRISPR.name, description: projectCRISPR.description, preview: projectCRISPR.preview, zome: JSON.stringify(projectCRISPR.zome), order: 0 }})
           .then((result) => {
-            const projectOriginsId = JSON.parse(result).Ok.id
+            const projectCRISPRId = JSON.parse(result).Ok.id
             console.log(JSON.parse(result))
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
               const columnId = JSON.parse(result).Ok.id
               console.log(JSON.parse(result))
               callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})

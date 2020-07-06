@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { connect } from '@holochain/hc-web-client'
-import tasks from '@/components/parts/Tasks/TasksStore'
 import tags from '@/components/parts/Tags/TagsStore'
 import instancemanager from '@/components/parts/InstanceManager/InstanceManagerStore'
 // NewImportModule
@@ -34,7 +33,6 @@ const store = new Vuex.Store({
     holochainConnection: connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
   },
   modules: {
-    tasks,
     tags,
     instancemanager,
     // NewModule

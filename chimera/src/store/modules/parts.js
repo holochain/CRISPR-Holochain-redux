@@ -45,11 +45,17 @@ export default {
     ],
     partParts: [
       {
-        base: 'QmHashyKanban',
+        base: 'QmWCJWin5xJ5G2pX6StDaSoiaxh1Ns7Lkh5ySJXCE1tbo6',
         parts: [
           {
             title: 'tasks',
-            dna: ''
+            instance: {
+              id: 'Qmtaskb1',
+              zome: 'tasks',
+              type: 'task',
+              instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
+              instanceName: 'Chimera Tasks'
+            }
           }
         ]
       }
@@ -61,7 +67,7 @@ export default {
         from: 'Art Brock', // Use AgentId and pick up name from Address book
         part: {
           title: 'tasks',
-          dna: ''
+          instance: ''
         }
       },
       {
@@ -149,18 +155,8 @@ export default {
     partParts: state => (base) => {
       const basePart = state.partParts.find(p => p.base === base)
       if (basePart) {
-        return basePart.parts.sort((a, b) => {
-          if (a.order < b.order) return -1
-          if (a.order > b.order) return 1
-          return 0
-        })
+        return basePart.parts
       } else {
-        state.partParts.push(
-          {
-            base: base,
-            parts: []
-          }
-        )
         return []
       }
     },
