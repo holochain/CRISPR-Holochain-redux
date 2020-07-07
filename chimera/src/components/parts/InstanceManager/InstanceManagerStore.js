@@ -5,23 +5,6 @@ export default {
     profiles: [],
     baseInstances: [
       {
-        base: 'PartEditor',
-        instances: [
-          {
-            id: 'PartEditor1',
-            content: 'Content for Instance 1'
-          },
-          {
-            id: 'PartEditor2',
-            content: 'Content for Instance 2'
-          },
-          {
-            id: 'PartEditor3',
-            content: 'Content for Instance 3'
-          }
-        ]
-      },
-      {
         base: 'Freckles',
         instances: [
           {

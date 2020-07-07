@@ -35,6 +35,20 @@ export default {
         if (!b.installed) return -1
         return 0
       })
+    },
+    partInstances: (state, getters, rootState, rootGetters) => {
+      console.log(rootGetters['parts/partNames'])
+      const partInstances = []
+      for (const partName of rootGetters['parts/partNames']) {
+        for (const instance of rootGetters['instancemanager/listInstances'](partName)) {
+          partInstances.push({
+            title: partName.toLowerCase(),
+            name: `${partName} - ${instance.instanceName}`,
+            instance: instance
+          })
+        }
+      }
+      return partInstances
     }
   },
   mutations: {

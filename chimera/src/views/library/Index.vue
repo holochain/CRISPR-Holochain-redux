@@ -155,9 +155,11 @@ export default {
     ...mapState('auth', ['splash'])
   },
   mounted () {
-    this.network = document.getElementById('network')
-    this.vueCanvas = this.network.getContext('2d')
-    this.drawMainSymbol()
+    if (this.splash) {
+      this.network = document.getElementById('network')
+      this.vueCanvas = this.network.getContext('2d')
+      this.drawMainSymbol()
+    }
   },
   watch: {
     timerCount: {

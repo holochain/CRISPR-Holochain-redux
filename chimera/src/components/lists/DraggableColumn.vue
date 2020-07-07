@@ -59,14 +59,11 @@ export default {
     },
     move (evt) {
       if (evt.from.id !== evt.to.id) {
-        console.log(evt.draggedContext.element.id)
-        console.log(evt.draggedContext.element.createdAt)
-        console.log(evt.from.id)
-        console.log(evt.to.id)
-        this.rebase({ from: evt.from.id, to: evt.to.id, id: evt.draggedContext.element.id, createdAt: evt.draggedContext.element.createdAt })
+        console.log(this.contentInstance)
+        this.rebase({ instance: this.contentInstance, from: evt.from.id, to: evt.to.id, id: evt.draggedContext.element.id, createdAt: evt.draggedContext.element.createdAt })
       }
     },
-    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapActions('root', ['fetchEntries', 'rebase', 'resetErrors', 'agentAddress', 'fetchProfiles']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
     ...mapMutations('friends', ['setGroup'])
   },

@@ -31,10 +31,10 @@
       </template>
       </v-progress-linear>
     </v-row>
-    <!-- <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/> -->
+    <v-text-field class="ml-2 white--text" v-model="taskTitle" label="Add a task" solo @keydown.enter="createTask()" append-icon="mdi-plus" @click:append="createTask()"/>
   </v-card>
   <v-card v-else>
-    <!-- <v-text-field class="ml-2 white--text" v-model="task.title" label="Add a task" solo @keydown.enter="saveTask({ base: base, task: task})" append-icon="mdi-plus" @click:append="saveTask({ base: base, task: task})"/> -->
+    <v-text-field class="ml-2 white--text" v-model="taskTitle" label="Add a task" solo @keydown.enter="createTask()" append-icon="mdi-plus" @click:append="createTask()"/>
   </v-card>
 </template>
 <script>
@@ -44,14 +44,26 @@ export default {
   props: ['instance', 'base', 'title'],
   data () {
     return {
-      task: {
-        title: '',
-        done: false
+      taskTitle: '',
+      payload: {
+        instance: this.instance,
+        base: this.base,
+        entry: {
+          id: 'new',
+          title: '',
+          done: false
+        }
       }
     }
   },
   methods: {
-    ...mapActions('root', ['fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles'])
+    createTask () {
+      this.payload.entry.title = this.taskTitle
+      this.tasks.splice(0, 0, this.payload.entry)
+      this.createEntry(this.payload)
+      this.taskTitle = ''
+    },
+    ...mapActions('root', ['createEntry', 'fetchEntries', 'resetErrors', 'agentAddress', 'fetchProfiles'])
   },
   computed: {
     ...mapState('auth', ['chimera']),
@@ -75,11 +87,6 @@ export default {
   },
   created () {
     this.fetchEntries({ instance: this.instance, base: this.base })
-  },
-  watch: {
-    tasks () {
-      this.task.title = ''
-    }
   }
 }
 </script>

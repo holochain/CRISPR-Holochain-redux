@@ -41,61 +41,16 @@ export default {
         compareAt: 8.99,
         publisher: 'Eat Sleep Code Repeat',
         updated: 1588900779424
-      }
-    ],
-    partParts: [
-      {
-        base: 'QmWCJWin5xJ5G2pX6StDaSoiaxh1Ns7Lkh5ySJXCE1tbo6',
-        parts: [
-          {
-            title: 'tasks',
-            instance: {
-              id: 'Qmtaskb1',
-              zome: 'tasks',
-              type: 'task',
-              instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-              instanceName: 'Chimera Tasks'
-            }
-          }
-        ]
-      }
-    ],
-    invites: [
-      {
-        id: 'Qmhashyinvite1',
-        base: 'QmHashyKanban',
-        from: 'Art Brock', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          instance: ''
-        }
       },
       {
-        id: 'Qmhashyinvite3',
-        base: 'QmmorebigfAgentsOfAnarchyhash',
-        from: 'Mark Keenan', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          dna: ''
-        }
-      },
-      {
-        id: 'Qmhashyinvite4',
-        base: 'QmmorebigfAgentsOfAnarchyhash',
-        from: 'Oscar', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          dna: ''
-        }
-      },
-      {
-        id: 'Qmhashyinvite2',
-        base: 'Qmmorebighashes333',
-        from: 'David Meister', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'ratings',
-          dna: ''
-        }
+        id: 'QmHashytags',
+        name: 'Tags',
+        src: 'tags',
+        description: 'Tag any entry',
+        price: 1.99,
+        compareAt: 8.99,
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1588900779424
       }
     ]
   },
@@ -113,24 +68,15 @@ export default {
   },
   mutations: {
     addPart (state, payload) {
+      console.log(payload)
       const basePart = state.partParts.find(p => p.base === payload.base)
       if (basePart) {
-        basePart.parts.push(
-          {
-            title: payload.part.title,
-            order: basePart.parts.length
-          }
-        )
+        basePart.parts.push(payload.part)
       } else {
         state.partParts.push(
           {
             base: payload.base,
-            parts: [
-              {
-                title: payload.part.title,
-                order: 0
-              }
-            ]
+            parts: [payload.part]
           }
         )
       }
@@ -152,11 +98,16 @@ export default {
         avatar: `parts/${part.src}/avatar.png`
       }))
     },
+    partNames: state => {
+      return state.parts.map(part => (part.name))
+    },
     partParts: state => (base) => {
       const basePart = state.partParts.find(p => p.base === base)
       if (basePart) {
+        console.log('parts')
         return basePart.parts
       } else {
+        console.log('no parts')
         return []
       }
     },
