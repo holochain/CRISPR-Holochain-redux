@@ -34,7 +34,9 @@ const FRECKLE_ENTRY_NAME: &str = "freckle";
 #[serde(rename_all = "camelCase")]
 pub struct FreckleEntry {
     uuid: String,
+	Title: String,
 	content: String,
+	emoji: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -46,7 +48,9 @@ pub struct Freckle {
     address: Address,
     updated_at: Iso8601,
     uuid: String,
+	Title: String,
 	content: String,
+	emoji: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -91,7 +95,9 @@ impl Freckle {
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
+			Title: entry.Title,
 			content: entry.content,
+			emoji: entry.emoji,
         })
     }
 }
@@ -105,7 +111,9 @@ impl Freckle {
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
             uuid: entry.uuid,
+			Title: entry.Title,
 			content: entry.content,
+			emoji: entry.emoji,
         })
     }
 }

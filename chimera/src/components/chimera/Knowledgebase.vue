@@ -57,7 +57,7 @@
       </v-col>
       <v-col cols="9">
         <tagcloud v-if="cloud" :instance="instance" />
-        <v-card v-else flat tile height="94vh" class="pa-1">
+        <v-card v-else flat tile class="pa-1">
           <v-system-bar color="indigo darken-2" dark>
             <v-list-item v-if="whois" class="mb-1 ml-n3">
               <v-progress-circular color="green" size="34" value="45" rotate="20">
@@ -167,7 +167,7 @@ export default {
         bubble: {
           value: {
             title: 'Getting Started',
-            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Now let\'s add some data.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li></ol><p></p>'
+            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure </p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
@@ -197,8 +197,17 @@ export default {
         children: [
           {
             name: 'Freckles',
-            content: 'What is it?',
-            id: '',
+            bubble: {
+              value: {
+                title: 'Super Secure Chat',
+                content: '<p>Feel secure with your privacy using Freckles knowing that only the players in your group ever see what you share. No centrally controlled servers, no snooping and no advertising.</p>'
+              },
+              schema: {
+                title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+                content: { type: 'tiptap', label: 'Content', col: 12 }
+              }
+            },
+            id: 'entryFreckles',
             file: 'note'
           },
           {
@@ -237,7 +246,7 @@ export default {
                 bubble: {
                   value: {
                     title: 'Getting Started',
-                    content: '<h1>Setting up a Holochain conductor</h1><p>Chimera uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Now let\'s add some data.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li></ol><p></p>'
+                    content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure </p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
                   },
                   schema: {
                     title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },

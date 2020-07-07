@@ -97,9 +97,10 @@ const rudysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5':
 const arthursConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const alicesConductorConfig = Config.gen({'57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const marksConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, {network: network, logger: logger })
+const grantsConductorConfig = Config.gen({'6261170b-2064-4920-be43-98cc7ca1d68b': editorOriginsDna, '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, '4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, 'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '01526dbb-17f7-42d4-8a26-01270b50eb73': clientProjectsDna, '15f5c748-e611-47c7-9d1b-7651e5c16d17': personalProjectsDna, '68342fe4-c2e3-4568-836e-421722757c84': personalProjectsKanbanDna, '6025b761-26e0-42c2-ad96-8bdc1ce00c33': personalProjectsNotesDna, '1b94be13-632b-4924-aa20-8f67113d7b9a': personalProjectsTasksDna,  '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 
 orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
-  const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
+  const {phil, lucy, rudy, arthur, alice, mark, grant} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig, grant: grantsConductorConfig}, true)
   console.log("started_ok_demo")
 
   // managed fields list
@@ -184,7 +185,13 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('arthurHolochainAvatar', arthurHolochainAvatar)
   const arthurHolochainProfilePic = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/art.profile.jpeg')}})
   console.log('arthurHolochainProfilePic', arthurHolochainProfilePic)
-  
+ 
+  // // Grant's Holochain persona
+  // const grantHolochainHandle = await grant.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": handleId.Ok.id, "value": "grant.mandell"}})
+  // console.log('grantHolochainHandle', grantHolochainHandle)
+  // const grantHolochainAvatar = await grant.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": avatarId.Ok.id, "value": base64_encode('./assets/grant.mandell.png')}})
+  // console.log('grantHolochainAvatar', grantHolochainAvatar)
+
   const philOriginProfile = await phil.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "philip.beadle"}})
   console.log('philOriginProfile', philOriginProfile)
   const markOriginProfile = await mark.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "mark.keenan"}})

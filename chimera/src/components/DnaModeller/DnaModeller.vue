@@ -292,17 +292,19 @@ export default {
       // this.refreshKey += '1'
     },
     entryTypeFieldsUpdated (fields) {
+      console.log(fields)
       this.entryType.fields = fields
       this.refreshKey += '1'
     },
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
-      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      console.log(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/Origins/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/DNA/test/${this.zome.templateTypeName}/${role}-${entryFunction}-${this.zome.templateTypeName}.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/Origins/DNA/test/origin/${role}-${entryFunction}-origin.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
@@ -400,6 +402,7 @@ export default {
     ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
+      console.log(z)
       z.template = this.project.zome.template
       z.templateTypeName = this.project.zome.templateTypeName
       return z

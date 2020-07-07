@@ -50,9 +50,6 @@ export default {
             instanceName: 'Part Editor',
             entry: {
               content: ''
-            },
-            schema: {
-              content: { type: 'textarea', label: 'Content' }
             }
           },
           {

@@ -586,9 +586,23 @@ const projects = [
           fields: [
             {
               id: 'QM234566777887',
+              fieldName: 'Title',
+              fieldType: 'String',
+              fieldDescription: 'Title of the freckle',
+              required: false
+            },
+            {
+              id: 'QM234566777887',
               fieldName: 'content',
               fieldType: 'String',
               fieldDescription: 'Main body of the freckle',
+              required: false
+            },
+            {
+              id: 'QM234566777887',
+              fieldName: 'emoji',
+              fieldType: 'String',
+              fieldDescription: 'Emoji',
               required: false
             }
           ]
@@ -1007,7 +1021,12 @@ const projects = [
             }
           ]
         }
-      ]
+      ],
+      profileSpec: {
+        id: 'QmTagsProfileSpecHash',
+        template: 'identify',
+        fields: []
+      }
     }
   }
 ]

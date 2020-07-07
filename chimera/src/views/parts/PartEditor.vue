@@ -159,6 +159,7 @@ export default {
     ...mapGetters('instancemanager', ['partEditorInstance']),
     ...mapGetters('portfolio', ['projectById']),
     editorInstance () {
+      console.log(this.project.name)
       const inst = this.partEditorInstance(this.project.name)
       inst.entry.createdBy = this.agentAddress
       return inst

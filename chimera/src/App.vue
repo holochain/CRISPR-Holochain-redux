@@ -32,8 +32,7 @@ export default {
     this.fetchProfiles({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
     this.agentAddress({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
     this.$store.subscribe((mutation, state) => {
-      console.log('listen for mutations')
-      console.log(mutation.type)
+      console.log(`Mutation -${mutation.type}`)
     })
   }
 }

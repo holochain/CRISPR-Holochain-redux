@@ -3,7 +3,7 @@ export default {
   namespaced: true,
   state: {
     installedHapps: ['QmHashyOrigins', 'QmHashyFreckles', 'QmHashykanban', 'QmHashyCRISPR'],
-    installedParts: ['QmHashyNotes', 'QmHashyTasks', 'QmHashyratings']
+    installedParts: ['QmHashyNotes', 'QmHashyTasks', 'QmHashyratings', 'QmHashyWhoIs']
   },
   getters: {
     happs: (state, getters, rootState, rootGetters) => {

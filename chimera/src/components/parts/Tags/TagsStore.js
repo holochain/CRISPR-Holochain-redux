@@ -143,6 +143,15 @@ export default {
                 id: 'entryChimera'
               }
             ]
+          },
+          {
+            text: 'Freckles',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryFreckles'
+              }
+            ]
           }
         ]
       },

@@ -36,7 +36,7 @@ export default {
         id: 'QmHashyWhoIs',
         name: 'Whois',
         src: 'whois',
-        description: 'Identify the Agent',
+        description: 'Identify the Agent with a profile so you know who youre communicating with. Works with any DNA built with the "Identify" option',
         price: 1.99,
         compareAt: 8.99,
         publisher: 'Eat Sleep Code Repeat',
