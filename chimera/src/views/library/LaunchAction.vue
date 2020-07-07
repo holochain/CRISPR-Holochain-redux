@@ -26,7 +26,7 @@
             <v-list-item :disabled="verifying && verifying !== value.id" @click="verify">
               <v-list-item-title><v-icon>mdi-certificate-outline</v-icon> Verify Holochain Application "{{value.name}}"</v-list-item-title>
             </v-list-item>
-            <v-list-item @click="createShortcut">
+            <v-list-item @click="newGroupDialog = true">
               <v-list-item-title><v-icon>mdi-account-multiple-plus-outline</v-icon> Create a new "{{value.name}}" group</v-list-item-title>
             </v-list-item>
           </v-list>
@@ -40,12 +40,33 @@
             </v-img>
           </v-card>
         </v-dialog>
+        <v-dialog v-model="newGroupDialog" max-width="400">
+          <v-card>
+            <v-card-title>{{value.name}}</v-card-title>
+            <v-img :src="require(`@/assets/${value.bg}`)" height="200" class="align-end" :opacity="0.5">
+              <v-row align="center" class="fill-height ma-0 transition-swing" justify="center">
+                <v-img :src="require(`@/assets/${value.logo}`)" contain max-width="180" style="z-index: -1;" />
+              </v-row>
+            </v-img>
+            <v-text-field class="ml-2 white--text" v-model="payload.data.instanceName" label="Title of new group" />
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="action darken-1" text @click="newGroupDialog = false">
+                Cancel
+              </v-btn>
+              <v-btn color="action darken-1" text @click="createInstance(payload); newGroupDialog = false">
+                Create
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </v-row>
     </v-sheet>
   </v-hover>
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
 import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'LibraryLaunchAction',
@@ -58,10 +79,25 @@ export default {
   data: () => ({
     autoUpdate: true,
     dialog: false,
+    newGroupDialog: false,
     hover: false,
     hoverInner: false,
     menu: false,
-    lauchMenu: false
+    lauchMenu: false,
+    payload: {
+      base: '',
+      data: {
+        id: 'QmOkb1',
+        zome: 'kanban',
+        type: 'column',
+        instanceId: uuidv4(),
+        instanceName: '',
+        entry: {
+          title: '',
+          order: 0
+        }
+      }
+    }
   }),
   computed: {
     ...mapState('library', ['installed']),
@@ -77,6 +113,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('instancemanager', ['createInstance']),
     ...mapActions('verify', ['verifyInstall']),
     ...mapMutations('snackbar', [
       'setSnackbar',

@@ -1064,7 +1064,7 @@ const tryConnection = () => {
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
               const columnId = JSON.parse(result).Ok.id
               console.log(JSON.parse(result))
               callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Tags Part', content: 'The tags part can be used to "tag" entries by selecting or adding 1 or more tags. A tag cloud is then created from the tags so that entries can easily be found.', order: 0 }})
@@ -1097,7 +1097,7 @@ const tryConnection = () => {
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
               const columnId = JSON.parse(result).Ok.id
               console.log(JSON.parse(result))
               callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'InstanceIds', content: 'Each new Part that is added needs either a new DHT or install an existing network. Unique InstanceIds that the Part can be associated with will enable the Part to call the correct DHT. Each InstanceId will need a player friendly name and probably namespaced to the type of Part.', order: 0 }})
@@ -1234,44 +1234,44 @@ const tryConnection = () => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
 
-          // // projectHoloPunkRecords
-          // callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectHoloPunkRecords.name, description: projectHoloPunkRecords.description, preview: projectHoloPunkRecords.preview, zome: JSON.stringify(projectHoloPunkRecords.zome), order: 5 }})
-          // .then((result) => {
-          //   const projectHoloPunkRecordsId = JSON.parse(result).Ok.id
-          //   console.log(JSON.parse(result))
-          //   callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
-          //     console.log(JSON.parse(result))
-          //   }).catch(err =>{console.log(err)})
-          //   callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
-          //     console.log(JSON.parse(result))
-          //   }).catch(err =>{console.log(err)})
-          //   callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
-          //     const columnId = JSON.parse(result).Ok.id
-          //     console.log(JSON.parse(result))
-          //     callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed DJ streaming', content: 'Players in the Unity game get the upcoming playlist (can be updated during the performance) so there is no buffering or delay. Tracks are played by Unity for the players using the tracklist and the MIDI messags from the DJ. All messages are saved into the DHT as well as being direct messages (possibly WebRTC). Live performance can be replayed and track artists get paid using info such as how much of the track was played.', order: 0 }})
-          //     .then((result) => {
-          //       console.log(JSON.parse(result))
-          //     }).catch(err =>{console.log(err)})
-          //     callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Using http://42noir.com/es/ & https://github.com/shaltiel/42Noir-UnityEasyController we can connect up any MIDI controller and record the messages and Direct Message to players who are listening to the live Stream.', order: 1 }})
-          //     .then((result) => {
-          //       console.log(JSON.parse(result))
-          //     }).catch(err =>{console.log(err)})
-          //     callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Looks like this https://assetstore.unity.com/packages/tools/audio/dj-pro-41993 will be good for playing the DJ set at the players device.', order: 2 }})
-          //     .then((result) => {
-          //       console.log(JSON.parse(result))
-          //     }).catch(err =>{console.log(err)})
-          //     callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed VJ streaming', content: 'Same approach as DJing just using video clips, can also be controlled by DJ  using the same MIDI messages.', order: 3 }})
-          //     .then((result) => {
-          //       const noteId = JSON.parse(result).Ok.id
-          //       console.log(JSON.parse(result))
-          //     }).catch(err =>{console.log(err)})
-          //     callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'In game lighting & effects', content: 'Using the same MIDI messages for DJing we can control the in game lights & effects.', order: 4 }})
-          //     .then((result) => {
-          //       const noteId = JSON.parse(result).Ok.id
-          //       console.log(JSON.parse(result))
-          //     }).catch(err =>{console.log(err)})
-          //   }).catch(err =>{console.log(err)})
-          // }).catch(err =>{console.log(err)})
+          // projectHoloPunkRecords
+          callZome('15f5c748-e611-47c7-9d1b-7651e5c16d17', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectHoloPunkRecords.name, description: projectHoloPunkRecords.description, preview: projectHoloPunkRecords.preview, zome: JSON.stringify(projectHoloPunkRecords.zome), order: 5 }})
+          .then((result) => {
+            const projectHoloPunkRecordsId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
+            callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+            callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'In Progress', order: 1}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+            callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Ideas', order: 0}}).then((result) => {
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
+              callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed DJ streaming', content: 'Players in the Unity game get the upcoming playlist (can be updated during the performance) so there is no buffering or delay. Tracks are played by Unity for the players using the tracklist and the MIDI messags from the DJ. All messages are saved into the DHT as well as being direct messages (possibly WebRTC). Live performance can be replayed and track artists get paid using info such as how much of the track was played.', order: 0 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Using http://42noir.com/es/ & https://github.com/shaltiel/42Noir-UnityEasyController we can connect up any MIDI controller and record the messages and Direct Message to players who are listening to the live Stream.', order: 1 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Live Streaming MIDI messages', content: 'Looks like this https://assetstore.unity.com/packages/tools/audio/dj-pro-41993 will be good for playing the DJ set at the players device.', order: 2 }})
+              .then((result) => {
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed VJ streaming', content: 'Same approach as DJing just using video clips, can also be controlled by DJ  using the same MIDI messages.', order: 3 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+              callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'In game lighting & effects', content: 'Using the same MIDI messages for DJing we can control the in game lights & effects.', order: 4 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+              }).catch(err =>{console.log(err)})
+            }).catch(err =>{console.log(err)})
+          }).catch(err =>{console.log(err)})
 
           // // projectProjects
           // callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectProjects.name, description: projectProjects.description, preview: projectProjects.preview, zome: JSON.stringify(projectProjects.zome), order: 6 }})

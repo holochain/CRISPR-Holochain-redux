@@ -91,14 +91,14 @@ export default {
             id: 'QmProjects2',
             zome: 'projects',
             type: 'project',
-            instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
+            instanceId: '01526dbb-17f7-42d4-8a26-01270b50eb73',
             instanceName: 'Client Projects'
           },
           {
             id: 'QmProjects3',
             zome: 'projects',
             type: 'project',
-            instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
+            instanceId: '15f5c748-e611-47c7-9d1b-7651e5c16d17',
             instanceName: 'Personal Projects'
           }
         ]
@@ -116,6 +116,44 @@ export default {
               title: '',
               order: 0
             }
+          },
+          {
+            id: 'QmOkb2',
+            zome: 'kanban',
+            type: 'column',
+            instanceId: '68342fe4-c2e3-4568-836e-421722757c84',
+            instanceName: 'Personal Projects Kanban Boards',
+            entry: {
+              title: '',
+              order: 0
+            }
+          }
+        ]
+      },
+      {
+        base: 'Notes',
+        instances: [
+          {
+            id: 'QmNo1',
+            zome: 'notes',
+            type: 'note',
+            instanceId: '6025b761-26e0-42c2-ad96-8bdc1ce00c33',
+            instanceName: 'Personal Projects Notes',
+            entry: {
+              title: '',
+              content: ''
+            }
+          },
+          {
+            id: 'QmONo2',
+            zome: 'notes',
+            type: 'note',
+            instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888',
+            instanceName: 'Holochain Projects Notes',
+            entry: {
+              title: '',
+              content: ''
+            }
           }
         ]
       },
@@ -127,7 +165,14 @@ export default {
             zome: 'tasks',
             type: 'task',
             instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-            instanceName: 'Chimera Tasks'
+            instanceName: 'Holochain Projects Tasks'
+          },
+          {
+            id: 'Qmtaskb2',
+            zome: 'tasks',
+            type: 'task',
+            instanceId: '1b94be13-632b-4924-aa20-8f67113d7b9a',
+            instanceName: 'Personal Projects Tasks'
           }
         ]
       },
