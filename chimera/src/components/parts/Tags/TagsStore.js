@@ -136,11 +136,20 @@ export default {
             ]
           },
           {
-            text: 'Music',
+            text: 'Testing',
             taggedEntries: [
               {
                 instanceId: 'ChimeraKnowledgeBase',
                 id: 'entryChimera'
+              }
+            ]
+          },
+          {
+            text: 'Freckles',
+            taggedEntries: [
+              {
+                instanceId: 'ChimeraKnowledgeBase',
+                id: 'entryFreckles'
               }
             ]
           }

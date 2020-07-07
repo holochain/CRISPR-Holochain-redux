@@ -7,15 +7,15 @@
           </v-avatar>
         </template>
         <v-list>
-          <v-list-item v-for="(part, index) in parts" :key="index" @click="addPart(part.name)">
+          <v-list-item v-for="(part, index) in parts" :key="index" @click="addPartPart({ base: base, part: part})">
             <v-list-item-title>{{ part.name }}</v-list-item-title>
           </v-list-item>
-          <v-list-item v-for="(invite) in invites" :key="invite.id">
+          <v-list-item v-for="(invite, i) in partInvites" :key="i + invite.part.title">
             <v-chip v-if="chimera && showChip" class="ma-2" close color="teal" text-color="white" close-icon="mdi-biohazard" @click:close="rejectInvite(invite)">
               <v-avatar left>
-                <v-icon small @click="acceptInvite(invite)">mdi-dna</v-icon>
+                <v-icon small @click="acceptPartInvite({ base: base, invite: invite})">mdi-dna</v-icon>
               </v-avatar>
-              {{invite.part.title}} - {{invite.from}}
+              {{invite.part.name}} - {{invite.from}}
             </v-chip>
           </v-list-item>
         </v-list>
@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'PartManager',
   components: {
@@ -35,25 +35,25 @@ export default {
   },
   props: ['base'],
   methods: {
+    ...mapMutations('root', ['addPartPart', 'acceptPartInvite']),
     acceptInvite (invite) {
       this.$emit('accept-invite', invite)
     },
     rejectInvite (invite) {
       this.$emit('reject-invite', invite)
-    },
-    addPart (name) {
-      console.log('add-part', { base: this.base, part: { title: name } })
-      this.$emit('add-part', { base: this.base, part: { title: name } })
     }
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('parts', ['allParts', 'partInvites']),
+    ...mapState({
+      partInvites (state) {
+        console.log(this.base)
+        return state.root.partInvites[this.base]
+      }
+    }),
+    ...mapGetters('library', ['partInstances']),
     parts () {
-      return this.allParts
-    },
-    invites () {
-      return this.partInvites(this.base)
+      return this.partInstances
     }
   }
 }

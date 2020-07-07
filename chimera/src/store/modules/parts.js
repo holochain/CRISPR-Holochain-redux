@@ -36,60 +36,21 @@ export default {
         id: 'QmHashyWhoIs',
         name: 'Whois',
         src: 'whois',
-        description: 'Identify the Agent',
+        description: 'Identify the Agent with a profile so you know who youre communicating with. Works with any DNA built with the "Identify" option',
         price: 1.99,
         compareAt: 8.99,
         publisher: 'Eat Sleep Code Repeat',
         updated: 1588900779424
-      }
-    ],
-    partParts: [
-      {
-        base: 'QmHashyKanban',
-        parts: [
-          {
-            title: 'tasks',
-            dna: ''
-          }
-        ]
-      }
-    ],
-    invites: [
-      {
-        id: 'Qmhashyinvite1',
-        base: 'QmHashyKanban',
-        from: 'Art Brock', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          dna: ''
-        }
       },
       {
-        id: 'Qmhashyinvite3',
-        base: 'QmmorebigfAgentsOfAnarchyhash',
-        from: 'Mark Keenan', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          dna: ''
-        }
-      },
-      {
-        id: 'Qmhashyinvite4',
-        base: 'QmmorebigfAgentsOfAnarchyhash',
-        from: 'Oscar', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'tasks',
-          dna: ''
-        }
-      },
-      {
-        id: 'Qmhashyinvite2',
-        base: 'Qmmorebighashes333',
-        from: 'David Meister', // Use AgentId and pick up name from Address book
-        part: {
-          title: 'ratings',
-          dna: ''
-        }
+        id: 'QmHashytags',
+        name: 'Tags',
+        src: 'tags',
+        description: 'Tag any entry',
+        price: 1.99,
+        compareAt: 8.99,
+        publisher: 'Eat Sleep Code Repeat',
+        updated: 1588900779424
       }
     ]
   },
@@ -107,24 +68,15 @@ export default {
   },
   mutations: {
     addPart (state, payload) {
+      console.log(payload)
       const basePart = state.partParts.find(p => p.base === payload.base)
       if (basePart) {
-        basePart.parts.push(
-          {
-            title: payload.part.title,
-            order: basePart.parts.length
-          }
-        )
+        basePart.parts.push(payload.part)
       } else {
         state.partParts.push(
           {
             base: payload.base,
-            parts: [
-              {
-                title: payload.part.title,
-                order: 0
-              }
-            ]
+            parts: [payload.part]
           }
         )
       }
@@ -146,21 +98,16 @@ export default {
         avatar: `parts/${part.src}/avatar.png`
       }))
     },
+    partNames: state => {
+      return state.parts.map(part => (part.name))
+    },
     partParts: state => (base) => {
       const basePart = state.partParts.find(p => p.base === base)
       if (basePart) {
-        return basePart.parts.sort((a, b) => {
-          if (a.order < b.order) return -1
-          if (a.order > b.order) return 1
-          return 0
-        })
+        console.log('parts')
+        return basePart.parts
       } else {
-        state.partParts.push(
-          {
-            base: base,
-            parts: []
-          }
-        )
+        console.log('no parts')
         return []
       }
     },

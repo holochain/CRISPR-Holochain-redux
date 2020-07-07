@@ -76,7 +76,7 @@ export default {
         { spacer: true },
         {
           icon: 'mdi-store-outline',
-          text: 'App Store',
+          text: 'Application Store',
           to: '/app-store'
         },
         {
@@ -85,14 +85,14 @@ export default {
           to: '/part-store'
         },
         { spacer: true },
-        {
-          icon: 'mdi-dna',
-          text: 'CRISPR',
-          to: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2'
-        },
+        // {
+        //   icon: 'mdi-dna',
+        //   text: 'CRISPR',
+        //   to: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2'
+        // },
         {
           icon: 'mdi-thought-bubble-outline',
-          text: 'Bubbles',
+          text: 'Support',
           to: '/knowledge-base'
         }
       ]

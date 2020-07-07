@@ -1,11 +1,19 @@
 <template>
   <v-card flat tile>
     <v-toolbar dark>
+      <v-btn icon  @click="$router.go(-1)">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
       <v-toolbar-title>CRISPR Part [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title>
       <v-btn icon>
         <v-icon @click="exportFiles">
           mdi-application-export
         </v-icon>
+      </v-btn>
+      <v-btn icon class="mr-1 ml-n1">
+        <template>
+          <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
+        </template>
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn color="action" icon @click="profileSpecDialog = true">
@@ -14,7 +22,7 @@
       <v-btn color="action" icon :to="`/projectKanban/${instanceId}/${base}/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn color="action" icon :to="`/part/${project.id}`">
+      <v-btn color="action" icon :to="`/part/${instanceId}/${base}/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon @click="help=!help">
@@ -46,6 +54,10 @@
       Click the key icon on an entry type to change the permissions.
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click the list icon on an entry type to manage the fields.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <v-icon>mdi-application-export</v-icon> export icon to export the DNA ready to be compiled.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <img src="@/assets/icons/holochain-circle.png" style="height: 20px"> Holochain icon to install the compiled DNA.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="3">
@@ -280,17 +292,19 @@ export default {
       // this.refreshKey += '1'
     },
     entryTypeFieldsUpdated (fields) {
+      console.log(fields)
       this.entryType.fields = fields
       this.refreshKey += '1'
     },
     permissionChanged (entryFunction, role) {
       const functionInfo = this.entryType.functions.find(f => f.name === entryFunction)
       functionInfo.permission = role
-      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      console.log(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
+      functionInfo.permissionsCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/Origins/permissions_rule_templates/validate_permissions_entry_${entryFunction}/${role}.rs`, 'utf8')
       if (role === 'remove') {
         functionInfo.testCode = `\t\t// No-one allowed to ${entryFunction}`
       } else {
-        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/${this.zome.template}/DNA/test/${this.zome.templateTypeName}/${role}-${entryFunction}-${this.zome.templateTypeName}.js`, 'utf8')
+        functionInfo.testCode = fs.readFileSync(`${this.developer.folder}/templates/dna_templates/Origins/DNA/test/origin/${role}-${entryFunction}-origin.js`, 'utf8')
       }
       this.refreshKey += '1'
     },
@@ -388,6 +402,7 @@ export default {
     ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
+      console.log(z)
       z.template = this.project.zome.template
       z.templateTypeName = this.project.zome.templateTypeName
       return z

@@ -2,8 +2,8 @@ import { set } from '@/utils/vuex'
 export default {
   namespaced: true,
   state: {
-    installedHapps: ['QmHashyOrigins', 'QmHashyFreckles', 'QmHashykanban', 'QmHashyCRISPR', 'QmHashyholopunk-records', 'QmHashyFreckles'],
-    installedParts: ['QmHashyNotes', 'QmHashyTasks', 'QmHashyratings']
+    installedHapps: ['QmHashyOrigins', 'QmHashyFreckles', 'QmHashykanban', 'QmHashyCRISPR'],
+    installedParts: ['QmHashyNotes', 'QmHashyTasks', 'QmHashyratings', 'QmHashyWhoIs']
   },
   getters: {
     happs: (state, getters, rootState, rootGetters) => {
@@ -35,6 +35,20 @@ export default {
         if (!b.installed) return -1
         return 0
       })
+    },
+    partInstances: (state, getters, rootState, rootGetters) => {
+      console.log(rootGetters['parts/partNames'])
+      const partInstances = []
+      for (const partName of rootGetters['parts/partNames']) {
+        for (const instance of rootGetters['instancemanager/listInstances'](partName)) {
+          partInstances.push({
+            title: partName.toLowerCase(),
+            name: `${partName} - ${instance.instanceName}`,
+            instance: instance
+          })
+        }
+      }
+      return partInstances
     }
   },
   mutations: {

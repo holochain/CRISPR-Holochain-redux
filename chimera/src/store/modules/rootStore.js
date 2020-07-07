@@ -3,7 +3,44 @@ export default {
   namespaced: true,
   state: {
     entries: {},
-    errors: {}
+    errors: {},
+    partParts: {},
+    partInvites: {
+      QmaUFLaxAtQ43Q3tx8BJCQaosJhVapSYH74muBtbsTSKBR: [
+        {
+          id: 'e7ac961d-388c-4a2a-b82b-f7d2479bf9e2',
+          from: 'Art Brock', // Use AgentId and pick up name from Address book
+          part: {
+            title: 'tasks',
+            name: 'Tasks - Chimera Tasks',
+            instance: {
+              id: 'Qmtaskb1',
+              zome: 'tasks',
+              type: 'task',
+              instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
+              instanceName: 'Chimera Tasks'
+            }
+          }
+        }
+      ],
+      QmWCJWin5xJ5G2pX6StDaSoiaxh1Ns7Lkh5ySJXCE1tbo6: [
+        {
+          id: 'e7ac961d-388c-4a2a-b82b-f7d2479bf9e2',
+          from: 'Art Brock', // Use AgentId and pick up name from Address book
+          part: {
+            title: 'tasks',
+            name: 'Tasks - Chimera Tasks',
+            instance: {
+              id: 'Qmtaskb1',
+              zome: 'tasks',
+              type: 'task',
+              instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
+              instanceName: 'Chimera Tasks'
+            }
+          }
+        }
+      ]
+    }
   },
   mutations: {
     createEntry (state, payload) {
@@ -45,6 +82,22 @@ export default {
       const entries = {}
       entries[`${payload.instance.instanceId}${payload.base}`] = sortedEntries
       state.entries = { ...state.entries, ...entries }
+    },
+    setPartsList (state, payload) {
+      const parts = {}
+      parts[payload.base] = payload.parts
+      state.parts = { ...state.parts, ...parts }
+    },
+    addPartPart (state, payload) {
+      const partParts = {}
+      partParts[payload.base] = [payload.part]
+      state.partParts = { ...state.partParts, ...partParts }
+    },
+    acceptPartInvite (state, payload) {
+      const partParts = {}
+      partParts[payload.base] = [payload.invite.part]
+      state.partInvites[payload.base] = state.partInvites[payload.base].filter(i => i.id !== payload.invite.id)
+      state.partParts = { ...state.partParts, ...partParts }
     }
   },
   actions: {
@@ -93,7 +146,7 @@ export default {
     },
     rebase: ({ state, commit, rootState }, payload) => {
       rootState.holochainConnection.then(({ callZome }) => {
-        callZome(payload.instance.instanceId, payload.instance.zome, `rebase_${payload.instance.type}`)({ base_from: payload.entry.from, base_to: payload.entry.to, id: payload.entry.id, created_at: payload.entry.createdAt }).then((result) => {
+        callZome(payload.instance.instanceId, payload.instance.zome, `rebase_${payload.instance.type}`)({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
           const res = JSON.parse(result)
           console.log(res)
           if (res.Ok === undefined) {

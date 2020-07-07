@@ -30,22 +30,21 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click <v-icon>mdi-delete-outline</v-icon> to delete a Freckle.
     </v-alert>
-    <v-card-text v-if="!isEditing" v-html="entry.content" />
-    <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
+    <v-form-base id="form-base-css" :editing="isEditing" :value="entry" :schema="schema" @change:form-base-css="log"></v-form-base>
     <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
+      <component :is="part.title" :base="instance.partBase" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
 </template>
 <script>
+import VFormBase from '@/components/vFormBase'
 import { mapState, mapActions, mapGetters } from 'vuex'
-import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
   name: 'Freckle',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
-    TiptapVuetify
+    VFormBase
   },
   props: ['instance', 'base', 'entry'],
   data () {
@@ -55,33 +54,20 @@ export default {
       isEditing: this.entry.id === 'new',
       parts: [],
       help: false,
-      extensions: [
-        History,
-        Blockquote,
-        Link,
-        Underline,
-        Strike,
-        Italic,
-        ListItem,
-        BulletList,
-        OrderedList,
-        [Heading, {
-          options: {
-            levels: [1, 2, 3]
-          }
-        }],
-        Bold,
-        Code,
-        HorizontalRule,
-        Paragraph,
-        HardBreak
-      ]
+      schema: {
+        title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+        content: { type: 'tiptap', label: 'Content', col: 12 },
+        emoji: { type: 'text', label: 'Emoji', col: 12 }
+      }
     }
   },
   methods: {
     ...mapActions('root', ['createEntry', 'updateEntry', 'deleteEntry']),
     addPart (name) {
       this.parts.push(name)
+    },
+    log (event) {
+      console.log(event)
     }
   },
   created () {

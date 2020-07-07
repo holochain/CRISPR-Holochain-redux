@@ -56,8 +56,8 @@
         </v-card>
       </v-col>
       <v-col cols="9">
-        <tagcloud v-if="cloud" :instance="instance" />
-        <v-card v-else flat tile height="94vh" class="pa-1">
+        <tagcloud v-if="cloud" :instance="instance" :showEntries="showEntries" />
+        <v-card v-else flat tile class="pa-1">
           <v-system-bar color="indigo darken-2" dark>
             <v-list-item v-if="whois" class="mb-1 ml-n3">
               <v-progress-circular color="green" size="34" value="45" rotate="20">
@@ -85,6 +85,7 @@
           </v-alert>
           <v-form-base id="form-base-css" :editing="isEditing" :value="bubble.value" :schema="bubble.schema" @change:form-base-css="log"></v-form-base>
           <tags :disabled="!isEditing" :instance="instance" :base="entry.id" />
+          <v-card-text v-text="bubble.value.content" />
         </v-card>
         <v-dialog v-model="newItemDialog" max-width="1000px">
           <v-card>
@@ -125,6 +126,7 @@ export default {
     newItemDialog: false,
     cloud: true,
     help: false,
+    showEntries: false,
     bubble: {
       value: {
         title: '',
@@ -162,12 +164,11 @@ export default {
         file: 'cloud'
       },
       {
-        name: 'What is Chimera?',
+        name: 'Getting Started',
         bubble: {
           value: {
-            title: 'What is Chimera?',
-            content: `<h1 class="title">Chimera is your personalised Holochain experience</h1>
-            <p>You can install "Applications" and use them as is, or you can also install "Parts" that you can add into applications to ge the functionality that suits you. You can then share the data for the part with whoever you like</p>`
+            title: 'Getting Started',
+            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First thing to do is update </p><p>...../CRISPR/chimera/src/store/modules/auth.js</p><p>and set the folder path to where you cloned this repo.</p><p>developer: {</p><p>folder: \'/Users/philipbeadle/holochain/CRISPR\'</p><p> }</p><p>Then you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
@@ -178,19 +179,18 @@ export default {
         file: 'note'
       },
       {
-        name: 'What is CRISPR?',
+        name: 'What is Chimera?',
         bubble: {
           value: {
-            title: 'What is CRISPR?',
-            content: `<h1 class="title">CRISPR is a Rapid Application Developemnt IDE for Holochain</h1>
-            <p>Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.</p>`
+            title: 'What is Chimera?',
+            content: '<h1>Chimera is your personalised Holochain experience</h1><p>In Greek mythology, the Chimera was a creature composed of body parts from many other creatures. In biomimicry, we talk of a Chimera approach as a combination of different biomimetic designs into one application. Holochain is based on the ideas of biomimicry (DNA, Zomes, Cells etc) and composing your own Holochain experience from many other apps (parts). The app, Chimera, is an all in one Holochain experience designed to make it simple and fun to use Holochain Apps as well as compose your own from exisiting parts and build new ones by cloning existing parts.</p><p>If you cant find the feature you want to add you can use CRISPR to clone an. existing part into the one you want. Slice and dice DNA into whatever combinations you need. CRISPR is also a Holochain App and each project created runs its own separate DHT which gives you complete control over who can access the content of your projects using the permissions and validation features of Holochain. The IDE will also be making use of the git like source control features native to Holochain for teams to be able to work together using familiar branch and merge techniques.</p>'
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
             content: { type: 'tiptap', label: 'Content', col: 12 }
           }
         },
-        id: 'entryCRISPR',
+        id: 'entryChimera',
         file: 'note'
       },
       {
@@ -198,8 +198,17 @@ export default {
         children: [
           {
             name: 'Freckles',
-            content: 'What is it?',
-            id: '',
+            bubble: {
+              value: {
+                title: 'Super Secure Chat',
+                content: '<p>Feel secure with your privacy using Freckles knowing that only the players in your group ever see what you share. No centrally controlled servers, no snooping and no advertising.</p>'
+              },
+              schema: {
+                title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+                content: { type: 'tiptap', label: 'Content', col: 12 }
+              }
+            },
+            id: 'entryFreckles',
             file: 'note'
           },
           {
@@ -216,9 +225,39 @@ export default {
           },
           {
             name: 'CRISPR',
-            content: 'What is it?',
             id: 'entryCRISPR',
-            file: 'note'
+            children: [
+              {
+                name: 'What is CRISPR?',
+                bubble: {
+                  value: {
+                    title: 'What is CRISPR?',
+                    content: '<h1>CRISPR is a Rapid Application Developemnt IDE for Holochain</h1><p>Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.</p><p>Using CRISPR requires the Holochain nix-shell to compile the DNA and also run the webserver for the hot reload feature when editing a part.</p>'
+                  },
+                  schema: {
+                    title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+                    content: { type: 'tiptap', label: 'Content', col: 12 }
+                  }
+                },
+                id: 'entryCRISPR',
+                file: 'note'
+              },
+              {
+                name: 'Getting Started',
+                bubble: {
+                  value: {
+                    title: 'Getting Started',
+                    content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure </p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
+                  },
+                  schema: {
+                    title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+                    content: { type: 'tiptap', label: 'Content', col: 12 }
+                  }
+                },
+                id: 'entryCRISPR',
+                file: 'note'
+              }
+            ]
           }
         ]
       },
@@ -279,6 +318,7 @@ export default {
       console.log(item)
       if (item.id === 'tag-cloud') {
         this.cloud = true
+        this.showEntries = false
       } else {
         this.cloud = false
         this.isEditing = false

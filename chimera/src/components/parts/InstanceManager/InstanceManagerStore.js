@@ -5,23 +5,6 @@ export default {
     profiles: [],
     baseInstances: [
       {
-        base: 'PartEditor',
-        instances: [
-          {
-            id: 'PartEditor1',
-            content: 'Content for Instance 1'
-          },
-          {
-            id: 'PartEditor2',
-            content: 'Content for Instance 2'
-          },
-          {
-            id: 'PartEditor3',
-            content: 'Content for Instance 3'
-          }
-        ]
-      },
-      {
         base: 'Freckles',
         instances: [
           {
@@ -67,9 +50,6 @@ export default {
             instanceName: 'Part Editor',
             entry: {
               content: ''
-            },
-            schema: {
-              content: { type: 'textarea', label: 'Content' }
             }
           },
           {
@@ -103,6 +83,20 @@ export default {
             type: 'project',
             instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2',
             instanceName: 'Holochain Projects'
+          },
+          {
+            id: 'QmProjects2',
+            zome: 'projects',
+            type: 'project',
+            instanceId: '01526dbb-17f7-42d4-8a26-01270b50eb73',
+            instanceName: 'Client Projects'
+          },
+          {
+            id: 'QmProjects3',
+            zome: 'projects',
+            type: 'project',
+            instanceId: '15f5c748-e611-47c7-9d1b-7651e5c16d17',
+            instanceName: 'Personal Projects'
           }
         ]
       },
@@ -119,6 +113,44 @@ export default {
               title: '',
               order: 0
             }
+          },
+          {
+            id: 'QmOkb2',
+            zome: 'kanban',
+            type: 'column',
+            instanceId: '68342fe4-c2e3-4568-836e-421722757c84',
+            instanceName: 'Personal Projects Kanban Boards',
+            entry: {
+              title: '',
+              order: 0
+            }
+          }
+        ]
+      },
+      {
+        base: 'Notes',
+        instances: [
+          {
+            id: 'QmNo1',
+            zome: 'notes',
+            type: 'note',
+            instanceId: '6025b761-26e0-42c2-ad96-8bdc1ce00c33',
+            instanceName: 'Personal Projects Notes',
+            entry: {
+              title: '',
+              content: ''
+            }
+          },
+          {
+            id: 'QmONo2',
+            zome: 'notes',
+            type: 'note',
+            instanceId: 'a23de7fe-bff7-4e6e-87f0-f4c44d038888',
+            instanceName: 'Holochain Projects Notes',
+            entry: {
+              title: '',
+              content: ''
+            }
           }
         ]
       },
@@ -130,7 +162,14 @@ export default {
             zome: 'tasks',
             type: 'task',
             instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-            instanceName: 'Chimera Tasks'
+            instanceName: 'Holochain Projects Tasks'
+          },
+          {
+            id: 'Qmtaskb2',
+            zome: 'tasks',
+            type: 'task',
+            instanceId: '1b94be13-632b-4924-aa20-8f67113d7b9a',
+            instanceName: 'Personal Projects Tasks'
           }
         ]
       },
@@ -212,6 +251,14 @@ export default {
       const baseInstance = state.baseInstances.find(n => n.base === base)
       if (baseInstance) {
         return baseInstance.instances.filter(n => n.instanceName !== 'Part Editor')
+      } else {
+        return []
+      }
+    },
+    partEditorInstance: state => (base) => {
+      const baseInstance = state.baseInstances.find(n => n.base === base)
+      if (baseInstance) {
+        return baseInstance.instances.find(n => n.instanceName === 'Part Editor')
       } else {
         return []
       }

@@ -47,10 +47,10 @@
             <v-toolbar-title>{{project.name}} UI Preview</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-card-actions>
-              <v-btn color="action" icon :to="`/partNotes/${project.id}`">
+              <v-btn color="action" icon :to="`/projectKanban/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">
                 <v-icon>mdi-notebook-outline</v-icon>
               </v-btn>
-              <v-btn color="action" icon :to="`/project/${project.id}`">
+              <v-btn color="action" icon :to="`/project/${this.$route.params.instanceId}/${this.$route.params.base}/${project.id}`">
                 <v-icon>mdi-code-braces</v-icon>
               </v-btn>
               <v-btn color="action" icon @click="help=!help">
@@ -65,11 +65,12 @@
           </v-alert>
           <v-tabs-items v-model="tab">
             <v-tab-item key="0">
-              <component :is="part(0)" instance="41553681-4c82-4c8c-87bb-ae2a3d2ba4cc" base="PartEditor" title="Part Editor" :agent="agentAddress" />
+              <draggable-column v-if="editorInstance" :isDraggable="false" :key="editorInstance.id" :contentInstance="editorInstance" :title="editorInstance.instanceName" contentBase="" :hasProfile="true"/>
+              <!-- <component :is="part(0)" :instance="editorInstance" base="Part Editor" :entry="editorInstance.entry" /> -->
             </v-tab-item>
-            <v-tab-item key="1">
+            <!-- <v-tab-item key="1">
               <component :is="part(1)" instance="41553681-4c82-4c8c-87bb-ae2a3d2ba4cc" base="PartEditor" title="Part Editor" :agent="agentAddress" />
-            </v-tab-item>
+            </v-tab-item> -->
           </v-tabs-items>
         </v-card>
       </v-col>
@@ -86,7 +87,8 @@ import '../../components/vscode-dark.css'
 export default {
   name: 'PartEditor',
   components: {
-    codemirror
+    codemirror,
+    DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
   data () {
     return {
@@ -154,10 +156,16 @@ export default {
   },
   computed: {
     ...mapState('auth', ['developer', 'agentAddress']),
+    ...mapGetters('instancemanager', ['partEditorInstance']),
     ...mapGetters('portfolio', ['projectById']),
+    editorInstance () {
+      console.log(this.project.name)
+      const inst = this.partEditorInstance(this.project.name)
+      inst.entry.createdBy = this.agentAddress
+      return inst
+    },
     project () {
-      console.log('project')
-      return this.projectById(this.$route.params.id)
+      return this.projectById({ instanceId: this.$route.params.instanceId, base: this.$route.params.base, projectId: this.$route.params.projectId })
     },
     files () {
       const components = []
@@ -168,7 +176,7 @@ export default {
     }
   },
   created () {
-    if (this.files[1]) {
+    if (this.files[0]) {
       this.partCodeItemFileName = `${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.files[0]}`
       this.partCodeItem = fs.readFileSync(this.partCodeItemFileName, 'utf8')
     } else {

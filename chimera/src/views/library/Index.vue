@@ -93,9 +93,6 @@ export default {
     renderMainSymbol () {
       var i
       for (i = 0; i < this.sideNumb / 2; i++) {
-        for (var delay = 0; delay < 3000 / this.sideNumb; delay++) {
-          // console.log('delay')
-        }
         this.vueCanvas.beginPath()
         const posX = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks - 1) * 2 * Math.PI / this.sideNumb))
         const posXto = this.xCenter + this.sideLen * Math.cos(this.rotation + ((this.ticks + i) * 2 * Math.PI / this.sideNumb))
@@ -129,7 +126,9 @@ export default {
         }
       } else {
         this.ticks = this.ticks + 1
-        window.requestAnimationFrame(this.renderMainSymbol)
+        setTimeout(() => {
+          window.requestAnimationFrame(this.renderMainSymbol)
+        }, 25 * this.networks)
       }
     },
     drawMainSymbol () {
@@ -155,9 +154,11 @@ export default {
     ...mapState('auth', ['splash'])
   },
   mounted () {
-    this.network = document.getElementById('network')
-    this.vueCanvas = this.network.getContext('2d')
-    this.drawMainSymbol()
+    if (this.splash) {
+      this.network = document.getElementById('network')
+      this.vueCanvas = this.network.getContext('2d')
+      this.drawMainSymbol()
+    }
   },
   watch: {
     timerCount: {
@@ -165,7 +166,7 @@ export default {
         if (value > 0) {
           setTimeout(() => {
             this.timerCount--
-            this.overlayOpacity = value / 100
+            this.overlayOpacity = value / 50
           }, 100)
         } else {
           this.turnSplashOff()

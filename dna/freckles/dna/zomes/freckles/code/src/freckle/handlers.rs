@@ -39,8 +39,8 @@ pub fn read(id: Address, created_at: Iso8601) -> ZomeApiResult<Freckle> {
 }
 
 pub fn update(id: Address, created_at: Iso8601, address: Address, freckle_input: FreckleEntry) -> ZomeApiResult<Freckle> {
-    let _updated_entry_address = hdk::update_entry(Entry::App(FRECKLE_ENTRY_NAME.into(), freckle_input.clone().into()), &address.clone())?;
-    read(id.clone(), created_at)
+    let updated_entry_address = hdk::update_entry(Entry::App(FRECKLE_ENTRY_NAME.into(), freckle_input.clone().into()), &address.clone())?;
+    Freckle::existing(id.clone(), created_at, updated_entry_address, freckle_input)
 }
 
 pub fn delete(base: String, id: Address, created_at: Iso8601, address: Address) -> ZomeApiResult<Address> {

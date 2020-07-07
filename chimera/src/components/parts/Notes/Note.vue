@@ -24,17 +24,17 @@
     <v-text-field v-if="isEditing" class="ml-2 white--text" v-model="entry.title" label="Title" />
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
-    <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :base="note.id" :title="part.title" :agent="entry.createdBy" :key="part.title" />
+    <v-col v-for="(part, i) in partParts" :key="i" class="d-flex child-flex" cols="12">
+      <component :is="part.title" :instance="part.instance" :base="entry.id" :agent="entry.createdBy" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Freckle',
+  name: 'Note',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
@@ -78,11 +78,14 @@ export default {
   },
   created () {
     this.clean = { ...this.entry }
-    this.parts = this.partParts(this.instance.partBase)
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('parts', ['partParts'])
+    ...mapState({
+      partParts (state) {
+        return state.root.partParts[this.instance.partBase]
+      }
+    })
   }
 }
 </script>

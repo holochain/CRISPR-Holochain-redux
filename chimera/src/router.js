@@ -73,7 +73,7 @@ const router = new Router({
       props: true
     },
     {
-      path: '/part/:id',
+      path: '/part/:instanceId/:base/:projectId',
       name: 'Part',
       component: () => import('@/views/parts/PartEditor')
     },
