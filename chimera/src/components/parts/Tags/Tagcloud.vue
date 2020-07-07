@@ -7,18 +7,26 @@
         </div>
       </template>
     </vue-word-cloud>
-    <v-simple-table>
+    <v-simple-table v-if="showEntries">
     <template v-slot:default>
       <thead>
         <tr>
-          <th class="text-left">Name</th>
-          <th class="text-left">Calories</th>
+          <th class="text-left">Bubble</th>
+          <th class="text-left">Created By</th>
+          <th class="text-right">Preview</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in desserts" :key="item.name">
+        <tr v-for="item in taggedEntries" :key="item.name">
           <td>{{ item.name }}</td>
-          <td>{{ item.calories }}</td>
+          <td>{{ item.createdBy }}</td>
+          <td class="text-right">
+            <v-btn icon @click="loadFile(item)">
+              <v-icon>
+                mdi-eye-outline
+              </v-icon>
+            </v-btn>
+            </td>
         </tr>
       </tbody>
     </template>
@@ -34,38 +42,18 @@ export default {
   components: {
     [VueWordCloud.name]: VueWordCloud
   },
-  props: ['instance', 'base', 'title'],
+  props: ['instance', 'base', 'title', 'showEntries'],
   data () {
     return {
       words: [],
-      desserts: [
+      taggedEntries: [
         {
-          name: 'Frozen Yogurt',
-          calories: 159
+          name: 'Getting Started',
+          createdBy: 'Phil'
         },
         {
-          name: 'Ice cream sandwich',
-          calories: 237
-        },
-        {
-          name: 'Eclair',
-          calories: 262
-        },
-        {
-          name: 'Cupcake',
-          calories: 305
-        },
-        {
-          name: 'Gingerbread',
-          calories: 356
-        },
-        {
-          name: 'Jelly bean',
-          calories: 375
-        },
-        {
-          name: 'Lollipop',
-          calories: 392
+          name: 'My Applications/Freckles',
+          createdBy: 'Phil'
         }
       ]
     }
@@ -74,7 +62,20 @@ export default {
     ...mapActions('tags', ['fetchTags', 'saveTag']),
     listEntries (evt) {
       console.log(evt)
+      this.showEntries = true
       this.$emit('list-entries', evt)
+    },
+    loadFile (item) {
+      console.log(item)
+      if (item.id === 'tag-cloud') {
+        this.cloud = true
+        this.showEntries = false
+      } else {
+        this.cloud = false
+        this.isEditing = false
+        this.entry.id = item.id
+        this.bubble = item.bubble
+      }
     }
   },
   computed: {

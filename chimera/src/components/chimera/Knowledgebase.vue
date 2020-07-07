@@ -56,7 +56,7 @@
         </v-card>
       </v-col>
       <v-col cols="9">
-        <tagcloud v-if="cloud" :instance="instance" />
+        <tagcloud v-if="cloud" :instance="instance" :showEntries="showEntries" />
         <v-card v-else flat tile class="pa-1">
           <v-system-bar color="indigo darken-2" dark>
             <v-list-item v-if="whois" class="mb-1 ml-n3">
@@ -126,6 +126,7 @@ export default {
     newItemDialog: false,
     cloud: true,
     help: false,
+    showEntries: false,
     bubble: {
       value: {
         title: '',
@@ -167,7 +168,7 @@ export default {
         bubble: {
           value: {
             title: 'Getting Started',
-            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure </p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
+            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First thing to do is update </p><p>...../CRISPR/chimera/src/store/modules/auth.js</p><p>and set the folder path to where you cloned this repo.</p><p>developer: {</p><p>folder: \'/Users/philipbeadle/holochain/CRISPR\'</p><p> }</p><p>Then you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
@@ -317,6 +318,7 @@ export default {
       console.log(item)
       if (item.id === 'tag-cloud') {
         this.cloud = true
+        this.showEntries = false
       } else {
         this.cloud = false
         this.isEditing = false
