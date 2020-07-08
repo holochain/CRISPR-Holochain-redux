@@ -6,7 +6,7 @@ export default {
     errors: {},
     partParts: {},
     partInvites: {
-      QmaUFLaxAtQ43Q3tx8BJCQaosJhVapSYH74muBtbsTSKBR: [
+      Qmf1dDSrcpgPZSYvSF2EgPthyD1LpvznNAcGhGKH6DC38c: [
         {
           id: 'e7ac961d-388c-4a2a-b82b-f7d2479bf9e2',
           from: 'Art Brock', // Use AgentId and pick up name from Address book

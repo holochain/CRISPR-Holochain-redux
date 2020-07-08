@@ -28,7 +28,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'FrecklesView',
+  name: 'BubblesView',
   components: {
     DraggableColumn: () => import('@/components/lists/DraggableColumn')
   },
@@ -40,7 +40,7 @@ export default {
   computed: {
     ...mapGetters('instancemanager', ['listInstances']),
     instance () {
-      return this.listInstances('Freckles').find(i => i.instanceId === this.$route.params.instanceId)
+      return this.listInstances('Bubbles').find(i => i.instanceId === this.$route.params.instanceId)
     }
   }
 }

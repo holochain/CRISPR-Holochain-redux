@@ -30,13 +30,13 @@ const tryConnection = () => {
               console.log('ok_demo_setup_Rudy_task', res)
             })
           })
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), title: 'Had to put titles on', content: `<h1>Rudy's first freckle??</h1><p>So Rad</p>`, emoji: '🎹' } }).then((result) => {
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'bubbles', 'create_bubble')({ base: '', bubble_input : {uuid:uuidv4(), title: 'Had to put titles on', content: `<h1>Rudy's first bubble??</h1><p>So Rad</p>`, emoji: '🎹' } }).then((result) => {
             const res = JSON.parse(result)
-            console.log('ok_demo_setup_Rudy_freckle', res)
+            console.log('ok_demo_setup_Rudy_bubble', res)
           })
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), title: 'to demonstrate the workflow', content: `<h1>How good are freckles 💋!</h1><p>So Rad</p>`, emoji: '🎹' } }).then((result) => {
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'bubbles', 'create_bubble')({ base: '', bubble_input : {uuid:uuidv4(), title: 'to demonstrate the workflow', content: `<h1>How good are bubbles 💋!</h1><p>So Rad</p>`, emoji: '🎹' } }).then((result) => {
             const res = JSON.parse(result)
-            console.log('ok_demo_setup_Rudy_freckle', res)
+            console.log('ok_demo_setup_Rudy_bubble', res)
           })
           // Broadcast Origins
           callZome('57c01ed8-30ae-4fca-b6f9-40192821fed2', 'origins', 'create_origin')({ base: '', origin_input : { uuid:uuidv4(), content: '<h1>Rudy wrote this</h1><p>in the Broadcast network</p>' }})

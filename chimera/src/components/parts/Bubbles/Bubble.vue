@@ -41,7 +41,7 @@
 import VFormBase from '@/components/vFormBase'
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'Freckle',
+  name: 'Bubble',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     VFormBase

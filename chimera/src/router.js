@@ -103,9 +103,9 @@ const router = new Router({
       component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
-      path: '/freckles/:instanceId',
-      name: 'Freckles',
-      component: () => import('@/views/freckles/Index')
+      path: '/bubbles/:instanceId',
+      name: 'Bubbles',
+      component: () => import('@/views/bubbles/Index')
     },
     {
       path: '/origins/:instanceId',
