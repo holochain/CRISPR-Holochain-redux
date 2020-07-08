@@ -25,6 +25,9 @@
         <v-icon>mdi-account-multiple-outline</v-icon>
         Profiles
       </v-btn>
+      <v-btn icon @click="redrawMainSymbol()">
+        <v-icon>mdi-hexagon-slice-3</v-icon>
+      </v-btn>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -80,7 +83,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('auth', ['turnSplashOff']),
+    ...mapActions('auth', ['turnSplashOff', 'turnSplashOn']),
     onResizeSplash () {
       if (window.innerHeight < window.innerWidth) {
         this.width = window.innerHeight * 0.9
@@ -141,13 +144,34 @@ export default {
       this.xCenter = this.width / 2
       this.yCenter = this.height / 2
       this.ticks = 1
-      fetch('./symbol.txt')
-        .then(response => response.text())
-        .then((data) => {
-          this.symbol = data
-          this.vueCanvas.clearRect(0, 0, this.width, this.height)
-          this.renderMainSymbol()
-        })
+      this.vueCanvas.clearRect(0, 0, this.width, this.height)
+      this.renderMainSymbol()
+    },
+    redrawMainSymbol () {
+      this.turnSplashOn()
+      this.network = document.getElementById('network')
+      this.vueCanvas = this.network.getContext('2d')
+      this.timerCount = 120
+      this.overlayOpacity = 1
+      this.showOverlayImage = false
+      this.network = undefined
+      this.vueCanvas = undefined
+      this.s = 0
+      this.height = 0
+      this.width = 0
+      this.sideLen = 500
+      this.sideNumb = 96
+      this.rotation = 30 * Math.PI / 180
+      this.fractals = 0
+      this.xCenter = 0
+      this.yCenter = 0
+      this.symbol = ''
+      this.scale = 0
+      this.offSet = 0
+      this.ticks = 0
+      this.networks = 0
+      this.canvasAlpha = 1
+      this.drawMainSymbol()
     }
   },
   computed: {

@@ -5,12 +5,12 @@ export default {
     profiles: [],
     baseInstances: [
       {
-        base: 'Freckles',
+        base: 'Bubbles',
         instances: [
           {
-            id: 'QmFrecklesEditor',
-            zome: 'freckles',
-            type: 'freckle',
+            id: 'QmBubblesEditor',
+            zome: 'bubbles',
+            type: 'bubble',
             instanceId: '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc',
             instanceName: 'Part Editor',
             entry: {
@@ -18,21 +18,21 @@ export default {
             }
           },
           {
-            id: 'QmFreckles1',
-            zome: 'freckles',
-            type: 'freckle',
+            id: 'QmBubbles1',
+            zome: 'bubbles',
+            type: 'bubble',
             instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
-            instanceName: 'Phil\'s Freckles',
+            instanceName: 'Phil\'s Bubbles',
             entry: {
               content: ''
             }
           },
           {
-            id: 'QmFreckles2',
-            zome: 'freckles',
-            type: 'freckle',
+            id: 'QmBubbles2',
+            zome: 'bubbles',
+            type: 'bubble',
             instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
-            instanceName: 'My Friends Freckles',
+            instanceName: 'My Friends Bubbles',
             entry: {
               content: ''
             }

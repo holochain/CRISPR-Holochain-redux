@@ -1,0 +1,42 @@
+{
+  "name": "freckles",
+  "version": "0.0.1",
+  "description": "A CRISPR part",
+  "scripts": {
+    "hc:install": "yarn install && cd ui && yarn install",
+    "hc:keygen": "hc keygen -n --path ./keystores/agent1.keystore",
+    "hc:config": "cd dna && hc test --testfile test/config-generate.js | tee conductor-output.txt && node test/config-copy.js",
+    "hc:test": "cd dna && hc test",
+    "hc:package": "cd dna && hc package",
+    "hc:run:alice": "holochain -c ./1-conductor-config.toml",
+    "hc:run:bob": "holochain -c ./2-conductor-config.toml",
+    "hc:run:phil": "holochain -c ./3-conductor-config.toml",
+    "hc:run:lucy": "holochain -c ./4-conductor-config.toml",
+    "hc:run:all": "npm run hc:run:alice & npm run hc:run:bob & npm run hc:run:phil & npm run hc:run:lucy",
+    "hc:start": "npm run hc:config && npm run hc:run:all",
+    "ui:connect-to-conductor": "cd ui && node connect-to-conductor",
+    "ui:start": "cd ui && yarn electron:serve",
+    "ui:lint": "cd ui && yarn lint",
+    "start": "nf start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holochain/react-graphql-template.git"
+  },
+  "keywords": [
+    "Holochain",
+    "CRISPR",
+    "happ",
+    "RAD",
+    "Tool"
+  ],
+  "author": "Philip Beadle <philip.beadle@holo.host>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/holochain/react-graphql-template/issues"
+  },
+  "homepage": "https://github.com/holochain/react-graphql-template#readme",
+  "dependencies": {
+    "foreman": "^3.0.1"
+  }
+}

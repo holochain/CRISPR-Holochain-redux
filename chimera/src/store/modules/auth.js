@@ -26,12 +26,16 @@ export default {
     },
     turnSplashOff: async ({ commit }) => {
       commit('setSplashOff', false)
+    },
+    turnSplashON: async ({ commit }) => {
+      commit('setSplashON', true)
     }
   },
   mutations: {
     setLoggedIn: set('loggedIn'),
     setChimeraOn: set('chimera'),
     setSplashOff: set('splash'),
+    setSplashOn: set('splash', false),
     setAgentAddress (state, payload) {
       state.agentAddresses.push({ instanceId: payload.instanceId, agentAddress: payload.agentAddress })
     }

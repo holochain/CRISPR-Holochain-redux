@@ -4,10 +4,10 @@ export default {
     featured: [],
     happs: [
       {
-        id: 'QmHashyFreckles',
-        name: 'Freckles',
-        src: 'freckles',
-        launch: '/freckles',
+        id: 'QmHashyBubbles',
+        name: 'Bubbles',
+        src: 'bubbles',
+        launch: '/bubbles',
         price: 19.99,
         compareAt: 27.99,
         publisher: 'Eat Sleep Code Repeat',

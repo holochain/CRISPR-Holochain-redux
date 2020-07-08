@@ -22,11 +22,11 @@ const tryConnection = () => {
         console.log('starting ui, connect to:' + port)
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : { uuid:uuidv4(), title: 'Exciting',  content: `<h1>Lucy's first freckle??</h1><p>So Rad</p>`, emoji: '📚' }})
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'bubbles', 'create_bubble')({ base: '', bubble_input : { uuid:uuidv4(), title: 'Exciting',  content: `<h1>Lucy's first bubble??</h1><p>So Rad</p>`, emoji: '📚' }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
-          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'freckles', 'create_freckle')({ base: '', freckle_input : {uuid:uuidv4(), title: 'Exciting', content: `<h1>How good are Lucy's freckles 💋!</h1><p>Just freckly</p>`, emoji: '📚' } })
+          callZome('0098d2a1-5668-4a5a-8ef8-503d58dd38ce', 'bubbles', 'create_bubble')({ base: '', bubble_input : {uuid:uuidv4(), title: 'Exciting', content: `<h1>How good are Lucy's bubbles 💋!</h1><p>Just freckly</p>`, emoji: '📚' } })
           .then((result) => {
             console.log(JSON.parse(result))
           })

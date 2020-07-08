@@ -55,7 +55,7 @@ function base64_encode(file) {
 }
 
 const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
-const frecklesDnaPath = path.join(__dirname, "../freckles/dna/dist/dna.dna.json")
+const bubblesDnaPath = path.join(__dirname, "../bubbles/dna/dist/dna.dna.json")
 const tagsDnaPath = path.join(__dirname, "../tags/dna/dist/dna.dna.json")
 const projectsDnaPath = path.join(__dirname, "../projects/dna/dist/dna.dna.json")
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
@@ -64,7 +64,7 @@ const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../curatedfields/dna/dist/dna.dna.json")
 const personalInformationDnaPath = path.join(__dirname, "../personalinformation/dna/dist/dna.dna.json")
 
-const editorFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
+const editorFrecklesDna = Config.dna(bubblesDnaPath, 'bubbles-test', { uuid: uuidv4() })
 const editorOriginsDna = Config.dna(originsDnaPath, 'origins-test', { uuid: uuidv4() })
 
 const holochainProjectsDna = Config.dna(projectsDnaPath, 'projects-test', { uuid: uuidv4() })
@@ -83,8 +83,8 @@ const notesDna = Config.dna(notesDnaPath, 'notes-test', { uuid: uuidv4() })
 const tasksDna = Config.dna(tasksDnaPath, 'tasks-test', { uuid: uuidv4() })
 const fieldsDna = Config.dna(curatedfieldsDnaPath, 'fields-test', { uuid: uuidv4() })
 const philsPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
-const philsFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
-const groupFrecklesDna = Config.dna(frecklesDnaPath, 'freckles-test', { uuid: uuidv4() })
+const philsFrecklesDna = Config.dna(bubblesDnaPath, 'bubbles-test', { uuid: uuidv4() })
+const groupFrecklesDna = Config.dna(bubblesDnaPath, 'bubbles-test', { uuid: uuidv4() })
 const lucysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const marksPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
 const rudysPersonalInformationDna = Config.dna(personalInformationDnaPath, 'personalinformation-test', { uuid: uuidv4() })
@@ -97,10 +97,10 @@ const rudysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5':
 const arthursConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const alicesConductorConfig = Config.gen({'57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 const marksConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, {network: network, logger: logger })
-const grantsConductorConfig = Config.gen({'6261170b-2064-4920-be43-98cc7ca1d68b': editorOriginsDna, '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, '4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, 'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '01526dbb-17f7-42d4-8a26-01270b50eb73': clientProjectsDna, '15f5c748-e611-47c7-9d1b-7651e5c16d17': personalProjectsDna, '68342fe4-c2e3-4568-836e-421722757c84': personalProjectsKanbanDna, '6025b761-26e0-42c2-ad96-8bdc1ce00c33': personalProjectsNotesDna, '1b94be13-632b-4924-aa20-8f67113d7b9a': personalProjectsTasksDna,  '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
+// const grantsConductorConfig = Config.gen({'6261170b-2064-4920-be43-98cc7ca1d68b': editorOriginsDna, '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc': editorFrecklesDna, '4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, 'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '01526dbb-17f7-42d4-8a26-01270b50eb73': clientProjectsDna, '15f5c748-e611-47c7-9d1b-7651e5c16d17': personalProjectsDna, '68342fe4-c2e3-4568-836e-421722757c84': personalProjectsKanbanDna, '6025b761-26e0-42c2-ad96-8bdc1ce00c33': personalProjectsNotesDna, '1b94be13-632b-4924-aa20-8f67113d7b9a': personalProjectsTasksDna,  '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna, '0d765fcf-118f-4122-8f03-f5f9ba74e7fa': philsFrecklesDna, '0098d2a1-5668-4a5a-8ef8-503d58dd38ce': groupFrecklesDna}, { network: network, logger: logger })
 
 orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
-  const {phil, lucy, rudy, arthur, alice, mark, grant} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig, grant: grantsConductorConfig}, true)
+  const {phil, lucy, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, lucy: lucysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
   console.log("started_ok_demo")
 
   // managed fields list
@@ -119,7 +119,7 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   const urlProfileField =   await alice.call("fields", "fields", "create_field", {"base": "", "field_input" : {"name": "Url","ui": "text-field"}})
   console.log('urlProfileField', urlProfileField)
   
-  const editorFrecklesProfile = await phil.call("41553681-4c82-4c8c-87bb-ae2a3d2ba4cc", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
+  const editorFrecklesProfile = await phil.call("41553681-4c82-4c8c-87bb-ae2a3d2ba4cc", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
   console.log('editorFrecklesProfile', editorFrecklesProfile)
 
   // Phil's Personal persona
@@ -212,16 +212,16 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   const rudyOriginMatesProfile = await rudy.call("164449a2-e7d4-47dc-acc8-2fe317b8d9fe", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "turtle"}})
   console.log('rudyOriginMatesProfile', rudyOriginMatesProfile)
 
-  const philPrivateFrecklesProfile = await phil.call("0d765fcf-118f-4122-8f03-f5f9ba74e7fa", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
+  const philPrivateFrecklesProfile = await phil.call("0d765fcf-118f-4122-8f03-f5f9ba74e7fa", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
   console.log('philPrivateFrecklesProfile', philPrivateFrecklesProfile)
 
-  const philFrecklesProfile = await phil.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philt3r.png'), "handle": "philip.freckle"}})
+  const philFrecklesProfile = await phil.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philt3r.png'), "handle": "philip.bubble"}})
   console.log('philFrecklesProfile', philFrecklesProfile)
-  const markFrecklesProfile = await mark.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "mark.keenan"}})
+  const markFrecklesProfile = await mark.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "mark.keenan"}})
   console.log('markFrecklesProfile', markFrecklesProfile)
-  const rudyFrecklesProfile = await rudy.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "Rudy"}})
+  const rudyFrecklesProfile = await rudy.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "Rudy"}})
   console.log('rudyFrecklesProfile', rudyFrecklesProfile)
-  const lucyFrecklesProfile = await lucy.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "freckles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
+  const lucyFrecklesProfile = await lucy.call("0098d2a1-5668-4a5a-8ef8-503d58dd38ce", "bubbles", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/lucy.jpg'), "handle": "Lucy"}})
   console.log('lucyFrecklesProfile', lucyFrecklesProfile)
 
   const philKanbanProfile = await phil.call("95569e2e-0de2-4073-8a7d-579f87534c04", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})

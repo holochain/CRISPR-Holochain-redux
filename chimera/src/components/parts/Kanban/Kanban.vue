@@ -2,7 +2,7 @@
   <v-card class="mx-auto" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-piano</v-icon>
-      <span class="subtitle">{{title}} Board</span>
+      <span class="subtitle">{{title}} Board {{base}}</span>
       <v-spacer></v-spacer>
       <v-icon @click="fetchEntries({ instance: this.instance, base: this.base })">mdi-refresh</v-icon>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
