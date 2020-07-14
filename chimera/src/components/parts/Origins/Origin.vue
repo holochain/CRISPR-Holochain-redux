@@ -14,7 +14,7 @@
       <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
       <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
       <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon>
-      <part-manager :base="instance.entry.id" @add-part="addPart"/>
+      <!-- <part-manager :base="instance.entry.uuid" @add-part="addPart"/> -->
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -30,9 +30,9 @@
     </v-alert>
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
-    <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
+    <!-- <v-col v-for="(part, i) in parts" :key="i" class="d-flex child-flex" cols="12">
       <component :is="part.title" :base="partBase" :agent="part.createdBy" :key="part.title" />
-    </v-col>
+    </v-col> -->
     <slot></slot>
   </v-card>
 </template>
@@ -40,9 +40,9 @@
 import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
-  name: 'Freckle',
+  name: 'Bubble',
   components: {
-    PartManager: () => import('@/components/chimera/PartManager'),
+    // PartManager: () => import('@/components/chimera/PartManager'),
     TiptapVuetify
   },
   props: ['instance', 'base', 'entry'],
@@ -84,11 +84,11 @@ export default {
   },
   created () {
     this.clean = { ...this.entry }
-    this.parts = this.partParts(this.instance.partBase)
+    // this.parts = this.partParts(this.instance.partBase)
   },
   computed: {
     ...mapState('auth', ['chimera']),
-    ...mapGetters('parts', ['partParts']),
+    // ...mapGetters('parts', ['partParts']),
     ...mapGetters('friends', ['friend']),
     whois () {
       return this.friend(this.instance.instanceId, this.entry.createdBy)

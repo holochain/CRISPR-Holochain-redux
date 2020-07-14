@@ -6,7 +6,7 @@
       <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
       <v-icon v-if="isEditing && instance.entry.id !== 'new'" @click="updateEntry(payload); isEditing=false">mdi-content-save</v-icon>
       <v-icon @click="deleteEntry(payload)">mdi-delete-outline</v-icon>
-      <part-manager :base="entry.id" @add-part="addPart"/>
+      <part-manager :base="entry.uuid" @add-part="addPart"/>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-system-bar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
@@ -25,7 +25,7 @@
     <v-card-text v-if="!isEditing" v-html="entry.content" />
     <tiptap-vuetify v-if="isEditing" v-model="entry.content" :extensions="extensions" :toolbar-attributes="{ color: 'info' }" />
     <v-col v-for="(part, i) in partParts" :key="i" class="d-flex child-flex" cols="12">
-      <component :is="part.title" :instance="part.instance" :base="entry.id" :agent="entry.createdBy" :key="part.title" />
+      <component :is="part.title" :instance="part.instance" :base="entry.uuid" :agent="entry.createdBy" :key="part.title" />
     </v-col>
     <slot></slot>
   </v-card>

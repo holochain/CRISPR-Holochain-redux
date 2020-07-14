@@ -1,0 +1,1 @@
+{"instance_id":"e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a","zome":"tasks","function":"create_task","args":{"base":"e689e10f-15a0-414f-bc81-eaeb4be86366","task_input":{"uuid":"c73799dd-cba1-4fc1-b62c-b84dc0f9e29a","title":"Research Vue components","done":true}},"url":"ws://localhost:33000","timestamp":1594704648146}

@@ -57,7 +57,7 @@ export default {
             zome: 'origins',
             type: 'origin',
             instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2',
-            instanceName: 'Broadcast Origins',
+            instanceName: 'Ideas',
             entry: {
               content: ''
             }
@@ -187,6 +187,18 @@ export default {
       },
       {
         base: 'Tags',
+        instances: [
+          {
+            id: 'Qmtag1',
+            zome: 'tags',
+            type: 'tag',
+            instanceId: '4b7641fe-145d-4217-9768-1e0bff70fdf5',
+            instanceName: 'Chimera Tags'
+          }
+        ]
+      },
+      {
+        base: 'Holopunk Records',
         instances: [
           {
             id: 'Qmtag1',

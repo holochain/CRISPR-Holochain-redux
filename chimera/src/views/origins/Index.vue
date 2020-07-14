@@ -12,7 +12,7 @@
       </v-btn>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
-      Write a new freckle in the open editor.
+      Write a new Bubble in the open editor.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12">

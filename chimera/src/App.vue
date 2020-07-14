@@ -29,10 +29,12 @@ export default {
     this.fetchFields()
     this.fetchPersonas()
     this.setGroup({ instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends' })
-    this.fetchProfiles({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
-    this.agentAddress({ zome: 'freckles', type: 'freckle', instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', instanceName: 'My Friends', base: '' })
+    this.fetchProfiles({ zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', instanceName: 'Ideas', base: '' })
+    this.agentAddress({ zome: 'origins', type: 'origin', instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2', instanceName: 'Ideas', base: '' })
     this.$store.subscribe((mutation, state) => {
-      console.log(`Mutation -${mutation.type}`)
+      if (mutation.type !== 'route/ROUTE_CHANGED') {
+        console.log(`Mutation -${mutation.type}`)
+      }
     })
   }
 }

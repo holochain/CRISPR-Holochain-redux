@@ -320,7 +320,7 @@ export default {
               fields_field_id: 'QM234566777887',
               fieldName: 'avatar',
               fieldType: 'String',
-              reason: 'Shows on each Freckle you write',
+              reason: 'Shows on each Bubble you write',
               contract: 'Store',
               required: true
             },
@@ -328,7 +328,7 @@ export default {
               fields_field_id: 'QM234566777887',
               fieldName: 'handle',
               fieldType: 'String',
-              reason: 'Shows on each Freckle you write',
+              reason: 'Shows on each Bubble you write',
               contract: 'Store',
               required: true
             }

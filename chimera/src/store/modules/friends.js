@@ -63,7 +63,7 @@ export default {
             name: ''
           },
           notifications: 0,
-          value: 0,
+          value: 40,
           start: 0
         }
       })

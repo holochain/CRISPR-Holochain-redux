@@ -1,0 +1,1 @@
+{"instance_id":"95569e2e-0de2-4073-8a7d-579f87534c04","zome":"kanban","function":"create_column","args":{"base":"c61ca186-222f-4acf-a5b8-fdf1660805da","column_input":{"uuid":"bfa69813-fb34-4395-a2b8-6a54eedbed34","title":"Done","order":2}},"url":"ws://localhost:33000","timestamp":1594704636067}

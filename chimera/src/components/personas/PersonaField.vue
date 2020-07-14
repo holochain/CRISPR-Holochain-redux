@@ -106,7 +106,7 @@ export default {
       this.$emit('move-persona-field', this.selected)
     }
   },
-  props: ['newField', 'personaFieldValue'],
+  props: ['newField', 'persona', 'personaFieldValue'],
   computed: {
     ...mapGetters('personalInformation', ['fields']),
     autocompleteFieldNames () {

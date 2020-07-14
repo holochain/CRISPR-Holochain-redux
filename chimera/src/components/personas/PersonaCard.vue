@@ -73,12 +73,10 @@ export default {
       this.persona.fields.push({})
     },
     saveField (field, fieldValue) {
-      field.personaId = this.persona.id
-      console.log(field.fieldName)
       if (field.fieldName === 'Avatar') {
         this.avatarData = fieldValue
       }
-      console.log(fieldValue)
+      console.log(this.persona.title, field, fieldValue)
     },
     deleteField (field) {
       console.log('delete field')

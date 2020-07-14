@@ -123,7 +123,12 @@ const projects = [
             }
           ]
         }
-      ]
+      ],
+      profileSpec: {
+        id: 'QmBubblesProfileSpecHash',
+        template: 'identify',
+        fields: []
+      }
     }
   },
   {
@@ -569,33 +574,33 @@ const projects = [
     }
   },
   {
-    happId: 'QmHashyFreckles',
-    name: 'Freckles',
-    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Freckles/preview.png',
-    description: 'Freckles have a title, content and order. Set the permissions at build time to control who can update and delete freckles.',
+    happId: 'QmHashyBubbles',
+    name: 'Bubbles',
+    preview: '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects/Bubbles/preview.png',
+    description: 'Bubbles have a title, content and order. Set the permissions at build time to control who can update and delete Bubbles.',
     zome: {
       template: 'Origins',
       templateTypeName: 'origin',
       itemsTemplatesName: 'template1',
-      name: 'Freckles',
+      name: 'Bubbles',
       entryTypes: [
         {
-          id: 'QmFreckleEntryTypeHash',
-          name: 'freckle',
+          id: 'QmBubbleEntryTypeHash',
+          name: 'Bubble',
           template: 'list_anchor_types_1',
           fields: [
             {
               id: 'QM234566777887',
-              fieldName: 'Title',
+              fieldName: 'title',
               fieldType: 'String',
-              fieldDescription: 'Title of the freckle',
+              fieldDescription: 'Title of the Bubble',
               required: false
             },
             {
               id: 'QM234566777887',
               fieldName: 'content',
               fieldType: 'String',
-              fieldDescription: 'Main body of the freckle',
+              fieldDescription: 'Main body of the Bubble',
               required: false
             },
             {
@@ -610,15 +615,15 @@ const projects = [
       ],
       anchorTypes: [
         {
-          id: 'Qmlist_freckles1',
-          type: 'list_freckles',
+          id: 'Qmlist_Bubbles1',
+          type: 'list_Bubbles',
           text: '',
           tag: ' ',
           context: 'permanent',
           links: [
             {
-              entityId: 'QmFreckleEntryTypeHash',
-              type: 'freckle_link',
+              entityId: 'QmBubbleEntryTypeHash',
+              type: 'Bubble_link',
               tag: 'created_at',
               context: 'exclusive'
             }
@@ -627,7 +632,7 @@ const projects = [
         }
       ],
       profileSpec: {
-        id: 'QmFreckleProfileSpecHash',
+        id: 'QmBubbleProfileSpecHash',
         template: 'identify',
         fields: []
       }
@@ -1038,7 +1043,7 @@ const projectKanban = projects.find(p => p.name === 'Kanban')
 
 const projectPersonalInformation = projects.find(p => p.name === 'Personal Information')
 const projectCuratedFields = projects.find(p => p.name === 'Curated Fields')
-const projectFreckles = projects.find(p => p.name === 'Freckles')
+const projectBubbles = projects.find(p => p.name === 'Bubbles')
 const projectNotes = projects.find(p => p.name === 'Notes')
 const projectTasks = projects.find(p => p.name === 'Tasks')
 const projectRatings = projects.find(p => p.name === 'Ratings')
@@ -1054,16 +1059,16 @@ const tryConnection = () => {
         startedConductor = true
         holochainConnection.then(({ callZome }) => {
           // projectCRISPR
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectCRISPR.name, description: projectCRISPR.description, preview: projectCRISPR.preview, zome: JSON.stringify(projectCRISPR.zome), order: 0 }})
+          let projectCRISPRId = 'c61ca186-222f-4acf-a5b8-fdf1660805da'
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:projectCRISPRId, name: projectCRISPR.name, description: projectCRISPR.description, preview: projectCRISPR.preview, zome: JSON.stringify(projectCRISPR.zome), order: 0 }})
           .then((result) => {
-            const projectCRISPRId = JSON.parse(result).Ok.id
             console.log(JSON.parse(result))
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            let columnId = 'bfa69813-fb34-4395-a2b8-6a54eedbed34'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:columnId, title: 'Done', order: 2}}).then((result) => {
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
+              let noteId = '2b8965a1-3d53-4e48-be02-a06c91022372'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Build & test DNA', done:true }})
                 .then((result) => {
@@ -1083,12 +1088,13 @@ const tryConnection = () => {
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
+            columnId = 'efb5ac73-fd13-47ab-8c66-9234ce959427'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:columnId, title: 'Doing', order: 1}}).then((result) => {
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Tags Part', content: 'The tags part can be used to "tag" entries by selecting or adding 1 or more tags. A tag cloud is then created from the tags so that entries can easily be found.', order: 0 }})
+              noteId = '9d023273-476e-4863-8861-66d492920ab6'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Tags Part', content: 'The tags part can be used to "tag" entries by selecting or adding 1 or more tags. A tag cloud is then created from the tags so that entries can easily be found.', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Research Vue components', done:true }})
                 .then((result) => {
@@ -1116,12 +1122,12 @@ const tryConnection = () => {
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            columnId = '60431f31-b44b-4535-bf93-c11d5a8b3369'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectCRISPRId, column_input : { uuid:columnId, title: 'Do', order: 0}}).then((result) => {
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'InstanceIds', content: 'Each new Part that is added needs either a new DHT or install an existing network. Unique InstanceIds that the Part can be associated with will enable the Part to call the correct DHT. Each InstanceId will need a player friendly name and probably namespaced to the type of Part.', order: 0 }})
+              noteId = 'c29201d3-8a1d-43c2-b3ec-a56ecabcff3d'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'InstanceIds', content: 'Each new Part that is added needs either a new DHT or install an existing network. Unique InstanceIds that the Part can be associated with will enable the Part to call the correct DHT. Each InstanceId will need a player friendly name and probably namespaced to the type of Part.', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Add instance to partParts', done:false }})
                 .then((result) => {
@@ -1139,14 +1145,14 @@ const tryConnection = () => {
                 .then((result) => {
                   console.log(JSON.parse(result))                   
                 }).catch(err =>{console.log(err)})
-                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Add multiple Freckles DHTs', done:false }})
+                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Add multiple Bubbles DHTs', done:false }})
                 .then((result) => {
                   console.log(JSON.parse(result))                   
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'InstanceId Manager', content: 'Adding or removing a DHT instance involves installing or uninstalling it from the conductor. The list of partParts needs to be updated as well such that if an instance is removed it no longer shows on the parent part it was associated with.', order: 0 }})
+              noteId = '13abef4b-314b-4ac2-a63a-cc5eef8703a1'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'InstanceId Manager', content: 'Adding or removing a DHT instance involves installing or uninstalling it from the conductor. The list of partParts needs to be updated as well such that if an instance is removed it no longer shows on the parent part it was associated with.', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Clone Origins', done:false }})
                 .then((result) => {
@@ -1169,9 +1175,9 @@ const tryConnection = () => {
                   console.log(JSON.parse(result))                   
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Part Editor Improvements', content: 'When using the Part Editor to modify the code of a Part it is quite normal to save code that does not compile due to missed symbols etc. The issue is that it is the editor being used that fails to compile and another code editor has to be used to fix the issue. Not ideal. Most issues could be caught with a code linter that is run before saving the file.', order: 0 }})
+              noteId = 'e689e10f-15a0-414f-bc81-eaeb4be86366'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Part Editor Improvements', content: 'When using the Part Editor to modify the code of a Part it is quite normal to save code that does not compile due to missed symbols etc. The issue is that it is the editor being used that fails to compile and another code editor has to be used to fix the issue. Not ideal. Most issues could be caught with a code linter that is run before saving the file.', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Investigate running eslint in the browser', done:false }})
                 .then((result) => {
@@ -1198,19 +1204,19 @@ const tryConnection = () => {
           }).catch(err =>{console.log(err)})
 
           // projectChimera
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectChimera.name, description: projectChimera.description, preview: projectChimera.preview, zome: JSON.stringify(projectChimera.zome), order: 1 }})
+          const projectChimeraId = '1d777140-2ba2-4697-9cd3-92f84ce9a64a'
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:projectChimeraId, name: projectChimera.name, description: projectChimera.description, preview: projectChimera.preview, zome: JSON.stringify(projectChimera.zome), order: 1 }})
           .then((result) => {
-            const projectChimeraId = JSON.parse(result).Ok.id
             console.log(JSON.parse(result))
             callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
               console.log(JSON.parse(result))
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            const columnId = '0027766d-bdde-4ba7-974b-489e4ade6f6c'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:columnId, title: 'Doing', order: 1}}).then((result) => {
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Make partBase []', content: 'When the partBase is an "Application" need to be able to add parts to the parts as well', order: 0 }})
+              const noteId = '54a20601-1b52-48f5-8b43-522b3d90138b'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Make partBase []', content: 'When the partBase is an "Application" need to be able to add parts to the parts as well', order: 0 }})
               .then((result) => {
-                const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
                 callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'partBase is []', done:false }})
                 .then((result) => {
@@ -1222,10 +1228,11 @@ const tryConnection = () => {
                 }).catch(err =>{console.log(err)})
               }).catch(err =>{console.log(err)})
             }).catch(err =>{console.log(err)})
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            columnId = 'f2168a74-ae3b-43e0-964f-638b151d0c1a'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectChimeraId, column_input : { uuid:columnId, title: 'Do', order: 0}}).then((result) => {
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Applications / Parts "store"', content: 'We need an easy way to find new apps and parts as well as a way to publish newly built parts and apps. This "store" is an integral part of socialising DHTs.', order: 0 }})
+              noteId = 'fca019e0-e199-45ce-827d-4fbd9632bad1'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Applications / Parts "store"', content: 'We need an easy way to find new apps and parts as well as a way to publish newly built parts and apps. This "store" is an integral part of socialising DHTs.', order: 0 }})
               .then((result) => {
                 console.log(JSON.parse(result))
               }).catch(err =>{console.log(err)})
@@ -1254,9 +1261,9 @@ const tryConnection = () => {
           }).catch(err =>{console.log(err)})
 
           // projectHoloPunkRecords
-          callZome('15f5c748-e611-47c7-9d1b-7651e5c16d17', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectHoloPunkRecords.name, description: projectHoloPunkRecords.description, preview: projectHoloPunkRecords.preview, zome: JSON.stringify(projectHoloPunkRecords.zome), order: 5 }})
+          const projectHoloPunkRecordsId = '7ce899ea-d554-454e-9f71-486f8441232c'
+          callZome('15f5c748-e611-47c7-9d1b-7651e5c16d17', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:projectHoloPunkRecordsId, name: projectHoloPunkRecords.name, description: projectHoloPunkRecords.description, preview: projectHoloPunkRecords.preview, zome: JSON.stringify(projectHoloPunkRecords.zome), order: 5 }})
           .then((result) => {
-            const projectHoloPunkRecordsId = JSON.parse(result).Ok.id
             console.log(JSON.parse(result))
             callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
               console.log(JSON.parse(result))
@@ -1264,8 +1271,8 @@ const tryConnection = () => {
             callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'In Progress', order: 1}}).then((result) => {
               console.log(JSON.parse(result))
             }).catch(err =>{console.log(err)})
-            callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:uuidv4(), title: 'Ideas', order: 0}}).then((result) => {
-              const columnId = JSON.parse(result).Ok.id
+            const columnId = 'd9991533-1a1f-4e12-9a6a-dce943df8a91'
+            callZome('68342fe4-c2e3-4568-836e-421722757c84', 'kanban', 'create_column')({base: projectHoloPunkRecordsId, column_input : { uuid:columnId, title: 'Ideas', order: 0}}).then((result) => {
               console.log(JSON.parse(result))
               callZome('6025b761-26e0-42c2-ad96-8bdc1ce00c33', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Distributed DJ streaming', content: 'Players in the Unity game get the upcoming playlist (can be updated during the performance) so there is no buffering or delay. Tracks are played by Unity for the players using the tracklist and the MIDI messags from the DJ. All messages are saved into the DHT as well as being direct messages (possibly WebRTC). Live performance can be replayed and track artists get paid using info such as how much of the track was played.', order: 0 }})
               .then((result) => {
@@ -1305,14 +1312,16 @@ const tryConnection = () => {
           }).catch(err =>{console.log(err)})
 
           // projectOrigins
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
+          const projectOriginsId = '63e3797d-8906-4f47-af6a-984ec146b9ab'
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:projectOriginsId, name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
           .then((result) => {
-            const projectOriginsId = JSON.parse(result).Ok.id
             console.log(JSON.parse(result))
-            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+            const columnId = '1268834c-4d9f-4801-b250-029e3228e5a4'
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:columnId, title: 'Done', order: 2}}).then((result) => {
               const columnId = JSON.parse(result).Ok.id
               console.log(JSON.parse(result))
-              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
+              const noteId = '05e047b5-0933-46d6-a9c5-4bf30729b468'
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:noteId, title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
               .then((result) => {
                 const noteId = JSON.parse(result).Ok.id
                 console.log(JSON.parse(result))
@@ -1342,8 +1351,8 @@ const tryConnection = () => {
             }).catch(err =>{console.log(err)})
           }).catch(err =>{console.log(err)})
 
-          // projectFreckles
-          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectFreckles.name, description: projectFreckles.description, preview: projectFreckles.preview, zome: JSON.stringify(projectFreckles.zome), order: 2 }})
+          // projectBubbles
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectBubbles.name, description: projectBubbles.description, preview: projectBubbles.preview, zome: JSON.stringify(projectBubbles.zome), order: 2 }})
           .then((result) => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})

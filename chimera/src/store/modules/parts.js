@@ -52,7 +52,8 @@ export default {
         publisher: 'Eat Sleep Code Repeat',
         updated: 1588900779424
       }
-    ]
+    ],
+    partParts: []
   },
   actions: {
     addPart: ({ state, commit, rootState }, payload) => {

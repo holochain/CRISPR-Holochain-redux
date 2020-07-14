@@ -37,7 +37,7 @@
               </v-card-title>
                 <v-row>
                   <v-col>
-                    <kanban :instance="instance" :key="project.id" :base="project.id" :title="project.name"/>
+                    <kanban :instance="instance" :key="project.id" :base="project.uuid" :title="project.name"/>
                   </v-col>
                 </v-row>
               </v-card>
@@ -60,7 +60,7 @@
               </v-card-title>
                 <v-row>
                   <v-col>
-                    <kanban :instance="instance" :key="project.id" :base="project.id" :title="project.name"/>
+                    <kanban :instance="instance" :key="project.id" :base="project.uuid" :title="project.name"/>
                   </v-col>
                 </v-row>
               </v-card>

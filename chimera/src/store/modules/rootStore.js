@@ -6,7 +6,7 @@ export default {
     errors: {},
     partParts: {},
     partInvites: {
-      Qmf1dDSrcpgPZSYvSF2EgPthyD1LpvznNAcGhGKH6DC38c: [
+      QmbyRYn2GN5MjJ8QTskk6xHTN88kCyUCgNysm2JEQXgt7R: [
         {
           id: 'e7ac961d-388c-4a2a-b82b-f7d2479bf9e2',
           from: 'Art Brock', // Use AgentId and pick up name from Address book
@@ -43,16 +43,28 @@ export default {
     }
   },
   mutations: {
+    initialiseEntries (state, payload) {
+      const localStorageItem = localStorage[`${payload.instance.instanceId}${payload.base}`]
+      if (localStorageItem) {
+        console.log(JSON.parse(localStorageItem))
+        const entries = {}
+        entries[`${payload.instance.instanceId}${payload.base}`] = JSON.parse(localStorageItem)
+        state.entries = { ...state.entries, ...entries }
+      }
+    },
     createEntry (state, payload) {
       const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === 'new' || n.id === payload.data.id)
       Object.assign(entry, payload.data)
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
     },
     updateEntry (state, payload) {
       const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
       Object.assign(entry, payload.data)
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
     },
     deleteEntry (state, payload) {
       state.entries[`${payload.instance.instanceId}${payload.base}`] = state.entries[`${payload.instance.instanceId}${payload.base}`].filter(n => n.id !== payload.data.id)
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
     },
     error (state, payload) {
       const errors = {}
@@ -68,6 +80,15 @@ export default {
       const entries = {}
       entries[`${payload.instance.instanceId}${payload.base}`] = payload.entries
       state.entries = { ...state.entries, ...entries }
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
+
+      const localStorageItem = localStorage[`${payload.instance.instanceId}${payload.base}`]
+      if (localStorageItem) {
+        console.log(JSON.parse(localStorageItem))
+        const entries = {}
+        entries[`${payload.instance.instanceId}${payload.base}`] = JSON.parse(localStorageItem)
+        state.entries = { ...state.entries, ...entries }
+      }
     },
     setSortedList (state, payload) {
       const sortedEntries = payload.entries.sort((a, b) => {
@@ -82,22 +103,26 @@ export default {
       const entries = {}
       entries[`${payload.instance.instanceId}${payload.base}`] = sortedEntries
       state.entries = { ...state.entries, ...entries }
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
     },
     setPartsList (state, payload) {
       const parts = {}
       parts[payload.base] = payload.parts
       state.parts = { ...state.parts, ...parts }
+      localStorage.setItem('state.parts', JSON.stringify(state.parts))
     },
     addPartPart (state, payload) {
       const partParts = {}
       partParts[payload.base] = [payload.part]
       state.partParts = { ...state.partParts, ...partParts }
+      localStorage.setItem('state.partParts', JSON.stringify(state.partParts))
     },
     acceptPartInvite (state, payload) {
       const partParts = {}
       partParts[payload.base] = [payload.invite.part]
       state.partInvites[payload.base] = state.partInvites[payload.base].filter(i => i.id !== payload.invite.id)
       state.partParts = { ...state.partParts, ...partParts }
+      localStorage.setItem('state.partParts', JSON.stringify(state.partParts))
     }
   },
   actions: {
@@ -156,6 +181,7 @@ export default {
       })
     },
     fetchEntries: ({ state, commit, rootState }, payload) => {
+      commit('initialiseEntries', { instance: payload.instance, base: payload.base })
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(payload.instance.instanceId, payload.instance.zome, `list_${payload.instance.type}s`)({ base: payload.base }).then((result) => {
           const res = JSON.parse(result)

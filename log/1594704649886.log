@@ -1,0 +1,1 @@
+{"instance_id":"e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a","zome":"tasks","function":"create_task","args":{"base":"54a20601-1b52-48f5-8b43-522b3d90138b","task_input":{"uuid":"5f5e56d8-4ccd-402e-9845-3468dfc64daf","title":"Add each part in the []","done":false}},"url":"ws://localhost:33000","timestamp":1594704649886}

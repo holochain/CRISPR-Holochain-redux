@@ -145,11 +145,11 @@ export default {
             ]
           },
           {
-            text: 'Freckles',
+            text: 'Bubbles',
             taggedEntries: [
               {
                 instanceId: 'ChimeraKnowledgeBase',
-                id: 'entryFreckles'
+                id: 'entryBubbles'
               }
             ]
           }
