@@ -29,6 +29,19 @@ export default {
     },
     turnSplashON: async ({ commit }) => {
       commit('setSplashON', true)
+    },
+    installDna: ({ state, commit, rootState }) => {
+      // check if DNA installed - get instances
+      // unistall
+      // install
+      // start instances
+      // check if args needs updating on each event
+      // run events on instances
+      rootState.holochainConnection.then(({ call }) => {
+        call('admin/dna/install_from_file')({ id: 'testInstall', name: 'testInstallName', path: '/Users/philipbeadle/holochain/CRISPR/dna/bubbles/dna/dist/dna.dna.json' }).then((result) => {
+          console.log(result)
+        })
+      })
     }
   },
   mutations: {

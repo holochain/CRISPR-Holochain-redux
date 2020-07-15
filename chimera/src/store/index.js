@@ -62,6 +62,11 @@ const store = new Vuex.Store({
     init: async () => {
       await Promise.all([])
     }
+  },
+  mutations: {
+    connect (state) {
+      state.holochainConnection = connect({ url: process.env.VUE_APP_HOLOCHAIN_URL })
+    }
   }
 })
 

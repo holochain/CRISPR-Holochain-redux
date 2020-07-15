@@ -12,7 +12,7 @@ function replacePlaceHolders (content, placeHolder, replacement) {
 }
 
 function replaceMod (modTemplate, fields) {
-  console.log(fields)
+  // console.log(fields)
   const rustFields = []
   const constRustNewFields = []
   fields.forEach(field => {

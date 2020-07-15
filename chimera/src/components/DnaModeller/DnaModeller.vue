@@ -10,7 +10,12 @@
           mdi-application-export
         </v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-n1">
+      <v-btn icon>
+        <v-icon @click="createDna">
+          mdi-creation
+        </v-icon>
+      </v-btn>
+      <v-btn icon class="mr-1 ml-n1" @click="installDna">
         <template>
           <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
         </template>
@@ -395,6 +400,24 @@ export default {
     },
     exportFiles () {
       writeFiles(this.items[0], `${this.developer.folder}/dna`)
+    },
+    createDna () {
+      const { exec } = require('child_process')
+      exec('cd /Users/philipbeadle/holochain/CRISPR/dna/bubbles && pwd && nix-shell https://holochain.love && yarn hc:package', (err, stdout, stderr) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        console.log(stdout)
+      })
+    },
+    installDna () {
+      this.$store.state.holochainConnection.then(({ call }) => {
+        call('admin/dna/install_from_file')({ id: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', name: 'testInstallName', path: '/Users/philipbeadle/holochain/CRISPR/dna/bubbles/dna/dist/dna.dna.json' }).then((result) => {
+          console.log(result)
+          // create a Part Editor instance
+        })
+      })
     }
   },
   computed: {
