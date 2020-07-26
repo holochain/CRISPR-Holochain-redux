@@ -52,7 +52,7 @@ export default {
           createdBy: 'Phil'
         },
         {
-          name: 'My Applications/Freckles',
+          name: 'My Applications/Bubbles',
           createdBy: 'Phil'
         }
       ]

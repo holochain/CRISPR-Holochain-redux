@@ -6,6 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import { sync } from 'vuex-router-sync'
 import './components/parts'
+// import ConsciousBubble from './ConsciousBubble.vue'
 
 sync(store, router)
 

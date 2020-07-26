@@ -16,7 +16,7 @@
         Hover over the <v-icon>mdi-dna</v-icon> to see which parts can be added to the Kanban board.
         <v-divider class="my-4 info" style="opacity: 0.22" />
       </div>
-      Click the <v-icon @click="add">mdi-plus</v-icon> to start a new Freckle.
+      Click the <v-icon @click="add">mdi-plus</v-icon> to start a new Bubble.
     </v-alert>
     <v-alert v-if="errors" type="error">
       <v-row no-gutters>

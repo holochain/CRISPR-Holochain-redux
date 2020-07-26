@@ -168,7 +168,7 @@ export default {
         bubble: {
           value: {
             title: 'Getting Started',
-            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First thing to do is update </p><p>...../CRISPR/chimera/src/store/modules/auth.js</p><p>and set the folder path to where you cloned this repo.</p><p>developer: {</p><p>folder: \'/Users/philipbeadle/holochain/CRISPR\'</p><p> }</p><p>Then you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
+            content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First thing to do is update</p><p>...../CRISPR/chimera/src/store/modules/auth.js</p><p>and set the folder path to where you cloned this repo.</p><p>developer: {</p><p>folder: \'/Users/philipbeadle/holochain/CRISPR\'</p><p>}</p><p>Then you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/curatedFields</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure</p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:mary</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each of the 6 players in the demo setup. You can now connect up instances of Chimera to each Holochain node by running</p><p><code>yarn chimera:phil</code></p>'
           },
           schema: {
             title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
@@ -179,7 +179,7 @@ export default {
         file: 'note'
       },
       {
-        name: 'What is Chimera?',
+        name: 'Chimera',
         bubble: {
           value: {
             title: 'What is Chimera?',
@@ -194,95 +194,19 @@ export default {
         file: 'note'
       },
       {
-        name: 'My Applications',
-        children: [
-          {
-            name: 'Freckles',
-            bubble: {
-              value: {
-                title: 'Super Secure Chat',
-                content: '<p>Feel secure with your privacy using Freckles knowing that only the players in your group ever see what you share. No centrally controlled servers, no snooping and no advertising.</p>'
-              },
-              schema: {
-                title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
-                content: { type: 'tiptap', label: 'Content', col: 12 }
-              }
-            },
-            id: 'entryFreckles',
-            file: 'note'
+        name: 'CRISPR',
+        bubble: {
+          value: {
+            title: 'What is CRISPR?',
+            content: '<h1>CRISPR is a Rapid Application Developemnt IDE for Holochain</h1><p>Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.</p><p>Using CRISPR requires the Holochain nix-shell to compile the DNA and also run the webserver for the hot reload feature when editing a part.</p>'
           },
-          {
-            name: 'Kanban',
-            content: 'What is it?',
-            id: '',
-            file: 'note'
-          },
-          {
-            name: 'Holopunk Records',
-            content: 'What is it?',
-            id: '',
-            file: 'note'
-          },
-          {
-            name: 'CRISPR',
-            id: 'entryCRISPR',
-            children: [
-              {
-                name: 'What is CRISPR?',
-                bubble: {
-                  value: {
-                    title: 'What is CRISPR?',
-                    content: '<h1>CRISPR is a Rapid Application Developemnt IDE for Holochain</h1><p>Holochain CRISPR makes it easy to edit your DNA by changing the fields in your entries, the DNA pattern and the permissions for who can add, edit and delete entries. Holochain is based on Biomimicry and like CRISPR Cas9 genetic editing Holochain CRISPR Cas enables editing of Holochain DNA.</p><p>Using CRISPR requires the Holochain nix-shell to compile the DNA and also run the webserver for the hot reload feature when editing a part.</p>'
-                  },
-                  schema: {
-                    title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
-                    content: { type: 'tiptap', label: 'Content', col: 12 }
-                  }
-                },
-                id: 'entryCRISPR',
-                file: 'note'
-              },
-              {
-                name: 'Getting Started',
-                bubble: {
-                  value: {
-                    title: 'Getting Started',
-                    content: '<h1>Setting up a Holochain conductor</h1><p>CRISPR uses the Holochain test framework Try-O-Rama to easily setup the DHTs and sample data is added by running the setup node files.</p><p>First you need package each of the DNAs. Open another nix-shell tab and cd into each of the dna folders and package:</p><ol><li><p><code>cd dna/freckles</code></p></li><li><p><code>yarn install</code></p></li><li><p><code>yarn hc:pacakge</code></p></li></ol><p>This will build the DNA file for each Application and Part used in Chimera. Once that is done there are setup scripts that configure </p><p>The files are located in the dna/demo folder. Open a Holochain nix-shell and follow these steps to run your conductor and add in data from mutliple players.</p><ol><li><p><code>cd dna/demo</code></p></li><li><p><code>yarn demo</code></p></li><li><p>Wait</p></li></ol><p>It takes a few minutes for Holochain to get settled, search the terminal for "Holochain settled ready to run setup data." When you get a result the conductors for the 6 players are ready. Leave Holochain to run while we add some data in a new terminal running the nix-shell.</p><ol><li><p><code>yarn demo:setup:phil</code></p></li><li><p><code>yarn demo:setup:philFreckles</code></p></li><li><p><code>yarn demo:setup:philOrigins</code></p></li><li><p><code>yarn demo:setup:rudy</code></p></li><li><p><code>yarn demo:setup:lucy</code></p></li><li><p><code>yarn demo:setup:grant</code></p></li><li><p><code>yarn demo:setup:arthur</code></p></li></ol><p>You will now have a working Holochain conductor and a separate node for each player.</p><p></p><p></p>'
-                  },
-                  schema: {
-                    title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
-                    content: { type: 'tiptap', label: 'Content', col: 12 }
-                  }
-                },
-                id: 'entryCRISPR',
-                file: 'note'
-              }
-            ]
+          schema: {
+            title: { type: 'text', label: 'Title', col: 12, class: 'display-1' },
+            content: { type: 'tiptap', label: 'Content', col: 12 }
           }
-        ]
-      },
-      {
-        name: 'My Parts',
-        children: [
-          {
-            name: 'Notes',
-            content: 'What is it?',
-            id: '',
-            file: 'note'
-          },
-          {
-            name: 'Tasks',
-            content: 'What is it?',
-            id: '',
-            file: 'note'
-          },
-          {
-            name: 'Who Is?',
-            content: 'What is it?',
-            id: '',
-            file: 'note'
-          }
-        ]
+        },
+        id: 'entryCRISPR',
+        file: 'note'
       }
     ]
   }),

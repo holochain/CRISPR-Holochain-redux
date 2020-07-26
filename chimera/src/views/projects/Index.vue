@@ -22,12 +22,12 @@
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects :instance="instance" base="Applications" title="Application Projects"/>
+        <projects :instance="instance" base="Parts" title="Part Projects" :cloneable="true" />
       </v-col>
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects :instance="instance" base="Parts" title="Part Projects" :cloneable="true" />
+        <projects :instance="instance" base="Applications" title="Application Projects"/>
       </v-col>
     </v-row>
   </section>

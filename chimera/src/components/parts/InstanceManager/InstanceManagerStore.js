@@ -5,41 +5,6 @@ export default {
     profiles: [],
     baseInstances: [
       {
-        base: 'Bubbles',
-        instances: [
-          {
-            id: 'QmBubblesEditor',
-            zome: 'bubbles',
-            type: 'bubble',
-            instanceId: '41553681-4c82-4c8c-87bb-ae2a3d2ba4cc',
-            instanceName: 'Part Editor',
-            entry: {
-              content: ''
-            }
-          },
-          {
-            id: 'QmBubbles1',
-            zome: 'bubbles',
-            type: 'bubble',
-            instanceId: '0d765fcf-118f-4122-8f03-f5f9ba74e7fa',
-            instanceName: 'Phil\'s Bubbles',
-            entry: {
-              content: ''
-            }
-          },
-          {
-            id: 'QmBubbles2',
-            zome: 'bubbles',
-            type: 'bubble',
-            instanceId: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce',
-            instanceName: 'My Friends Bubbles',
-            entry: {
-              content: ''
-            }
-          }
-        ]
-      },
-      {
         base: 'Origins',
         instances: [
           {
@@ -57,7 +22,7 @@ export default {
             zome: 'origins',
             type: 'origin',
             instanceId: '57c01ed8-30ae-4fca-b6f9-40192821fed2',
-            instanceName: 'Broadcast Origins',
+            instanceName: 'Ideas',
             entry: {
               content: ''
             }
@@ -131,6 +96,17 @@ export default {
         base: 'Notes',
         instances: [
           {
+            id: 'QmNotesEditor',
+            zome: 'notes',
+            type: 'note',
+            instanceId: '8239b37b-5b69-43cd-aa2c-28b1054aef20',
+            instanceName: 'Part Editor',
+            entry: {
+              title: '',
+              content: ''
+            }
+          },
+          {
             id: 'QmNo1',
             zome: 'notes',
             type: 'note',
@@ -157,6 +133,13 @@ export default {
       {
         base: 'Tasks',
         instances: [
+          {
+            id: 'Qmtaskb0',
+            zome: 'tasks',
+            type: 'task',
+            instanceId: 'c74e9c11-eb79-4459-a187-39ef459a008b',
+            instanceName: 'Part Editor'
+          },
           {
             id: 'Qmtaskb1',
             zome: 'tasks',
@@ -187,6 +170,25 @@ export default {
       },
       {
         base: 'Tags',
+        instances: [
+          {
+            id: 'Qmtag1',
+            zome: 'tags',
+            type: 'tag',
+            instanceId: '2b3a7e5a-739e-427e-9f38-6992758e0552',
+            instanceName: 'Part Editor'
+          },
+          {
+            id: 'Qmtag1',
+            zome: 'tags',
+            type: 'tag',
+            instanceId: '4b7641fe-145d-4217-9768-1e0bff70fdf5',
+            instanceName: 'Chimera Tags'
+          }
+        ]
+      },
+      {
+        base: 'Holopunk Records',
         instances: [
           {
             id: 'Qmtag1',

@@ -2,7 +2,7 @@
   <v-card class="mx-auto" dark>
     <v-system-bar color="indigo darken-2" dark>
       <v-icon>mdi-piano</v-icon>
-      <span class="subtitle">{{title}} Board {{base}}</span>
+      <span class="subtitle">{{title}} Board</span>
       <v-spacer></v-spacer>
       <v-icon @click="fetchEntries({ instance: this.instance, base: this.base })">mdi-refresh</v-icon>
       <v-icon @click="newColumn = true">mdi-table-column-plus-after</v-icon>
@@ -21,7 +21,7 @@
     </v-alert>
     <v-row class="pl-1 pr-1">
       <v-col v-for="column in columns" :key="column.id">
-        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :contentInstance="noteInstance" :title="column.title" :contentBase="column.id" />
+        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :contentInstance="noteInstance" :title="column.title" :contentBase="column.uuid" />
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>

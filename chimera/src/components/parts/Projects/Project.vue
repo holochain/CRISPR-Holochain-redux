@@ -26,9 +26,6 @@
       <v-btn color="action" icon :to="`/project/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
-      <v-btn v-if="cloneable" color="alert" icon @click="cloningDialog = true">
-        <v-icon>mdi-dna</v-icon>
-      </v-btn>
     </v-card-actions>
     <v-dialog v-if="cloneable" v-model="cloningDialog" max-width="700px">
       <v-card flat>

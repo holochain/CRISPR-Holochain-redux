@@ -261,9 +261,9 @@ export default {
         ]
       },
       {
-        id: 'QmhashProfileFreckles',
-        name: 'Freckles',
-        dna: 'QmHashyFreckles',
+        id: 'QmhashProfileBubbles',
+        name: 'Bubbles',
+        dna: 'QmHashyBubbles',
         fields: [
           {
             fieldsFieldId: 'QmUCCewxi41axbVUtbQjWWL8498CSL8CV2G2raDdbCqWFu',

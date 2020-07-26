@@ -66,7 +66,6 @@
           <v-tabs-items v-model="tab">
             <v-tab-item key="0">
               <draggable-column v-if="editorInstance" :isDraggable="false" :key="editorInstance.id" :contentInstance="editorInstance" :title="editorInstance.instanceName" contentBase="" :hasProfile="true"/>
-              <!-- <component :is="part(0)" :instance="editorInstance" base="Part Editor" :entry="editorInstance.entry" /> -->
             </v-tab-item>
             <!-- <v-tab-item key="1">
               <component :is="part(1)" instance="41553681-4c82-4c8c-87bb-ae2a3d2ba4cc" base="PartEditor" title="Part Editor" :agent="agentAddress" />

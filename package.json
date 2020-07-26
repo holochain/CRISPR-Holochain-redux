@@ -7,7 +7,6 @@
   "author": "Philip Beadle <philip.beadle@holo.host>",
   "license": "MIT",
   "scripts": {
-    "start:agent": "node ~/holochain/CRISPR/chimera/src/agent",
     "hc:install": "yarn install && cd ui && yarn install",
     "hc:config": "cd dna && hc test --testfile test/config-generate.js | tee conductor-output.txt && node test/config-copy.js",
     "hc:test": "cd dna && hc test",
@@ -19,11 +18,10 @@
     "chimera:phil": "cd chimera && yarn electron:serve:phil",
     "chimera:bob": "cd chimera && yarn electron:serve:bob",
     "chimera:alice": "cd chimera && yarn electron:serve:alice",
-    "chimera:lucy": "cd chimera && yarn electron:serve:lucy",
+    "chimera:mary": "cd chimera && yarn electron:serve:mary",
     "start": "nf start"
   },
   "dependencies": {
-    "foreman": "^3.0.1",
-    "vue-the-mask": "^0.11.1"
+    "foreman": "^3.0.1"
   }
 }

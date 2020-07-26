@@ -1,4 +1,4 @@
-import * as fs from 'fs'
+const fs = require('fs')
 export const developer = {
   folder: '/Users/philipbeadle/holochain/CRISPR'
 }
@@ -12,7 +12,7 @@ function replacePlaceHolders (content, placeHolder, replacement) {
 }
 
 function replaceMod (modTemplate, fields) {
-  console.log(fields)
+  // console.log(fields)
   const rustFields = []
   const constRustNewFields = []
   fields.forEach(field => {
@@ -320,7 +320,7 @@ export default {
               fields_field_id: 'QM234566777887',
               fieldName: 'avatar',
               fieldType: 'String',
-              reason: 'Shows on each Freckle you write',
+              reason: 'Shows on each Bubble you write',
               contract: 'Store',
               required: true
             },
@@ -328,7 +328,7 @@ export default {
               fields_field_id: 'QM234566777887',
               fieldName: 'handle',
               fieldType: 'String',
-              reason: 'Shows on each Freckle you write',
+              reason: 'Shows on each Bubble you write',
               contract: 'Store',
               required: true
             }

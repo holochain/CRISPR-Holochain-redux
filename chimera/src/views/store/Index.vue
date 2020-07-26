@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-divider class="mx-3" inset vertical />
-      <span class="title">Parts Store</span>
+      <span class="title">Holo App Store</span>
     </v-toolbar>
     <!-- <featured /> -->
     <games />

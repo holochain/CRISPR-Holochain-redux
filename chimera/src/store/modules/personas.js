@@ -1,6 +1,5 @@
 export default {
   namespaced: true,
-
   state: {
     personas: [
     ]
@@ -35,6 +34,19 @@ export default {
                 }
               })
             })
+          }
+        })
+      })
+    },
+    updatePersona: ({ state, commit, rootState }, payload) => {
+      rootState.holochainConnection.then(({ callZome }) => {
+        callZome('personalinformation', 'personalinformation', 'update_personafield')({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, personafield_input: { ...payload.entry } }).then((result) => {
+          const res = JSON.parse(result)
+          console.log(res)
+          if (res.Ok === undefined) {
+            commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
+          } else {
+            commit('updatePersonaField', { instance: payload.instance, base: payload.base, data: payload.entry })
           }
         })
       })
