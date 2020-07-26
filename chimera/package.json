@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "serve": "VUE_APP_HOLOCHAIN_URL=ws://localhost:33002 vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "now && now alias",
     "electron:generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "VUE_APP_POSITION=0 VUE_APP_HOLOCHAIN_URL=ws://localhost:33000 vue-cli-service electron:serve",
@@ -37,8 +34,7 @@
     "vue-the-mask": "^0.11.1",
     "vuedraggable": "^2.23.2",
     "vuetify-image-input": "^19.1.0",
-    "vuewordcloud": "^18.7.12",
-    "wavesurfer.js": "^3.3.3"
+    "vuewordcloud": "^18.7.12"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.2",

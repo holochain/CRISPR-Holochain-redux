@@ -1,27 +1,18 @@
 {
   "name": "holochain-crispr",
   "version": "0.0.1",
-  "description": "Holochain Application experince completely Agent controlled enabling new Agents to use Holochain and power users to assemble, modify and build their own applications.",
+  "description": "Holochain DNA IDE",
   "main": "index.js",
   "repository": "https://github.com/holochain/CRISPR",
   "author": "Philip Beadle <philip.beadle@holo.host>",
   "license": "MIT",
   "scripts": {
-    "hc:install": "yarn install && cd ui && yarn install",
-    "hc:config": "cd dna && hc test --testfile test/config-generate.js | tee conductor-output.txt && node test/config-copy.js",
-    "hc:test": "cd dna && hc test",
-    "hc:package": "cd dna && hc package",
-    "hc:run": "holochain -c ./1-conductor-config.toml",
-    "hc:start": "npm run hc:config && npm run hc:run",
+    "hc:install": "cd chimera && yarn install --ignore-engines && cd ../dna/demo && yarn install --ignore-engines",
     "chimera": "cd chimera && yarn electron:serve",
     "chimera:lint": "cd chimera && yarn lint",
     "chimera:phil": "cd chimera && yarn electron:serve:phil",
     "chimera:bob": "cd chimera && yarn electron:serve:bob",
     "chimera:alice": "cd chimera && yarn electron:serve:alice",
-    "chimera:mary": "cd chimera && yarn electron:serve:mary",
-    "start": "nf start"
-  },
-  "dependencies": {
-    "foreman": "^3.0.1"
+    "chimera:mary": "cd chimera && yarn electron:serve:mary"
   }
 }
