@@ -7,6 +7,9 @@
       <v-btn color="action" icon @click="details=!details">
         <v-icon>mdi-details</v-icon>
       </v-btn>
+      <v-btn v-if="base === 'Parts'" color="alert" icon @click="cloningDialog = true">
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
       <v-btn color="action" icon @click="help=!help">
         <v-icon>mdi-help</v-icon>
       </v-btn>
@@ -73,7 +76,7 @@
       </v-row>
     </v-alert>
     <v-row no-gutters>
-      <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" lg="2">
+      <v-col v-for="project in projects" :key="project.id" cols="12" sm="6" lg="3">
         <project :key="project.id" :instance="instance" :base="base" :project="project" :details="details" :cloneable="cloneable" />      </v-col>
     </v-row>
     <slot></slot>

@@ -200,7 +200,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { mapGetters, mapState } from 'vuex'
-
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
   if (!fs.existsSync(dirname)) {
@@ -402,8 +401,9 @@ export default {
       writeFiles(this.items[0], `${this.developer.folder}/dna`)
     },
     createDna () {
+      console.log(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`)
       const { exec } = require('child_process')
-      exec('cd /Users/philipbeadle/holochain/CRISPR/dna/bubbles && pwd && nix-shell https://holochain.love && yarn hc:package', (err, stdout, stderr) => {
+      exec(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`, (err, stdout, stderr) => {
         if (err) {
           console.error(err)
           return
@@ -413,11 +413,29 @@ export default {
     },
     installDna () {
       this.$store.state.holochainConnection.then(({ call }) => {
-        call('admin/dna/install_from_file')({ id: '0098d2a1-5668-4a5a-8ef8-503d58dd38ce', name: 'testInstallName', path: '/Users/philipbeadle/holochain/CRISPR/dna/bubbles/dna/dist/dna.dna.json' }).then((result) => {
-          console.log(result)
-          // create a Part Editor instance
+        call('admin/agent/list')().then((installedAgents) => {
+          for (const agent of installedAgents) {
+            console.log(agent.public_address)
+          }
         })
       })
+      // const id = 'dd-4c82-4c8c-87bb-ae2a3d2ba4cc'
+      // const dnaId = 'rerytuety-5668-4a5a-8ef8-503d58dd38ce'
+      // const agentId = 'HcSCj8AWBrQJekt6f4mjSd7G5AQdz5npuaBbv49iFH5bovr8ukRWHs5zn3amoii' // this.$store.state.auth.agentAddresses[0].agentAddress
+      // this.$store.state.holochainConnection.then(({ call }) => {
+      //   call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: '/Users/philipbeadle/holochain/CRISPR/dna/bubbles/dna/dist/dna.dna.json' }).then((result) => {
+      //     console.log(result)
+      //     // create a Part Editor instance
+      //     const instanceAddArgs = { id, dna_id: dnaId, agent_id: agentId, storage: 'lmdb' }
+      //     console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+      //     call('admin/instance/add')(instanceAddArgs).then((result) => {
+      //       console.log(result)
+      //     })
+      //   })
+      // })
+    },
+    bundle () {
+      alert('create Holo bundle')
     }
   },
   computed: {

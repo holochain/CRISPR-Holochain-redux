@@ -36,16 +36,6 @@ const router = new Router({
       props: true
     },
     {
-      path: '/app-store',
-      name: 'Applications Store',
-      component: () => import('@/views/store/Index')
-    },
-    {
-      path: '/part-store',
-      name: 'Parts Store',
-      component: () => import('@/views/store/Index')
-    },
-    {
       path: '/store/part/:id',
       name: 'Part Store Page',
       component: () => import('@/views/store-page/Part')

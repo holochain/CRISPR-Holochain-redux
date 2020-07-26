@@ -1,1 +1,0 @@
-{"instance_id":"68342fe4-c2e3-4568-836e-421722757c84","zome":"kanban","function":"create_column","args":{"base":"7ce899ea-d554-454e-9f71-486f8441232c","column_input":{"uuid":"d9991533-1a1f-4e12-9a6a-dce943df8a91","title":"Ideas","order":0}},"url":"ws://localhost:33000","timestamp":1594704638075}

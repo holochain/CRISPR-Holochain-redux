@@ -1,1 +1,0 @@
-{"instance_id":"e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a","zome":"tasks","function":"create_task","args":{"base":"e689e10f-15a0-414f-bc81-eaeb4be86366","task_input":{"uuid":"76ecfb9e-7487-4791-ab3d-2cbf20eeda45","title":"Investigate running eslint in the browser","done":false}},"url":"ws://localhost:33000","timestamp":1594704649203}

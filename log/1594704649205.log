@@ -1,1 +1,0 @@
-{"instance_id":"e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a","zome":"tasks","function":"create_task","args":{"base":"e689e10f-15a0-414f-bc81-eaeb4be86366","task_input":{"uuid":"b0080c92-59ef-4248-8bd4-f01fcc5ddc41","title":"Add Tags part to each instance","done":false}},"url":"ws://localhost:33000","timestamp":1594704649205}

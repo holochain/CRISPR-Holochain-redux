@@ -1,11 +1,11 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app class="grey darken-4" :mini-variant.sync="mini" mini-variant-width="70" permanent>
+  <v-navigation-drawer v-model="drawer" app width="220" class="grey darken-4" :mini-variant.sync="mini" mini-variant-width="70" permanent>
     <v-list dense color="transparent">
       <v-list-item class="mb-4">
         <v-list-item-avatar color="#80deea">
           <v-img :src="require('@/assets/chimera.png')" />
         </v-list-item-avatar>
-        <v-list-item-title class="title">Chimera</v-list-item-title>
+        <v-list-item-title class="title">CRISPR</v-list-item-title>
         <v-btn icon @click.stop="mini = !mini">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -54,14 +54,9 @@ export default {
     items () {
       return [
         {
-          icon: 'mdi-view-grid',
-          text: 'My Applications',
-          to: '/library/false'
-        },
-        {
-          icon: 'mdi-plus-box-multiple-outline',
-          text: 'My Parts',
-          to: '/parts'
+          icon: 'mdi-dna',
+          text: 'Projects',
+          to: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2'
         },
         {
           icon: 'mdi-newspaper',
@@ -75,25 +70,20 @@ export default {
         },
         { spacer: true },
         {
-          icon: 'mdi-store-outline',
-          text: 'Application Store',
-          to: '/app-store'
-        },
-        {
-          icon: 'mdi-store',
-          text: 'Parts Store',
-          to: '/part-store'
-        },
-        { spacer: true },
-        // {
-        //   icon: 'mdi-dna',
-        //   text: 'CRISPR',
-        //   to: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2'
-        // },
-        {
           icon: 'mdi-thought-bubble-outline',
           text: 'Support',
           to: '/knowledge-base'
+        },
+        { spacer: true },
+        {
+          icon: 'mdi-account-multiple',
+          text: 'Personas',
+          to: '/personas'
+        },
+        {
+          icon: 'mdi-account-multiple-outline',
+          text: 'Profiles',
+          to: '/library/true'
         }
       ]
     }

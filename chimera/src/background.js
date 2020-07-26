@@ -1,6 +1,7 @@
 'use strict'
-
-import { app, protocol, BrowserWindow } from 'electron'
+/* global __static */
+import path from 'path'
+import { app, Menu, Tray, protocol, BrowserWindow, nativeImage } from 'electron'
 import {
   createProtocol
   /* installVueDevtools */
@@ -10,7 +11,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
+let trayIcon = null
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{ scheme: 'app', privileges: { secure: true, standard: true } }])
 function createWindow () {
@@ -18,34 +19,9 @@ function createWindow () {
     fullscreen: true,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    icon: path.join(__static, 'icon.png')
   })
-  // console.log('process.env.VUE_APP_POSITION')
-  // console.log(process.env.VUE_APP_POSITION)
-  // let x = 0
-  // let y = 0
-  // switch (process.env.VUE_APP_POSITION) {
-  //   case '2':
-  //     x = 840
-  //     break
-  //   case '3':
-  //     y = 500
-  //     break
-  //   case '4':
-  //     y = 500
-  //     x = 840
-  //     break
-  // }
-
-  // win = new BrowserWindow({
-  //   width: 840,
-  //   height:500,
-  //   x: x,
-  //   y: y,
-  //   webPreferences: {
-  //     nodeIntegration: true
-  //   }
-  // })
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -97,6 +73,19 @@ app.on('ready', async () => {
 
   }
   createWindow()
+
+  const image = nativeImage.createFromPath(path.join(__static, 'icon.png'))
+  image.setTemplateImage(true)
+  trayIcon = new Tray(image)
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Item1', type: 'radio' },
+    { label: 'Item2', type: 'radio' },
+    { label: 'Item3', type: 'radio', checked: true },
+    { label: 'Item4', type: 'radio' }
+  ])
+  trayIcon.setToolTip('Chimera')
+  trayIcon.setContextMenu(contextMenu)
+  console.log(trayIcon)
 })
 
 // Exit cleanly on request from parent process in development mode.

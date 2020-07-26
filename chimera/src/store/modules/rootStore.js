@@ -46,7 +46,7 @@ export default {
     initialiseEntries (state, payload) {
       const localStorageItem = localStorage[`${payload.instance.instanceId}${payload.base}`]
       if (localStorageItem) {
-        console.log(JSON.parse(localStorageItem))
+        // console.log(JSON.parse(localStorageItem))
         const entries = {}
         entries[`${payload.instance.instanceId}${payload.base}`] = JSON.parse(localStorageItem)
         state.entries = { ...state.entries, ...entries }
@@ -55,16 +55,16 @@ export default {
     createEntry (state, payload) {
       const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === 'new' || n.id === payload.data.id)
       Object.assign(entry, payload.data)
-      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(state.entries[`${payload.instance.instanceId}${payload.base}`]))
     },
     updateEntry (state, payload) {
       const entry = state.entries[`${payload.instance.instanceId}${payload.base}`].find(n => n.id === payload.data.id)
       Object.assign(entry, payload.data)
-      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(state.entries[`${payload.instance.instanceId}${payload.base}`]))
     },
     deleteEntry (state, payload) {
       state.entries[`${payload.instance.instanceId}${payload.base}`] = state.entries[`${payload.instance.instanceId}${payload.base}`].filter(n => n.id !== payload.data.id)
-      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(payload.entries))
+      localStorage.setItem(`${payload.instance.instanceId}${payload.base}`, JSON.stringify(state.entries[`${payload.instance.instanceId}${payload.base}`]))
     },
     error (state, payload) {
       const errors = {}
@@ -84,7 +84,7 @@ export default {
 
       const localStorageItem = localStorage[`${payload.instance.instanceId}${payload.base}`]
       if (localStorageItem) {
-        console.log(JSON.parse(localStorageItem))
+        // console.log(JSON.parse(localStorageItem))
         const entries = {}
         entries[`${payload.instance.instanceId}${payload.base}`] = JSON.parse(localStorageItem)
         state.entries = { ...state.entries, ...entries }
@@ -134,7 +134,7 @@ export default {
         callZome(instance.instanceId, instance.zome, 'agent_address')({ }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
-            console.log(res)
+            // console.log(res)
           } else {
             dispatch('auth/agentAddress', { instanceId: instance.instanceId, agentAddress: res.Ok }, { root: true })
           }
@@ -146,7 +146,7 @@ export default {
         callZome(instance.instanceId, instance.zome, 'list_profiles')({ base: '' }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
-            console.log(res)
+            // console.log(res)
           } else {
             dispatch('friends/profiles', { instance: instance, profiles: res.Ok }, { root: true })
           }
@@ -159,7 +159,7 @@ export default {
         rootState.holochainConnection.then(({ callZome }) => {
           callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: entry.id, created_at: entry.createdAt, address: entry.address, [`${payload.instance.type}_input`]: { ...entry } }).then((result) => {
             const res = JSON.parse(result)
-            console.log(res)
+            // console.log(res)
             if (res.Ok === undefined) {
               commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
             } else {
@@ -173,7 +173,7 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(payload.instance.instanceId, payload.instance.zome, `rebase_${payload.instance.type}`)({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
+          // console.log(res)
           if (res.Ok === undefined) {
             commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
           }
@@ -186,7 +186,7 @@ export default {
         callZome(payload.instance.instanceId, payload.instance.zome, `list_${payload.instance.type}s`)({ base: payload.base }).then((result) => {
           const res = JSON.parse(result)
           if (res.Ok === undefined) {
-            console.log(res)
+            // console.log(res)
           } else {
             if (payload.sortKey) {
               commit('setSortedList', { instance: payload.instance, base: payload.base, entries: res.Ok, sortKey: payload.sortKey })
@@ -198,12 +198,12 @@ export default {
       })
     },
     createEntry: ({ state, commit, rootState }, payload) => {
-      console.log(payload)
+      // console.log(payload)
       payload.entry.uuid = uuidv4()
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
+          // console.log(res)
           if (res.Ok === undefined) {
             commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
           } else {
@@ -216,7 +216,7 @@ export default {
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(payload.instance.instanceId, payload.instance.zome, `update_${payload.instance.type}`)({ id: payload.entry.id, created_at: payload.entry.createdAt, address: payload.entry.address, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
           const res = JSON.parse(result)
-          console.log(res)
+          // console.log(res)
           if (res.Ok === undefined) {
             commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal.kind })
           } else {

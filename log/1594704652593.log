@@ -1,1 +1,0 @@
-{"instance_id":"e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a","zome":"tasks","function":"create_task","args":{"base":"QmaueFszpK9FjxVqmCNMN2D4zHakR5FrMdt9py9Gvs3YgA","task_input":{"uuid":"1cac503d-2b7f-497c-92e0-660d38c7f3e6","title":"Part Editor","done":true}},"url":"ws://localhost:33000","timestamp":1594704652593}
