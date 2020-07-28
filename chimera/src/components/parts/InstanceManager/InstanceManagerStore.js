@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 export default {
   namespaced: true,
   state: {
@@ -138,21 +137,33 @@ export default {
             zome: 'tasks',
             type: 'task',
             instanceId: 'c74e9c11-eb79-4459-a187-39ef459a008b',
-            instanceName: 'Part Editor'
+            instanceName: 'Part Editor',
+            entry: {
+              title: '',
+              done: false
+            }
           },
           {
             id: 'Qmtaskb1',
             zome: 'tasks',
             type: 'task',
             instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-            instanceName: 'Holochain Projects Tasks'
+            instanceName: 'Holochain Projects Tasks',
+            entry: {
+              title: '',
+              done: false
+            }
           },
           {
             id: 'Qmtaskb2',
             zome: 'tasks',
             type: 'task',
             instanceId: '1b94be13-632b-4924-aa20-8f67113d7b9a',
-            instanceName: 'Personal Projects Tasks'
+            instanceName: 'Personal Projects Tasks',
+            entry: {
+              title: '',
+              done: false
+            }
           }
         ]
       },
@@ -176,20 +187,12 @@ export default {
             zome: 'tags',
             type: 'tag',
             instanceId: '2b3a7e5a-739e-427e-9f38-6992758e0552',
-            instanceName: 'Part Editor'
+            instanceName: 'Part Editor',
+            entry: {
+              title: '',
+              done: false
+            }
           },
-          {
-            id: 'Qmtag1',
-            zome: 'tags',
-            type: 'tag',
-            instanceId: '4b7641fe-145d-4217-9768-1e0bff70fdf5',
-            instanceName: 'Chimera Tags'
-          }
-        ]
-      },
-      {
-        base: 'Holopunk Records',
-        instances: [
           {
             id: 'Qmtag1',
             zome: 'tags',
@@ -279,131 +282,8 @@ export default {
     }
   },
   actions: {
-    acknowledgeErrors: ({ state, commit, rootState }, base) => {
-      commit('resetErrors', base)
-    },
-    // order: ({ state, commit, rootState }, payload) => {
-    //   commit('setInstancesList', { base: payload.base, instances: payload.instances })
-    //   payload.instances.forEach(instance => {
-    //     rootState.holochainConnection.then(({ callZome }) => {
-    //       callZome('instances', 'instances', 'update_instance')({ id: instance.id, created_at: instance.createdAt, address: instance.address, instance_input: { uuid: instance.uuid, content: instance.content } }).then((result) => {
-    //         const res = JSON.parse(result)
-    //         // console.log(res)
-    //         if (res.Ok === undefined) {
-    //           commit('error', { base: payload.base, error: res.Err.Internal })
-    //         } else {
-    //           commit('updateInstance', { base: payload.base, data: res.Ok })
-    //         }
-    //       })
-    //     })
-    //   })
-    // },
-    // rebase: ({ state, commit, rootState }, payload) => {
-    //   rootState.holochainConnection.then(({ callZome }) => {
-    //     callZome('instances', 'instances', 'rebase_instance')({ base_from: payload.from, base_to: payload.to, id: payload.id, created_at: payload.createdAt }).then((result) => {
-    //       const res = JSON.parse(result)
-    //       console.log(res)
-    //       if (res.Ok === undefined) {
-    //         commit('error', { base: payload.base, error: res.Err.Internal })
-    //       }
-    //     })
-    //   })
-    // },
-    agentAddress: ({ state, commit, rootState, dispatch }) => {
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome('instances', 'instances', 'agent_address')({ }).then((result) => {
-          const res = JSON.parse(result)
-          if (res.Ok === undefined) {
-            console.log(res)
-          } else {
-            dispatch('auth/agentAddress', { agentAddress: res.Ok }, { root: true })
-            console.log(rootState.auth.agentAddress)
-          }
-        })
-      })
-    },
-    fetchProfiles: ({ state, commit, rootState, dispatch }) => {
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome('instances', 'instances', 'list_profiles')({ base: '' }).then((result) => {
-          const res = JSON.parse(result)
-          if (res.Ok === undefined) {
-            console.log(res)
-          } else {
-            const friends = res.Ok.map(p => {
-              return {
-                id: p.id,
-                agentAddress: p.agentId,
-                name: p.handle,
-                online: true,
-                info: {
-                  id: 10,
-                  avatar: p.avatar,
-                  name: ''
-                },
-                notifications: 0,
-                value: 0,
-                start: 0
-              }
-            })
-            dispatch('friends/profiles', { profiles: friends }, { root: true })
-          }
-        })
-      })
-    },
-    fetchInstances: ({ state, commit, rootState }, base) => {
-      if (base === 'PartEditor') return
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome('instances', 'instances', 'list_instances')({ base: base }).then((result) => {
-          const res = JSON.parse(result)
-          // console.log(res)
-          if (res.Ok === undefined) {
-            console.log(res)
-          } else {
-            commit('setInstancesList', { base: base, instances: res.Ok })
-          }
-        })
-      })
-    },
-    saveInstance: ({ state, commit, rootState }, payload) => {
-      if (payload.base === 'PartEditor') return
-      if (payload.instance.id === 'new' || payload.instance.id === undefined) {
-        rootState.holochainConnection.then(({ callZome }) => {
-          callZome('instances', 'instances', 'create_instance')({ base: payload.base, instance_input: { uuid: uuidv4(), content: payload.instance.content } }).then((result) => {
-            const res = JSON.parse(result)
-            // console.log(res)
-            if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
-            } else {
-              commit('createInstance', { base: payload.base, data: res.Ok })
-            }
-          })
-        })
-      } else {
-        rootState.holochainConnection.then(({ callZome }) => {
-          callZome('instances', 'instances', 'update_instance')({ id: payload.instance.id, created_at: payload.instance.createdAt, address: payload.instance.address, instance_input: { uuid: payload.instance.uuid, content: payload.instance.content } }).then((result) => {
-            const res = JSON.parse(result)
-            // console.log(res)
-            if (res.Ok === undefined) {
-              commit('error', { base: payload.base, error: res.Err.Internal })
-            } else {
-              commit('updateInstance', { base: payload.base, data: res.Ok })
-            }
-          })
-        })
-      }
-    },
-    deleteInstance: ({ state, commit, rootState }, payload) => {
-      if (payload.base === 'PartEditor') return
-      rootState.holochainConnection.then(({ callZome }) => {
-        callZome('instances', 'instances', 'delete_instance')({ base: payload.base, id: payload.instance.id, created_at: payload.instance.createdAt, address: payload.instance.address }).then((result) => {
-          const res = JSON.parse(result)
-          if (res.Ok === undefined) {
-            commit('error', { base: payload.base, error: res.Err.Internal })
-          } else {
-            commit('deleteInstance', { base: payload.base, data: payload.instance.id })
-          }
-        })
-      })
+    createInstance: ({ state, commit, rootState }, payload) => {
+      commit('createInstance', { base: payload.base, data: payload.instance })
     }
   }
 }

@@ -200,6 +200,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import { mapGetters, mapState } from 'vuex'
+import { v4 as uuidv4 } from 'uuid'
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
   if (!fs.existsSync(dirname)) {
@@ -399,6 +400,7 @@ export default {
     },
     exportFiles () {
       writeFiles(this.items[0], `${this.developer.folder}/dna`)
+      console.log(`${this.items[0].name} ready to package`)
     },
     createDna () {
       console.log(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`)
@@ -412,38 +414,83 @@ export default {
       })
     },
     installDna () {
+      const instanceId = this.newInstanceId()
+      console.log(instanceId)
+      const dnaId = `${this.zome.name.toLowerCase()}:${uuidv4()}`
       this.$store.state.holochainConnection.then(({ call }) => {
-        call('admin/agent/list')().then((installedAgents) => {
-          for (const agent of installedAgents) {
-            console.log(agent.public_address)
-          }
+        // Get the interface for the conductor
+        call('admin/interface/list')().then((interfaces) => {
+          console.log(interfaces)
+          // const conductorInterface = interfaces[0]
+          // Now get the list of instances to see if it needs removing before we add this new one
+          call('admin/instance/list')().then((instances) => {
+            console.log(instances)
+            const inst = instances.find(i => i.id === instanceId)
+            if (inst) {
+              console.log('Uninstall the DNA')
+              call('admin/dna/uninstall')({ id: inst.dna }).then((result) => {
+                console.log(result)
+                call('admin/agent/list')().then((installedAgents) => {
+                  const agentId = installedAgents[0]
+                  this.$store.state.holochainConnection.then(({ call }) => {
+                    console.log(`Installing ${this.items[0].name} DNA`)
+                    call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+                      console.log(result)
+                      // create a Part Editor instance
+                      const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
+                      console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+                      call('admin/instance/add')(instanceAddArgs).then((result) => {
+                        console.log(result)
+                        console.log(`Starting ${this.items[0].name} instance`)
+                        call('admin/instance/start')({ id: instanceId }).then((result) => {
+                          console.log(result)
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            } else {
+              // call('admin/agent/list')().then((installedAgents) => {
+              //   const agentId = installedAgents[0]
+              //   this.$store.state.holochainConnection.then(({ call }) => {
+              //     console.log(`Installing ${this.items[0].name} DNA`)
+              //     call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+              //       console.log(result)
+              //       // create a Part Editor instance
+              //       const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
+              //       console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+              //       call('admin/instance/add')(instanceAddArgs).then((result) => {
+              //         console.log(result)
+              //         console.log(`Starting ${this.items[0].name} instance`)
+              //         call('admin/instance/start')({ id: instanceId }).then((result) => {
+              //           console.log(result)
+              //         })
+              //       })
+              //     })
+              //   })
+              // })
+            }
+          })
         })
       })
-      // const id = 'dd-4c82-4c8c-87bb-ae2a3d2ba4cc'
-      // const dnaId = 'rerytuety-5668-4a5a-8ef8-503d58dd38ce'
-      // const agentId = 'HcSCj8AWBrQJekt6f4mjSd7G5AQdz5npuaBbv49iFH5bovr8ukRWHs5zn3amoii' // this.$store.state.auth.agentAddresses[0].agentAddress
-      // this.$store.state.holochainConnection.then(({ call }) => {
-      //   call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: '/Users/philipbeadle/holochain/CRISPR/dna/bubbles/dna/dist/dna.dna.json' }).then((result) => {
-      //     console.log(result)
-      //     // create a Part Editor instance
-      //     const instanceAddArgs = { id, dna_id: dnaId, agent_id: agentId, storage: 'lmdb' }
-      //     console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
-      //     call('admin/instance/add')(instanceAddArgs).then((result) => {
-      //       console.log(result)
-      //     })
-      //   })
-      // })
     },
-    bundle () {
-      alert('create Holo bundle')
+    newInstanceId () {
+      console.log(this.partEditorInstance(this.zome.name))
+      const inst = this.partEditorInstance(this.zome.name)
+      if (inst) {
+        return inst.instanceId
+      } else {
+        return uuidv4()
+      }
     }
   },
   computed: {
+    ...mapGetters('instancemanager', ['partEditorInstance']),
     ...mapState('auth', ['developer']),
     ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
-      console.log(z)
       z.template = this.project.zome.template
       z.templateTypeName = this.project.zome.templateTypeName
       return z

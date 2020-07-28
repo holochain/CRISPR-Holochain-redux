@@ -10,6 +10,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      redirect: '/projects/ef5ba968-0048-4135-b831-a86b615a89b2',
       name: 'Home',
       component: () => import('@/views/library/Index')
     },
@@ -93,19 +94,9 @@ const router = new Router({
       component: () => import('@/views/projectKanban/ProjectKanbanModule')
     },
     {
-      path: '/bubbles/:instanceId',
-      name: 'Bubbles',
-      component: () => import('@/views/bubbles/Index')
-    },
-    {
       path: '/origins/:instanceId',
       name: 'Origins',
       component: () => import('@/views/origins/Index')
-    },
-    {
-      path: '/holopunk-records/library',
-      name: 'Holopunk Records',
-      component: () => import('@/components/parts/MusicLibrary/MusicManager')
     },
     {
       path: '/knowledge-base',

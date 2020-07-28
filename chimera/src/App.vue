@@ -28,9 +28,9 @@ export default {
   created () {
     this.fetchFields()
     this.fetchPersonas()
-    this.setGroup({ instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects' })
-    this.fetchProfiles({ zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects', base: '' })
-    this.agentAddress({ zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects', base: '' })
+    // this.setGroup({ instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects' })
+    // this.fetchProfiles({ zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects', base: '' })
+    // this.agentAddress({ zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects', base: '' })
     this.$store.subscribe((mutation, state) => {
       if (mutation.type !== 'route/ROUTE_CHANGED') {
         console.log(`Mutation -${mutation.type}`)

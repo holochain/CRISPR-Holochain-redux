@@ -11,6 +11,7 @@
     "uuid": "^8.0.0"
   },
   "scripts": {
+    "keygen": "hc keygen --path ./agentPhil.keystore -n",
     "demo": "node demo.js | tee conductor-output.txt && node config-copy.js",
     "demo:setup": "node demo-setup.js",
     "demo:setup:phil": "node demo-setup-phil.js",
