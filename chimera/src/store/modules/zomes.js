@@ -436,23 +436,23 @@ export default {
         entryTypeTemplate.fields = entryType.fields
         template.entryTypes.push(entryTypeTemplate)
       })
-      const profileZomeCode = ''
-      // if (zome.profileSpec) {
-      //   let profileSpecTemplate = state.profileSpecTemplates.find(t => t.template === zome.profileSpec.template)
-      //   profileSpecTemplate = JSON.parse(JSON.stringify(profileSpecTemplate.profileSpec))
-      //   template.profileSpec = profileSpecTemplate
-      //   template.libCode += replacePlaceHolders(template.libDeclarations, template.profileSpec.name, 'profile')
-      //   profileZomeCode = profileSpecTemplate.libZomeCode
-      //   zomesItemSrc.children.push(
-      //     {
-      //       name: 'profile',
-      //       children: [
-      //         { name: 'handlers.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/handlers_profile.rs`, 'utf8') },
-      //         { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'), profileSpecTemplate.fields) }
-      //       ]
-      //     }
-      //   )
-      // }
+      let profileZomeCode = ''
+      if (zome.profileSpec) {
+        let profileSpecTemplate = state.profileSpecTemplates.find(t => t.template === zome.profileSpec.template)
+        profileSpecTemplate = JSON.parse(JSON.stringify(profileSpecTemplate.profileSpec))
+        template.profileSpec = profileSpecTemplate
+        template.libCode += replacePlaceHolders(template.libDeclarations, template.profileSpec.name, 'profile')
+        profileZomeCode = profileSpecTemplate.libZomeCode
+        zomesItemSrc.children.push(
+          {
+            name: 'profile',
+            children: [
+              { name: 'handlers.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/handlers_profile.rs`, 'utf8') },
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'), profileSpecTemplate.fields) }
+            ]
+          }
+        )
+      }
       template.libCode += template.libZome
       template.libCode += profileZomeCode
       return template

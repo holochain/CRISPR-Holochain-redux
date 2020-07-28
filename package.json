@@ -8,11 +8,11 @@
   "license": "MIT",
   "scripts": {
     "hc:install": "cd chimera && yarn install --ignore-engines && cd ../dna/demo && yarn install --ignore-engines",
-    "chimera": "cd chimera && yarn electron:serve",
-    "chimera:lint": "cd chimera && yarn lint",
-    "chimera:phil": "cd chimera && yarn electron:serve:phil",
-    "chimera:bob": "cd chimera && yarn electron:serve:bob",
-    "chimera:alice": "cd chimera && yarn electron:serve:alice",
-    "chimera:mary": "cd chimera && yarn electron:serve:mary"
+    "crispr": "cd chimera && yarn electron:serve",
+    "crispr:lint": "cd chimera && yarn lint",
+    "crispr:phil": "cd chimera && yarn electron:serve:phil",
+    "crispr:bob": "cd chimera && yarn electron:serve:bob",
+    "crispr:alice": "cd chimera && yarn electron:serve:alice",
+    "crispr:mary": "cd chimera && yarn electron:serve:mary"
   }
 }

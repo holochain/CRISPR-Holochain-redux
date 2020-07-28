@@ -443,7 +443,6 @@ export default {
     ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
       const z = this.zomeByBaseIdFromTemplate(this.project)
-      console.log(z)
       z.template = this.project.zome.template
       z.templateTypeName = this.project.zome.templateTypeName
       return z

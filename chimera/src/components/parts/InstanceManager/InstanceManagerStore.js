@@ -138,21 +138,33 @@ export default {
             zome: 'tasks',
             type: 'task',
             instanceId: 'c74e9c11-eb79-4459-a187-39ef459a008b',
-            instanceName: 'Part Editor'
+            instanceName: 'Part Editor',
+            entry: {
+              title: '',
+              done: false
+            }
           },
           {
             id: 'Qmtaskb1',
             zome: 'tasks',
             type: 'task',
             instanceId: 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a',
-            instanceName: 'Holochain Projects Tasks'
+            instanceName: 'Holochain Projects Tasks',
+            entry: {
+              title: '',
+              done: false
+            }
           },
           {
             id: 'Qmtaskb2',
             zome: 'tasks',
             type: 'task',
             instanceId: '1b94be13-632b-4924-aa20-8f67113d7b9a',
-            instanceName: 'Personal Projects Tasks'
+            instanceName: 'Personal Projects Tasks',
+            entry: {
+              title: '',
+              done: false
+            }
           }
         ]
       },
@@ -176,7 +188,11 @@ export default {
             zome: 'tags',
             type: 'tag',
             instanceId: '2b3a7e5a-739e-427e-9f38-6992758e0552',
-            instanceName: 'Part Editor'
+            instanceName: 'Part Editor',
+            entry: {
+              title: '',
+              done: false
+            }
           },
           {
             id: 'Qmtag1',

@@ -1,4 +1,3 @@
-
 <template>
   <v-card flat>
     <v-row no-gutters>
@@ -280,6 +279,7 @@ export default {
           anchorsOffset = anchorsYIndex * 185
         }
       })
+      console.log(this.zome)
       if (this.zome.profileSpec) {
         let profileOffset = entryTypesOffset
         if (anchorsOffset > entryTypesOffset) profileOffset = anchorsOffset
