@@ -414,32 +414,79 @@ export default {
       })
     },
     installDna () {
+      const instanceId = this.newInstanceId()
+      console.log(instanceId)
+      const dnaId = `${this.zome.name.toLowerCase()}:${uuidv4()}`
       this.$store.state.holochainConnection.then(({ call }) => {
-        call('admin/agent/list')().then((installedAgents) => {
-          const instanceId = uuidv4()
-          const dnaId = `${this.zome.name}:${uuidv4()}`
-          const agentId = installedAgents[0]
-          this.$store.state.holochainConnection.then(({ call }) => {
-            console.log(`Installing ${this.items[0].name} DNA`)
-            call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
-              console.log(result)
-              // create a Part Editor instance
-              const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
-              console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
-              call('admin/instance/add')(instanceAddArgs).then((result) => {
+        // Get the interface for the conductor
+        call('admin/interface/list')().then((interfaces) => {
+          console.log(interfaces)
+          // const conductorInterface = interfaces[0]
+          // Now get the list of instances to see if it needs removing before we add this new one
+          call('admin/instance/list')().then((instances) => {
+            console.log(instances)
+            const inst = instances.find(i => i.id === instanceId)
+            if (inst) {
+              console.log('Uninstall the DNA')
+              call('admin/dna/uninstall')({ id: inst.dna }).then((result) => {
                 console.log(result)
-                console.log(`Starting ${this.items[0].name} instance`)
-                call('admin/instance/start')({ id: instanceId }).then((result) => {
-                  console.log(result)
+                call('admin/agent/list')().then((installedAgents) => {
+                  const agentId = installedAgents[0]
+                  this.$store.state.holochainConnection.then(({ call }) => {
+                    console.log(`Installing ${this.items[0].name} DNA`)
+                    call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+                      console.log(result)
+                      // create a Part Editor instance
+                      const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
+                      console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+                      call('admin/instance/add')(instanceAddArgs).then((result) => {
+                        console.log(result)
+                        console.log(`Starting ${this.items[0].name} instance`)
+                        call('admin/instance/start')({ id: instanceId }).then((result) => {
+                          console.log(result)
+                        })
+                      })
+                    })
+                  })
                 })
               })
-            })
+            } else {
+              // call('admin/agent/list')().then((installedAgents) => {
+              //   const agentId = installedAgents[0]
+              //   this.$store.state.holochainConnection.then(({ call }) => {
+              //     console.log(`Installing ${this.items[0].name} DNA`)
+              //     call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+              //       console.log(result)
+              //       // create a Part Editor instance
+              //       const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
+              //       console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+              //       call('admin/instance/add')(instanceAddArgs).then((result) => {
+              //         console.log(result)
+              //         console.log(`Starting ${this.items[0].name} instance`)
+              //         call('admin/instance/start')({ id: instanceId }).then((result) => {
+              //           console.log(result)
+              //         })
+              //       })
+              //     })
+              //   })
+              // })
+            }
           })
         })
       })
+    },
+    newInstanceId () {
+      console.log(this.partEditorInstance(this.zome.name))
+      const inst = this.partEditorInstance(this.zome.name)
+      if (inst) {
+        return inst.instanceId
+      } else {
+        return uuidv4()
+      }
     }
   },
   computed: {
+    ...mapGetters('instancemanager', ['partEditorInstance']),
     ...mapState('auth', ['developer']),
     ...mapGetters('portfolio', ['zomeByBaseIdFromTemplate', 'zomeByBaseId', 'fileItemsForZome']),
     zome () {
