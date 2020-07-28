@@ -1090,49 +1090,49 @@ const tryConnection = () => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
 
-        //   // projectCuratedFields
-        //   callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectCuratedFields.name, description: projectCuratedFields.description, preview: projectCuratedFields.preview, zome: JSON.stringify(projectCuratedFields.zome), order: 1 }})
-        //   .then((result) => {
-        //     console.log(JSON.parse(result))
-        //   }).catch(err =>{console.log(err)})
+          // projectCuratedFields
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Applications', project_input : { uuid:uuidv4(), name: projectCuratedFields.name, description: projectCuratedFields.description, preview: projectCuratedFields.preview, zome: JSON.stringify(projectCuratedFields.zome), order: 1 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
 
-        //   // projectOrigins
-        //   callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
-        //   .then((result) => {
-        //     const projectOriginsId = JSON.parse(result).Ok.id
-        //     console.log(JSON.parse(result))
-        //     callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
-        //       const columnId = JSON.parse(result).Ok.id
-        //       console.log(JSON.parse(result))
-        //       callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
-        //       .then((result) => {
-        //         const noteId = JSON.parse(result).Ok.id
-        //         console.log(JSON.parse(result))
-        //         callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Build & test DNA', done:true }})
-        //         .then((result) => {
-        //           console.log(JSON.parse(result))                
-        //         }).catch(err =>{console.log(err)})
-        //         callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write store', done:true }})
-        //         .then((result) => {
-        //           console.log(JSON.parse(result))                 
-        //         }).catch(err =>{console.log(err)})
-        //         callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write component', done:true }})
-        //         .then((result) => {
-        //           console.log(JSON.parse(result))                  
-        //         }).catch(err =>{console.log(err)})
-        //         callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Part Editor', done:true }})
-        //         .then((result) => {
-        //           console.log(JSON.parse(result))                 
-        //         }).catch(err =>{console.log(err)})
-        //       }).catch(err =>{console.log(err)})
-        //     }).catch(err =>{console.log(err)})
-        //     callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
-        //       console.log(JSON.parse(result))
-        //     }).catch(err =>{console.log(err)})
-        //     callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
-        //       console.log(JSON.parse(result))
-        //     }).catch(err =>{console.log(err)})
-        //   }).catch(err =>{console.log(err)})
+          // projectOrigins
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectOrigins.name, description: projectOrigins.description, preview: projectOrigins.preview, zome: JSON.stringify(projectOrigins.zome), order: 0 }})
+          .then((result) => {
+            const projectOriginsId = JSON.parse(result).Ok.id
+            console.log(JSON.parse(result))
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Done', order: 2}}).then((result) => {
+              const columnId = JSON.parse(result).Ok.id
+              console.log(JSON.parse(result))
+              callZome('a23de7fe-bff7-4e6e-87f0-f4c44d038888', 'notes', 'create_note')({base: columnId, note_input : { uuid:uuidv4(), title: 'Clone parts files', content: 'The cloning process needs to copy the "Origin" files for the vuex store & component', order: 0 }})
+              .then((result) => {
+                const noteId = JSON.parse(result).Ok.id
+                console.log(JSON.parse(result))
+                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Build & test DNA', done:true }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                
+                }).catch(err =>{console.log(err)})
+                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write store', done:true }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                 
+                }).catch(err =>{console.log(err)})
+                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Copy, Replace, Write component', done:true }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                  
+                }).catch(err =>{console.log(err)})
+                callZome('e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a', 'tasks', 'create_task')({base: noteId, task_input : { uuid:uuidv4(), title: 'Part Editor', done:true }})
+                .then((result) => {
+                  console.log(JSON.parse(result))                 
+                }).catch(err =>{console.log(err)})
+              }).catch(err =>{console.log(err)})
+            }).catch(err =>{console.log(err)})
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Doing', order: 1}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+            callZome('95569e2e-0de2-4073-8a7d-579f87534c04', 'kanban', 'create_column')({base: projectOriginsId, column_input : { uuid:uuidv4(), title: 'Do', order: 0}}).then((result) => {
+              console.log(JSON.parse(result))
+            }).catch(err =>{console.log(err)})
+          }).catch(err =>{console.log(err)})
 
 
           // projectNotes
@@ -1141,23 +1141,23 @@ const tryConnection = () => {
             console.log(JSON.parse(result))
           }).catch(err =>{console.log(err)})
 
-        //   // projectTasks
-        //   callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTasks.name, description: projectTasks.description, preview: projectTasks.preview, zome: JSON.stringify(projectTasks.zome), order: 4 }})
-        //   .then((result) => {
-        //     console.log(JSON.parse(result))
-        //   }).catch(err =>{console.log(err)})
+          // projectTasks
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTasks.name, description: projectTasks.description, preview: projectTasks.preview, zome: JSON.stringify(projectTasks.zome), order: 4 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})
 
-        //   // projectRatings
-        //   callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectRatings.name, description: projectRatings.description, preview: projectRatings.preview, zome: JSON.stringify(projectRatings.zome), order: 5 }})
-        //   .then((result) => {
-        //     console.log(JSON.parse(result))
-        //   }).catch(err =>{console.log(err)})                 
+          // // projectRatings
+          // callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectRatings.name, description: projectRatings.description, preview: projectRatings.preview, zome: JSON.stringify(projectRatings.zome), order: 5 }})
+          // .then((result) => {
+          //   console.log(JSON.parse(result))
+          // }).catch(err =>{console.log(err)})                 
 
-        //   // projectTags
-        //   callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTags.name, description: projectTags.description, preview: projectTags.preview, zome: JSON.stringify(projectTags.zome), order: 7 }})
-        //   .then((result) => {
-        //     console.log(JSON.parse(result))
-        //   }).catch(err =>{console.log(err)})  
+          // projectTags
+          callZome('ef5ba968-0048-4135-b831-a86b615a89b2', 'projects', 'create_project')({ base: 'Parts', project_input : { uuid:uuidv4(), name: projectTags.name, description: projectTags.description, preview: projectTags.preview, zome: JSON.stringify(projectTags.zome), order: 7 }})
+          .then((result) => {
+            console.log(JSON.parse(result))
+          }).catch(err =>{console.log(err)})  
         })
       }
     }
