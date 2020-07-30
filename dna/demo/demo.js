@@ -54,7 +54,7 @@ function base64_encode(file) {
   return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
 }
 
-const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
+// const originsDnaPath = path.join(__dirname, "../origins/dna/dist/dna.dna.json")
 const tagsDnaPath = path.join(__dirname, "../tags/dna/dist/dna.dna.json")
 const crisprDnaPath = path.join(__dirname, "../crispr/dna/dist/dna.dna.json")
 const kanbanDnaPath = path.join(__dirname, "../kanban/dna/dist/dna.dna.json")
@@ -63,7 +63,7 @@ const tasksDnaPath = path.join(__dirname, "../tasks/dna/dist/dna.dna.json")
 const curatedfieldsDnaPath = path.join(__dirname, "../curated_fields/dna/dist/dna.dna.json")
 const personalInformationDnaPath = path.join(__dirname, "../personal_information/dna/dist/dna.dna.json")
 
-const editorOriginsDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
+// const editorOriginsDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
 const editorNotesDna = Config.dna(notesDnaPath, 'notes', { uuid: uuidv4() })
 const editorTagsDna = Config.dna(tagsDnaPath, 'tags', { uuid: uuidv4() })
 const editorTasksDna = Config.dna(tasksDnaPath, 'tasks', { uuid: uuidv4() })
@@ -75,8 +75,8 @@ const personalProjectsKanbanDna = Config.dna(kanbanDnaPath, 'kanban', { uuid: uu
 const personalProjectsNotesDna = Config.dna(notesDnaPath, 'notes', { uuid: uuidv4() })
 const personalProjectsTasksDna = Config.dna(tasksDnaPath, 'tasks', { uuid: uuidv4() })
 const tagsDna = Config.dna(tagsDnaPath, 'tags', { uuid: uuidv4() })
-const originsDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
-const originsMatesDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
+// const originsDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
+// const originsMatesDna = Config.dna(originsDnaPath, 'origins', { uuid: uuidv4() })
 const kanbanDna = Config.dna(kanbanDnaPath, 'kanban', { uuid: uuidv4() })
 const notesDna = Config.dna(notesDnaPath, 'notes', { uuid: uuidv4() })
 const tasksDna = Config.dna(tasksDnaPath, 'tasks', { uuid: uuidv4() })
@@ -94,12 +94,12 @@ const alicesPersonalInformationDna = Config.dna(personalInformationDnaPath, 'per
 //   public_address: 'HcS----------...',
 //   keystore_file: 'path/to/keystore',
 // }
-const philsConductorConfig = Config.gen({'c74e9c11-eb79-4459-a187-39ef459a008b': editorTasksDna, '8239b37b-5b69-43cd-aa2c-28b1054aef20': editorNotesDna, '6261170b-2064-4920-be43-98cc7ca1d68b': editorOriginsDna, '2b3a7e5a-739e-427e-9f38-6992758e0552': editorTagsDna, '4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, 'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '01526dbb-17f7-42d4-8a26-01270b50eb73': clientProjectsDna, '15f5c748-e611-47c7-9d1b-7651e5c16d17': personalProjectsDna, '68342fe4-c2e3-4568-836e-421722757c84': personalProjectsKanbanDna, '6025b761-26e0-42c2-ad96-8bdc1ce00c33': personalProjectsNotesDna, '1b94be13-632b-4924-aa20-8f67113d7b9a': personalProjectsTasksDna,  '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna}, { network: network, logger: logger })
-const marysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marysPersonalInformationDna}, { network: network, logger: logger })
-const rudysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna}, { network: network, logger: logger })
-const arthursConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna}, { network: network, logger: logger })
-const alicesConductorConfig = Config.gen({'57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna}, { network: network, logger: logger })
-const marksConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '57c01ed8-30ae-4fca-b6f9-40192821fed2': originsDna, '164449a2-e7d4-47dc-acc8-2fe317b8d9fe': originsMatesDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna}, {network: network, logger: logger })
+const philsConductorConfig = Config.gen({'c74e9c11-eb79-4459-a187-39ef459a008b': editorTasksDna, '8239b37b-5b69-43cd-aa2c-28b1054aef20': editorNotesDna, '2b3a7e5a-739e-427e-9f38-6992758e0552': editorTagsDna, '4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, 'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '01526dbb-17f7-42d4-8a26-01270b50eb73': clientProjectsDna, '15f5c748-e611-47c7-9d1b-7651e5c16d17': personalProjectsDna, '68342fe4-c2e3-4568-836e-421722757c84': personalProjectsKanbanDna, '6025b761-26e0-42c2-ad96-8bdc1ce00c33': personalProjectsNotesDna, '1b94be13-632b-4924-aa20-8f67113d7b9a': personalProjectsTasksDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: philsPersonalInformationDna}, { network: network, logger: logger })
+const marysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marysPersonalInformationDna}, { network: network, logger: logger })
+const rudysConductorConfig = Config.gen({'4b7641fe-145d-4217-9768-1e0bff70fdf5': tagsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: rudysPersonalInformationDna}, { network: network, logger: logger })
+const arthursConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: arthursPersonalInformationDna}, { network: network, logger: logger })
+const alicesConductorConfig = Config.gen({'95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: alicesPersonalInformationDna}, { network: network, logger: logger })
+const marksConductorConfig = Config.gen({'ef5ba968-0048-4135-b831-a86b615a89b2': holochainProjectsDna, '95569e2e-0de2-4073-8a7d-579f87534c04': kanbanDna, 'a23de7fe-bff7-4e6e-87f0-f4c44d038888': notesDna, 'e1289ae4-0611-4c5c-b1fa-5b4ed0b8c67a': tasksDna, fields: fieldsDna, personalinformation: marksPersonalInformationDna}, {network: network, logger: logger })
 
 orchestrator.registerScenario("Set up Holochain for all players, DHTs and entries", async (s, t) => {
   const {phil, mary, rudy, arthur, alice, mark} = await s.players({phil: philsConductorConfig, mary: marysConductorConfig, rudy: rudysConductorConfig, arthur: arthursConductorConfig, alice: alicesConductorConfig, mark: marksConductorConfig}, true)
@@ -142,9 +142,7 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('philMusicBio', philMusicBio)
   const philMusicProfilePic = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/philt3r-profile.jpg')}})
   console.log('philMusicProfilePic', philMusicProfilePic)
-  const philMusicProfileImages = await phil.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profileImages.Ok.id, "value": [{ name:"", image: base64_encode('./assets/philt3r-profile.jpg') }, { name:"", image: base64_encode('./assets/philt3r-profile.jpg') }, { name:"", image: base64_encode('./assets/philt3r-profile.jpg') }]}})
-  console.log('philMusicProfileImages', philMusicProfileImages)
-
+  
   // mary's Personal persona
   const maryPersonalFullName = await mary.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "mary Beadle"}})
   console.log('maryPersonalFullName', maryPersonalFullName)
@@ -158,8 +156,6 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('maryPersonalBio', maryPersonalBio)
   const maryPersonalProfilePic = await mary.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/mary.png')}})
   console.log('maryPersonalProfilePic', maryPersonalProfilePic)
-  const maryPersonalProfileImages = await mary.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Music", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profileImages.Ok.id, "value": [{ name:"", image: base64_encode('./assets/mary.png') }, { name:"", image: base64_encode('./assets/mary.png') }, { name:"", image: base64_encode('./assets/mary.png') }]}})
-  console.log('maryPersonalProfileImages', maryPersonalProfileImages)
 
   // Rudy's Personal persona
   const rudyPersonalFullName = await rudy.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Personal", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": fullNameId.Ok.id, "value": "Rudy"}})
@@ -184,26 +180,6 @@ orchestrator.registerScenario("Set up Holochain for all players, DHTs and entrie
   console.log('arthurHolochainAvatar', arthurHolochainAvatar)
   const arthurHolochainProfilePic = await arthur.call("personalinformation", "personalinformation", "create_personafield",  {"base": "Holochain", "personafield_input" : {"uuid":uuidv4(), "fieldsFieldId": profilePicId.Ok.id, "value": base64_encode('./assets/art.profile.jpeg')}})
   console.log('arthurHolochainProfilePic', arthurHolochainProfilePic)
-
-  const philOriginProfile = await phil.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "philip.beadle"}})
-  console.log('philOriginProfile', philOriginProfile)
-  const markOriginProfile = await mark.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "mark.keenan"}})
-  console.log('markOriginProfile', markOriginProfile)
-  const rudyOriginProfile = await rudy.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "Rudy"}})
-  console.log('rudyOriginProfile', rudyOriginProfile)
-  const maryOriginProfile = await mary.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mary.png'), "handle": "mary"}})
-  console.log('maryOriginProfile', maryOriginProfile)
-  const aliceOriginProfile = await alice.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mhairi.jpg'), "handle": "Mha Iri"}})
-  console.log('aliceOriginProfile', aliceOriginProfile)
-  const artOriginProfile = await arthur.call("57c01ed8-30ae-4fca-b6f9-40192821fed2", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/arthur.brock.png'), "handle": "arthur.brock"}})
-  console.log('artOriginProfile', artOriginProfile)
-
-  const philOriginMatesProfile = await phil.call("164449a2-e7d4-47dc-acc8-2fe317b8d9fe", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philt3r.png'), "handle": "phil"}})
-  console.log('philOriginMatesProfile', philOriginMatesProfile)
-  const markOriginMatesProfile = await mark.call("164449a2-e7d4-47dc-acc8-2fe317b8d9fe", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/mark.keenan.jpg'), "handle": "macros"}})
-  console.log('markOriginMatesProfile', markOriginMatesProfile)
-  const rudyOriginMatesProfile = await rudy.call("164449a2-e7d4-47dc-acc8-2fe317b8d9fe", "origins", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/rudy.jpeg'), "handle": "turtle"}})
-  console.log('rudyOriginMatesProfile', rudyOriginMatesProfile)
 
   const philKanbanProfile = await phil.call("95569e2e-0de2-4073-8a7d-579f87534c04", "kanban", "create_profile", {"base": "", "profile_input" : {"agentId":"", "avatar": base64_encode('./assets/philip.beadle.png'), "handle": "Phil"}})
   console.log('philKanbanProfile', philKanbanProfile)

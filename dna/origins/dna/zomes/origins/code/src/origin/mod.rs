@@ -33,8 +33,8 @@ const ORIGIN_ENTRY_NAME: &str = "origin";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct OriginEntry {
-    uuid: String,
 	content: String,
+	uuid: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -45,8 +45,8 @@ pub struct Origin {
     created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	content: String,
+	uuid: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -90,8 +90,8 @@ impl Origin {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			content: entry.content,
+			uuid: entry.uuid,
         })
     }
 }
@@ -104,8 +104,8 @@ impl Origin {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			content: entry.content,
+			uuid: entry.uuid,
         })
     }
 }

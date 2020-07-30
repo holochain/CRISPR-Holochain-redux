@@ -33,7 +33,6 @@ const FIELD_ENTRY_NAME: &str = "field";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct FieldEntry {
-    uuid: String,
 	name: String,
 	ui: String,
 }
@@ -46,7 +45,6 @@ pub struct Field {
     created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	name: String,
 	ui: String,
 }
@@ -92,7 +90,6 @@ impl Field {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			ui: entry.ui,
         })
@@ -107,7 +104,6 @@ impl Field {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			ui: entry.ui,
         })

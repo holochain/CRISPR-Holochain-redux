@@ -10,12 +10,17 @@
           mdi-application-export
         </v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn icon :disabled="btnCreateDnaDisabled">
         <v-icon @click="createDna">
           mdi-creation
         </v-icon>
       </v-btn>
       <v-btn icon class="mr-1 ml-n1" @click="installDna">
+        <template>
+          <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
+        </template>
+      </v-btn>
+      <v-btn icon class="mr-1 ml-n1" @click="uninstallDna">
         <template>
           <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
         </template>
@@ -247,6 +252,9 @@ export default {
   props: ['instanceId', 'base', 'project'],
   data () {
     return {
+      btnInstallDnaDisabled: true,
+      btnCreateDnaDisabled: true,
+      hasBeenUninstalled: false,
       zomeTab: null,
       help: false,
       entryType: {},
@@ -401,22 +409,25 @@ export default {
     exportFiles () {
       writeFiles(this.items[0], `${this.developer.folder}/dna`)
       console.log(`${this.items[0].name} ready to package`)
+      this.btnCreateDnaDisabled = false
     },
     createDna () {
+      this.btnCreateDnaDisabled = true
       console.log(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`)
       const { exec } = require('child_process')
       exec(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`, (err, stdout, stderr) => {
         if (err) {
           console.error(err)
+          this.btnCreateDnaDisabled = false
           return
         }
         console.log(stdout)
+        this.btnCreateDnaDisabled = false
+        this.btnInstallDnaDisabled = false
       })
     },
-    installDna () {
+    uninstallDna () {
       const instanceId = this.newInstanceId()
-      console.log(instanceId)
-      const dnaId = `${this.zome.name.toLowerCase()}:${uuidv4()}`
       this.$store.state.holochainConnection.then(({ call }) => {
         // Get the interface for the conductor
         call('admin/interface/list')().then((interfaces) => {
@@ -430,47 +441,42 @@ export default {
               console.log('Uninstall the DNA')
               call('admin/dna/uninstall')({ id: inst.dna }).then((result) => {
                 console.log(result)
-                call('admin/agent/list')().then((installedAgents) => {
-                  const agentId = installedAgents[0]
-                  this.$store.state.holochainConnection.then(({ call }) => {
-                    console.log(`Installing ${this.items[0].name} DNA`)
-                    call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+              })
+            }
+          })
+        })
+      })
+    },
+    installDna () {
+      const instanceId = this.newInstanceId()
+      console.log(instanceId)
+      const dnaId = `${this.zome.name.toLowerCase()}:${uuidv4()}`
+      this.$store.state.holochainConnection.then(({ call }) => {
+        // Get the interface for the conductor
+        call('admin/interface/list')().then((interfaces) => {
+          console.log(interfaces)
+          const conductorInterfaceId = interfaces[0].id
+          call('admin/agent/list')().then((installedAgents) => {
+            const agentId = installedAgents[0]
+            this.$store.state.holochainConnection.then(({ call }) => {
+              console.log(`Installing ${this.items[0].name} DNA`)
+              call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
+                console.log(result)
+                // create a Part Editor instance
+                const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
+                console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
+                call('admin/instance/add')(instanceAddArgs).then((result) => {
+                  console.log(result)
+                  console.log(`Starting ${this.items[0].name} instance`)
+                  call('admin/instance/start')({ id: instanceId }).then((result) => {
+                    console.log(`Adding ${this.items[0].name} instance to interface ${conductorInterfaceId}`)
+                    call('admin/interface/add_instance')({ interface_id: conductorInterfaceId, instance_id: instanceId }).then((result) => {
                       console.log(result)
-                      // create a Part Editor instance
-                      const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
-                      console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
-                      call('admin/instance/add')(instanceAddArgs).then((result) => {
-                        console.log(result)
-                        console.log(`Starting ${this.items[0].name} instance`)
-                        call('admin/instance/start')({ id: instanceId }).then((result) => {
-                          console.log(result)
-                        })
-                      })
                     })
                   })
                 })
               })
-            } else {
-              // call('admin/agent/list')().then((installedAgents) => {
-              //   const agentId = installedAgents[0]
-              //   this.$store.state.holochainConnection.then(({ call }) => {
-              //     console.log(`Installing ${this.items[0].name} DNA`)
-              //     call('admin/dna/install_from_file')({ id: dnaId, name: 'testInstallName', path: `${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}/dna/dist/dna.dna.json` }).then((result) => {
-              //       console.log(result)
-              //       // create a Part Editor instance
-              //       const instanceAddArgs = { id: instanceId, dna_id: dnaId, agent_id: agentId.id, storage: 'lmdb' }
-              //       console.log('Adding instance with ', JSON.stringify(instanceAddArgs))
-              //       call('admin/instance/add')(instanceAddArgs).then((result) => {
-              //         console.log(result)
-              //         console.log(`Starting ${this.items[0].name} instance`)
-              //         call('admin/instance/start')({ id: instanceId }).then((result) => {
-              //           console.log(result)
-              //         })
-              //       })
-              //     })
-              //   })
-              // })
-            }
+            })
           })
         })
       })

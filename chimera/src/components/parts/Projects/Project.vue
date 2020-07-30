@@ -20,14 +20,14 @@
       <v-btn color="action" icon :to="`/projectKanban/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-notebook-outline</v-icon>
       </v-btn>
-      <v-btn v-if="cloneable" color="action" icon :to="`/part/${instance.instanceId}/${base}/${project.id}`">
+      <v-btn v-if="showPartEditor" color="action" icon :to="`/part/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-application</v-icon>
       </v-btn>
       <v-btn color="action" icon :to="`/project/${instance.instanceId}/${base}/${project.id}`">
         <v-icon>mdi-code-braces</v-icon>
       </v-btn>
     </v-card-actions>
-    <v-dialog v-if="cloneable" v-model="cloningDialog" max-width="700px">
+    <v-dialog v-model="cloningDialog" max-width="700px">
       <v-card flat>
         <v-toolbar dark>
           <v-toolbar-title class="display-1">Let's clone - {{project.name}}</v-toolbar-title>
@@ -114,7 +114,7 @@ export default {
     details: {
       type: Boolean
     },
-    cloneable: {
+    showPartEditor: {
       type: Boolean,
       default: false
     }
