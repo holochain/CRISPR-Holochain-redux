@@ -160,7 +160,7 @@ export default {
       }
       this.zome.entryTypes.forEach(entryType => {
         let testCode = this.zome.testCode
-        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth + 100, entryTypeIndex, this.$vuetify.theme.themes.dark.entry)
+        const entryTypeNode = dnaModel.addEntryType(that.zome.name, entryType, entryTypeOffset, yOffset + anchorsOffset + entryTypesOffset, cardWidth + 100, entryTypeIndex, this.$vuetify.theme.themes.dark.entry, entryType.uuid)
         let handlersCode = ''
         let permissionsCode = ''
         entryType.functions.forEach(f => {

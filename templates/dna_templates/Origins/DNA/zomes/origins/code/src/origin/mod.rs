@@ -32,8 +32,7 @@ const ORIGIN_ENTRY_NAME: &str = "origin";
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct OriginEntry {
-    uuid: String,_commaReplaceFields
+pub struct OriginEntry {_commaReplaceFields
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -43,8 +42,7 @@ pub struct Origin {
     created_at: Iso8601,
     created_by: Address,
     address: Address,
-    updated_at: Iso8601,
-    uuid: String,_commaReplaceFields
+    updated_at: Iso8601,_commaReplaceFields
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -87,8 +85,7 @@ impl Origin {
             created_at: timestamp(address.clone())?,
             created_by: created_by(address.clone())?,
             address: address.clone(),
-            updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,_commaReplaceFields
+            updated_at: timestamp(address.clone())?,_commaReplaceFields
         })
     }
 }
@@ -100,8 +97,7 @@ impl Origin {
             created_at: created_at.clone(),
             created_by: created_by(address.clone())?,
             address: address.clone(),
-            updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,_commaReplaceFields
+            updated_at: timestamp(address.clone())?,_commaReplaceFields
         })
     }
 }

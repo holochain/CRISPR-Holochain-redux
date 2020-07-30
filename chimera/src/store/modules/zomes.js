@@ -11,10 +11,13 @@ function replacePlaceHolders (content, placeHolder, replacement) {
   return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
 }
 
-function replaceMod (modTemplate, fields) {
+function replaceMod (modTemplate, fields, uuid) {
   // console.log(fields)
   const rustFields = []
   const constRustNewFields = []
+  if (uuid) {
+    fields.push({ fieldName: 'uuid', fieldType: 'String' })
+  }
   fields.forEach(field => {
     rustFields.push(`\n\t${field.fieldName}: ${field.fieldType}`)
     constRustNewFields.push(`\n\t\t\t${field.fieldName}: entry.${field.fieldName}`)
@@ -422,7 +425,7 @@ export default {
             name: entryType.name,
             children: [
               { name: 'handlers.rs', file: 'rs', code: '' },
-              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8'), entryType.fields) },
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/mod.rs`, 'utf8'), entryType.fields, entryType.uuid) },
               { name: 'entry_permissions.rs', file: 'rs', code: '' },
               { name: 'link_permissions.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/link_permissions.rs`, 'utf8') },
               { name: 'validation.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/validation.rs`, 'utf8') }
@@ -448,7 +451,7 @@ export default {
             name: 'profile',
             children: [
               { name: 'handlers.rs', file: 'rs', code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/handlers_profile.rs`, 'utf8') },
-              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'), profileSpecTemplate.fields) }
+              { name: 'mod.rs', file: 'rs', code: replaceMod(fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/profile/mod_profile.rs`, 'utf8'), profileSpecTemplate.fields, false) }
             ]
           }
         )

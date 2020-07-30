@@ -58,7 +58,7 @@ class DiagramModel {
     return anchorTypeNode
   }
 
-  addEntryType (zomeName, entryType, colOffset, yOffset, cardWidth, entryTypeIndex, color) {
+  addEntryType (zomeName, entryType, colOffset, yOffset, cardWidth, entryTypeIndex, color, uuid = true) {
     const entityName = `${zomeName.toLowerCase().replace(' ', '_')}::${entryType.name.toLowerCase()}`
     const entryTypeNodeHeight = 125 + (entryType.fields.length + entryType.metaFields.length) * 20
     const entryTypeNode = this.addNode(entityName, colOffset, yOffset, cardWidth, entryTypeNodeHeight, 'entryType', entryTypeIndex, color, 78)
@@ -66,7 +66,7 @@ class DiagramModel {
     entryTypeNode.addField(`entry!|${entityName}`)
     entryTypeNode.addField('link!|from:holochain::anchor')
     entryTypeNode.addField(`link!|type:${entryType.name.toLowerCase()}_link`)
-    entryTypeNode.addField('uuid|true')
+    entryTypeNode.addField(`uuid|${uuid}`)
     entryType.fields.forEach(field => {
       entryTypeNode.addField(`${field.fieldName}|${field.fieldType}`)
     })
