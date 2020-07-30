@@ -20,8 +20,8 @@
       Click <v-icon>mdi-table-column-remove</v-icon> on a column to remove that column.
     </v-alert>
     <v-row class="pl-1 pr-1">
-      <v-col v-for="column in columns" :key="column.id">
-        <draggable-column :isDraggable="true" sortKey="order" :key="column.id" :contentInstance="noteInstance" :title="column.title" :contentBase="column.uuid" />
+      <v-col v-for="column in columns" :key="column.uuid">
+        <draggable-column :isDraggable="true" sortKey="order" :key="column.uuid" :contentInstance="noteInstance" :title="column.title" :contentBase="column.uuid" />
       </v-col>
       <v-col v-if="newColumn">
         <v-card class="mx-auto" max-width="520" color="secondary" dark>
@@ -37,7 +37,7 @@
   </v-card>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   name: 'Kanban',
   components: {
@@ -53,7 +53,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('root', ['fetchEntries', 'resetErrors', 'createEntry']),
+    ...mapActions('root', ['fetchEntries', 'createEntry', 'resetErrors', 'agentAddress', 'fetchProfiles']),
+    ...mapMutations('friends', ['setGroup']),
     ...mapActions('parts', ['addPart', 'acceptInvite', 'rejectInvite']),
     add () {
       this.instance.entry.id = 'new'
@@ -72,6 +73,9 @@ export default {
     })
   },
   created () {
+    this.setGroup(this.instance)
+    this.agentAddress(this.instance)
+    this.fetchProfiles(this.instance)
     this.fetchEntries({ instance: this.instance, base: this.base, sortKey: 'order' })
   }
 }

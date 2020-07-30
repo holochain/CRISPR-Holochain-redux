@@ -10,14 +10,14 @@
           mdi-application-export
         </v-icon>
       </v-btn>
-      <v-btn icon :disabled="btnCreateDnaDisabled">
-        <v-icon @click="createDna">
-          mdi-creation
-        </v-icon>
-      </v-btn>
       <v-btn icon :disabled="btnTestDnaDisabled">
         <v-icon @click="testDna">
           mdi-airbag
+        </v-icon>
+      </v-btn>
+      <v-btn icon :disabled="btnCreateDnaDisabled">
+        <v-icon @click="createDna">
+          mdi-creation
         </v-icon>
       </v-btn>
       <v-btn icon class="mr-1 ml-n1" @click="installDna" v-if="!btnInstallDnaDisabled">
@@ -209,7 +209,7 @@
 <script>
 import * as fs from 'fs'
 import * as path from 'path'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapMutations } from 'vuex'
 import { v4 as uuidv4 } from 'uuid'
 function ensureDirectoryExistence (filePath) {
   var dirname = path.dirname(filePath)
@@ -294,6 +294,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('instancemanager', ['createInstance']),
     showZomeModel (item) {
       this.showModel = true
       this.showCode = false
@@ -417,6 +418,7 @@ export default {
       writeFiles(this.items[0], `${this.developer.folder}/dna`)
       console.log(`${this.items[0].name} ready to package`)
       this.btnCreateDnaDisabled = false
+      this.btnTestDnaDisabled = false
     },
     createDna () {
       this.btnCreateDnaDisabled = true
@@ -439,6 +441,7 @@ export default {
     },
     testDna () {
       this.btnCreateDnaDisabled = true
+      this.btnTestDnaDisabled = true
       const { spawn } = require('child_process')
       const hcPackage = spawn('/bin/sh', ['-c', `
         cd "${this.developer.folder}/dna/${this.items[0].name.replace(' ', '_').toLowerCase()}"
@@ -452,7 +455,6 @@ export default {
       hcPackage.on('close', (code) => {
         console.log(`child process exited with code ${code}`)
         this.btnCreateDnaDisabled = false
-        this.btnInstallDnaDisabled = false
         this.btnTestDnaDisabled = false
       })
     },
@@ -504,6 +506,8 @@ export default {
                       console.log(result)
                     })
                   })
+                }).catch((err) => {
+                  console.log(err)
                 })
               })
             })
@@ -517,7 +521,20 @@ export default {
       if (inst) {
         return inst.instanceId
       } else {
-        return uuidv4()
+        const instanceId = uuidv4()
+        this.createInstance({
+          base: this.project.name,
+          instance: {
+            zome: this.zome.name.toLowerCase(),
+            type: this.zome.entryTypes[0].name,
+            instanceId: instanceId,
+            instanceName: 'Part Editor',
+            entry: {
+              content: ''
+            }
+          }
+        })
+        return instanceId
       }
     }
   },

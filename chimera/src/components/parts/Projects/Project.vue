@@ -31,22 +31,7 @@
 </template>
 
 <script>
-import * as fs from 'fs'
-import * as path from 'path'
-import { mapActions, mapState } from 'vuex'
-function ensureDirectoryExistence (filePath) {
-  var dirname = path.dirname(filePath)
-  if (!fs.existsSync(dirname)) {
-    fs.mkdirSync(dirname, { recursive: true })
-  }
-}
-function replacePlaceHolders (content, placeHolder, replacement) {
-  const replacementC = replacement.charAt(0).toUpperCase() + replacement.substring(1)
-  const replacementAllC = replacement.toUpperCase()
-  const placeHolderC = placeHolder.charAt(0).toUpperCase() + placeHolder.substring(1)
-  const placeHolderAllC = placeHolder.toUpperCase()
-  return content.replace(new RegExp(placeHolder, 'g'), replacement).replace(new RegExp(placeHolderAllC, 'g'), replacementAllC).replace(new RegExp(placeHolderC, 'g'), replacementC)
-}
+import { mapState } from 'vuex'
 export default {
   name: 'HolochainProject',
   components: {
@@ -90,50 +75,6 @@ export default {
     showPartEditor: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    ...mapActions('root', ['createEntry']),
-    copyParts () {
-      let listPart = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}.vue`, 'utf8')
-      const listPartCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}.vue`
-      ensureDirectoryExistence(listPartCloneFileName)
-      listPart = replacePlaceHolders(listPart, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
-      fs.writeFileSync(listPartCloneFileName, listPart, (err) => {
-        if (err) throw err
-        console.log('The file has been saved!')
-      })
-      let part = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.zome.entryTypes[0].name}.vue`, 'utf8')
-      let partCloneFileName = this.clone.zome.entryTypes[0].name
-      partCloneFileName = partCloneFileName.charAt(0).toUpperCase() + partCloneFileName.substring(1)
-      partCloneFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${partCloneFileName}.vue`
-      console.log(partCloneFileName)
-      ensureDirectoryExistence(partCloneFileName)
-      part = replacePlaceHolders(part, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
-      fs.writeFileSync(partCloneFileName, part, (err) => {
-        if (err) throw err
-        console.log('The file has been saved!')
-      })
-      let store = fs.readFileSync(`${this.developer.folder}/chimera/src/components/parts/${this.project.name}/${this.project.name}Store.js`, 'utf8')
-      const storeFileName = `${this.developer.folder}/chimera/src/components/parts/${this.clone.name}/${this.clone.name}Store.js`
-      ensureDirectoryExistence(storeFileName)
-      store = replacePlaceHolders(store, this.project.zome.entryTypes[0].name, this.clone.zome.entryTypes[0].name)
-      fs.writeFileSync(storeFileName, store, (err) => {
-        if (err) throw err
-        console.log('The file has been saved!')
-      })
-      const storeFile = `${this.developer.folder}/chimera/src/store/index.js`
-      let vuexStore = fs.readFileSync(storeFile, 'utf8')
-      const importStore = `import ${this.clone.name.toLowerCase()} from '@/components/parts/${this.clone.name}/${this.clone.name}Store'\n`
-      const moduleStore = `${this.clone.name.toLowerCase()},\n    `
-      const part1 = vuexStore.slice(0, vuexStore.indexOf('// NewImportModule'))
-      const part2 = vuexStore.slice(vuexStore.indexOf('// NewImportModule'), vuexStore.indexOf('// NewModule'))
-      const part3 = vuexStore.slice(vuexStore.indexOf('// NewModule'), vuexStore.length)
-      vuexStore = part1 + importStore + part2 + moduleStore + part3
-      fs.writeFileSync(`${this.developer.folder}/chimera/src/store/index.js`, vuexStore, (err) => {
-        if (err) throw err
-        console.log('The file has been saved!')
-      })
     }
   },
   computed: {

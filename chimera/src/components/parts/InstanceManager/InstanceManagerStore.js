@@ -201,6 +201,21 @@ export default {
             instanceName: 'Chimera Tags'
           }
         ]
+      },
+      {
+        base: 'Events',
+        instances: [
+          {
+            id: 'QmEventsEditor',
+            zome: 'events',
+            type: 'events',
+            instanceId: '45a3baa3-03a1-4873-a781-37f27413cc5b',
+            instanceName: 'Part Editor',
+            entry: {
+              content: ''
+            }
+          }
+        ]
       }
     ],
     errors: []
@@ -210,10 +225,14 @@ export default {
       const base = state.baseInstances.find(b => b.base === payload.base)
       if (base) {
         base.instances = base.instances.filter(n => n.id !== 'new')
-        base.instances.splice(0, 0, payload.data)
+        base.instances.splice(0, 0, payload.instance)
       } else {
-        state.baseInstances.push((payload))
+        state.baseInstances.push({
+          base: payload.base,
+          instances: [payload.instance]
+        })
       }
+      console.log(state)
     },
     updateInstance (state, payload) {
       const base = state.baseInstances.find(e => e.base === payload.base)
@@ -265,7 +284,7 @@ export default {
       if (baseInstance) {
         return baseInstance.instances.find(n => n.instanceName === 'Part Editor')
       } else {
-        return []
+        return undefined
       }
     },
     getInstanceName: state => (instanceId) => {
@@ -279,11 +298,6 @@ export default {
       } else {
         return []
       }
-    }
-  },
-  actions: {
-    createInstance: ({ state, commit, rootState }, payload) => {
-      commit('createInstance', { base: payload.base, data: payload.instance })
     }
   }
 }

@@ -198,12 +198,12 @@ export default {
       })
     },
     createEntry: ({ state, commit, rootState }, payload) => {
-      // console.log(payload)
+      console.log(payload)
       payload.entry.uuid = uuidv4()
       rootState.holochainConnection.then(({ callZome }) => {
         callZome(payload.instance.instanceId, payload.instance.zome, `create_${payload.instance.type}`)({ base: payload.base, [`${payload.instance.type}_input`]: { ...payload.entry } }).then((result) => {
           const res = JSON.parse(result)
-          // console.log(res)
+          console.log(res)
           if (res.Ok === undefined) {
             commit('error', { instance: payload.instance, base: payload.base, error: res.Err.Internal })
           } else {

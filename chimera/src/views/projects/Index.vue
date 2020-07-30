@@ -17,7 +17,7 @@
       </v-tooltip>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="alert" v-bind="attrs" v-on="on" icon @click="cloningDialog = true">
+          <v-btn color="alert" v-bind="attrs" v-on="on" icon @click="showNewProject = true">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
@@ -85,109 +85,26 @@
     </v-alert>
     <v-row no-gutters>
       <v-col cols="12">
-        <projects :instance="instance" base="Parts" :details="details" :showPartEditor="true"/>
+        <projects :instance="instance" base="Parts" :details="details" :showPartEditor="true" :showNewProject="showNewProject" @close-new-project-dialog="showNewProject = false"/>
         <projects :instance="instance" base="Applications"/>
       </v-col>
     </v-row>
-     <v-dialog v-model="cloningDialog" max-width="700px">
-      <v-card flat>
-        <v-toolbar dark>
-          <v-toolbar-title class="display-1">New Project</v-toolbar-title>
-        </v-toolbar>
-        <v-row no-gutters align="start" justify="center">
-          <v-col cols="12">
-            <v-text-field class="ml-2 white--text" v-model="clone.name" label="Project Name" :hint="`A plural such as Notes`" />
-            <v-textarea class="ml-2 white--text" v-model="clone.description" label="Description" hint="What new characteristics are you giving your clone?" />
-            <v-text-field class="ml-2 white--text" v-model="clone.zome.name" label="Zome Name" :hint="`A plural such as Notes`" />
-            <v-text-field class="ml-2 white--text" v-model="clone.zome.entryTypes[0].name" label="Entry Type Name" :hint="`A singular such as note`" />
-            <v-image-input v-model="clone.preview" :image-quality="0.85" clearable image-format="jpeg,png" :image-height="200" :image-width="200"/>
-          </v-col>
-        </v-row>
-        <v-spacer></v-spacer>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="action darken-1" text @click="cloningDialog = false">
-            Cancel
-          </v-btn>
-          <v-btn color="action darken-1" text @click="createEntry({ base: 'Parts', project: clone }); copyParts(); cloningDialog = false">
-            Clone
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </section>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import VImageInput from 'vuetify-image-input/a-la-carte'
 export default {
   name: 'AllProjects',
   components: {
-    Projects: () => import('@/components/parts/Projects/Projects.vue'),
-    VImageInput
+    Projects: () => import('@/components/parts/Projects/Projects.vue')
   },
   data () {
     return {
       help: false,
       details: false,
-      cloningDialog: false,
-      clone: {
-        name: '',
-        preview: '/Users/philipbeadle/holochain/CRISPR-Holochain-redux/chimera/src/assets/projects/Origins/preview.jpg',
-        description: '',
-        zome: {
-          template: 'Origins',
-          templateTypeName: 'origin',
-          itemsTemplatesName: 'template1',
-          name: '',
-          entryTypes: [
-            {
-              id: 'QmOriginEntryTypeHash',
-              name: '',
-              template: 'list_anchor_types_1',
-              uuid: true,
-              fields: [
-                {
-                  id: 'QM234566777887',
-                  fieldName: 'content',
-                  fieldType: 'String',
-                  fieldDescription: 'Content',
-                  required: false
-                }
-              ]
-            }
-          ],
-          anchorTypes: [
-            {
-              id: 'Qmlist_origins1',
-              type: 'list_origins',
-              text: '',
-              tag: ' ',
-              context: 'permanent',
-              links: [
-                {
-                  entityId: 'QmOriginEntryTypeHash',
-                  type: 'origin_link',
-                  tag: 'created_at',
-                  context: 'exclusive'
-                }
-              ],
-              anchors: []
-            }
-          ],
-          profileSpec: {
-            id: 'QmOriginProfileSpecHash',
-            template: 'identify',
-            fields: []
-          }
-        }
-      },
+      showNewProject: false,
       instance: { zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', partBase: '', instanceName: 'Holochain Projects' }
     }
-  },
-  computed: {
-    ...mapState('auth', ['developer'])
   }
 }
 </script>
