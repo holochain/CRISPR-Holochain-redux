@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
 const fs = require('fs')
-const port = 33000;
+const port = 43000;
 const { connect } = require('@holochain/hc-web-client')
 const holochainConnection = connect({ url: `ws://localhost:${port}` })
 const net = require('net')
@@ -11,7 +11,7 @@ function base64Encode(file) {
     var bitmap = fs.readFileSync(file);
     return `data:image/png;base64, ${Buffer.from(bitmap).toString('base64')}`
 }
-const folder = '/Users/philipbeadle/holochain/CRISPR/chimera/src/assets/projects'
+const folder = '/Users/philipbeadle/holochain/CRISPR-Holochain-redux/chimera/src/assets/projects'
 const projects = [
   {
     happId: 'QmHashyCRISPR',

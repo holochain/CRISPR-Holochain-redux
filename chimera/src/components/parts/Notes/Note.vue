@@ -1,6 +1,14 @@
 <template>
   <v-card flat class="mx-auto" dark>
     <v-system-bar color="indigo darken-2" dark>
+      <v-list-item v-if="whois">
+        <v-list-item-avatar size="24" class="pl-0 ml-0">
+          <v-img :src="whois.info.avatar" />
+        </v-list-item-avatar>
+        <v-list-item-content class="ml-0">
+          <v-list-item-title>{{whois.name}}</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       <v-spacer></v-spacer>
       <v-icon v-if="!isEditing" @click="isEditing = true">mdi-note-text-outline</v-icon>
       <v-icon v-if="isEditing && instance.entry.id === 'new'" @click="createEntry(payload); isEditing=false">mdi-content-save</v-icon>
@@ -31,7 +39,7 @@
   </v-card>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
 export default {
   name: 'Note',
@@ -80,6 +88,10 @@ export default {
     this.clean = { ...this.entry }
   },
   computed: {
+    ...mapGetters('friends', ['friend']),
+    whois () {
+      return this.friend(this.instance.instanceId, this.entry.createdBy)
+    },
     ...mapState('auth', ['chimera']),
     ...mapState({
       partParts (state) {

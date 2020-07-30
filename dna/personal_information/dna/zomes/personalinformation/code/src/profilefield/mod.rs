@@ -33,10 +33,10 @@ const PROFILEFIELD_ENTRY_NAME: &str = "profilefield";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ProfilefieldEntry {
-    uuid: String,
 	fields_field_id: String,
 	persona_field_address: String,
 	contract: String,
+	uuid: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -47,10 +47,10 @@ pub struct Profilefield {
     created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	fields_field_id: String,
 	persona_field_address: String,
 	contract: String,
+	uuid: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -94,10 +94,10 @@ impl Profilefield {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			fields_field_id: entry.fields_field_id,
 			persona_field_address: entry.persona_field_address,
 			contract: entry.contract,
+			uuid: entry.uuid,
         })
     }
 }
@@ -110,10 +110,10 @@ impl Profilefield {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			fields_field_id: entry.fields_field_id,
 			persona_field_address: entry.persona_field_address,
 			contract: entry.contract,
+			uuid: entry.uuid,
         })
     }
 }

@@ -33,6 +33,6 @@ const orchestrator = new Orchestrator({
 const dna = Config.dna(dnaPath, 'notes-test')
 const conductorConfig = Config.gen({notes: dna})
 
-require('./entry types/note')(orchestrator.registerScenario, conductorConfig)
+require('./entry_types/note')(orchestrator.registerScenario, conductorConfig)
 
 orchestrator.run()

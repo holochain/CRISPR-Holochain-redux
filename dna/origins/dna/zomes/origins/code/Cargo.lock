@@ -429,6 +429,7 @@ dependencies = [
 [[package]]
 name = "holochain_anchors"
 version = "0.2.5"
+source = "git+https://github.com/holochain/holochain-anchors?branch=agent-list#109c9fd902083c6db150d9f9c51dcfed283447b2"
 dependencies = [
  "hdk 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -802,7 +803,7 @@ version = "0.1.0"
 dependencies = [
  "hdk 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "hdk_proc_macros 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)",
- "holochain_anchors 0.2.5",
+ "holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors?branch=agent-list)",
  "holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "holochain_wasm_utils 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -1427,6 +1428,7 @@ dependencies = [
 "checksum hdk 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum hdk_proc_macros 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum hermit-abi 0.1.15 (registry+https://github.com/rust-lang/crates.io-index)" = "3deed196b6e7f9e44a2ae8d94225d80302d81208b1bb673fd21fe634645c85a9"
+"checksum holochain_anchors 0.2.5 (git+https://github.com/holochain/holochain-anchors?branch=agent-list)" = "<none>"
 "checksum holochain_core_types 0.0.50-alpha4 (git+https://github.com/holochain/holochain-rust?branch=develop)" = "<none>"
 "checksum holochain_json_api 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "723490ea3377bde2f4ac07ea63c7ccdf0bf20eb699a0ed580566fe927b735bba"
 "checksum holochain_json_derive 0.0.23 (registry+https://github.com/rust-lang/crates.io-index)" = "6d411807a76c2a2f45bee166d576e65eee2659be61a62f10008e94313be1b537"

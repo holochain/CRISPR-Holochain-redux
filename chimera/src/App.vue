@@ -33,7 +33,7 @@ export default {
     // this.agentAddress({ zome: 'projects', type: 'project', instanceId: 'ef5ba968-0048-4135-b831-a86b615a89b2', instanceName: 'Holochain Projects', base: '' })
     this.$store.subscribe((mutation, state) => {
       if (mutation.type !== 'route/ROUTE_CHANGED') {
-        console.log(`Mutation -${mutation.type}`)
+        // console.log(`Mutation -${mutation.type}`)
       }
     })
   }

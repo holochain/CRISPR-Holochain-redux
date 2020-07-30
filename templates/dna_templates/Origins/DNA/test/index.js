@@ -33,6 +33,6 @@ const orchestrator = new Orchestrator({
 const dna = Config.dna(dnaPath, 'originszome-test')
 const conductorConfig = Config.gen({originszome: dna})
 
-require('./entry types/origin')(orchestrator.registerScenario, conductorConfig)
+require('./entry_types/origin')(orchestrator.registerScenario, conductorConfig)
 
 orchestrator.run()

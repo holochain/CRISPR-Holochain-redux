@@ -8,7 +8,7 @@ export default {
     chimera: false,
     splash: true,
     developer: {
-      folder: '/Users/philipbeadle/holochain/CRISPR'
+      folder: '/Users/philipbeadle/holochain/CRISPR-Holochain-redux'
     }
   },
   actions: {

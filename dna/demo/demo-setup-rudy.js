@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid')
 const path = require('path')
 const fs = require('fs')
-const port = 33002;
+const port = 43002;
 const { connect } = require('@holochain/hc-web-client')
 const holochainConnection = connect({ url: `ws://localhost:${port}` })
 const net = require('net')

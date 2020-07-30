@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid')
-const createParams = {"base": "testbase", "profilefield_input" : {"uuid":uuidv4(), "fieldsFieldId": "String for testing","personaFieldAddress": "String for testing","contract": "String for testing"}}
+const createParams = {"base": "testbase", "profilefield_input" : {"uuid":uuidv4(), "fieldsFieldId": "String for testing","personaFieldAddress": "String for testing","contract": "String for testing","uuid": "String for testing"}}
 module.exports = (scenario, conductorConfig) => {
   scenario("create_profilefield", async (s, t) => {
     const {alice} = await s.players({alice: conductorConfig}, true)
@@ -37,12 +37,12 @@ module.exports = (scenario, conductorConfig) => {
   scenario("anyone-update-profilefield", async (s, t) => {
     const {alice, bob} = await s.players({alice: conductorConfig, bob: conductorConfig}, true)
     const create_profilefield_result = await alice.call("personalinformation", "personalinformation", "create_profilefield", createParams)
-    const update_profilefield_result = await alice.call("personalinformation", "personalinformation", "update_profilefield", {"id": create_profilefield_result.Ok.id, "created_at": create_profilefield_result.Ok.createdAt, "address": create_profilefield_result.Ok.address, "profilefield_input" : {"uuid": create_profilefield_result.Ok.uuid, "fieldsFieldId": "Update string for testing","personaFieldAddress": "Update string for testing","contract": "Update string for testing"}})
+    const update_profilefield_result = await alice.call("personalinformation", "personalinformation", "update_profilefield", {"id": create_profilefield_result.Ok.id, "created_at": create_profilefield_result.Ok.createdAt, "address": create_profilefield_result.Ok.address, "profilefield_input" : {"uuid": create_profilefield_result.Ok.uuid, "fieldsFieldId": "Update string for testing","personaFieldAddress": "Update string for testing","contract": "Update string for testing","uuid": "Update string for testing"}})
     await s.consistency()
     const read_profilefield_result = await alice.call("personalinformation", "personalinformation", "read_profilefield", {"id": update_profilefield_result.Ok.id, "created_at": update_profilefield_result.Ok.createdAt})
     t.deepEqual(update_profilefield_result, read_profilefield_result)
 
-    const update_profilefield_result_2 = await bob.call("personalinformation", "personalinformation", "update_profilefield", {"id": update_profilefield_result.Ok.id, "created_at": update_profilefield_result.Ok.createdAt, "address": update_profilefield_result.Ok.address, "profilefield_input" : {"uuid": update_profilefield_result.Ok.uuid, "fieldsFieldId": "Update string for testing","personaFieldAddress": "Update string for testing","contract": "Update string for testing"}})
+    const update_profilefield_result_2 = await bob.call("personalinformation", "personalinformation", "update_profilefield", {"id": update_profilefield_result.Ok.id, "created_at": update_profilefield_result.Ok.createdAt, "address": update_profilefield_result.Ok.address, "profilefield_input" : {"uuid": update_profilefield_result.Ok.uuid, "fieldsFieldId": "Update string for testing","personaFieldAddress": "Update string for testing","contract": "Update string for testing","uuid": "Update string for testing"}})
     await s.consistency()
     const read_profilefield_result_2 = await alice.call("personalinformation", "personalinformation", "read_profilefield", {"id": update_profilefield_result_2.Ok.id, "created_at": update_profilefield_result_2.Ok.createdAt})
     t.deepEqual(update_profilefield_result_2, read_profilefield_result_2)

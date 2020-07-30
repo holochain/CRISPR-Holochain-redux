@@ -5,7 +5,7 @@
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
       <v-toolbar-title>CRISPR Part [{{project.name}}] - Zome [{{this.zome.name}}]</v-toolbar-title>
-      <v-btn icon>
+      <v-btn icon :disabled="btnExportDnaDisabled">
         <v-icon @click="exportFiles">
           mdi-application-export
         </v-icon>
@@ -15,16 +15,21 @@
           mdi-creation
         </v-icon>
       </v-btn>
-      <v-btn icon class="mr-1 ml-n1" @click="installDna">
+      <v-btn icon :disabled="btnTestDnaDisabled">
+        <v-icon @click="testDna">
+          mdi-airbag
+        </v-icon>
+      </v-btn>
+      <v-btn icon class="mr-1 ml-n1" @click="installDna" v-if="!btnInstallDnaDisabled">
         <template>
           <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
         </template>
       </v-btn>
-      <v-btn icon class="mr-1 ml-n1" @click="uninstallDna">
+      <!-- <v-btn icon class="mr-1 ml-n1" @click="uninstallDna">
         <template>
           <img src="@/assets/icons/holochain-circle.png" style="height: 20px">
         </template>
-      </v-btn>
+      </v-btn> -->
       <v-spacer></v-spacer>
       <v-btn color="action" icon @click="profileSpecDialog = true">
         <v-icon>mdi-badge-account-outline</v-icon>
@@ -215,7 +220,7 @@ function ensureDirectoryExistence (filePath) {
 
 function writeFiles (item, folder) {
   if (item.children) {
-    folder += '/' + item.name
+    folder += '/' + item.name.replace(' ', '_')
     item.children.forEach(item => {
       if (item.file) {
         const fileName = folder + '/' + item.name
@@ -254,7 +259,8 @@ export default {
     return {
       btnInstallDnaDisabled: true,
       btnCreateDnaDisabled: true,
-      hasBeenUninstalled: false,
+      btnExportDnaDisabled: true,
+      btnTestDnaDisabled: true,
       zomeTab: null,
       help: false,
       entryType: {},
@@ -291,6 +297,7 @@ export default {
     showZomeModel (item) {
       this.showModel = true
       this.showCode = false
+      this.btnExportDnaDisabled = false
     },
     profileSpecUpdated (profileSpec) {
       console.log(profileSpec)
@@ -413,17 +420,40 @@ export default {
     },
     createDna () {
       this.btnCreateDnaDisabled = true
-      console.log(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`)
-      const { exec } = require('child_process')
-      exec(`cd "${this.developer.folder.toLowerCase()}/dna/${this.items[0].name.toLowerCase()}" && pwd && nix-shell https://holochain.love && yarn hc:package`, (err, stdout, stderr) => {
-        if (err) {
-          console.error(err)
-          this.btnCreateDnaDisabled = false
-          return
-        }
-        console.log(stdout)
+      const { spawn } = require('child_process')
+      const hcPackage = spawn('/bin/sh', ['-c', `
+        cd "${this.developer.folder}/dna/${this.items[0].name.replace(' ', '_').toLowerCase()}"
+        pwd
+        nix-shell https://holochain.love
+        yarn hc:package
+      `])
+      hcPackage.stdout.on('data', (data) => {
+        console.log(`hc:package: ${data}`)
+      })
+      hcPackage.on('close', (code) => {
+        console.log(`child process exited with code ${code}`)
         this.btnCreateDnaDisabled = false
         this.btnInstallDnaDisabled = false
+        this.btnTestDnaDisabled = false
+      })
+    },
+    testDna () {
+      this.btnCreateDnaDisabled = true
+      const { spawn } = require('child_process')
+      const hcPackage = spawn('/bin/sh', ['-c', `
+        cd "${this.developer.folder}/dna/${this.items[0].name.replace(' ', '_').toLowerCase()}"
+        pwd
+        nix-shell https://holochain.love
+        yarn hc:test
+      `])
+      hcPackage.stdout.on('data', (data) => {
+        console.log(`hc:test: ${data}`)
+      })
+      hcPackage.on('close', (code) => {
+        console.log(`child process exited with code ${code}`)
+        this.btnCreateDnaDisabled = false
+        this.btnInstallDnaDisabled = false
+        this.btnTestDnaDisabled = false
       })
     },
     uninstallDna () {

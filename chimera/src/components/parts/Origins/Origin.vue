@@ -39,7 +39,7 @@
 import VFormBase from '@/components/vFormBase'
 import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
-  name: 'Bubble',
+  name: 'Origins',
   components: {
     PartManager: () => import('@/components/chimera/PartManager'),
     VFormBase
@@ -63,7 +63,7 @@ export default {
       this.parts.push(name)
     },
     log (event) {
-      console.log(event)
+      // console.log(event)
     }
   },
   created () {

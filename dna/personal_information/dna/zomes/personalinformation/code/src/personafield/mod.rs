@@ -33,7 +33,6 @@ const PERSONAFIELD_ENTRY_NAME: &str = "personafield";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct PersonafieldEntry {
-    uuid: String,
 	fields_field_id: String,
 	value: String,
 }
@@ -46,7 +45,6 @@ pub struct Personafield {
     created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	fields_field_id: String,
 	value: String,
 }
@@ -92,7 +90,6 @@ impl Personafield {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			fields_field_id: entry.fields_field_id,
 			value: entry.value,
         })
@@ -107,7 +104,6 @@ impl Personafield {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			fields_field_id: entry.fields_field_id,
 			value: entry.value,
         })

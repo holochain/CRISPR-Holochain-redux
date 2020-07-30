@@ -1,6 +1,6 @@
 const fs = require('fs')
 export const developer = {
-  folder: '/Users/philipbeadle/holochain/CRISPR'
+  folder: '/Users/philipbeadle/holochain/CRISPR-Holochain-redux'
 }
 
 function replacePlaceHolders (content, placeHolder, replacement) {
@@ -173,7 +173,7 @@ export default {
               code: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/zomes/origins/code/src/origin/delete.rs`, 'utf8'),
               explanation: 'Docs go here',
               permission: 'anyone',
-              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_delete/remove.rs`, 'utf8'),
+              permissionsCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/permissions_rule_templates/validate_permissions_entry_delete/anyone.rs`, 'utf8'),
               permissionsExplanation: 'Docs go here',
               testCode: fs.readFileSync(`${developer.folder}/templates/dna_templates/origins/DNA/test/origin/anyone-delete-origin.js`, 'utf8')
             },
@@ -435,6 +435,7 @@ export default {
         template.libCode += replacePlaceHolders(template.libDeclarations, entryTypeTemplate.name, entryType.name)
         setTypeNameAndFieldsInTemplateFiles(template.items[0], zome.templateTypeName, entryType)
         entryTypeTemplate.id = entryType.id
+        entryTypeTemplate.uuid = entryType.uuid
         entryTypeTemplate.name = entryType.name
         entryTypeTemplate.fields = entryType.fields
         template.entryTypes.push(entryTypeTemplate)

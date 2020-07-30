@@ -33,12 +33,12 @@ const PROJECT_ENTRY_NAME: &str = "project";
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct ProjectEntry {
-    uuid: String,
 	name: String,
 	description: String,
 	preview: String,
 	zome: String,
 	order: u32,
+	uuid: String,
 }
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson,Clone)]
@@ -49,12 +49,12 @@ pub struct Project {
     created_by: Address,
     address: Address,
     updated_at: Iso8601,
-    uuid: String,
 	name: String,
 	description: String,
 	preview: String,
 	zome: String,
 	order: u32,
+	uuid: String,
 }
 
 fn timestamp(address: Address) -> ZomeApiResult<Iso8601> {
@@ -98,12 +98,12 @@ impl Project {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			description: entry.description,
 			preview: entry.preview,
 			zome: entry.zome,
 			order: entry.order,
+			uuid: entry.uuid,
         })
     }
 }
@@ -116,12 +116,12 @@ impl Project {
             created_by: created_by(address.clone())?,
             address: address.clone(),
             updated_at: timestamp(address.clone())?,
-            uuid: entry.uuid,
 			name: entry.name,
 			description: entry.description,
 			preview: entry.preview,
 			zome: entry.zome,
 			order: entry.order,
+			uuid: entry.uuid,
         })
     }
 }
