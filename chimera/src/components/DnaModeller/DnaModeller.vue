@@ -72,7 +72,11 @@
       <v-divider class="my-4 info" style="opacity: 0.22" />
       Click the <v-icon>mdi-application-export</v-icon> export icon to export the DNA ready to be compiled.
       <v-divider class="my-4 info" style="opacity: 0.22" />
-      Click the <img src="@/assets/icons/holochain-circle.png" style="height: 20px"> Holochain icon to install the compiled DNA.
+      Click the <v-icon>mdi-airbag</v-icon> test icon to run <i>hc test</i> on the DNA.
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <v-icon>mdi-creation</v-icon> creation icon to run <i>hc package</i> on the DNA
+      <v-divider class="my-4 info" style="opacity: 0.22" />
+      Click the <img src="@/assets/icons/holochain-circle.png" style="height: 20px"> Holochain icon to install the compiled DNA into your developer Holochain node.
     </v-alert>
     <v-row no-gutters>
       <v-col cols="3">
@@ -403,7 +407,7 @@ export default {
             tabSize: 4,
             mode: 'markdown',
             theme: 'base16-dark',
-            lineNumbers: true,
+            lineNumbers: false,
             line: true
           }
           break

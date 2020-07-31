@@ -15,9 +15,6 @@
         <v-icon>mdi-account-multiple-outline</v-icon>
         Profiles
       </v-btn>
-      <v-btn icon @click="redrawMainSymbol()">
-        <v-icon>mdi-hexagon-slice-3</v-icon>
-      </v-btn>
       <v-icon @click="help=!help">mdi-help</v-icon>
     </v-toolbar>
     <v-alert v-model="help" dismissible border="left" colored-border color="deep-purple accent-4" elevation="2">
