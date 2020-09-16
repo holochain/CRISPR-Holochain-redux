@@ -4,7 +4,7 @@
 - ``` yarn install --ignore-engines ```
 - ``` cd .. ```
 
-Update `chimera/src/store/modules/zomes.js` to use the correct path to your CRISPR repo:s
+Update `chimera/src/store/modules/zomes.js` to use the correct path to your CRISPR repo:
 
 ```
 export const developer = {
